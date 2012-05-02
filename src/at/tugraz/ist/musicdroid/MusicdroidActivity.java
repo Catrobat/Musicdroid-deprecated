@@ -11,7 +11,7 @@ public class MusicdroidActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        // Seventh change!!! (Bianca ;-) )
+        // Branch: open_soundfile!!!
         
     }
 }
