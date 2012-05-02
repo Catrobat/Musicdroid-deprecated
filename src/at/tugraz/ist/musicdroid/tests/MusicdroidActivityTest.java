@@ -31,7 +31,11 @@ public class MusicdroidActivityTest extends ActivityInstrumentationTestCase2<Mus
 	}
 	
 	public void testMainScreen(){
-	  assertTrue("TextView Load Project not found", solo.searchText(solo.getString(R.string.load_project))); 
+	  //assertTrue("TextView Load Project not found", solo.searchText(solo.getString(R.string.load_project))); 
+	assertTrue("Open Sound-Recorder Button not found", solo.searchButton(solo.getString(R.string.load_sound_recorder), true));
+	assertTrue("Open Sound-Player Button not found", solo.searchButton(solo.getString(R.string.load_sound_player), true));
+	assertTrue("New Project Button not found", solo.searchButton(solo.getString(R.string.new_project), true));
+	assertTrue("Open Project Button not found", solo.searchButton(solo.getString(R.string.open_project), true));
 	}
 
 }
