@@ -3,5 +3,6 @@
 
     <string name="hello">Hello World, MusicdroidActivity!</string>
     <string name="app_name">Musicdroid</string>
+    <string name="load_project">Load Project</string>
 
 </resources>
