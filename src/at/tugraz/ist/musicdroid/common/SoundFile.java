@@ -1,4 +1,4 @@
-package common;
+package at.tugraz.ist.musicdroid.common;
 
 public class SoundFile {
 
@@ -6,13 +6,6 @@ public class SoundFile {
 	};
 
 	public void LoadFile() {
-		
-	
-	
-	
-	
-	
-	
 	};
 
 	public void SaveFile() {
