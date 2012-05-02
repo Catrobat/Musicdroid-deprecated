@@ -1,4 +1,4 @@
-package common;
+package at.tugraz.ist.musicdroid.common;
 
 public class SoundFile {
 
