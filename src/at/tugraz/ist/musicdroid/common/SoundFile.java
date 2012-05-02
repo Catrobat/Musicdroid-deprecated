@@ -1,15 +1,25 @@
 package at.tugraz.ist.musicdroid.common;
 
+import android.content.Context;
+import android.content.Intent;
+import at.tugraz.ist.musicdroid.R;
+
 public class SoundFile {
 
-	public SoundFile() {
+	private Context context;
+
+	public SoundFile(Context context) {
+		this.context = context;
 	};
 
-	public void LoadFile() {
+	public void LoadFile(String filename) {
+
+		tmp_filename_ = filename;
 	};
 
 	public void SaveFile() {
 	};
+	
 
 	public void AppendFile() {
 	};

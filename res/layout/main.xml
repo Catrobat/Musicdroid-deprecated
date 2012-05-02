@@ -42,7 +42,8 @@
         android:id="@+id/openSoundButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open" />
+        android:text="Open" 
+        android:onClick="handleLoadFileButton"/>
 
     <SeekBar
         android:id="@+id/seekBar1"
