@@ -2,6 +2,7 @@ package at.tugraz.ist.musicdroid;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 public class MusicdroidActivity extends Activity {

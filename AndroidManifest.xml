@@ -21,8 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecordSoundActivity"></activity>
-        <service android:name="org.puredata.android.service.PdService" />
+        <activity android:name=".RecordSoundActivity">       
+              <service android:name="org.puredata.android.service.PdService" />
+        </activity>
+
     </application>
   <instrumentation
       android:targetPackage="at.tugraz.ist.musicdroid"

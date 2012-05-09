@@ -6,5 +6,6 @@
     <string name="load_project">Load Project</string>
     <string name="recordButtonTextField">Record</string>
     <string name="recordInfoTextField">Keine Aufnahme</string>
+    <string name="stopRecordButtonTextField">Stop</string>
 
 </resources>

@@ -14,8 +14,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.media.MediaRecorder;
-import android.media.AudioRecord;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
 	private Button recordButton;
+	private Button stopButton;
 	private TextView testoutput;
 	private PdService pdService = null;
 	private final ServiceConnection pdConnection = new ServiceConnection() {
@@ -67,6 +66,15 @@ public class RecordSoundActivity extends Activity {
 				 testoutput.setText("I'm recording now");
 				 recordSoundFile();  
 		    }
+		
+        });
+        stopButton = (Button) findViewById(R.id.button2);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View view) {
+        	  String status = "stop";
+        	  testoutput.setText("Stopped Recording"); 
+        	  PdBase.sendSymbol("status", status);	
+        	}
         });
         
     }

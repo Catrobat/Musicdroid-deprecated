@@ -40,4 +40,13 @@ public class RecordSoundActivityTest extends ActivityInstrumentationTestCase2<Re
 	  	solo.clickOnButton(solo.getString(R.string.recordButtonTextField)); 
 	  	assertTrue("Text didn't change", solo.searchText("I'm recording now")); 
 	}
+	
+	public void testRecordFile() {
+	    solo.clickOnButton(solo.getString(R.string.recordButtonTextField));
+	    assertTrue("Text didn't change", solo.searchText("I'm recording now"));
+	    solo.clickOnButton(solo.getString(R.string.stopRecordButtonTextField));
+	    assertTrue("Text didn't change", solo.searchText("Stopped Recording"));
+	     
+	}
+	
 }
