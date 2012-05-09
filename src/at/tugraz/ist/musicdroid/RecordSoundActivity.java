@@ -107,7 +107,7 @@ public class RecordSoundActivity extends Activity {
 	}
     
     public void recordSoundFile() {
-      String filename= "first_record.wav";
+      String filename= "firstrecord.wav";
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
