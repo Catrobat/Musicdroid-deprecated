@@ -12,6 +12,8 @@ public class MusicdroidActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Intent i = new Intent(MusicdroidActivity.this, RecordSoundActivity.class);
+        startActivity(i);
         
         // Seventh change!!! (Bianca ;-) )
         

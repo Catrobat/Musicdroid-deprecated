@@ -2,6 +2,7 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.String;
 
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
@@ -11,6 +12,7 @@ import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -27,6 +29,7 @@ public class RecordSoundActivity extends Activity {
 	private Button stopButton;
 	private TextView testoutput;
 	private PdService pdService = null;
+	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
     	public void onServiceConnected(ComponentName name, IBinder service) {
@@ -52,9 +55,10 @@ public class RecordSoundActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
         
-        
+
         
         setContentView(R.layout.record);
         
@@ -80,11 +84,18 @@ public class RecordSoundActivity extends Activity {
     }
 
     private void loadPatch() throws IOException {
+    	testoutput = (TextView) findViewById(R.id.textView1);
 		File dir = getFilesDir();
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
 				dir, true);
 		File patchFile = new File(dir, "recordtest.pd");
-		PdBase.openPatch(patchFile.getAbsolutePath());
+		
+		String path = patchFile.getAbsolutePath();
+		testoutput.setText("test");
+		
+		
+    	PdBase.openPatch(patchFile.getAbsolutePath());	
+		
     }
     
     
@@ -107,11 +118,12 @@ public class RecordSoundActivity extends Activity {
 	}
     
     public void recordSoundFile() {
-      String filename= "first_record.wav";
+      String filename= "firstrecord.wav";
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
-      
+      status = "stop";
+      PdBase.sendSymbol("status", status);
     	//MediaRecorder recorder = new MediaRecorder();
       //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       //recorder.setOutputFormat(MediaRecorder.OutputFormat.);
