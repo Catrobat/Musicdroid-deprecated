@@ -5,6 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="10" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:icon="@drawable/musicdroid_launcher"
@@ -21,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecordSoundActivity"></activity>
+        <service android:name="org.puredata.android.service.PdService" />
     </application>
   <instrumentation
       android:targetPackage="at.tugraz.ist.musicdroid"
