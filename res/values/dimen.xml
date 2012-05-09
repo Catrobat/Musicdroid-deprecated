@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mainButtonWidth">200dip</dimen>
+    <dimen name="mainButtonMarginBottom">20dip</dimen>
+    
+</resources>
