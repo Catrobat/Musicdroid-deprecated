@@ -25,16 +25,19 @@ public class MusicdroidActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		sound_file = new SoundFile(this);
+		//sound_file = new SoundFile();
 		// Branch: open_soundfile!!!
 		my_list_view = (TextView) findViewById(R.id.textView1);
 	}
 
 	public void handleLoadFileButton(View v){
 			Log.v("musicdroid", "button geklickt!!");
-			sound_file.LoadFile();
+			LoadFile();
+			
+			
 	}
-
+	
+	
 	public void LoadFile() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("audio/*");
@@ -48,24 +51,8 @@ public class MusicdroidActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-
-		if (resultCode == Activity.RESULT_OK
-				&& requestCode == REQUEST_SELECT_MUSIC) {
-			try {
-
-				String tmp_filename = "";
-
-				Uri sound_file_uri = data.getData();
-				tmp_filename = sound_file_uri.getPath();
-
-				//sound_file.LoadFile(tmp_filename);
-				
-				my_list_view.setText(tmp_filename);
-
-			} catch (Exception e) {
-
-			}
-		}
-
+		
+		SoundFile.GetInstance().LoadFile(requestCode, resultCode, data);
+		
 	}
 }

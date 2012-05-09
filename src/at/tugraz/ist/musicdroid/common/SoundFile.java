@@ -1,44 +1,84 @@
 package at.tugraz.ist.musicdroid.common;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import at.tugraz.ist.musicdroid.R;
 
-public class SoundFile extends Activity {
+public class SoundFile {
 
 	private Context context;
+	private static SoundFile instance = null;
+	final int REQUEST_CODE = 0;
+	ArrayList<String> file_list_= new ArrayList<String>();
 
-	public SoundFile(Context context) {
-		this.context = context;
-	};
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-
-	
-		// Branch: open_soundfile!!!
-		
+	private SoundFile() {
 	}
 
-	public void LoadFile() {
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("audio/*");
-		startActivityForResult(Intent.createChooser(intent,
-				getString(R.string.load_sound_file_chooser_text)),
-				0);
+	public static SoundFile GetInstance() {
+		if (instance == null)
+			return new SoundFile();
+		else
+			return instance;
+	}
+
+	public void LoadFile(int requestCode, int resultCode, Intent data) {
+
+		if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+			try {
+				Uri sound_file_uri = data.getData();
+				file_list_.add(sound_file_uri.getPath());
+
+				File input = new File(file_list_.get(file_list_.size()-1));
+				File output = new File("/mnt/sdcard/musicdroid/data/soundfiles/"
+						+ input.getName());
+
+				SaveFile(input, output);
+
+			} catch (Exception e) {
+
+			}
+		}
 	};
 
 	public void SaveFile() {
 	};
-	
+
+	public void SaveFile(File input, File output) throws IOException {
+		checkDirectory(output.getPath());
+		try {
+			checkDirectory(output.getPath());
+
+			FileChannel inChannel = new FileInputStream(input).getChannel();
+			FileChannel outChannel = new FileOutputStream(output).getChannel();
+
+			inChannel.transferTo(0, inChannel.size(), outChannel);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	};
+
+	public void checkDirectory(String directory_path) {
+		File directory;
+		String new_path = "";
+		String[] splittArray = directory_path.split("/");
+
+		for (int i = 0; i < splittArray.length-1; i++) {
+			new_path += splittArray[i] + "/";
+			directory = new File(new_path);
+			if (!(directory.exists() && directory.isDirectory() && directory.canWrite()))
+			{
+				directory.mkdir();
+			}	
+		}
+	}
 
 	public void AppendFile() {
 	};
@@ -51,32 +91,9 @@ public class SoundFile extends Activity {
 
 	public void Play() {
 	};
-
-	private String filename_;
-	private Activity activity_;
 	
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);/*
-
-		if (resultCode == activity_.RESULT_OK
-				&& requestCode == 0) {
-			try {
-
-				String tmp_filename = "";
-
-				Uri sound_file_uri = data.getData();
-				tmp_filename = sound_file_uri.getPath();
-
-				filename_=tmp_filename;
-				
-
-			} catch (Exception e) {
-				Log.v("musicdroid", "obkackt!!");
-			}
-		}*/
-
+	public String getFilePath()
+	{
+		return file_list_.get(file_list_.size()-1);
 	}
-
 }

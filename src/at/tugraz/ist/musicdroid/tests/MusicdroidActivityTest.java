@@ -22,6 +22,8 @@ public class MusicdroidActivityTest extends ActivityInstrumentationTestCase2<Mus
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		try {
+			solo.clickOnButton(R.id.openSoundButton);
+			
 			solo.finalize(); 
 			
 		} catch(Throwable e) {
