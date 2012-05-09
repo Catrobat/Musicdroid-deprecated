@@ -17,6 +17,7 @@ public class MusicdroidActivity extends Activity {
 	SoundFile sound_file;
 	private final int REQUEST_SELECT_MUSIC = 0;
 	TextView my_list_view;
+	String filename_;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class MusicdroidActivity extends Activity {
 
 	public void handleLoadFileButton(View v){
 			Log.v("musicdroid", "button geklickt!!");
-			LoadFile();
+			sound_file.LoadFile();
 	}
 
 	public void LoadFile() {
@@ -57,7 +58,7 @@ public class MusicdroidActivity extends Activity {
 				Uri sound_file_uri = data.getData();
 				tmp_filename = sound_file_uri.getPath();
 
-				sound_file.LoadFile(tmp_filename);
+				//sound_file.LoadFile(tmp_filename);
 				
 				my_list_view.setText(tmp_filename);
 
