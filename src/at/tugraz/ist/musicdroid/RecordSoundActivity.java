@@ -1,5 +1,11 @@
 package at.tugraz.ist.musicdroid;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.puredata.core.PdBase;
+import org.puredata.core.utils.IoUtils;
+
 import android.app.Activity;
 import android.media.MediaRecorder;
 import android.media.AudioRecord;
@@ -30,11 +36,20 @@ public class RecordSoundActivity extends Activity {
        // getResources().)
     }
 
+    private void loadPatch() throws IOException {
+		File dir = getFilesDir();
+		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
+				dir, true);
+		File patchFile = new File(dir, "recordtest.pd");
+		PdBase.openPatch(patchFile.getAbsolutePath());
+    }
+    
+    
     public void recordSoundFile() {
       MediaRecorder recorder = new MediaRecorder();
       recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       //recorder.setOutputFormat(MediaRecorder.OutputFormat.);
-      ExtAudioRecorder extAudioRecorder = ExtAudioRecorder.getInstanse(false);
+      //ExtAudioRecorder extAudioRecorder = ExtAudioRecorder.getInstanse(false);
     }
     	
     	
