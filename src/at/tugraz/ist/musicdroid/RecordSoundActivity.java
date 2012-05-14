@@ -12,7 +12,6 @@ import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
