@@ -7,5 +7,6 @@
     <string name="recordButtonTextField">Record</string>
     <string name="recordInfoTextField">Keine Aufnahme</string>
     <string name="stopRecordButtonTextField">Stop</string>
+    <string name="descr">Micro</string>
 
 </resources>

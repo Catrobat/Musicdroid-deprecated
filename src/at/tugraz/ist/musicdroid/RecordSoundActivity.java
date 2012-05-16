@@ -15,18 +15,27 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
 	private Button recordButton;
 	private Button stopButton;
+	private Button playButton;
 	private TextView testoutput;
+	private Chronometer chrono;
+	private EditText editText;
+	private File dir;
 	private PdService pdService = null;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
@@ -61,24 +70,42 @@ public class RecordSoundActivity extends Activity {
         
         setContentView(R.layout.record);
         
-        recordButton = (Button) findViewById(R.id.button1);
+        recordButton = (Button) findViewById(R.id.button2);
         testoutput = (TextView) findViewById(R.id.textView1);	
+        chrono = (Chronometer) findViewById(R.id.chronometer1);
+        
         recordButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				 testoutput.setText("I'm recording now");
+				 chrono.start();
 				 recordSoundFile();  
 		    }
 		
         });
-        stopButton = (Button) findViewById(R.id.button2);
+        stopButton = (Button) findViewById(R.id.stopButton);
         stopButton.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View view) {
+              long bytes; 
         	  String status = "stop";
-        	  testoutput.setText("Stopped Recording"); 
+        	  chrono.stop(); 
         	  PdBase.sendSymbol("status", status);	
+        	  File file = new File(dir, "firstrecord.wav");
+        	  dir = file;
+        	  bytes = dir.length();
+        	  
+        	  testoutput = (TextView) findViewById(R.id.textView1);
+        	  
+        	  testoutput.setText("bytes " + bytes);
+        	
         	}
         });
+        
+        playButton = (Button) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View view) {
+        	  playfile(); 
+        	}
+        }); 
         
     }
 
@@ -101,19 +128,15 @@ public class RecordSoundActivity extends Activity {
     
     private void initPd() throws IOException {
 		// Configure the audio glue
-		
-		int sampleRate = AudioParameters.suggestSampleRate();
-		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
-		pdService.initAudio(sampleRate, 1, 2, 10.0f);
-		pdService.startAudio();
+		String name = getResources().getString(R.string.app_name);
+		pdService.initAudio(-1, -1, -1, -1);
+		pdService.startAudio(new Intent(this, RecordSoundActivity.class), R.drawable.ic_launcher, name, "Retrun to " + name + ".");
 		
 		//dispatcher = new PdUiDispatcher();
 		//PdBase.setReceiver(dispatcher);
 		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
 
-		
-		
-		
+
 	}
     
     public void recordSoundFile() {
@@ -121,8 +144,7 @@ public class RecordSoundActivity extends Activity {
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
-      status = "stop";
-      PdBase.sendSymbol("status", status);
+      
     	//MediaRecorder recorder = new MediaRecorder();
       //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       //recorder.setOutputFormat(MediaRecorder.OutputFormat.);
@@ -135,6 +157,40 @@ public class RecordSoundActivity extends Activity {
 		super.onDestroy();
 		unbindService(pdConnection);
 	}
+    
+    public void playfile() {
+    	Uri myUri = Uri.fromFile(dir);
+    	//Uri myUri = ....; // initialize Uri here
+    	MediaPlayer mediaPlayer = new MediaPlayer();
+    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    	try {
+    		mediaPlayer.setDataSource(getApplicationContext(), myUri);
+    	} catch (IllegalArgumentException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (SecurityException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	try {
+    		mediaPlayer.prepare();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	mediaPlayer.start();
+    	//PdBase.sendSymbol("playfile", "test.wav");
+    	//PdBase.sendSymbol("play", "start");	
+    }
     	
     	
 }
