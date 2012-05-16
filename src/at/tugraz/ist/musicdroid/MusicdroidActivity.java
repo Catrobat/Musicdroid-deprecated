@@ -52,7 +52,10 @@ public class MusicdroidActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		SoundFile.GetInstance().LoadFile(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK && requestCode == 0) {
+		
+		SoundFile.GetInstance().LoadFile(data);
+		}
 		
 	}
 }

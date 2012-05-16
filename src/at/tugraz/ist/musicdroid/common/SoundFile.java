@@ -1,6 +1,7 @@
 package at.tugraz.ist.musicdroid.common;
 
 import java.io.File;
+import at.tugraz.ist.musicdroid.common.Constants;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class SoundFile {
 	private Context context;
 	private static SoundFile instance = null;
 	final int REQUEST_CODE = 0;
-	ArrayList<String> file_list_= new ArrayList<String>();
+	ArrayList<String> file_list_ = new ArrayList<String>();
 
 	private SoundFile() {
 	}
@@ -29,26 +30,19 @@ public class SoundFile {
 			return instance;
 	}
 
-	public void LoadFile(int requestCode, int resultCode, Intent data) {
+	public void LoadFile(Intent data) {
+		try {
+			Uri sound_file_uri = data.getData();
+			file_list_.add(sound_file_uri.getPath());
 
-		if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-			try {
-				Uri sound_file_uri = data.getData();
-				file_list_.add(sound_file_uri.getPath());
+			File input = new File(file_list_.get(file_list_.size() - 1));
+			File output = new File(Constants.MAIN_DIRECTORY
+					+ Constants.SOUND_FILE_SUB_DIRECTORY + input.getName());
 
-				File input = new File(file_list_.get(file_list_.size()-1));
-				File output = new File("/mnt/sdcard/musicdroid/data/soundfiles/"
-						+ input.getName());
+			SaveFile(input, output);
 
-				SaveFile(input, output);
-
-			} catch (Exception e) {
-
-			}
+		} catch (Exception e) {
 		}
-	};
-
-	public void SaveFile() {
 	};
 
 	public void SaveFile(File input, File output) throws IOException {
@@ -70,13 +64,13 @@ public class SoundFile {
 		String new_path = "";
 		String[] splittArray = directory_path.split("/");
 
-		for (int i = 0; i < splittArray.length-1; i++) {
+		for (int i = 0; i < splittArray.length - 1; i++) {
 			new_path += splittArray[i] + "/";
 			directory = new File(new_path);
-			if (!(directory.exists() && directory.isDirectory() && directory.canWrite()))
-			{
+			if (!(directory.exists() && directory.isDirectory() && directory
+					.canWrite())) {
 				directory.mkdir();
-			}	
+			}
 		}
 	}
 
@@ -91,9 +85,8 @@ public class SoundFile {
 
 	public void Play() {
 	};
-	
-	public String getFilePath()
-	{
-		return file_list_.get(file_list_.size()-1);
+
+	public String getFilePath() {
+		return file_list_.get(file_list_.size() - 1);
 	}
 }
