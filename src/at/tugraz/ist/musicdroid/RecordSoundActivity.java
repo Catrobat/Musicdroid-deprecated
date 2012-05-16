@@ -36,7 +36,6 @@ public class RecordSoundActivity extends Activity {
 	private TextView testoutput;
 	private Chronometer chrono;
 	private EditText editText;
-	private PdUiDispatcher dispatcher;
 	private File dir;
 	private PdService pdService = null;
 	private String path;
@@ -72,6 +71,11 @@ public class RecordSoundActivity extends Activity {
         setContentView(R.layout.record);
         
         recordButton = (Button) findViewById(R.id.button2);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        playButton = (Button) findViewById(R.id.playButton);
+        stopButton.setEnabled(false);
+        playButton.setEnabled(false); //todo  
+        
         testoutput = (TextView) findViewById(R.id.textView1);	
         chrono = (Chronometer) findViewById(R.id.chronometer1);
         
@@ -80,32 +84,24 @@ public class RecordSoundActivity extends Activity {
 			public void onClick(View view) {
 				 chrono.setBase(SystemClock.elapsedRealtime());
 				 chrono.start();
+				 stopButton.setEnabled(true);
+				 playButton.setEnabled(true);
 				 recordSoundFile();  
 		    }
 		
         });
-        stopButton = (Button) findViewById(R.id.stopButton);
+        
         stopButton.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View view) {
-              long bytes; 
         	  String status = "stop";
-        	  String list[];
-        	  String test;
-        	  
-        	  
+        	
         	  chrono.stop(); 
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
         	  dir = file;
-        	  
-        	  //testoutput = (TextView) findViewById(R.id.textView1);
-        	  path = file.getAbsolutePath();
-        	  testoutput.setText("Patch: " + path);
- 
         	}
         });
         
-        playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View view) {
         	  playfile(); 
@@ -128,28 +124,12 @@ public class RecordSoundActivity extends Activity {
     
     
     private void initPd() throws IOException {
-		//Configure the audio glue
 		String name = getResources().getString(R.string.app_name);
 		pdService.initAudio(-1, -1, -1, -1);
-		pdService.startAudio(new Intent(this, RecordSoundActivity.class), R.drawable.musicdroid_launcher, name, "Retrun to " + name + ".");
-		
-		//dispatcher = new PdUiDispatcher();
-		//PdBase.setReceiver(dispatcher);
-		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
-		
-		
-		dispatcher = new PdUiDispatcher();
-		PdBase.setReceiver(dispatcher);
-		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
-		
-		dispatcher.addListener("pitch", new PdListener.Adapter() {
-			@Override
-			public void receiveFloat(String source, float x) {
-				editText.setText("Pitch: " + x);
+		pdService.startAudio(new Intent(this, RecordSoundActivity.class), 
+				             R.drawable.musicdroid_launcher, name, "Retrun to " 
+		                                                          + name + ".");
 				
-			}
-		});
-		
 		
 	}
     
@@ -158,10 +138,6 @@ public class RecordSoundActivity extends Activity {
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
-    	//MediaRecorder recorder = new MediaRecorder();
-      //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-      //recorder.setOutputFormat(MediaRecorder.OutputFormat.);
-      //ExtAudioRecorder extAudioRecorder = ExtAudioRecorder.getInstanse(false);
     }
     
     
@@ -173,7 +149,6 @@ public class RecordSoundActivity extends Activity {
     
     public void playfile() {
     	Uri myUri = Uri.fromFile(dir);
-    	//Uri myUri = ....; // initialize Uri here
     	MediaPlayer mediaPlayer = new MediaPlayer();
     	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     	try {
@@ -200,9 +175,7 @@ public class RecordSoundActivity extends Activity {
     		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
-    	mediaPlayer.start();
-    	//PdBase.sendSymbol("playfile", "test.wav");
-    	//PdBase.sendSymbol("play", "start");	
+    	mediaPlayer.start();	
     }
     	
     	
