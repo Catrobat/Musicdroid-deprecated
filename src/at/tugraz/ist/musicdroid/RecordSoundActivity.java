@@ -20,6 +20,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +51,7 @@ public class RecordSoundActivity extends Activity {
     		} catch (IOException e) {
     			Log.e(Appname, e.toString());
     			finish();
-    		}
+    		} 
     	}
     
     
@@ -67,9 +68,7 @@ public class RecordSoundActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
-        
-
-        
+    
         setContentView(R.layout.record);
         
         recordButton = (Button) findViewById(R.id.button2);
@@ -79,6 +78,7 @@ public class RecordSoundActivity extends Activity {
         recordButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				 chrono.setBase(SystemClock.elapsedRealtime());
 				 chrono.start();
 				 recordSoundFile();  
 		    }
@@ -96,10 +96,10 @@ public class RecordSoundActivity extends Activity {
         	  chrono.stop(); 
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
-        	  dir = getFilesDir();
-        	  bytes = file.length();
+        	  dir = file;
         	  
-        	  testoutput = (TextView) findViewById(R.id.textView1);
+        	  //testoutput = (TextView) findViewById(R.id.textView1);
+        	  path = file.getAbsolutePath();
         	  testoutput.setText("Patch: " + path);
  
         	}
@@ -115,7 +115,7 @@ public class RecordSoundActivity extends Activity {
     }
 
     private void loadPatch() throws IOException {
-    	
+    	Log.e("test", "test");
 		dir = getFilesDir();
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
 				dir, true);
@@ -128,14 +128,29 @@ public class RecordSoundActivity extends Activity {
     
     
     private void initPd() throws IOException {
-		// Configure the audio glue
+		//Configure the audio glue
 		String name = getResources().getString(R.string.app_name);
 		pdService.initAudio(-1, -1, -1, -1);
-		pdService.startAudio(new Intent(this, RecordSoundActivity.class), R.drawable.ic_launcher, name, "Retrun to " + name + ".");
+		pdService.startAudio(new Intent(this, RecordSoundActivity.class), R.drawable.musicdroid_launcher, name, "Retrun to " + name + ".");
 		
 		//dispatcher = new PdUiDispatcher();
 		//PdBase.setReceiver(dispatcher);
 		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
+		
+		
+		dispatcher = new PdUiDispatcher();
+		PdBase.setReceiver(dispatcher);
+		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
+		
+		dispatcher.addListener("pitch", new PdListener.Adapter() {
+			@Override
+			public void receiveFloat(String source, float x) {
+				editText.setText("Pitch: " + x);
+				
+			}
+		});
+		
+		
 	}
     
     public void recordSoundFile() {
@@ -143,7 +158,6 @@ public class RecordSoundActivity extends Activity {
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
-      
     	//MediaRecorder recorder = new MediaRecorder();
       //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       //recorder.setOutputFormat(MediaRecorder.OutputFormat.);

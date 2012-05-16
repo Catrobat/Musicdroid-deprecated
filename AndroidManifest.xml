@@ -24,8 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecordSoundActivity">       
-              <service android:name="org.puredata.android.service.PdService" />
         </activity>
+        <service android:name="org.puredata.android.service.PdService" />
 
     </application>
   <instrumentation
