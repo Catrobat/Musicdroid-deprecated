@@ -22,8 +22,7 @@ public class MusicdroidActivityTest extends ActivityInstrumentationTestCase2<Mus
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		try {
-			solo.clickOnButton(R.id.openSoundButton);
-			
+			testMainScreen();
 			solo.finalize(); 
 			
 		} catch(Throwable e) {
@@ -33,7 +32,9 @@ public class MusicdroidActivityTest extends ActivityInstrumentationTestCase2<Mus
 	}
 	
 	public void testMainScreen(){
-	  assertTrue("TextView Load Project not found", solo.searchText(solo.getString(R.string.load_project))); 
+	  //assertTrue("TextView Load Project not found", solo.searchText(solo.getString(R.string.load_project))); 
+		solo.clickOnButton(R.id.openSoundButton);
+		solo.clickOnButton("OI Dateimanager");
 	}
 
 }
