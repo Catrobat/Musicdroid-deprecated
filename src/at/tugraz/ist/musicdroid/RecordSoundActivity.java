@@ -35,6 +35,7 @@ public class RecordSoundActivity extends Activity {
 	private TextView testoutput;
 	private Chronometer chrono;
 	private EditText editText;
+	private PdUiDispatcher dispatcher;
 	private File dir;
 	private PdService pdService = null;
 	
@@ -91,7 +92,7 @@ public class RecordSoundActivity extends Activity {
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
         	  dir = file;
-        	  bytes = dir.length();
+        	  bytes = file.length();
         	  
         	  testoutput = (TextView) findViewById(R.id.textView1);
         	  
@@ -110,17 +111,13 @@ public class RecordSoundActivity extends Activity {
     }
 
     private void loadPatch() throws IOException {
-    	testoutput = (TextView) findViewById(R.id.textView1);
-		File dir = getFilesDir();
+    	
+		dir = getFilesDir();
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
 				dir, true);
 		File patchFile = new File(dir, "recordtest.pd");
 		
-		String path = patchFile.getAbsolutePath();
-		testoutput.setText("test");
-		
-		
-    	PdBase.openPatch(patchFile.getAbsolutePath());	
+		PdBase.openPatch(patchFile.getAbsolutePath());	
 		
     }
     
@@ -135,8 +132,6 @@ public class RecordSoundActivity extends Activity {
 		//dispatcher = new PdUiDispatcher();
 		//PdBase.setReceiver(dispatcher);
 		//PdAudio.initAudio(sampleRate, 1, 2, 8, true);
-
-
 	}
     
     public void recordSoundFile() {
