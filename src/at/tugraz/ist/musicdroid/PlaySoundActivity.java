@@ -13,19 +13,22 @@ import android.widget.Button;
 
 public class PlaySoundActivity extends Activity {
 
-	public MediaPlayer mp_;
+	public static MediaPlayer mp_;
 	private short state_ = 0;// stopped
 	private Button but_paus_res_;
-
-	private static PlaySoundActivity soundManager = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_sound);
 		// mp_ = MediaPlayer.create(this, R.raw.iris);
-
+		but_paus_res_ = (Button)findViewById(R.id.pauseResumeButton);
 		mp_ = new MediaPlayer();
+		initFile();
+
+	}
+
+	public static void initFile() {
 
 		FileInputStream fis;
 		try {
@@ -70,7 +73,6 @@ public class PlaySoundActivity extends Activity {
 	}
 
 	public void on_pause_resume(View v) {
-		but_paus_res_ = (Button) v.findViewById(R.id.pauseResumeButton);
 		if (mp_ != null) {
 			if (but_paus_res_.getText().equals("Pause") && mp_.isPlaying()) {
 				if (state_ == 1) {
@@ -101,20 +103,17 @@ public class PlaySoundActivity extends Activity {
 				state_ = 0;
 				mp_.seekTo(0);
 			}
-			but_paus_res_.setText("Pause");
+			if (but_paus_res_!=null) {
+				but_paus_res_.setText("Pause");
+			}
 		}
 
 	}
 
-	
-	 public synchronized static PlaySoundActivity getInstance() { 
-		 if(soundManager == null) 
-		 { 
-			 soundManager = new PlaySoundActivity(); 
-		 } 
-		 return soundManager; 
-	 }
-	 
+	public static MediaPlayer getMP() {
+		return mp_;
+	}
+
 	@Override
 	public void onDestroy() {
 		mp_.release();

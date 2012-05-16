@@ -56,6 +56,7 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		if (arg0 == OpenPlayerButton)
 		{
 		// open player
+			startActivity(new Intent(this, PlaySoundActivity.class));
 		}
 		if (arg0 == OpenRecorderButton)
 		{
