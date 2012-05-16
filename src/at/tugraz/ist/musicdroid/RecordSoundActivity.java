@@ -38,6 +38,7 @@ public class RecordSoundActivity extends Activity {
 	private PdUiDispatcher dispatcher;
 	private File dir;
 	private PdService pdService = null;
+	private String path;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
@@ -88,16 +89,19 @@ public class RecordSoundActivity extends Activity {
         	public void onClick(View view) {
               long bytes; 
         	  String status = "stop";
+        	  String list[];
+        	  String test;
+        	  
+        	  
         	  chrono.stop(); 
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
-        	  dir = file;
+        	  dir = getFilesDir();
         	  bytes = file.length();
         	  
         	  testoutput = (TextView) findViewById(R.id.textView1);
-        	  
-        	  testoutput.setText("bytes " + bytes);
-        	
+        	  testoutput.setText("Patch: " + path);
+ 
         	}
         });
         
@@ -116,9 +120,9 @@ public class RecordSoundActivity extends Activity {
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
 				dir, true);
 		File patchFile = new File(dir, "recordtest.pd");
-		
+		path = patchFile.getAbsolutePath();		
 		PdBase.openPatch(patchFile.getAbsolutePath());	
-		
+
     }
     
     
