@@ -3,26 +3,27 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
-
+
     <Button
-        android:id="@+id/butStart"
+        android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
-	android:onClick="onPlay" />
-
+        android:onClick="onPlay"
+        android:text="Start" />
+
     <Button
-        android:id="@+id/but_pause_resume"
+        android:id="@+id/pauseResumeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pause"
-	android:onClick="on_pause_resume" />
-
-    <Button
-        android:id="@+id/butStop"
+        android:onClick="on_pause_resume"
+        android:text="Pause" />
+     <Button
+        android:id="@+id/stopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop" 
-	android:onClick="onStop"/>
+        android:onClick="onStop"
+        android:text="Stop" />
+
+
 
 </LinearLayout>
