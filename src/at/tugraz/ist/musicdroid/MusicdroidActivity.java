@@ -34,7 +34,7 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		if (arg0 == NewProjectButton)
 		{
-		// new project
+		
 		}
 		if (arg0 == OpenProjectButton)
 		{
