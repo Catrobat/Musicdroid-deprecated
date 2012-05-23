@@ -40,6 +40,7 @@ public class RecordSoundActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
+	private File patch;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
@@ -103,7 +104,7 @@ public class RecordSoundActivity extends Activity {
         	  chrono.stop(); 
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
-        	  dir = file;
+        	  patch = file;
         	}
         });
         
@@ -153,7 +154,7 @@ public class RecordSoundActivity extends Activity {
 	}
     
     public void playfile() {
-    	Uri myUri = Uri.fromFile(dir);
+    	Uri myUri = Uri.fromFile(patch);
     	MediaPlayer mediaPlayer = new MediaPlayer();
     	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     	try {
