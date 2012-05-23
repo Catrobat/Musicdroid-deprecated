@@ -17,6 +17,7 @@ public class SoundFile {
 
 	private Context context;
 	private static SoundFile instance = null;
+
 	public static final int REQUEST_CODE = 0;
 	ArrayList<String> file_list_ = new ArrayList<String>();
 
