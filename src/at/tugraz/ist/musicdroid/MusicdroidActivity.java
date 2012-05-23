@@ -20,8 +20,8 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        //Intent i = new Intent(MusicdroidActivity.this, RecordSoundActivity.class);
-        //startActivity(i);
+        Intent i = new Intent(MusicdroidActivity.this, PitchDetectionActivity.class);
+        startActivity(i);
         
         OpenRecorderButton = (Button)findViewById(R.id.soundRecorderButton);
         OpenRecorderButton.setOnClickListener(this);

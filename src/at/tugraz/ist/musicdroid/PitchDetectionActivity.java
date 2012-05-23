@@ -2,47 +2,33 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.String;
 
-import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
 import org.puredata.android.utils.PdUiDispatcher;
 import org.puredata.core.PdBase;
 import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
+import org.puredata.core.utils.PdDispatcher;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class PitchDetectionActivity extends Activity {
-	private final static String Appname = "Record_Sound";
-	private Button recordButton;
-	private Button stopButton;
-	private Button playButton;
-	private TextView testoutput;
-	private Chronometer chrono;
-	private EditText editText;
+	private final static String Appname = "Pitchdetection";
+
 	private File dir;
 	private PdService pdService = null;
 	private String path;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
-    	@Override
+
     	public void onServiceConnected(ComponentName name, IBinder service) {
     		pdService = ((PdService.PdBinder)service).getService();
     		try {
@@ -55,12 +41,54 @@ public class PitchDetectionActivity extends Activity {
     	}
     
     
-    @Override
     public void onServiceDisconnected(ComponentName name) {
     	
     	
         }
     };
+    
+    /* We'll use this to catch print statements from Pd
+    when the user has a [print] object */
+ private final PdDispatcher myDispatcher = new PdUiDispatcher() {
+   @Override
+   public void print(String s) {
+     Log.i("Pd print", s);
+   }
+ };
+    
+
+/* We'll use this to listen out for messages from Pd.
+   Later we'll hook this up to a named receiver. */
+private final PdListener myListener = new PdListener() {	
+  public void receiveMessage(String source, String symbol, Object... args) {
+    Log.i("receiveMessage symbol:", symbol);
+    for (Object arg: args) {
+      Log.i("receiveMessage atom:", arg.toString());
+    }
+  }
+
+  /* What to do when we receive a list from Pd. In this example
+     we're collecting the list from Pd and outputting each atom */
+  public void receiveList(String source, Object... args) {
+    for (Object arg: args) {
+      Log.i("receiveList atom:", arg.toString());
+      Toast.makeText(this, arg.toString(), Toast.LENGTH_SHORT);
+    }
+  }
+
+  /* When we receive a symbol from Pd */
+  public void receiveSymbol(String source, String symbol) {
+    Log.i("receiveSymbol", symbol);
+  }
+  /* When we receive a float from Pd */
+  public void receiveFloat(String source, float x) {
+    Log.i("receiveFloat", ((Float)x).toString());
+  }
+  /* When we receive a bang from Pd */
+  public void receiveBang(String source) {
+    Log.i("receiveBang", "bang!");
+  }
+};
     
 	
     public void onCreate(Bundle savedInstanceState) {
@@ -69,58 +97,32 @@ public class PitchDetectionActivity extends Activity {
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
     
-        setContentView(R.layout.record);
+        setContentView(R.layout.pitchdetection);
         
-        recordButton = (Button) findViewById(R.id.button2);
-        stopButton = (Button) findViewById(R.id.stopButton);
-        playButton = (Button) findViewById(R.id.playButton);
-        stopButton.setBackgroundResource(R.drawable.stopdisabled);
-        stopButton.setEnabled(false);
-        playButton.setBackgroundResource(R.drawable.playdisabled);
-        playButton.setEnabled(false); //todo  
         
-      //  testoutput = (TextView) findViewById(R.id.textView1);	
-        chrono = (Chronometer) findViewById(R.id.chronometer1);
+       
         
-        recordButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				 chrono.setBase(SystemClock.elapsedRealtime());
-				 chrono.start();
-				 stopButton.setEnabled(true);
-				 stopButton.setBackgroundResource(R.drawable.stop);
-				 playButton.setEnabled(true);
-				 playButton.setBackgroundResource(R.drawable.play);
-				 recordSoundFile();  
-		    }
-		
-        });
-        
-        stopButton.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View view) {
-        	  String status = "stop";
-        	
-        	  chrono.stop(); 
-        	  PdBase.sendSymbol("status", status);	
-        	  File file = new File(dir, "firstrecord.wav");
-        	  dir = file;
-        	}
-        });
-        
-        playButton.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View view) {
-        	  playfile(); 
-        	}
-        }); 
-        
+    }
+    
+    public void onRunClick(View view) {
+    	File inputFile = new File(dir, "Hammond.wav");
+    	String input_wav = inputFile.getAbsolutePath();		
+    	File f = new File(input_wav);
+    	
+    	if(!f.exists())
+    	{
+    		Log.i("pitchde","Sound-file not found!");
+    	}
+    	
+    	PdBase.sendSymbol("input-wav", input_wav);	    	
     }
 
     private void loadPatch() throws IOException {
-    	Log.e("test", "test");
+    	Log.e("Pitchdet", "test");
 		dir = getFilesDir();
-		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
+		IoUtils.extractZipResource(getResources().openRawResource(R.raw.pitchdet),
 				dir, true);
-		File patchFile = new File(dir, "recordtest.pd");
+		File patchFile = new File(dir, "pitchdet.pd");
 		path = patchFile.getAbsolutePath();		
 		PdBase.openPatch(patchFile.getAbsolutePath());	
 
@@ -129,21 +131,25 @@ public class PitchDetectionActivity extends Activity {
     
     
     private void initPd() throws IOException {
-		String name = getResources().getString(R.string.app_name);
+		/*String name = getResources().getString(R.string.app_name);
 		pdService.initAudio(-1, -1, -1, -1);
 		pdService.startAudio(new Intent(this, PitchDetectionActivity.class), 
-				             R.drawable.musicdroid_launcher, name, "Retrun to " 
-		                                                          + name + ".");
+				             R.drawable.musicdroid_launcher, name, "Return to " 
+		                                                          + name + ".");*/
+    	
+    	/* here is where we bind the print statement catcher defined below */
+    	  PdBase.setReceiver(myDispatcher);
+    	  /* here we are adding the listener for various messages
+    	     from Pd sent to "GUI", i.e., anything that goes into the object
+    	     [s GUI] will send to the listener defined below */
+
+    	  
+    	  myDispatcher.addListener("pitch-midi", myListener);
+    	  
 				
 		
 	}
     
-    public void recordSoundFile() {
-      String filename= "firstrecord.wav";
-      String status = "start";
-      PdBase.sendSymbol("filename", filename);
-      PdBase.sendSymbol("status", status);
-    }
     
     
     @Override
@@ -151,37 +157,6 @@ public class PitchDetectionActivity extends Activity {
 		super.onDestroy();
 		unbindService(pdConnection);
 	}
-    
-    public void playfile() {
-    	Uri myUri = Uri.fromFile(dir);
-    	MediaPlayer mediaPlayer = new MediaPlayer();
-    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-    	try {
-    		mediaPlayer.setDataSource(getApplicationContext(), myUri);
-    	} catch (IllegalArgumentException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (SecurityException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IllegalStateException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	try {
-    		mediaPlayer.prepare();
-    	} catch (IllegalStateException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	mediaPlayer.start();	
-    }
     	
     	
 }
