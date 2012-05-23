@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -73,7 +74,9 @@ public class RecordSoundActivity extends Activity {
         recordButton = (Button) findViewById(R.id.button2);
         stopButton = (Button) findViewById(R.id.stopButton);
         playButton = (Button) findViewById(R.id.playButton);
+        stopButton.setBackgroundResource(R.drawable.stopdisabled);
         stopButton.setEnabled(false);
+        playButton.setBackgroundResource(R.drawable.playdisabled);
         playButton.setEnabled(false); //todo  
         
         testoutput = (TextView) findViewById(R.id.textView1);	
@@ -85,7 +88,9 @@ public class RecordSoundActivity extends Activity {
 				 chrono.setBase(SystemClock.elapsedRealtime());
 				 chrono.start();
 				 stopButton.setEnabled(true);
+				 stopButton.setBackgroundResource(R.drawable.stop);
 				 playButton.setEnabled(true);
+				 playButton.setBackgroundResource(R.drawable.play);
 				 recordSoundFile();  
 		    }
 		

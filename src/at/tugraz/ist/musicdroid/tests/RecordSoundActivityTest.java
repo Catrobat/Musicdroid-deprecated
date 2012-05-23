@@ -45,6 +45,10 @@ public class RecordSoundActivityTest extends ActivityInstrumentationTestCase2<Re
 		solo.clickOnButton(0); 
 		assertTrue("Button is disabled", startbutton.isEnabled());
 		assertTrue("Button is disabled", playbutton.isEnabled());
+	}
+	
+	public void testFileSaved() {
+		
 		
 	}
 	
