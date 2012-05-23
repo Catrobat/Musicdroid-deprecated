@@ -2,6 +2,7 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.puredata.android.service.PdService;
 import org.puredata.android.utils.PdUiDispatcher;
@@ -18,7 +19,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class PitchDetectionActivity extends Activity {
 	private final static String Appname = "Pitchdetection";
@@ -26,6 +30,8 @@ public class PitchDetectionActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
+	
+	ArrayList<String> values;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 
@@ -53,6 +59,7 @@ public class PitchDetectionActivity extends Activity {
    @Override
    public void print(String s) {
      Log.i("Pd print", s);
+         
    }
  };
     
@@ -72,21 +79,24 @@ private final PdListener myListener = new PdListener() {
   public void receiveList(String source, Object... args) {
     for (Object arg: args) {
       Log.i("receiveList atom:", arg.toString());
-      Toast.makeText(0, arg.toString(), Toast.LENGTH_SHORT);
     }
   }
 
   /* When we receive a symbol from Pd */
   public void receiveSymbol(String source, String symbol) {
     Log.i("receiveSymbol", symbol);
+
   }
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
+    values.add( ((Float)x).toString()); 
+    
   }
   /* When we receive a bang from Pd */
   public void receiveBang(String source) {
     Log.i("receiveBang", "bang!");
+   
   }
 };
     
@@ -94,12 +104,11 @@ private final PdListener myListener = new PdListener() {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.pitchdetection);
+        values = new ArrayList<String>();
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
     
-        setContentView(R.layout.pitchdetection);
-        
-        
        
         
     }
@@ -111,10 +120,28 @@ private final PdListener myListener = new PdListener() {
     	
     	if(!f.exists())
     	{
-    		Log.i("pitchde","Sound-file not found!");
+    		Log.i("Pitchdet","Sound-file not found!");
     	}
     	
-    	PdBase.sendSymbol("input-wav", input_wav);	    	
+    	values.clear();
+    	
+    	PdBase.sendSymbol("input-wav", input_wav);
+    }
+    
+    public void onResultClick(View view) {
+    /*ArrayAdapter<String> arrayAdapter =      
+            new ArrayAdapter<String>(PitchDetectionActivity.this,android.R.layout.simple_list_item_1, values);
+            pitchListView.setAdapter(arrayAdapter); */
+   
+    String out = "";
+    for(int i=0;i< values.size();i++)
+    {
+    	out += values.get(i) + "-";
+    }
+    
+    TextView t = (TextView)findViewById(R.id.outTextView);
+    t.setText(out);
+    	
     }
 
     private void loadPatch() throws IOException {
@@ -131,11 +158,11 @@ private final PdListener myListener = new PdListener() {
     
     
     private void initPd() throws IOException {
-		/*String name = getResources().getString(R.string.app_name);
+		String name = getResources().getString(R.string.app_name);
 		pdService.initAudio(-1, -1, -1, -1);
 		pdService.startAudio(new Intent(this, PitchDetectionActivity.class), 
 				             R.drawable.musicdroid_launcher, name, "Return to " 
-		                                                          + name + ".");*/
+		                                                          + name + ".");
     	
     	/* here is where we bind the print statement catcher defined below */
     	  PdBase.setReceiver(myDispatcher);
