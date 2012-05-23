@@ -79,7 +79,7 @@ public class RecordSoundActivity extends Activity {
         playButton.setBackgroundResource(R.drawable.playdisabled);
         playButton.setEnabled(false); //todo  
         
-        testoutput = (TextView) findViewById(R.id.textView1);	
+      //  testoutput = (TextView) findViewById(R.id.textView1);	
         chrono = (Chronometer) findViewById(R.id.chronometer1);
         
         recordButton.setOnClickListener(new View.OnClickListener() {
