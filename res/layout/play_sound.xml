@@ -9,20 +9,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onPlay"
-        android:text="Start" />
+        android:text="@string/start_text" />
 
     <Button
         android:id="@+id/pauseResumeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="on_pause_resume"
-        android:text="Pause" />
+        android:text="@string/pause_text" />
      <Button
         android:id="@+id/stopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onStop"
-        android:text="Stop" />
+        android:text="@string/stop_text" />
 
 
 

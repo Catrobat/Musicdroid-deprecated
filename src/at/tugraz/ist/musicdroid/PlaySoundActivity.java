@@ -34,7 +34,7 @@ public class PlaySoundActivity extends Activity {
 		try {
 			// TODO Pfad als Parameter setzen
 			fis = new FileInputStream(new File(
-					"mnt/sdcard/bluetooth/FloSong.mp3"));
+					"mnt/sdcard/bluetooth/Iris.mp3"));
 
 			FileDescriptor fileDescriptor = fis.getFD();
 
@@ -67,24 +67,24 @@ public class PlaySoundActivity extends Activity {
 			mp_.start();
 			state_ = 1;
 			if (but_paus_res_ != null)
-				but_paus_res_.setText("Pause");
+				but_paus_res_.setText(R.string.pause_text);
 
 		}
 	}
 
 	public void on_pause_resume(View v) {
 		if (mp_ != null) {
-			if (but_paus_res_.getText().equals("Pause") && mp_.isPlaying()) {
+			if (but_paus_res_.getText().equals(getString(R.string.pause_text)) && mp_.isPlaying()) {
 				if (state_ == 1) {
 					mp_.pause();
-					but_paus_res_.setText("Resume");
+					but_paus_res_.setText(R.string.resume_text);
 					state_ = 2;
 				}
 
-			} else if (but_paus_res_.getText().equals("Resume")) {
+			} else if (but_paus_res_.getText().equals(getString(R.string.resume_text))) {
 				if (state_ == 2) {
 					mp_.start();
-					but_paus_res_.setText("Pause");
+					but_paus_res_.setText(R.string.pause_text);
 					state_ = 1;
 				}
 			}
@@ -104,7 +104,7 @@ public class PlaySoundActivity extends Activity {
 				mp_.seekTo(0);
 			}
 			if (but_paus_res_!=null) {
-				but_paus_res_.setText("Pause");
+				but_paus_res_.setText(R.string.pause_text);
 			}
 		}
 
