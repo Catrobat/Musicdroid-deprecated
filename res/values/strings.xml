@@ -9,5 +9,7 @@
     <string name="load_sound_player">Open Sound Player</string>
     <string name="new_project">New Project</string>
     <string name="open_project">Open Project</string>
+    <string name="rtof_save_file">Save File</string>
+    <string name="rtof_next_note">Next note</string>
 
 </resources>

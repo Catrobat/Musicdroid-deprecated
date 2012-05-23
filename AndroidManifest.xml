@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RecToFrequencyActivity">       
+        </activity>
     </application>
   <instrumentation
       android:targetPackage="at.tugraz.ist.musicdroid"

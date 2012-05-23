@@ -32,25 +32,25 @@ public class RecToFrequencyActivityTest extends ActivityInstrumentationTestCase2
 	}
 
 	public void PreRecord(){
-		assertTrue("Rec-Button not found pre record", solo.searchButton(solo.getString(R.string.rtof_start_record), true));
-		assertFalse("Stop-Rec-Button visible pre record", solo.getButton(solo.getString(R.string.rtof_stop_record)).isVisible());
-		assertFalse("Next-Note-Button visible pre record", solo.getButton(solo.getString(R.string.rtof_next_note)).isVisible());
-		assertFalse("Save-File-Button visible pre record", solo.getButton(solo.getString(R.string.rtof_save_file)).isVisible());
+		assertTrue("Rec-Button not found pre record", solo.getButton(R.id.startRecordButton).isShown());
+		assertFalse("Stop-Rec-Button visible pre record", solo.getButton(R.id.stopRecordButton).isShown());
+		assertFalse("Next-Note-Button visible pre record", solo.getButton(solo.getString(R.string.rtof_next_note)).isShown());
+		assertFalse("Save-File-Button visible pre record", solo.getButton(solo.getString(R.string.rtof_save_file)).isShown());
 	}
 	
 	public void RecordSound(){
-		solo.clickOnButton(solo.getString(R.string.rtof_start_record));
-		assertFalse("Rec-Button visible during record", solo.getButton(solo.getString(R.string.rtof_start_record)).isVisible());
-		assertTrue("Stop-Rec-Button not found during record", solo.searchButton(solo.getString(R.string.rtof_stop_record), true));
-		assertTrue("Next-Note-Button not found during record", solo.searchButon(solo.getString(R.string.rtof_next_note), true));
-		assertFalse("Save-File-Button visible during record", solo.getButton(solo.getString(R.string.rtof_save_file)).isVisible());
+		solo.clickOnButton(R.id.startRecordButton);
+		assertFalse("Rec-Button visible during record", solo.getButton(R.id.startRecordButton).isShown());
+		assertTrue("Stop-Rec-Button not found during record", solo.getButton(R.id.stopRecordButton).isShown());
+		assertTrue("Next-Note-Button not found during record", solo.searchButton(solo.getString(R.string.rtof_next_note), true));
+		assertFalse("Save-File-Button visible during record", solo.getButton(solo.getString(R.string.rtof_save_file)).isShown());
 	}
 	public void PostSound(){
-		solo.clickOnButton(solo.getString(R.string.rtof_start_record));
-		solo.clickOnButton(solo.getString(R.string.rtof_stop_record));
-		assertTrue("Rec-Button not found post record", solo.searchButton(solo.getString(R.string.rtof_start_record), true));
-		assertFalse("Stop-Rec-Button visible post record", solo.getButton(solo.getString(R.string.rtof_stop_record)).isVisible());
-		assertFalse("Next-Note-Button visible post record", solo.getButton(solo.getString(R.string.rtof_next_note)).isVisible());
+		solo.clickOnButton(R.id.startRecordButton);
+		solo.clickOnButton(R.id.stopRecordButton);
+		assertTrue("Rec-Button not found post record", solo.getButton(R.id.startRecordButton).isShown());
+		assertFalse("Stop-Rec-Button visible post record", solo.getButton(R.id.stopRecordButton).isShown());
+		assertFalse("Next-Note-Button visible post record", solo.getButton(solo.getString(R.string.rtof_next_note)).isShown());
 		assertTrue("Save-File-Button not found post record", solo.searchButton(solo.getString(R.string.rtof_save_file), true));
 	}
 	
