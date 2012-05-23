@@ -3,49 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="78dp"
+        android:background="@drawable/play" />
+
     <ImageView
         android:id="@+id/test_image"
         android:layout_width="match_parent"
-        android:layout_height="388dp"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/descr"
+        android:paddingLeft="300dp"
         android:src="@drawable/mica" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/playButton"
         android:background="@drawable/rec" />
-
-    <Chronometer
-        android:id="@+id/chronometer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_below="@+id/test_image"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:minHeight="50dp"
-        android:minWidth="474dp"
-        android:text="Chronometer"
-        android:textSize="20pt" />
-
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/button2"
-        android:background="@drawable/play" />
 
     <Button
         android:id="@+id/stopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
         android:layout_toLeftOf="@+id/button2"
         android:background="@drawable/stop" />
 
@@ -53,10 +42,21 @@
         android:id="@+id/recordlight"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignBottom="@+id/test_image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:contentDescription="@string/descr"
         android:src="@drawable/recordlightoff" />
+
+    <Chronometer
+        android:id="@+id/chronometer1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:minWidth="474dp"
+        android:text="Chronometer"
+        android:textSize="20pt"
+        android:visibility="visible" />
 
 </RelativeLayout>
