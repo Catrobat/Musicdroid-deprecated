@@ -18,10 +18,6 @@ public class SoundFile {
 	private Context context;
 	private static SoundFile instance = null;
 
-	public final static int REQUEST_CODE = 0;
-	ArrayList<String> file_list_= new ArrayList<String>();
-
-
 	private SoundFile() {
 	}
 
