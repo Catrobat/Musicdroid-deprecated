@@ -29,7 +29,7 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RecordSoundActivity extends Activity {
+public class PitchDetectionActivity extends Activity {
 	private final static String Appname = "Record_Sound";
 	private Button recordButton;
 	private Button stopButton;
@@ -42,6 +42,7 @@ public class RecordSoundActivity extends Activity {
 	private String path;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
+    	@Override
     	public void onServiceConnected(ComponentName name, IBinder service) {
     		pdService = ((PdService.PdBinder)service).getService();
     		try {
@@ -54,6 +55,7 @@ public class RecordSoundActivity extends Activity {
     	}
     
     
+    @Override
     public void onServiceDisconnected(ComponentName name) {
     	
     	
@@ -129,7 +131,7 @@ public class RecordSoundActivity extends Activity {
     private void initPd() throws IOException {
 		String name = getResources().getString(R.string.app_name);
 		pdService.initAudio(-1, -1, -1, -1);
-		pdService.startAudio(new Intent(this, RecordSoundActivity.class), 
+		pdService.startAudio(new Intent(this, PitchDetectionActivity.class), 
 				             R.drawable.musicdroid_launcher, name, "Retrun to " 
 		                                                          + name + ".");
 				

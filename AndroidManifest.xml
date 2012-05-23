@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecordSoundActivity">       
+        <activity android:name=".PitchDetectionActivity">       
         </activity>
         <service android:name="org.puredata.android.service.PdService" />
 
