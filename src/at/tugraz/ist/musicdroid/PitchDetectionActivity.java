@@ -72,7 +72,7 @@ private final PdListener myListener = new PdListener() {
   public void receiveList(String source, Object... args) {
     for (Object arg: args) {
       Log.i("receiveList atom:", arg.toString());
-      Toast.makeText(this, arg.toString(), Toast.LENGTH_SHORT);
+      Toast.makeText(0, arg.toString(), Toast.LENGTH_SHORT);
     }
   }
 
