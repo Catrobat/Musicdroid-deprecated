@@ -42,7 +42,11 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		}
 		if (arg0 == OpenPlayerButton)
 		{
-		// open player
+			int i = (int) 1.8;
+			int j = (int) -1.8;
+			System.out.println("Hallo");
+			System.out.println("i" + i + " j" + j);
+			startActivity(new Intent(this, DrawTonesActivity.class));
 		}
 		if (arg0 == OpenRecorderButton)
 		{
