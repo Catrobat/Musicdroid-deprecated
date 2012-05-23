@@ -93,4 +93,12 @@ public class Tone extends View {
 		}
 		invalidate();
 	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public void setX(int new_x){
+		x = new_x;
+	}
 }
