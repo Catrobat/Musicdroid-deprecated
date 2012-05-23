@@ -1,7 +1,10 @@
 package at.tugraz.ist.musicdroid.tests;
 
+import java.io.File;
+
 import com.jayway.android.robotium.solo.Solo;
 
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import at.tugraz.ist.musicdroid.MusicdroidActivity;
@@ -48,8 +51,19 @@ public class RecordSoundActivityTest extends ActivityInstrumentationTestCase2<Re
 	}
 	
 	public void testFileSaved() {
-		
-		
+		File directory;
+		Button startbutton = (Button) solo.getView(R.id.stopButton);
+		Button playbutton = (Button) solo.getView(R.id.playButton);
+		solo.clickOnButton(0); 
+		solo.sleep(3000);
+		solo.clickOnButton(2);
+		//File file = getContext().getFileStreamPath("test.wav");
+		String file = android.os.Environment.getExternalStorageDirectory().getPath() + "/records/test.wav";
+		File newFile = new File(file);
+  	    
+		assertTrue("Failed to write file", newFile.exists());	
+		//solo.clickOnButton(0); 
+		//solo.clickOnButton(2);
 	}
 	
 	/*public void testRecordFile() {

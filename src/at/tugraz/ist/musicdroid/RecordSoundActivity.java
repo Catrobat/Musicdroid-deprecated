@@ -1,8 +1,11 @@
 package at.tugraz.ist.musicdroid;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.String;
+import java.nio.channels.FileChannel;
 
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
@@ -20,6 +23,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
@@ -27,6 +31,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RecordSoundActivity extends Activity {
@@ -41,6 +46,9 @@ public class RecordSoundActivity extends Activity {
 	private PdService pdService = null;
 	private String path;
 	private File patch;
+	private File directory;
+	private File newFile;
+	private ImageView recordlight;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
@@ -67,6 +75,9 @@ public class RecordSoundActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records");
+  	    directory.mkdirs();
+  	    newFile = new File(directory, "test.wav");
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
     
@@ -79,7 +90,8 @@ public class RecordSoundActivity extends Activity {
         stopButton.setEnabled(false);
         playButton.setBackgroundResource(R.drawable.playdisabled);
         playButton.setEnabled(false); //todo  
-        
+        recordlight = (ImageView) findViewById(R.id.recordlight);
+        recordlight.setImageResource(R.drawable.recordlighton);
       //  testoutput = (TextView) findViewById(R.id.textView1);	
         chrono = (Chronometer) findViewById(R.id.chronometer1);
         
@@ -102,9 +114,18 @@ public class RecordSoundActivity extends Activity {
         	  String status = "stop";
         	
         	  chrono.stop(); 
+        	  recordlight.setImageResource(R.drawable.recordlightoff);
         	  PdBase.sendSymbol("status", status);	
         	  File file = new File(dir, "firstrecord.wav");
         	  patch = file;
+        	  try {
+				copyFile(patch, newFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	  
+        	  
         	}
         });
         
@@ -184,6 +205,23 @@ public class RecordSoundActivity extends Activity {
     	mediaPlayer.start();	
     }
     	
-    	
+    
+    public static void copyFile(File src, File dest) throws IOException
+    {
+        Log.e("Copy File:", "Copy File");
+    	FileChannel inChannel = new FileInputStream(src).getChannel();
+        FileChannel outChannel = new FileOutputStream(dest).getChannel();
+        try
+        {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        }
+        finally
+        {
+            if (inChannel != null)
+                inChannel.close();
+            if (outChannel != null)
+                outChannel.close();
+        }
+    }
 }
 
