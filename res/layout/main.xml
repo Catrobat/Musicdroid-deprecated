@@ -2,18 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="40dip" android:background="@color/solid_blue">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
     <Button
-        android:id="@+id/butPlaySound"
-        android:layout_width="wrap_content"
+        android:id="@+id/soundRecorderButton"
+        android:layout_width="@dimen/mainButtonWidth"
         android:layout_height="wrap_content"
-        android:text="toPlaySound"
-	android:onClick="onPlaySound" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:text="@string/load_sound_recorder" 
+        android:drawableTop="@drawable/open_recorder"/>
+
+
+    
+    
+    
+    <Button
+        android:id="@+id/soundPlayerButton"
+        android:layout_width="@dimen/mainButtonWidth"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:text="@string/load_sound_player" 
+        android:drawableTop="@drawable/open_player"/>
+
+    <Button
+        android:id="@+id/newProjectButton"
+        android:layout_width="@dimen/mainButtonWidth"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:text="@string/new_project" 
+        android:drawableTop="@drawable/new_project"/>
+
+    <Button
+        android:id="@+id/openProjectButton"
+        android:layout_width="@dimen/mainButtonWidth"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:text="@string/open_project" 
+        android:drawableTop="@drawable/open_project"/>
+>>>>>>> refs/heads/master
 
 </LinearLayout>
