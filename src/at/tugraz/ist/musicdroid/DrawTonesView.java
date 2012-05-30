@@ -82,7 +82,6 @@ public class DrawTonesView extends View {
 	
 	private void drawViolinschluessel(Canvas canvas) {
 
-        canvas.
 		
 		
 
