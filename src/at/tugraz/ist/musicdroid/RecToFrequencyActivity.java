@@ -75,7 +75,7 @@ public class RecToFrequencyActivity extends Activity {
     		String name = getResources().getString(R.string.app_name);
     		pdService.initAudio(-1, -1, -1, -1);
     		pdService.startAudio(new Intent(this, RecToFrequencyActivity.class), 
-    				             R.drawable.musicdroid_launcher, name, "Retrun to " 
+    				             R.drawable.musicdroid_launcher, name, "Return to " 
     		                                                          + name + ".");
     				
     		
