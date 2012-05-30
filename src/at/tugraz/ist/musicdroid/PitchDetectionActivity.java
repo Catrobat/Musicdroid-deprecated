@@ -23,15 +23,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PitchDetectionActivity extends Activity {
 	private final static String Appname = "Pitchdetection";
 
 	private File dir;
 	private PdService pdService = null;
-	private String path;
 	
-	ArrayList<String> values;
+	ArrayList<Float> values;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 
@@ -47,9 +47,7 @@ public class PitchDetectionActivity extends Activity {
     	}
     
     
-    public void onServiceDisconnected(ComponentName name) {
-    	
-    	
+    public void onServiceDisconnected(ComponentName name) {    	
         }
     };
     
@@ -59,7 +57,6 @@ public class PitchDetectionActivity extends Activity {
    @Override
    public void print(String s) {
      Log.i("Pd print", s);
-         
    }
  };
     
@@ -90,7 +87,7 @@ private final PdListener myListener = new PdListener() {
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
-    values.add( ((Float)x).toString()); 
+    values.add( x); 
     
   }
   /* When we receive a bang from Pd */
@@ -105,22 +102,20 @@ private final PdListener myListener = new PdListener() {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
-        values = new ArrayList<String>();
+        values = new ArrayList<Float>();
 
-        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
-    
-       
-        
+        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
     }
     
     public void onRunClick(View view) {
     	File inputFile = new File(dir, "Hammond.wav");
     	String input_wav = inputFile.getAbsolutePath();		
-    	File f = new File(input_wav);
     	
-    	if(!f.exists())
+    	if(!inputFile.exists())
     	{
+    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_SHORT);
     		Log.i("Pitchdet","Sound-file not found!");
+    		return;
     	}
     	
     	values.clear();
@@ -128,19 +123,15 @@ private final PdListener myListener = new PdListener() {
     	PdBase.sendSymbol("input-wav", input_wav);
     }
     
-    public void onResultClick(View view) {
-    /*ArrayAdapter<String> arrayAdapter =      
-            new ArrayAdapter<String>(PitchDetectionActivity.this,android.R.layout.simple_list_item_1, values);
-            pitchListView.setAdapter(arrayAdapter); */
-   
-    String out = "";
-    for(int i=0;i< values.size();i++)
-    {
-    	out += values.get(i) + "-";
-    }
-    
-    TextView t = (TextView)findViewById(R.id.outTextView);
-    t.setText(out);
+    public void onResultClick(View view) {   
+	    String out = "";
+	    for(int i=0;i< values.size();i++)
+	    {
+	    	out += values.get(i).toString() + "-";
+	    }
+	    
+	    TextView t = (TextView)findViewById(R.id.outTextView);
+	    t.setText(out);
     	
     }
 
@@ -150,31 +141,27 @@ private final PdListener myListener = new PdListener() {
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.pitchdet),
 				dir, true);
 		File patchFile = new File(dir, "pitchdet.pd");
-		path = patchFile.getAbsolutePath();		
 		PdBase.openPatch(patchFile.getAbsolutePath());	
-
     }
     
     
     
     private void initPd() throws IOException {
 		String name = getResources().getString(R.string.app_name);
-		pdService.initAudio(-1, -1, -1, -1);
-		pdService.startAudio(new Intent(this, PitchDetectionActivity.class), 
-				             R.drawable.musicdroid_launcher, name, "Return to " 
-		                                                          + name + ".");
-    	
+			
+		pdService.initAudio(-1, 0, -1, -1);
+		pdService.startAudio();		
+		//.startAudio(new Intent(this, PitchDetectionActivity.class), 
+		//	             R.drawable.musicdroid_launcher, name, "Return to " 
+	    //                                                      + name + ".");
+		    	
     	/* here is where we bind the print statement catcher defined below */
     	  PdBase.setReceiver(myDispatcher);
     	  /* here we are adding the listener for various messages
     	     from Pd sent to "GUI", i.e., anything that goes into the object
     	     [s GUI] will send to the listener defined below */
-
     	  
     	  myDispatcher.addListener("pitch-midi", myListener);
-    	  
-				
-		
 	}
     
     
