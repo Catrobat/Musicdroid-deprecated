@@ -1,38 +1,30 @@
 package at.tugraz.ist.musicdroid;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
+
 import java.io.IOException;
 import java.lang.String;
-import java.nio.channels.FileChannel;
 
-import org.puredata.android.io.AudioParameters;
+
+
 import org.puredata.android.service.PdService;
 import org.puredata.android.utils.PdUiDispatcher;
 import org.puredata.core.PdBase;
 import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
+import org.puredata.core.utils.PdDispatcher;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
-import android.os.SystemClock;
+
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 
 public class RecToFrequencyActivity extends Activity {
 
@@ -57,8 +49,65 @@ public class RecToFrequencyActivity extends Activity {
         public void onServiceDisconnected(ComponentName name) {
         	
         	
-            }
+            } 
         };
+         
+        public void onCreate(Bundle savedInstanceState) {
+
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.record_to_frequency);
+            
+
+            bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
+        
+           
+            
+        }
+        
+        /* We'll use this to catch print statements from Pd
+        when the user has a [print] object */
+     private final PdDispatcher myDispatcher = new PdUiDispatcher() {
+       @Override
+       public void print(String s) {
+         Log.i("Pd print", s);
+             
+       }
+     };
+     /* We'll use this to listen out for messages from Pd.
+     Later we'll hook this up to a named receiver. */
+  private final PdListener myListener = new PdListener() {	
+    public void receiveMessage(String source, String symbol, Object... args) {
+      Log.i("receiveMessage symbol:", symbol);
+      for (Object arg: args) {
+        Log.i("receiveMessage atom:", arg.toString());
+      }
+    }
+
+    /* What to do when we receive a list from Pd. In this example
+       we're collecting the list from Pd and outputting each atom */
+    public void receiveList(String source, Object... args) {
+      for (Object arg: args) {
+        Log.i("receiveList atom:", arg.toString());
+      }
+    }
+
+    /* When we receive a symbol from Pd */
+    public void receiveSymbol(String source, String symbol) {
+      Log.i("receiveSymbol", symbol);
+
+    }
+    /* When we receive a float from Pd */
+    public void receiveFloat(String source, float x) {
+      Log.i("receiveFloat", ((Float)x).toString());
+      //values.add( ((Float)x).toString()); 
+      
+    }
+    /* When we receive a bang from Pd */
+    public void receiveBang(String source) {
+      Log.i("receiveBang", "bang!");
+     
+    }
+  };
         
         private void loadPatch() throws IOException {
         	Log.e("test", "test");
@@ -78,6 +127,18 @@ public class RecToFrequencyActivity extends Activity {
     				             R.drawable.musicdroid_launcher, name, "Return to " 
     		                                                          + name + ".");
     				
-    		
+    		/* here is where we bind the print statement catcher defined below */
+      	  PdBase.setReceiver(myDispatcher);
+      	  /* here we are adding the listener for various messages
+      	     from Pd sent to "GUI", i.e., anything that goes into the object
+      	     [s GUI] will send to the listener defined below */
+
+      	  
+      	  myDispatcher.addListener("pitch-midi", myListener);
+    	}
+        @Override
+    	public void onDestroy() {
+    		super.onDestroy();
+    		unbindService(pdConnection);
     	}
 }
