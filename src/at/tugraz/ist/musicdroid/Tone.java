@@ -14,8 +14,8 @@ public class Tone extends View {
 	private int x;
 	private int y;
 	private int midiVal;
+	private int help_value;
 	private boolean cross = false;
-	private int helpline = 0;
 	private Paint paint;
 	private int y_line;
 
@@ -24,7 +24,7 @@ public class Tone extends View {
 		super(context);
 		this.midiVal = midiVal;
 		this.x = x;
-		this.y = y;
+		this.y = y + 4 * 8;
 		this.y_line = y;
 		calculateCoordinates();
 		this.paint = paint;
@@ -36,69 +36,55 @@ public class Tone extends View {
 		int octave = midiVal / 12 - 1;
 		int value = midiVal % 12; // 0=C
 
-		int distance[] = { 3, 3, 2, 2, 1, 0, 0, 6, 6, 5, 5, 4 };
-		int help_value = distance[value];
-		cross = true;
+		int distance[] = { 6, 6, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0 };
 
-		y += help_value * 8;
-		int oct;
+		help_value = distance[value];
+		
+		if(value == 1 || value == 3 || value == 6 || value == 8 || value == 10)
+			cross = true;
 
-		if (midiVal >= 43) { // nach oben
-
-			if (value > 6)
-				oct = 1;
-			else
-				oct = 2;
-			y -= 7 * (octave - oct) * 8;
-			helpline = (int) ((octave - 2) * 3.5);
-
-		} else if (midiVal < 31) {
-
-			if (value > 6)
-				oct = 1;
-			else
-				oct = 2;
-
-			helpline = (int) ((octave - 1) * 3.5);
-			y += 7 * (oct - octave) * 8;
-		}
-
+		y += help_value * 8 - (octave - 1) * 2 * 8 * 3.5;
 	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
+		//if (cross)
+			//x += 20;
 		RectF oval = new RectF(x - r - 2, y - r, x + r + 2, y + r);
+
 		canvas.drawOval(oval, paint);
 		if (this.midiVal < 36)
 			canvas.drawLine(x + r + 2, y, x + r + 2, y - 20, paint);// nach
 																	// unten
-		// klappen
+																	// klappen
 		else {
 			canvas.drawLine(x - r - 2, y, x - r - 2, y + 20, paint);
 		}
+		int helpline = y_line + 10 * 8;
+		while (helpline <= y) {
+			canvas.drawLine(x - 15, helpline, x + 15, helpline, paint);
+			helpline += 2 * 8;
+		}
+		helpline = y_line - 2 * 8;
+		while (helpline >= y) {
+			canvas.drawLine(x - 15, helpline, x + 15, helpline, paint);
+			helpline -= 2 * 8;
+		}
 
-		if (helpline > 0) { // Linien nach oben
-			for (int i = 0; i < helpline; i++) {
-				canvas.drawLine(x - 15, (y_line) - 8 * 2 * i, x + 15, (y_line)
-						- 8 * 2 * i, paint);// radius
-			}
+		if (cross) {
+			canvas.drawLine(x - 24, y - 15, x - 24, y + 15, paint);
+			canvas.drawLine(x - 16, y - 15, x - 16, y + 15, paint);
+			canvas.drawLine(x - 27, y - 5, x - 12, y - 6, paint);
+			canvas.drawLine(x - 27, y + 5, x - 12, y + 4, paint);
 		}
-		if (helpline < 0) {
-			for (int i = 0; i < helpline * (-1); i++) {
-				canvas.drawLine(x - 15, (y_line) + 8 * 2 * i + 3 * 8 * 2,
-						x + 15, (y_line) + 8 * 2 * i + 3 * 8 * 2, paint);// radius
-			}
-		}
-		invalidate();
 	}
-	
-	public int getX(){
+
+	public int getX() {
 		return x;
 	}
-	
-	public void setX(int new_x){
+
+	public void setX(int new_x) {
 		x = new_x;
 	}
 }

@@ -18,6 +18,12 @@ public class DrawTonesView extends View {
 		this.paint = new Paint();
 		this.setBackgroundColor(Color.WHITE);
 		// TODO Auto-generated constructor stub
+
+		for (int i = 0; i < 20; i++) {
+			addElement(10 + i);
+		}
+
+		invalidate();
 	}
 
 	@Override
@@ -26,15 +32,11 @@ public class DrawTonesView extends View {
 		this.paint.setColor(Color.BLACK);
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
-		drawLines(canvas);		
-		
-		for(int i = 0 ; i < 30; i++)
-		{
-			tones.add (new Tone(super.getContext(), 40+i, 20 + i* 40, 120, paint));
-			((Tone)(tones.get(i))).draw(canvas);
+		drawLines(canvas);
+
+		for (int i = 0; i < tones.size(); i++) {
+			((Tone) (tones.get(i))).draw(canvas);
 		}
-		
-		invalidate();
 
 	}
 
@@ -44,25 +46,46 @@ public class DrawTonesView extends View {
 			canvas.drawLine(this.getLeft(), 120 + i * 8 * 2, this.getRight(),
 					120 + i * 8 * 2, paint);
 		}
+		drawViolinschluessel();
+
+	}
+
+	public void addElement(int midi) {
+		int i = tones.size();
+		int x = 0;
+		if (i > 0)
+			x = ((Tone) (tones.get(i - 1))).getX() + 60;
+		else
+			x = 40;
+
+		tones.add(new Tone(super.getContext(), midi, x, 120, paint));
+	}
+
+	public void deleteElement(int i) {
+		if (i > tones.size()) {
+			return;
+		}
+
+		tones.remove(i);
+		for (int j = i; j < tones.size(); j++) {
+			int x_value = ((Tone) (tones.get(j))).getX();
+			((Tone) (tones.get(j))).setX(x_value - 40);
+		}
+	}
+
+	public void clearList() {
+		if (!tones.isEmpty()) {
+			tones.clear();
+		}
 
 	}
 	
-	public void addElement(int tone){
-		int i = tones.size() + 1;
-		tones.add(new Tone(super.getContext(), tone, 20 + i*40, 120, paint));
-	}
-	
-	public void deleteElement(int i) {
-		tones.remove(i);
-		for(int j = i; j < tones.size() ; j++)
-		{
-			int x_value = ((Tone)(tones.get(j))).getX();
-			((Tone)(tones.get(j))).setX(x_value - 40);
-		}
-	}
-	
-	public void clearList() {
-		tones.clear();
+	private void drawViolinschluessel(Canvas canvas) {
+
+        canvas.
+		
+		
+
 	}
 
 }
