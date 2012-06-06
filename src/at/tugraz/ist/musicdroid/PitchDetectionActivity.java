@@ -125,9 +125,13 @@ private final PdListener myListener = new PdListener() {
     
     public void onResultClick(View view) {   
 	    String out = "";
+	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
 	    {
-	    	out += values.get(i).toString() + "-";
+	    	out += values.get(i).toString() +
+	    			" -> " +
+	    			midi.midiToName((int)Math.rint(values.get(i)))	+ 
+	    			"\n";
 	    }
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
