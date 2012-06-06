@@ -36,7 +36,6 @@ public class PitchDetectionActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
-	private int instrument = 0;
 	
 	ArrayList<Integer> values;
 	
@@ -163,18 +162,13 @@ private final PdListener myListener = new PdListener() {
     	
     }
     
-    public void onMidiClick(View view) {   
-
-    	instrument = 0;
-    	registerForContextMenu(view); 
-        openContextMenu(view);
-        unregisterForContextMenu(view);
-
+    private void writeMidiFile(int instrument)
+    {
+    	if(instrument <= 0) return;
+    	
     	
     	MidiFile mf = new MidiFile();  
     	
-    	if(values.size() <= 0) return;
-    	if(instrument <= 0) return;
     	try
     	{
 	    	mf.progChange(instrument);  //select instrument
@@ -196,6 +190,15 @@ private final PdListener myListener = new PdListener() {
 		}    	
     }
     
+    public void onMidiClick(View view) {   
+
+    	if(values.size() <= 0) return;
+    	
+    	registerForContextMenu(view); 
+        openContextMenu(view);
+        unregisterForContextMenu(view);     
+    }
+    
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenuInfo menuInfo) {
@@ -209,28 +212,30 @@ private final PdListener myListener = new PdListener() {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.instrument_piano:
-            	instrument = 1;
+            	writeMidiFile(1);
                 return true;
             case R.id.instrument_guitar:
-            	instrument = 25;
+            	writeMidiFile(25);
                 return true;
-            case R.id.instrument_flute:
-            	instrument = 74;
+            case R.id.instrument_violin:
+            	writeMidiFile(41);
+                return true;
+            case R.id.instrument_panflute:
+            	writeMidiFile(76);
                 return true;
             case R.id.instrument_accordion:
-            	instrument = 22;
+            	writeMidiFile(22);
                 return true;
             case R.id.instrument_sax:
-            	instrument = 65;
+            	writeMidiFile(65);
                 return true;
             case R.id.instrument_trumpet:
-            	instrument = 57;
+            	writeMidiFile(57);
                 return true;
             case R.id.instrument_xylophone:
-            	instrument = 14;
+            	writeMidiFile(14);
                 return true;
             default:
-            	instrument = 0;
                 return super.onContextItemSelected(item);
         }
     }

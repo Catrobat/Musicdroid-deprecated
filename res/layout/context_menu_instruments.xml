@@ -3,8 +3,8 @@
         android:title="Piano" />
     <item android:id="@+id/instrument_guitar"
         android:title="Guitar" />
-    <item android:id="@+id/instrument_flute"
-        android:title="Flute" />
+    <item android:id="@+id/instrument_panflute"
+        android:title="Pan Flute" />
     <item android:id="@+id/instrument_violin"
         android:title="Violin" />
     <item android:id="@+id/instrument_trumpet"
