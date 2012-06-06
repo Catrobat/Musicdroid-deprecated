@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/solid_blue"
     android:orientation="vertical"
-    android:paddingTop="40dip" android:background="@color/solid_blue">
+    android:paddingTop="40dip" >
 
     <Button
         android:id="@+id/soundRecorderButton"
@@ -11,21 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:text="@string/load_sound_recorder" 
-        android:drawableTop="@drawable/open_recorder"/>
+        android:drawableTop="@drawable/open_recorder"
+        android:text="@string/load_sound_recorder" />
 
-
-    
-    
-    
     <Button
         android:id="@+id/soundPlayerButton"
         android:layout_width="@dimen/mainButtonWidth"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:text="@string/load_sound_player" 
-        android:drawableTop="@drawable/open_player"/>
+        android:drawableTop="@drawable/open_player"
+        android:text="@string/load_sound_player" />
 
     <Button
         android:id="@+id/newProjectButton"
@@ -33,16 +30,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:text="@string/new_project" 
-        android:drawableTop="@drawable/new_project"/>
+        android:drawableTop="@drawable/new_project"
+        android:text="@string/new_project" />
 
     <Button
-        android:id="@+id/openProjectButton"
+        android:id="@+id/openSoundfileButton"
         android:layout_width="@dimen/mainButtonWidth"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:text="@string/open_project" 
-        android:drawableTop="@drawable/open_project"/>
+        android:drawableTop="@drawable/open_project"
+        android:text="@string/open_soundfile" />
 
 </LinearLayout>
