@@ -6,38 +6,39 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class PlaySoundActivity extends Activity {
-
+	
 	public static MediaPlayer mp_;
 	private short state_ = 0;// stopped
 	private Button but_paus_res_;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		System.out.println("On Create!");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_sound);
-		// mp_ = MediaPlayer.create(this, R.raw.iris);
 		but_paus_res_ = (Button)findViewById(R.id.pauseResumeButton);
 		mp_ = new MediaPlayer();
-		initFile();
-
+		
+		initFile(getIntent().getExtras().getString("filename"));
 	}
+	
+	public static void initFile(String filename) {
 
-	public static void initFile() {
-
+		System.out.println("initFile");
 		FileInputStream fis;
 		try {
 			// TODO Pfad als Parameter setzen
-			fis = new FileInputStream(new File(
-					"mnt/sdcard/bluetooth/Iris.mp3"));
+			fis = new FileInputStream(new File(filename));
 
 			FileDescriptor fileDescriptor = fis.getFD();
-
 			mp_.setDataSource(fileDescriptor);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

@@ -56,7 +56,16 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		if (arg0 == OpenPlayerButton)
 		{
 		// open player
-			startActivity(new Intent(this, PlaySoundActivity.class));
+			
+			//pl.initFile("mnt/sdcard/bluetooth/test.midi");
+			String filename="mnt/sdcard/bluetooth/Iris.mp3";
+			Intent intent=new Intent(MusicdroidActivity.this,PlaySoundActivity.class);
+			intent.putExtra("filename", filename);
+			//PlaySoundActivity.getInstance().initFile(filename);
+			//PlaySoundActivity.getInstanceCount().initFile(filename);
+			//startActivity(new Intent(this, PlaySoundActivity.class));
+			System.out.println("Vor StartActivity");
+			startActivity(intent);
 		}
 		if (arg0 == OpenRecorderButton)
 		{
