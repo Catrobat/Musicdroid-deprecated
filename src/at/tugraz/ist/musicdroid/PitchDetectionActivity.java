@@ -15,13 +15,18 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +35,10 @@ public class PitchDetectionActivity extends Activity {
 
 	private File dir;
 	private PdService pdService = null;
+	private String path;
+	private int instrument = 0;
 	
-	ArrayList<Float> values;
+	ArrayList<Integer> values;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 
@@ -87,7 +94,14 @@ private final PdListener myListener = new PdListener() {
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
-    values.add( x); 
+    
+    if(x < 0)
+    {
+    	printResults();
+    	return;
+    }
+    
+    values.add( (int)x); 
     
   }
   /* When we receive a bang from Pd */
@@ -102,41 +116,160 @@ private final PdListener myListener = new PdListener() {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
-        values = new ArrayList<Float>();
+        values = new ArrayList<Integer>();
+        Bundle b = getIntent().getExtras();
+        path = b.getString("path");
+
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
     }
     
     public void onRunClick(View view) {
-    	File inputFile = new File(dir, "Hammond.wav");
+    	File inputFile = new File(path);
     	String input_wav = inputFile.getAbsolutePath();		
     	
     	if(!inputFile.exists())
     	{
-    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_SHORT);
+    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
     		Log.i("Pitchdet","Sound-file not found!");
     		return;
     	}
     	
     	values.clear();
+    	TextView t = (TextView)findViewById(R.id.outTextView);
+	    t.setText("");
     	
     	PdBase.sendSymbol("input-wav", input_wav);
     }
     
-    public void onResultClick(View view) {   
-	    String out = "";
+    private void printResults()
+    {
+    	String out = "";
 	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
 	    {
 	    	out += values.get(i).toString() +
 	    			" -> " +
-	    			midi.midiToName((int)Math.rint(values.get(i)))	+ 
+	    			midi.midiToName(values.get(i))	+ 
 	    			"\n";
 	    }
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
+    }
+    
+    public void onResultClick(View view) {   
+	    printResults();
     	
+    }
+    
+    public void onMidiClick(View view) {   
+
+    	registerForContextMenu(view); 
+        openContextMenu(view);
+        unregisterForContextMenu(view);
+
+    	
+    	MidiFile mf = new MidiFile();  
+    	
+    	if(values.size() <= 0) return;
+    	if(instrument <= 0) return;
+    	try
+    	{
+	    	mf.progChange(instrument);  //select instrument
+	    	for(int i=0;i< values.size();i++)
+		    {
+	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
+		    }
+		    File f = new File(path);
+		    String filename = f.getParentFile() + File.separator + "test.midi";
+		    mf.writeToFile(filename);
+		    
+		    playfile();
+    	}
+    	catch (Exception e) {
+			Log.e("Midi", e.getMessage());
+		}    	
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.context_menu_instruments, menu);
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.instrument_piano:
+            	instrument = 1;
+                return true;
+            case R.id.instrument_guitar:
+            	instrument = 25;
+                return true;
+            case R.id.instrument_flute:
+            	instrument = 74;
+                return true;
+            case R.id.instrument_accordion:
+            	instrument = 22;
+                return true;
+            case R.id.instrument_sax:
+            	instrument = 65;
+                return true;
+            case R.id.instrument_trumpet:
+            	instrument = 57;
+                return true;
+            case R.id.instrument_xylophone:
+            	instrument = 14;
+                return true;
+            default:
+            	instrument = 0;
+                return super.onContextItemSelected(item);
+                
+                
+                
+             
+        }
+    }
+    
+    public void playfile() {
+    	File f = new File(path);
+	    String filename = f.getParentFile() + File.separator + "test.midi";
+	    File f2 = new File(filename);
+	    
+	    if(!f2.exists()) return;
+	    
+    	Uri myUri = Uri.fromFile(f2);
+    	MediaPlayer mediaPlayer = new MediaPlayer();
+    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    	try {
+    		mediaPlayer.setDataSource(getApplicationContext(), myUri);
+    	} catch (IllegalArgumentException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (SecurityException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	try {
+    		mediaPlayer.prepare();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	mediaPlayer.start();	
     }
 
     private void loadPatch() throws IOException {

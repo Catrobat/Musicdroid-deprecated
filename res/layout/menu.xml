@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/icon"
+        android:icon="@drawable/musicdroid_launcher" />
+    <item android:id="@+id/text"
+        android:title="Text" />
+    <item android:id="@+id/icontext"
+        android:title="Icon and text"
+        android:icon="@drawable/musicdroid_launcher" />
+</menu>

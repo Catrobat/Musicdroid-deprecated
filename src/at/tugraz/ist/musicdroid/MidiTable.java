@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class MidiTable {
 	
-	HashMap NoteMap = new HashMap();
+	HashMap<Integer, String> NoteMap = new HashMap<Integer, String>();
 	
 	public MidiTable() {
 		
@@ -28,7 +28,10 @@ public class MidiTable {
 	
 	public String midiToName(int midi)
 	{
-		return NoteMap.get(midi).toString();	
+		if(NoteMap.containsKey(midi))
+		  return NoteMap.get(midi).toString();
+		else
+		  return "invalid value";
 	}
 	
 	
