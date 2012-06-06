@@ -182,8 +182,11 @@ private final PdListener myListener = new PdListener() {
 	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
 		    }
 		    File f = new File(path);
-		    String filename = f.getParentFile() + File.separator + "test.midi";
+		    String filename = f.getParentFile() + File.separator + "test.mid";
 		    mf.writeToFile(filename);
+		    
+		    f = new File(filename);
+		    if(!f.exists()) throw new Exception("Midi file could not be created!");
 		    
 		    playfile();
     	}
@@ -228,16 +231,12 @@ private final PdListener myListener = new PdListener() {
             default:
             	instrument = 0;
                 return super.onContextItemSelected(item);
-                
-                
-                
-             
         }
     }
     
     public void playfile() {
     	File f = new File(path);
-	    String filename = f.getParentFile() + File.separator + "test.midi";
+	    String filename = f.getParentFile() + File.separator + "test.mid";
 	    File f2 = new File(filename);
 	    
 	    if(!f2.exists()) return;
