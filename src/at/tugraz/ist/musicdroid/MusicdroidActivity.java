@@ -1,12 +1,13 @@
 package at.tugraz.ist.musicdroid;
 
+import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 
 public class MusicdroidActivity extends Activity implements OnClickListener {
@@ -43,6 +44,15 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 
 	}
 
+	public void onPlaySound(View v) {
+		startActivity(new Intent(this, PlaySoundActivity.class));
+		/*
+		 * TextView tv=new TextView(this); tv.setText("hugo");
+		 * setContentView(tv);
+		 */
+
+	}
+
 	public void LoadFile() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("audio/*");
@@ -73,6 +83,17 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		}
 		if (arg0 == OpenPlayerButton) {
 			// open player
+
+			// pl.initFile("mnt/sdcard/bluetooth/test.midi");
+			String filename = "mnt/sdcard/bluetooth/Iris.mp3";
+			Intent intent = new Intent(MusicdroidActivity.this,
+					PlaySoundActivity.class);
+			intent.putExtra("filename", filename);
+			// PlaySoundActivity.getInstance().initFile(filename);
+			// PlaySoundActivity.getInstanceCount().initFile(filename);
+			// startActivity(new Intent(this, PlaySoundActivity.class));
+			System.out.println("Vor StartActivity");
+			startActivity(intent);
 		}
 		if (arg0 == OpenRecorderButton) {
 			// open Recorder

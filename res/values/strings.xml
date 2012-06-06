@@ -9,6 +9,9 @@
     <string name="load_sound_player">Open Sound Player</string>
     <string name="new_project">New Project</string>
     <string name="open_soundfile">Open Soundfile</string>
-    <string name="load_sound_file_chooser_text">Please select a Sound</string>
+    <string name="start_text">Play</string>
+    <string name="pause_text">Pause</string>
+    <string name="resume_text">Resume</string>
+    <string name="stop_text">Stop</string>
 
 </resources>
