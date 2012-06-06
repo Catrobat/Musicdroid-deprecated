@@ -15,6 +15,9 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -161,7 +164,7 @@ private final PdListener myListener = new PdListener() {
     	if(values.size() <= 0) return;
     	try
     	{
-	    	mf.progChange(1);  //select instrument
+	    	mf.progChange(76);  //select instrument
 	    	for(int i=0;i< values.size();i++)
 		    {
 	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
@@ -169,10 +172,49 @@ private final PdListener myListener = new PdListener() {
 		    File f = new File(path);
 		    String filename = f.getParentFile() + File.separator + "test.midi";
 		    mf.writeToFile(filename);
+		    
+		    playfile();
     	}
     	catch (Exception e) {
 			Log.e("Midi", e.getMessage());
 		}    	
+    }
+    
+    public void playfile() {
+    	File f = new File(path);
+	    String filename = f.getParentFile() + File.separator + "test.midi";
+	    File f2 = new File(filename);
+	    
+	    if(!f2.exists()) return;
+	    
+    	Uri myUri = Uri.fromFile(f2);
+    	MediaPlayer mediaPlayer = new MediaPlayer();
+    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    	try {
+    		mediaPlayer.setDataSource(getApplicationContext(), myUri);
+    	} catch (IllegalArgumentException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (SecurityException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	try {
+    		mediaPlayer.prepare();
+    	} catch (IllegalStateException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	mediaPlayer.start();	
     }
 
     private void loadPatch() throws IOException {
