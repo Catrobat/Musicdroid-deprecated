@@ -44,13 +44,16 @@ public class DataManagement {
 	public void LoadSoundFile(Intent data) {
 		try {
 			Uri sound_file_uri = data.getData();
-			Projekt.getInstance().addSoundFile(sound_file_uri.getPath());
 
 			File input = new File(sound_file_uri.getPath());
 			File output = new File(Constants.MAIN_DIRECTORY
 					+ Constants.SOUND_FILE_SUB_DIRECTORY + input.getName());
 
 			copyFile(input, output);
+
+			Projekt.getInstance().addSoundFile(output.getAbsolutePath());
+			System.out.println(output.getAbsolutePath());
+			System.out.println(Projekt.getInstance().getLastSoundFile());
 
 		} catch (Exception e) {
 		}

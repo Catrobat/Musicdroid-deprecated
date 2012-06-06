@@ -22,66 +22,70 @@ public class Projekt {
 			return instance;
 	}
 
-	boolean LoadProject(String project_name) {
+	public boolean LoadProject(String project_name) {
 		// TODO: LoadDirectory(), LoadXML aus DataManagement aufrufen.
 		project_name_ = project_name;
 		return true;
 	}
 
-	boolean CreateProject(String project_name) {
+	public boolean CreateProject(String project_name) {
 		return true;
 	}
 
-	boolean SaveProject() {
+	public boolean SaveProject() {
 		return true;
 	}
 
-	boolean DeleteProject() {
+	public boolean DeleteProject() {
 		return true;
 	}
 
-	void addMidi(MidiFile midi) {
+	public void addMidi(MidiFile midi) {
 
 		midis_.add(midi);
 	}
 
-	void addSoundFile(String filename) {
+	public void addSoundFile(String filename) {
 		imported_files_.add(filename);
 	}
 
-	void addRecord(String file) {
+	public String getLastSoundFile() {
+		return imported_files_.get(imported_files_.size() - 1);
+	}
+
+	public void addRecord(String file) {
 
 	}
 
-	void fillSlot(int index, Object input, int type_code) {
+	public void fillSlot(int index, Object input, int type_code) {
 
 	}
 
-	void releaseSlot(int index) {
+	public void releaseSlot(int index) {
 
 	}
 
-	void deleteMidi(MidiFile midi) {
+	public void deleteMidi(MidiFile midi) {
 		midis_.remove(midi);
 	}
 
-	void deleteFile(String filename) {
+	public void deleteFile(String filename) {
 
 	}
 
-	void deleteRecord(String filename) {
+	public void deleteRecord(String filename) {
 
 	}
 
-	Pair<Integer, Object> getSlotDataAt(int index) {
+	public Pair<Integer, Object> getSlotDataAt(int index) {
 
 		return new Pair<Integer, Object>(0, 0);
 	}
 
-	ArrayList<MidiFile> midis_;
-	ArrayList<String> imported_files_=new ArrayList<String>();
-	ArrayList<String> records_=new ArrayList<String>();
-	Vector<Pair<Integer, Object>> slots_;
-	String project_name_;
+	public static ArrayList<MidiFile> midis_;
+	public static ArrayList<String> imported_files_ = new ArrayList<String>();
+	public static ArrayList<String> records_ = new ArrayList<String>();
+	public static Vector<Pair<Integer, Object>> slots_;
+	public static String project_name_;
 
 }

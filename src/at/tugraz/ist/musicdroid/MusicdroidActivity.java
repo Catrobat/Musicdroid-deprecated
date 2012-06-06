@@ -1,6 +1,5 @@
 package at.tugraz.ist.musicdroid;
 
-import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +7,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import at.tugraz.ist.musicdroid.common.Constants;
 import at.tugraz.ist.musicdroid.common.DataManagement;
+import at.tugraz.ist.musicdroid.common.Projekt;
 
 public class MusicdroidActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
@@ -85,7 +86,9 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 			// open player
 
 			// pl.initFile("mnt/sdcard/bluetooth/test.midi");
-			String filename = "mnt/sdcard/bluetooth/Iris.mp3";
+			// String filename = Projekt.getInstance().getLastSoundFile();
+			// System.out.println(Projekt.getInstance().getLastSoundFile());
+			String filename = Projekt.getInstance().getLastSoundFile();
 			Intent intent = new Intent(MusicdroidActivity.this,
 					PlaySoundActivity.class);
 			intent.putExtra("filename", filename);

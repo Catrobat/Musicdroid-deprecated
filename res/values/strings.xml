@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
-   	
+
     <string name="hello">Hello World, MusicdroidActivity!</string>
     <string name="app_name">Musicdroid</string>
     <string name="load_project">Load Project</string>
@@ -13,5 +12,6 @@
     <string name="pause_text">Pause</string>
     <string name="resume_text">Resume</string>
     <string name="stop_text">Stop</string>
+    <string name="load_sound_file_chooser_text">Please select a Sound</string>
 
 </resources>
