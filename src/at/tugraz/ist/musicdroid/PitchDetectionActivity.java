@@ -21,7 +21,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +36,7 @@ public class PitchDetectionActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
+	private int instrument = 0;
 	
 	ArrayList<Integer> values;
 	
@@ -158,13 +164,19 @@ private final PdListener myListener = new PdListener() {
     }
     
     public void onMidiClick(View view) {   
-	    
+
+    	registerForContextMenu(view); 
+        openContextMenu(view);
+        unregisterForContextMenu(view);
+
+    	
     	MidiFile mf = new MidiFile();  
     	
     	if(values.size() <= 0) return;
+    	if(instrument <= 0) return;
     	try
     	{
-	    	mf.progChange(76);  //select instrument
+	    	mf.progChange(instrument);  //select instrument
 	    	for(int i=0;i< values.size();i++)
 		    {
 	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
@@ -178,6 +190,49 @@ private final PdListener myListener = new PdListener() {
     	catch (Exception e) {
 			Log.e("Midi", e.getMessage());
 		}    	
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.context_menu_instruments, menu);
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.instrument_piano:
+            	instrument = 1;
+                return true;
+            case R.id.instrument_guitar:
+            	instrument = 25;
+                return true;
+            case R.id.instrument_flute:
+            	instrument = 74;
+                return true;
+            case R.id.instrument_accordion:
+            	instrument = 22;
+                return true;
+            case R.id.instrument_sax:
+            	instrument = 65;
+                return true;
+            case R.id.instrument_trumpet:
+            	instrument = 57;
+                return true;
+            case R.id.instrument_xylophone:
+            	instrument = 14;
+                return true;
+            default:
+            	instrument = 0;
+                return super.onContextItemSelected(item);
+                
+                
+                
+             
+        }
     }
     
     public void playfile() {
