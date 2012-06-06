@@ -19,9 +19,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +27,9 @@ public class PitchDetectionActivity extends Activity {
 
 	private File dir;
 	private PdService pdService = null;
+	private String path;
 	
-	ArrayList<Float> values;
+	ArrayList<Integer> values;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 
@@ -87,7 +85,14 @@ private final PdListener myListener = new PdListener() {
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
-    values.add( x); 
+    
+    if(x < 0)
+    {
+    	printResults();
+    	return;
+    }
+    
+    values.add( (int)x); 
     
   }
   /* When we receive a bang from Pd */
@@ -102,41 +107,72 @@ private final PdListener myListener = new PdListener() {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
-        values = new ArrayList<Float>();
+        values = new ArrayList<Integer>();
+        Bundle b = getIntent().getExtras();
+        path = b.getString("path");
+
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
     }
     
     public void onRunClick(View view) {
-    	File inputFile = new File(dir, "Hammond.wav");
+    	File inputFile = new File(path);
     	String input_wav = inputFile.getAbsolutePath();		
     	
     	if(!inputFile.exists())
     	{
-    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_SHORT);
+    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
     		Log.i("Pitchdet","Sound-file not found!");
     		return;
     	}
     	
     	values.clear();
+    	TextView t = (TextView)findViewById(R.id.outTextView);
+	    t.setText("");
     	
     	PdBase.sendSymbol("input-wav", input_wav);
     }
     
-    public void onResultClick(View view) {   
-	    String out = "";
+    private void printResults()
+    {
+    	String out = "";
 	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
 	    {
 	    	out += values.get(i).toString() +
 	    			" -> " +
-	    			midi.midiToName((int)Math.rint(values.get(i)))	+ 
+	    			midi.midiToName(values.get(i))	+ 
 	    			"\n";
 	    }
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
+    }
+    
+    public void onResultClick(View view) {   
+	    printResults();
     	
+    }
+    
+    public void onMidiClick(View view) {   
+	    
+    	MidiFile mf = new MidiFile();  
+    	
+    	if(values.size() <= 0) return;
+    	try
+    	{
+	    	mf.progChange(1);  //select instrument
+	    	for(int i=0;i< values.size();i++)
+		    {
+	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
+		    }
+		    File f = new File(path);
+		    String filename = f.getParentFile() + File.separator + "test.midi";
+		    mf.writeToFile(filename);
+    	}
+    	catch (Exception e) {
+			Log.e("Midi", e.getMessage());
+		}    	
     }
 
     private void loadPatch() throws IOException {

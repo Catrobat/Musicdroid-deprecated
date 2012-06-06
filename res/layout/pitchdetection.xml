@@ -21,6 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
             android:text="Result" android:onClick="onResultClick"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MIDI" android:onClick="onMidiClick"/>
+
     </LinearLayout>
 
     <TextView
