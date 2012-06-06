@@ -32,16 +32,35 @@ public class PianoActivity extends Activity {
             {
                 // TODO Auto-generated method stub
             	String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
-            	//Log.e("position", pos);
-                int x = piano.getWidth(); //- Ti.Platform.displayCaps.platformWidth/2;
+            	Log.e("position", pos);
+                int x = piano.getWidth();
+                int y = piano.getHeight();
                 int key_width = (x/35); 
                 int c = key_width*15-key_width/2;
             	
-                String hit = (c - key_width/2) + "x" + (c + key_width/2);
+                //String hit = (c - key_width/2) + "x" + (c + key_width/2);
                 //Log.e("c-pos", hit);
+                int mapped_key = 0;
                 
-                int mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
-                Log.e("mappedkey", String.valueOf(mapped_key));
+                if(event.getY() > 2*y/3)
+                {	
+                  mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
+                  Log.e("mappedkey", String.valueOf(mapped_key));                  
+                } 
+                //TODO: blackey map funktioniert noch nicht 
+                /*
+                else
+                {
+                  mapped_key = mapper.getBlackKeyFromPosition(round(event.getX()));
+                  if(mapped_key >= 0)
+                  {
+                	Log.e("mappedkey", String.valueOf(mapped_key));
+                  }
+                  else 
+                  {
+                	Log.e("nokey", String.valueOf(mapped_key));
+                  }
+                } */
                 
                 
                 //TODO instead of toast -> play midi :) 
@@ -62,19 +81,18 @@ public class PianoActivity extends Activity {
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
-        int x = scroll.getWidth()/2; //- Ti.Platform.displayCaps.platformWidth/2; 
-        int y = scroll.getHeight()/2; // - Ti.Platform.displayCaps.platformHeight/2;
-        //subtract platform width/height so that the center is centered and not in the corner
+        int x = scroll.getWidth()/2; 
+        int y = scroll.getHeight()/2;
+        
         mapper = new NoteMapper();
         
         scroll.postDelayed(new Runnable() {
             public void run() {
-                int x = piano.getWidth(); //- Ti.Platform.displayCaps.platformWidth/2;
+                int x = piano.getWidth();
                 int key_width = (x/35); 
-                int position = key_width*10;//+key_width/2; 
+                int position = key_width*10; 
                 String pos = ""+x; 
                 Log.e("position", pos); 
-                //int y = piano.getHeight()/2; // - Ti.Platform.displayCaps.platformHeight/2;
             	scroll.scrollTo(position,0);
             	mapper.initializeNoteMap(round(key_width));
             }
