@@ -44,6 +44,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		try {
     			
     			initPd();
+    			
     			loadPatch();
     		} catch (IOException e) {
     			Log.e(Appname, e.toString());
@@ -121,7 +122,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
   };
         
         private void loadPatch() throws IOException {
-        	Log.e("test", "test");
+        	Log.e("loadPatch", "loadPatch");
     		dir = getFilesDir();
     		IoUtils.extractZipResource(getResources().openRawResource(R.raw.fiddle),
     				dir, true);
@@ -133,11 +134,13 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
         
         private void initPd() throws IOException {
     		String name = getResources().getString(R.string.app_name);
-    		pdService.initAudio(-1, -1, -1, -1);
+    		Log.i("initPd", "initPd");
+    		pdService.initAudio(44100, 0, 2, -1);
+    		Log.i("initAudio", "initAudio");
     		pdService.startAudio(new Intent(this, RecToFrequencyActivity.class), 
     				             R.drawable.musicdroid_launcher, name, "Return to " 
     		                                                          + name + ".");
-    				
+    		Log.i("startAudio", "startAudio");		
     		/* here is where we bind the print statement catcher defined below */
       	  PdBase.setReceiver(myDispatcher);
       	  /* here we are adding the listener for various messages
