@@ -85,6 +85,13 @@ private final PdListener myListener = new PdListener() {
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
+    
+    if(x < 0)
+    {
+    	printResults();
+    	return;
+    }
+    
     values.add( (int)x); 
     
   }
@@ -120,12 +127,15 @@ private final PdListener myListener = new PdListener() {
     	}
     	
     	values.clear();
+    	TextView t = (TextView)findViewById(R.id.outTextView);
+	    t.setText("");
     	
     	PdBase.sendSymbol("input-wav", input_wav);
     }
     
-    public void onResultClick(View view) {   
-	    String out = "";
+    private void printResults()
+    {
+    	String out = "";
 	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
 	    {
@@ -137,6 +147,10 @@ private final PdListener myListener = new PdListener() {
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
+    }
+    
+    public void onResultClick(View view) {   
+	    printResults();
     	
     }
     
