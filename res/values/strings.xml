@@ -13,5 +13,9 @@
     <string name="load_sound_player">Open Sound Player</string>
     <string name="new_project">New Project</string>
     <string name="open_project">Open Project</string>
+    <string name="overwrite_dialog">Ungespeicherte Aufnahmen gehen verloren, bist Du sicher, dass du fortsetzen möchtest?</string>
+    <string name="ja">Ja</string>
+    <string name="nein">Nein</string>
+     <string name="record_toast">Aufnahme läuft noch, drücke zuerst Stopp</string>
 
 </resources>
