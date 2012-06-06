@@ -110,9 +110,11 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     }
     /* When we receive a float from Pd */
     public void receiveFloat(String source, float x) {
-      Log.i("receiveFloat", ((Float)x).toString());
-      //values.add( ((Float)x).toString()); 
-      
+    	if(state == RECORD)
+    	{
+    		Log.i("receiveFloat", ((Float)x).toString());
+    		//values.add( ((Float)x).toString()); 
+    	}
     }
     /* When we receive a bang from Pd */
     public void receiveBang(String source) {
@@ -135,11 +137,11 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
         private void initPd() throws IOException {
     		String name = getResources().getString(R.string.app_name);
     		Log.i("initPd", "initPd");
-    		pdService.initAudio(44100, 0, 2, -1);
+    		pdService.initAudio(-1, 1, -1, -1);
     		Log.i("initAudio", "initAudio");
     		pdService.startAudio(new Intent(this, RecToFrequencyActivity.class), 
     				             R.drawable.musicdroid_launcher, name, "Return to " 
-    		                                                          + name + ".");
+    		                                                         + name + "."); 
     		Log.i("startAudio", "startAudio");		
     		/* here is where we bind the print statement catcher defined below */
       	  PdBase.setReceiver(myDispatcher);
