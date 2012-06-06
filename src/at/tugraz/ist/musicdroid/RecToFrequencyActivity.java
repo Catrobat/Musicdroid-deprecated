@@ -2,6 +2,7 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.puredata.android.service.PdService;
 import org.puredata.android.utils.PdUiDispatcher;
@@ -155,7 +156,27 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		super.onDestroy();
     		unbindService(pdConnection);
     	}
-
+        
+        public void writeMidiFile(ArrayList values) {   
+    	    
+        	MidiFile mf = new MidiFile();  
+        	
+        	if(values.size() <= 0) return;
+        	try
+        	{
+    	    	mf.progChange(76);  //select instrument
+    	    	for(int i=0;i< values.size();i++)
+    		    {
+    	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
+    		    }
+    		    File f = new File(path);
+    		    String filename = f.getParentFile() + File.separator + "test.midi";
+    		    mf.writeToFile(filename);
+        	}
+        	catch (Exception e) {
+    			Log.e("Midi", e.getMessage());
+    		}    	
+        }
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
