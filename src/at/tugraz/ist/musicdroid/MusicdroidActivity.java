@@ -1,15 +1,13 @@
 package at.tugraz.ist.musicdroid;
 
-import at.tugraz.ist.musicdroid.R;
-import at.tugraz.ist.musicdroid.common.SoundFile;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
+import at.tugraz.ist.musicdroid.common.DataManagement;
+import at.tugraz.ist.musicdroid.common.SoundFile;
 
 public class MusicdroidActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -25,19 +23,17 @@ public class MusicdroidActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		//sound_file = new SoundFile();
+		// sound_file = new SoundFile();
 		// Branch: open_soundfile!!!
 		my_list_view = (TextView) findViewById(R.id.textView1);
 	}
 
-	public void handleLoadFileButton(View v){
-			Log.v("musicdroid", "button geklickt!!");
-			LoadFile();
-			
-			
+	public void handleLoadFileButton(View v) {
+		Log.v("musicdroid", "button geklickt!!");
+		LoadFile();
+
 	}
-	
-	
+
 	public void LoadFile() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("audio/*");
@@ -51,11 +47,11 @@ public class MusicdroidActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (resultCode == Activity.RESULT_OK && requestCode == 0) {
-		
-		SoundFile.GetInstance().LoadFile(data);
+			DataManagement management = new DataManagement();
+			management.LoadSoundFile(data);
 		}
-		
+
 	}
 }
