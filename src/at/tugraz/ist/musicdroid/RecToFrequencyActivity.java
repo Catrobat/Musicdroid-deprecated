@@ -11,11 +11,15 @@ import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 import org.puredata.core.utils.PdDispatcher;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -32,11 +36,14 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 	private PdService pdService = null;
 	private final static String Appname = "rec_to_frequency";
 	private String path;
+	private String midiPath = "";
 	private File dir;
 	private Button StopRecordButton;
     private Button StartRecordButton;
     private Button SaveFileButton;
     private Button NextNoteButton;
+    private Integer pitch;
+    ArrayList<Integer> pitches;
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
     	public void onServiceConnected(ComponentName name, IBinder service) {
@@ -59,8 +66,12 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
          
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            
+
+            
             setContentView(R.layout.record_to_frequency);
             Log.i("test", "test");
+            pitches = new ArrayList<Integer>();
             StopRecordButton = (Button)findViewById(R.id.stopRecordButton);
             StopRecordButton.setOnClickListener(this);
             StartRecordButton = (Button)findViewById(R.id.startRecordButton);
@@ -114,6 +125,8 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     	if(state == RECORD)
     	{
     		Log.i("receiveFloat", ((Float)x).toString());
+    		pitch = Math.round(x); 
+    		Log.i("Pitch", ((Integer)pitch).toString());
     		//values.add( ((Float)x).toString()); 
     	}
     }
@@ -169,14 +182,56 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		    {
     	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
     		    }
-    		    File f = new File(path);
+    		    File f = new File("/sdcard/records/miditest.mid");
     		    String filename = f.getParentFile() + File.separator + "test.midi";
     		    mf.writeToFile(filename);
+    		    File f2 = new File(filename);
+    		    if(f2.exists())
+    		    	Log.i("file exists", "file exists");
         	}
         	catch (Exception e) {
     			Log.e("Midi", e.getMessage());
-    		}    	
+    		} 
+        	playfile();  	
         }
+        
+        public void playfile() {
+        	File f = new File("/sdcard/records/miditest.mid" );
+    	    String filename = f.getParentFile() + File.separator + "test.midi";
+    	    File f2 = new File(filename);
+    	    
+    	    if(!f2.exists()) return;
+    	    
+        	Uri myUri = Uri.fromFile(f2);
+        	MediaPlayer mediaPlayer = new MediaPlayer();
+        	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        	try {
+        		mediaPlayer.setDataSource(getApplicationContext(), myUri);
+        	} catch (IllegalArgumentException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (SecurityException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (IllegalStateException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (IOException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+        	try {
+        		mediaPlayer.prepare();
+        	} catch (IllegalStateException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (IOException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+        	mediaPlayer.start();	
+        }
+        
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
@@ -214,6 +269,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 			{
 				if(state == RECORD)
 				{
+					
 					// Stop record
 					state = POSTRECORD;
 					StartRecordButton.setVisibility(View.VISIBLE);
@@ -230,7 +286,9 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 			{
 				if(state == POSTRECORD)
 				{
-					// Stop record
+					// save file
+					writeMidiFile(pitches);
+					Log.i("writeMidiFile", "writeMidiFile");
 					state = PRERECORD;
 					StartRecordButton.setVisibility(View.VISIBLE);
 					StopRecordButton.setVisibility(View.GONE);
@@ -246,7 +304,8 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 			{
 				if(state == RECORD)
 				{
-					// Stop record
+					pitches.add(pitch);
+					Log.i("pitch added", "pitch added");
 				}
 				else
 				{
