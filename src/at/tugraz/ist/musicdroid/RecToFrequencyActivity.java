@@ -157,7 +157,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		unbindService(pdConnection);
     	}
         
-        public void writeMidiFile(ArrayList values) {   
+        public void writeMidiFile(ArrayList<Integer> values) {   
     	    
         	MidiFile mf = new MidiFile();  
         	
