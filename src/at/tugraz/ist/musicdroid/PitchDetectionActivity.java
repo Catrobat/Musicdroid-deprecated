@@ -227,7 +227,7 @@ private final PdListener myListener = new PdListener() {
             	writeMidiFile(22);
                 return true;
             case R.id.instrument_sax:
-            	writeMidiFile(65);
+            	writeMidiFile(66);
                 return true;
             case R.id.instrument_trumpet:
             	writeMidiFile(57);
