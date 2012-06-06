@@ -32,24 +32,24 @@ public class PianoActivity extends Activity {
             {
                 // TODO Auto-generated method stub
             	String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
-            	Log.e("position", pos);
+            	//Log.e("position", pos);
                 int x = piano.getWidth(); //- Ti.Platform.displayCaps.platformWidth/2;
                 int key_width = (x/35); 
                 int c = key_width*15-key_width/2;
             	
                 String hit = (c - key_width/2) + "x" + (c + key_width/2);
-                Log.e("c-pos", hit);
+                //Log.e("c-pos", hit);
                 
-                String mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
-                Log.e("mappedkey", mapped_key);
+                int mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
+                Log.e("mappedkey", String.valueOf(mapped_key));
                 
                 
-                //TODO instead of toast -> play midi; change NoteMapper
-                if(mapped_key.equals("c") || mapped_key.equals("c1")) 
+                //TODO instead of toast -> play midi :) 
+                if(mapped_key == 24) 
                 {
                 	Context context = getApplicationContext();
     	    		int duration = Toast.LENGTH_SHORT;
-    	    		Toast toast = Toast.makeText(context, "you hit a C", duration);
+    	    		Toast toast = Toast.makeText(context, "you hit a c1", duration);
     	    		toast.show();  	
                 }
                 return false;
