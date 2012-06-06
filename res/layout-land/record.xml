@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="78dp"
+        android:background="@drawable/play" />
+
+    <ImageView
+        android:id="@+id/test_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/descr"
+        android:paddingLeft="300dp"
+        android:src="@drawable/mica" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/playButton"
+        android:background="@drawable/rec" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_toLeftOf="@+id/button2"
+        android:background="@drawable/stop" />
+
+    <ImageView
+        android:id="@+id/recordlight"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/descr"
+        android:src="@drawable/recordlightoff" />
+
+    <Chronometer
+        android:id="@+id/chronometer1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:minWidth="474dp"
+        android:text="Chronometer"
+        android:textSize="20pt"
+        android:visibility="visible" />
+
+</RelativeLayout>
