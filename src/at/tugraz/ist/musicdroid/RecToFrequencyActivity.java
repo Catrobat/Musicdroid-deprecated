@@ -1,12 +1,7 @@
 package at.tugraz.ist.musicdroid;
 
 import java.io.File;
-
-
 import java.io.IOException;
-import java.lang.String;
-
-
 
 import org.puredata.android.service.PdService;
 import org.puredata.android.utils.PdUiDispatcher;
@@ -19,25 +14,35 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-
 import android.os.Bundle;
 import android.os.IBinder;
-
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 
-public class RecToFrequencyActivity extends Activity {
+public class RecToFrequencyActivity extends Activity implements OnClickListener {
 
+	private static final int PRERECORD = 0;
+	private static final int RECORD = 1;
+	private static final int POSTRECORD = 2;
+	private int state = 0;
 	private PdService pdService = null;
 	private final static String Appname = "rec_to_frequency";
 	private String path;
 	private File dir;
-	
+	private Button StopRecordButton;
+    private Button StartRecordButton;
+    private Button SaveFileButton;
+    private Button NextNoteButton;
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
     	public void onServiceConnected(ComponentName name, IBinder service) {
+    		Log.i("onServiceConnected", "ServiceConnection");
     		pdService = ((PdService.PdBinder)service).getService();
     		try {
+    			
     			initPd();
     			loadPatch();
     		} catch (IOException e) {
@@ -47,21 +52,27 @@ public class RecToFrequencyActivity extends Activity {
     	}
         @Override
         public void onServiceDisconnected(ComponentName name) {
-        	
-        	
             } 
         };
          
         public void onCreate(Bundle savedInstanceState) {
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.record_to_frequency);
-            
-
+            Log.i("test", "test");
+            StopRecordButton = (Button)findViewById(R.id.stopRecordButton);
+            StopRecordButton.setOnClickListener(this);
+            StartRecordButton = (Button)findViewById(R.id.startRecordButton);
+            StartRecordButton.setOnClickListener(this);
+            SaveFileButton = (Button)findViewById(R.id.saveFileButton);
+            SaveFileButton.setOnClickListener(this);
+            NextNoteButton = (Button)findViewById(R.id.nextNoteButton);
+            NextNoteButton.setOnClickListener(this);
+			StartRecordButton.setVisibility(View.VISIBLE);
+			StopRecordButton.setVisibility(View.GONE);
+			NextNoteButton.setVisibility(View.GONE);
+			SaveFileButton.setVisibility(View.GONE);
             bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
-        
-           
-            
+            Log.i("bindService", "bindService");
         }
         
         /* We'll use this to catch print statements from Pd
@@ -132,13 +143,90 @@ public class RecToFrequencyActivity extends Activity {
       	  /* here we are adding the listener for various messages
       	     from Pd sent to "GUI", i.e., anything that goes into the object
       	     [s GUI] will send to the listener defined below */
-
-      	  
-      	  myDispatcher.addListener("pitch-midi", myListener);
+      	  myDispatcher.addListener("micro", myListener);
     	}
         @Override
     	public void onDestroy() {
     		super.onDestroy();
     		unbindService(pdConnection);
     	}
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			if (arg0 == StartRecordButton)
+			{
+				if(state == PRERECORD)
+				{
+					// start record
+					state = RECORD;
+					StartRecordButton.setVisibility(View.GONE);
+					StopRecordButton.setVisibility(View.VISIBLE);
+					NextNoteButton.setVisibility(View.VISIBLE);
+					SaveFileButton.setVisibility(View.GONE);
+				}
+				else if(state == POSTRECORD)
+				{
+					//verwerfen?
+					
+					//ja:
+					//start record
+					state = RECORD;
+					StartRecordButton.setVisibility(View.GONE);
+					StopRecordButton.setVisibility(View.VISIBLE);
+					NextNoteButton.setVisibility(View.VISIBLE);
+					SaveFileButton.setVisibility(View.GONE);
+					
+					//nein:nix tun
+				}
+				else
+				{
+					Log.e("StartRecord-Error", "StartRecordButton clicked in wrong state");
+				}
+			}
+			if (arg0 == StopRecordButton)
+			{
+				if(state == RECORD)
+				{
+					// Stop record
+					state = POSTRECORD;
+					StartRecordButton.setVisibility(View.VISIBLE);
+					StopRecordButton.setVisibility(View.GONE);
+					NextNoteButton.setVisibility(View.GONE);
+					SaveFileButton.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					Log.e("StopRecord-Error", "StopRecordButton clicked in wrong state");
+				}
+			}
+			if (arg0 == SaveFileButton)
+			{
+				if(state == POSTRECORD)
+				{
+					// Stop record
+					state = PRERECORD;
+					StartRecordButton.setVisibility(View.VISIBLE);
+					StopRecordButton.setVisibility(View.GONE);
+					NextNoteButton.setVisibility(View.GONE);
+					SaveFileButton.setVisibility(View.GONE);
+				}
+				else
+				{
+					Log.e("SaveFileButton-Error", "SaveFileButton clicked in wrong state");
+				}
+			}
+			if (arg0 == NextNoteButton)
+			{
+				if(state == RECORD)
+				{
+					// Stop record
+				}
+				else
+				{
+					Log.e("NextNoteButton-Error", "NextNoteButton clicked in wrong state");
+				}
+			}
+			
+		}
 }

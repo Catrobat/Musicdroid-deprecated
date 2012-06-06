@@ -34,7 +34,8 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		if (arg0 == NewProjectButton)
 		{
-		
+			 Intent intent = new Intent(MusicdroidActivity.this, RecToFrequencyActivity.class);
+		     startActivity(intent);
 		}
 		if (arg0 == OpenProjectButton)
 		{

@@ -7,26 +7,25 @@
     <Button
         android:id="@+id/stopRecordButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" 
+        android:text="stop"/>
 
     <Button
         android:id="@+id/startRecordButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="start" />
 
     <Button
         android:id="@+id/saveFileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rtof_save_file" 
-				android:visibility="gone" />
+        android:text="@string/rtof_save_file"  />
 
     <Button
-        android:id="@+id/NextNoteButton"
+        android:id="@+id/nextNoteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rtof_next_note" 
-				android:visibility="gone" />
+        android:text="@string/rtof_next_note" />
 
 </LinearLayout>
