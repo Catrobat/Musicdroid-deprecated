@@ -165,6 +165,7 @@ private final PdListener myListener = new PdListener() {
     
     public void onMidiClick(View view) {   
 
+    	instrument = 0;
     	registerForContextMenu(view); 
         openContextMenu(view);
         unregisterForContextMenu(view);
