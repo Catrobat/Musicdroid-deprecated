@@ -1,8 +1,5 @@
 package at.tugraz.ist.musicdroid.tests;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import at.tugraz.ist.musicdroid.MidiTable;
 
 import junit.framework.TestCase;
