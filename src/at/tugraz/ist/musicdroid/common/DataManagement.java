@@ -61,10 +61,10 @@ public class DataManagement {
 	}
 
 	public Vector<String> LoadDirectory(String directoryPath) {
-		return new Vector();
+		return new Vector<String>();
 	}
 
 	public Vector<String> LoadXML(String filename) {
-		return new Vector();
+		return new Vector<String>();
 	}
 }

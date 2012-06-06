@@ -3,7 +3,6 @@ package at.tugraz.ist.musicdroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -28,7 +27,6 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// sound_file = new SoundFile();
 		OpenRecorderButton = (Button) findViewById(R.id.soundRecorderButton);
 		OpenRecorderButton.setOnClickListener(this);
 		OpenPlayerButton = (Button) findViewById(R.id.soundPlayerButton);
