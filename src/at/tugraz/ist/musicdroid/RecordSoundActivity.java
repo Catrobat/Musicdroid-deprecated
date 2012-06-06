@@ -4,21 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.String;
 import java.nio.channels.FileChannel;
 
-import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
-import org.puredata.android.utils.PdUiDispatcher;
 import org.puredata.core.PdBase;
-import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -27,12 +22,16 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
@@ -91,7 +90,7 @@ public class RecordSoundActivity extends Activity {
         playButton.setBackgroundResource(R.drawable.playdisabled);
         playButton.setEnabled(false); //todo  
         recordlight = (ImageView) findViewById(R.id.recordlight);
-        recordlight.setImageResource(R.drawable.recordlighton);
+        recordlight.setImageResource(R.drawable.recordlightoff);
       //  testoutput = (TextView) findViewById(R.id.textView1);	
         chrono = (Chronometer) findViewById(R.id.chronometer1);
         
@@ -151,11 +150,12 @@ public class RecordSoundActivity extends Activity {
     
     
     private void initPd() throws IOException {
-		String name = getResources().getString(R.string.app_name);
-		pdService.initAudio(-1, -1, -1, -1);
-		pdService.startAudio(new Intent(this, RecordSoundActivity.class), 
-				             R.drawable.musicdroid_launcher, name, "Retrun to " 
-		                                                          + name + ".");
+		//String name = getResources().getString(R.string.app_name);
+		pdService.initAudio(-1, 1, -1, -1);
+		pdService.startAudio();
+		//(new Intent(this, RecordSoundActivity.class), 
+		//		             R.drawable.musicdroid_launcher, name, "Return to " 
+		//                                                          + name + ".");
 				
 		
 	}
@@ -165,6 +165,7 @@ public class RecordSoundActivity extends Activity {
       String status = "start";
       PdBase.sendSymbol("filename", filename);
       PdBase.sendSymbol("status", status);
+      recordlight.setImageResource(R.drawable.recordlighton);
     }
     
     
@@ -222,6 +223,34 @@ public class RecordSoundActivity extends Activity {
             if (outChannel != null)
                 outChannel.close();
         }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.icon:     
+            	Intent i = new Intent(RecordSoundActivity.this, PitchDetectionActivity.class);
+            	Bundle b = new Bundle();
+            	b.putString("path", newFile.getAbsolutePath()); //Your id
+            	i.putExtras(b); //Put your id to your next Intent
+
+                startActivity(i);
+            	
+            	//Toast.makeText(this, "You pressed the icon!", Toast.LENGTH_LONG).show();
+                                break;
+            case R.id.text:     Toast.makeText(this, "You pressed the text!", Toast.LENGTH_LONG).show();
+                                break;
+            case R.id.icontext: Toast.makeText(this, "You pressed the icon and text!", Toast.LENGTH_LONG).show();
+                                break;
+        }
+        return true;
     }
 }
 

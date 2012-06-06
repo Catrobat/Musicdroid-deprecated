@@ -28,7 +28,10 @@ public class MidiTable {
 	
 	public String midiToName(int midi)
 	{
-		return NoteMap.get(midi).toString();	
+		if(NoteMap.containsKey(midi))
+		  return NoteMap.get(midi).toString();
+		else
+		  return "invalid value";
 	}
 	
 	

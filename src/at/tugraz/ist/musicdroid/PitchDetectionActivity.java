@@ -30,6 +30,7 @@ public class PitchDetectionActivity extends Activity {
 
 	private File dir;
 	private PdService pdService = null;
+	private String path;
 	
 	ArrayList<Float> values;
 	
@@ -103,17 +104,20 @@ private final PdListener myListener = new PdListener() {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
         values = new ArrayList<Float>();
+        Bundle b = getIntent().getExtras();
+        path = b.getString("path");
+
 
         bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
     }
     
     public void onRunClick(View view) {
-    	File inputFile = new File(dir, "Hammond.wav");
+    	File inputFile = new File(path);
     	String input_wav = inputFile.getAbsolutePath();		
     	
     	if(!inputFile.exists())
     	{
-    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_SHORT);
+    		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
     		Log.i("Pitchdet","Sound-file not found!");
     		return;
     	}
