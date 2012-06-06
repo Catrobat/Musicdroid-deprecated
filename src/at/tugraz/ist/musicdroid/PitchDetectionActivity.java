@@ -19,9 +19,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +29,7 @@ public class PitchDetectionActivity extends Activity {
 	private PdService pdService = null;
 	private String path;
 	
-	ArrayList<Float> values;
+	ArrayList<Integer> values;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 
@@ -88,7 +85,7 @@ private final PdListener myListener = new PdListener() {
   /* When we receive a float from Pd */
   public void receiveFloat(String source, float x) {
     Log.i("receiveFloat", ((Float)x).toString());
-    values.add( x); 
+    values.add( (int)x); 
     
   }
   /* When we receive a bang from Pd */
@@ -103,7 +100,7 @@ private final PdListener myListener = new PdListener() {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
-        values = new ArrayList<Float>();
+        values = new ArrayList<Integer>();
         Bundle b = getIntent().getExtras();
         path = b.getString("path");
 
@@ -134,13 +131,34 @@ private final PdListener myListener = new PdListener() {
 	    {
 	    	out += values.get(i).toString() +
 	    			" -> " +
-	    			midi.midiToName((int)Math.rint(values.get(i)))	+ 
+	    			midi.midiToName(values.get(i))	+ 
 	    			"\n";
 	    }
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
     	
+    }
+    
+    public void onMidiClick(View view) {   
+	    
+    	MidiFile mf = new MidiFile();  
+    	
+    	if(values.size() <= 0) return;
+    	try
+    	{
+	    	mf.progChange(1);  //select instrument
+	    	for(int i=0;i< values.size();i++)
+		    {
+	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
+		    }
+		    File f = new File(path);
+		    String filename = f.getParentFile() + File.separator + "test.midi";
+		    mf.writeToFile(filename);
+    	}
+    	catch (Exception e) {
+			Log.e("Midi", e.getMessage());
+		}    	
     }
 
     private void loadPatch() throws IOException {

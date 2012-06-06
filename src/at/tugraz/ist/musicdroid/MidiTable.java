@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class MidiTable {
 	
-	HashMap NoteMap = new HashMap();
+	HashMap<Integer, String> NoteMap = new HashMap<Integer, String>();
 	
 	public MidiTable() {
 		
