@@ -1,11 +1,14 @@
 package at.tugraz.ist.musicdroid;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.Object;
 import java.util.*;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,11 +22,18 @@ public class PianoActivity extends Activity {
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
 	private NoteMapper mapper;
+	static final int SEMIQUAVER = 4;
+	static final int QUAVER = 8;
+	static final int CROTCHET = 16;
+	static final int MINIM = 32;
+	static final int SEMIBREVE = 64;
+	private String ActivityName = "PianoActivity";
 	
 	public void onCreate(Bundle savedInstanceState) {
  
         super.onCreate(savedInstanceState);
         setContentView(R.layout.piano);
+        createMidiSounds();
         init();
         piano.setOnTouchListener(new OnTouchListener()    {
 
@@ -104,6 +114,75 @@ public class PianoActivity extends Activity {
 	{
 	  val += 0.5;
 	  return (int)val;
+	}
+	
+	private String getMidiNote(int value){
+		switch (value){
+			case 0:
+				return "C";
+			case 1:
+				return "Cis";
+			case 2:
+				return "D";
+			case 3:
+				return "Dis";
+			case 4: 
+				return "E";
+			case 5:
+			    return "F";
+			case 6:
+				return "Fis";
+			case 7:
+				return "G";
+			case 8:
+				return "Gis";
+			case 9:
+				return "A";
+			case 10:
+				return "Ais";
+			case 11:
+				return "H";
+	
+		}
+		
+		return "W";			
+			
+	}
+	
+	
+	private boolean createMidiSounds(){
+		boolean success= false;
+		File directory;
+		String midi_note;
+		String file_name;
+		String path;
+		int midi_value = 0;
+		int counter = 0;
+		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"piano_midi_sounds");
+ 	    directory.mkdirs();
+ 	    counter = 0;
+ 	    for(midi_value = 36; midi_value < 96; midi_value++ ){
+ 	    	
+ 	    	midi_note = getMidiNote(counter);
+ 	    	MidiFile midiFile = new MidiFile();
+ 	   		midiFile.noteOn(0, midi_value, 127);
+ 	   		midiFile.noteOff(SEMIBREVE, midi_value);
+ 	   		file_name = midi_note + "_" + midi_value + ".mid";
+ 	   		path = directory.getAbsolutePath() + File.separator + file_name;
+     		try {
+	    			midiFile.writeToFile(path); 	
+	    		} catch (IOException e) {
+ 	    			Log.e(ActivityName, e.toString());
+ 	    			finish();
+ 	    		}
+ 	    	
+     		counter++;
+     		if (counter == 12)
+     			counter = 0;
+     		
+     		
+ 	    }
+ 	    return success;
 	}
 
 }

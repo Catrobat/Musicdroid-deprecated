@@ -27,19 +27,19 @@ public class NoteMapper {
 	int oct = 0;
 	for(int octave = 0; octave < 5; octave++)
 	{	
-		positionToWhiteKey.put(position,oct+0);   //C
+		positionToWhiteKey.put(position,oct+36);   //C
 		position += interval;
-		positionToWhiteKey.put(position,oct+2);   //D
+		positionToWhiteKey.put(position,oct+38);   //D
 		position += interval;
-		positionToWhiteKey.put(position,oct+4);   //E
+		positionToWhiteKey.put(position,oct+40);   //E
 		position += interval;
-		positionToWhiteKey.put(position,oct+5);   //F
+		positionToWhiteKey.put(position,oct+41);   //F
 		position += interval;
-		positionToWhiteKey.put(position,oct+7);   //G
+		positionToWhiteKey.put(position,oct+43);   //G
 		position += interval;
-		positionToWhiteKey.put(position,oct+9);   //A
+		positionToWhiteKey.put(position,oct+45);   //A
 		position += interval;
-		positionToWhiteKey.put(position,oct+11);  //H
+		positionToWhiteKey.put(position,oct+47);  //H
 		position += interval;
 		oct += 12;
 	}	
