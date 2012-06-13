@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +30,7 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import at.tugraz.ist.musicdroid.common.Constants;
 
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
@@ -47,9 +47,9 @@ public class RecordSoundActivity extends Activity {
 	private File directory;
 	private File newFile;
 	private ImageView recordlight;
+	private boolean record_saved = false;
 
 	private final ServiceConnection pdConnection = new ServiceConnection() {
-		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			pdService = ((PdService.PdBinder) service).getService();
 			try {
@@ -61,7 +61,6 @@ public class RecordSoundActivity extends Activity {
 			}
 		}
 
-		@Override
 		public void onServiceDisconnected(ComponentName name) {
 
 		}
@@ -70,10 +69,6 @@ public class RecordSoundActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		directory = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "records");
-		directory.mkdirs();
-		newFile = new File(directory, "test.wav");
 
 		bindService(new Intent(this, PdService.class), pdConnection,
 				BIND_AUTO_CREATE);
@@ -93,12 +88,12 @@ public class RecordSoundActivity extends Activity {
 		chrono = (Chronometer) findViewById(R.id.chronometer1);
 
 		recordButton.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View view) {
 				chrono.setBase(SystemClock.elapsedRealtime());
 				chrono.start();
 				stopButton.setEnabled(true);
 				stopButton.setBackgroundResource(R.drawable.stop);
+
 				playButton.setEnabled(true);
 				playButton.setBackgroundResource(R.drawable.play);
 				recordSoundFile();
@@ -111,12 +106,12 @@ public class RecordSoundActivity extends Activity {
 				String status = "stop";
 
 				chrono.stop();
+				chrono.setBase(SystemClock.elapsedRealtime());
 				recordlight.setImageResource(R.drawable.recordlightoff);
 				PdBase.sendSymbol("status", status);
 				File file = new File(dir, "firstrecord.wav");
 				patch = file;
-				getRecordName(file);
-
+				SaveRecord(file);
 			}
 		});
 
@@ -128,27 +123,32 @@ public class RecordSoundActivity extends Activity {
 
 	}
 
-	public void getRecordName(File file) {
+	public void SaveRecord(File file) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Please enter a filename.");
 		final EditText input = new EditText(this);
 		alert.setView(input);
-		String neu = "";
-
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			String value = "";
 
-			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				value = input.getText().toString();
 
-				newFile = new File(directory, value + ".wav");
+				if (value != "") {
+					newFile = new File(Constants.MAIN_DIRECTORY
+							+ Constants.RECORDS_SUB_DIRECTORY, value + ".wav");
 
-				try {
-					copyFile(patch, newFile);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					try {
+						copyFile(patch, newFile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					playButton.setBackgroundResource(R.drawable.playdisabled);
+					playButton.setEnabled(false);
+					stopButton.setBackgroundResource(R.drawable.stopdisabled);
+					stopButton.setEnabled(false);
 				}
 			}
 
@@ -157,10 +157,8 @@ public class RecordSoundActivity extends Activity {
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-
+						
 					}
 				});
 
