@@ -126,7 +126,8 @@ public class RecordSoundActivity extends Activity {
 		 
 		alert = builder.create();
        
-        directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records");
+        		
+		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records");
  	    directory.mkdirs();
  	    newFile = new File(directory, "test.wav");
 

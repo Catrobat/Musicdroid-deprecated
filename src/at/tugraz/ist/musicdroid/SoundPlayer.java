@@ -18,14 +18,14 @@ public class SoundPlayer {
 	private static final int PRIORITY=1;
 	private int soundID = 36;
 	private Context context;
-	//private AudioManager audiomanager;
+	
 	
 	public SoundPlayer(Context cxt){
 		context = cxt;
 	}
 	
 	private void fillSoundpool (String path){
-		Log.e("SoundPlayer:", "fillSound " + path);
+		
 		soundPoolMap.put(soundID, soundPool.load(path, PRIORITY));
 	    soundID++;
 		
@@ -34,15 +34,14 @@ public class SoundPlayer {
 	
 	
 	public void initSoundpool () {
-		Log.e("SoundPlayer:", "initSoundpool ");
+		
 		soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 100);
         soundPoolMap = new HashMap<Integer, Integer>();
-        //soundPool.setOnLoadCompleteListener(this);
-        //audiomanager=(AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
+        
 	}
 	
 	public void setSoundpool(String path){
-		Log.e("SoundPlayer:", "fillSound " + path);
+		
 		fillSoundpool(path);
 	}
 	
@@ -58,7 +57,7 @@ public class SoundPlayer {
 		float normal_playback_rate = 1f;
 		soundPool.play(midiValue, leftVolume, rightVolume, priority, no_loop, normal_playback_rate);
 		
-		//Toast.makeText(SoundPlayer.this, "soundPool.play()", Toast.LENGTH_LONG).show();
+		
 	}
 
 }
