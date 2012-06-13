@@ -13,12 +13,15 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class PianoActivity extends Activity {
@@ -26,6 +29,7 @@ public class PianoActivity extends Activity {
 	private ImageView piano; 
 	private ImageView gradient;
 	private ImageView notes;
+	private DrawTonesView toneView;
 	
 	private NoteMapper mapper;
 	private SoundPlayer soundplayer;
@@ -106,15 +110,51 @@ public class PianoActivity extends Activity {
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
+        scroll.setId(2);
       //  gradient = (ImageView) findViewById(R.id.imageView2);
-        notes = (ImageView) findViewById(R.id.imageView1);
+        //notes = (ImageView) findViewById(R.id.imageView1);
+
+        LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
         
         Display display = getWindowManager().getDefaultDisplay();
         int height = display.getHeight();
-        
-        notes.setMinimumHeight(height/2);
-        
-        gradient.setVisibility(View.INVISIBLE);
+        int width = display.getWidth();
+        layout.setLayoutParams(new RelativeLayout.LayoutParams(width,height/2));
+        //notes.setMinimumHeight(height/2);
+		int radius = getResources().getInteger(R.integer.radius);
+		int topline = getResources().getInteger(R.integer.topmarginlines);
+  	    toneView = new DrawTonesView(this, R.drawable.violine, radius , topline);
+  	    toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,height/2));
+  	    layout.addView(toneView,0);
+  	  
+  /*	    
+        layoutParams = new RelativeLayout.LayoutParams(val_high, val_high);
+        layoutParams2 = new RelativeLayout.LayoutParams(val_high, val_high);
+        layoutParams3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
+            (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()));
+
+        sssImageView.setMaxHeight(val_high);
+        sssImageView.setMaxWidth(val_high);
+        relativeLayout.updateViewLayout(sssImageView, layoutParams);            
+
+        layoutParams3.addRule(RelativeLayout.BELOW, sssImageView.getId());
+        relativeLayout.updateViewLayout(spacing, layoutParams3);
+
+        layoutParams2.addRule(RelativeLayout.BELOW, spacing.getId());
+        gaImageView.setMaxHeight(val_high);
+        gaImageView.setMaxWidth(val_high);
+        relativeLayout.updateViewLayout(gaImageView, layoutParams2);  
+  	    
+  	    */
+  	    
+
+        //RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //p.addRule(RelativeLayout.ALIGN_BOTTOM, scroll.getId());
+        //p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, scroll.getId());
+        //layout.addView(toneView, p);
+
+       // gradient.setVisibility(View.INVISIBLE);
         
         int x = scroll.getWidth()/2; 
         int y = scroll.getHeight()/2;
