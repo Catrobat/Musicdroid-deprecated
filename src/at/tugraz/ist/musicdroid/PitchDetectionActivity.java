@@ -2,6 +2,7 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.puredata.android.service.PdService;
@@ -19,6 +20,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,6 +29,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +41,10 @@ public class PitchDetectionActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
+	private boolean isConnected = false;
+	private int patchID = 0;
+	private Handler myProgressHandler = new Handler();
+	private String input_wav;
 	
 	ArrayList<Integer> values;
 	
@@ -115,24 +124,66 @@ private final PdListener myListener = new PdListener() {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pitchdetection);
+       
         values = new ArrayList<Integer>();
         Bundle b = getIntent().getExtras();
         path = b.getString("path");
-
-
-        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
-    }
-    
-    public void onRunClick(View view) {
-    	File inputFile = new File(path);
-    	String input_wav = inputFile.getAbsolutePath();		
+        
+        
+        File inputFile = new File(path);
+    	input_wav = inputFile.getAbsolutePath();		
     	
     	if(!inputFile.exists())
     	{
     		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
     		Log.i("Pitchdet","Sound-file not found!");
+    		Button button = (Button)findViewById(R.id.analyzeButton);
+    		button.setEnabled(false);
     		return;
+    	}    	
+        
+    	calculateWavLength();
+
+        isConnected = bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
+    }
+    
+    private void calculateWavLength()
+    {
+    	MediaPlayer mp = MediaPlayer.create(this, Uri.parse(input_wav));
+    	int duration = mp.getDuration() / 1000;
+    	mp.release();
+    	
+    	TextView t = (TextView)findViewById(R.id.progressText);
+    	
+    	DecimalFormat df =   new DecimalFormat  ( "00" );
+    	
+    	if(duration < 60)
+    		t.setText("00:" + df.format(duration));
+    	else
+    	{
+    		int temp = duration;
+    		int min = 0;
+    		while(temp > 60)
+    		{
+    			min++;
+    			temp = temp - 60;
+    		}
+    		t.setText(df.format(min) + ":" + df.format(temp));
     	}
+    	
+    	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
+    	p.setMax(duration*10);
+    	p.setProgress(0);       	
+    }
+    
+    public void onRunClick(View view) {
+    	
+    	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
+    	p.setProgress(0); 
+    	
+    	myProgressHandler.removeCallbacks(myHandlerTask);
+    	myProgressHandler.postDelayed(myHandlerTask, 100);   	
+    	
     	
     	values.clear();
     	TextView t = (TextView)findViewById(R.id.outTextView);
@@ -143,6 +194,10 @@ private final PdListener myListener = new PdListener() {
     
     private void printResults()
     {
+    	myProgressHandler.removeCallbacks(myHandlerTask);
+    	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
+    	p.setProgress(p.getMax());
+    	
     	String out = "";
 	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
@@ -155,12 +210,11 @@ private final PdListener myListener = new PdListener() {
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
+	    
+	    Button b = (Button)findViewById(R.id.synthesizeButton);
+	    b.setEnabled(true);
     }
     
-    public void onResultClick(View view) {   
-	    printResults();
-    	
-    }
     
     private void writeMidiFile(int instrument)
     {
@@ -278,12 +332,11 @@ private final PdListener myListener = new PdListener() {
     }
 
     private void loadPatch() throws IOException {
-    	Log.e("Pitchdet", "test");
 		dir = getFilesDir();
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.pitchdet),
 				dir, true);
 		File patchFile = new File(dir, "pitchdet.pd");
-		PdBase.openPatch(patchFile.getAbsolutePath());	
+		patchID = PdBase.openPatch(patchFile.getAbsolutePath());	
     }
     
     
@@ -311,8 +364,24 @@ private final PdListener myListener = new PdListener() {
     @Override
 	public void onDestroy() {
 		super.onDestroy();
+		PdBase.closePatch(patchID);
 		unbindService(pdConnection);
 	}
+    
+    
+    
+    
+    private Runnable myHandlerTask = new Runnable() {
+    	   public void run() {
+    		    ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
+    	    	if(p.getProgress() < p.getMax() - 1)
+    	    		p.incrementProgressBy(1);
+    		   
+    	   // Hier Methode ausführen, Ereignis auslösen, usw...   
+    		   myProgressHandler.postDelayed(myHandlerTask, 100);
+    	   }
+
+    	};
     	
     	
 }

@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PitchDetectionActivity">       
+        <activity android:name=".PitchDetectionActivity" android:launchMode="singleTop">       
         </activity>
         <service android:name="org.puredata.android.service.PdService" />
         <activity android:name="RecordSoundActivity"></activity>

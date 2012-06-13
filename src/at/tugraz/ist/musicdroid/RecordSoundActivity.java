@@ -48,6 +48,7 @@ public class RecordSoundActivity extends Activity {
 	private File directory;
 	private File newFile;
 	private ImageView recordlight;
+	private int patchID = 0;
 	
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
@@ -143,8 +144,7 @@ public class RecordSoundActivity extends Activity {
 				dir, true);
 		File patchFile = new File(dir, "recordtest.pd");
 		path = patchFile.getAbsolutePath();		
-		PdBase.openPatch(patchFile.getAbsolutePath());	
-
+		patchID = PdBase.openPatch(patchFile.getAbsolutePath());	
     }
     
     
@@ -172,8 +172,10 @@ public class RecordSoundActivity extends Activity {
     @Override
 	public void onDestroy() {
 		super.onDestroy();
+		PdBase.closePatch(patchID);
 		unbindService(pdConnection);
 	}
+    
     
     public void playfile() {
     	Uri myUri = Uri.fromFile(patch);
@@ -227,6 +229,8 @@ public class RecordSoundActivity extends Activity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	stopButton.performClick();
+    	
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.layout.menu, menu);
         return true;
@@ -235,8 +239,10 @@ public class RecordSoundActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.icon:     
+            case R.id.menuAnalyze:     
             	Intent i = new Intent(RecordSoundActivity.this, PitchDetectionActivity.class);
+            	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             	Bundle b = new Bundle();
             	b.putString("path", newFile.getAbsolutePath()); //Your id
             	i.putExtras(b); //Put your id to your next Intent
@@ -244,10 +250,6 @@ public class RecordSoundActivity extends Activity {
                 startActivity(i);
             	
             	//Toast.makeText(this, "You pressed the icon!", Toast.LENGTH_LONG).show();
-                                break;
-            case R.id.text:     Toast.makeText(this, "You pressed the text!", Toast.LENGTH_LONG).show();
-                                break;
-            case R.id.icontext: Toast.makeText(this, "You pressed the icon and text!", Toast.LENGTH_LONG).show();
                                 break;
         }
         return true;
