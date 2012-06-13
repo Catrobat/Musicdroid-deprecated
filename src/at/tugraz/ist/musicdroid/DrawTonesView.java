@@ -3,24 +3,15 @@ package at.tugraz.ist.musicdroid;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.spec.IvParameterSpec;
-
-import android.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
+import android.util.AttributeSet;
 import android.widget.ScrollView;
 
 public class DrawTonesView extends ScrollView {
@@ -32,9 +23,46 @@ public class DrawTonesView extends ScrollView {
 	private int radius_;
 	private int distance_between_notes_;
 	
+	public DrawTonesView(Context context)
+	{
+		super(context);
+		
+		Resources r = getResources();
+		int radius = r.getInteger(R.integer.radius);
+		int topline = r.getInteger(R.integer.topmarginlines);
+	  
+	  init(context, R.drawable.violine, radius, topline);
+	}
 
+	public DrawTonesView(Context context, AttributeSet attrs)
+	{
+	  super(context,attrs);
+	  
+	 Resources r = getResources();
+		int radius = r.getInteger(R.integer.radius);
+		int topline = r.getInteger(R.integer.topmarginlines);
+	  
+	  init(context, R.drawable.violine, radius, topline);
+	}
+	
+	public DrawTonesView(Context context, AttributeSet attrs, int defStyle)
+	{
+	  super(context,attrs, defStyle);
+	  
+	 Resources r = getResources();
+		int radius = r.getInteger(R.integer.radius);
+		int topline = r.getInteger(R.integer.topmarginlines);
+	  
+	  init(context, R.drawable.violine, radius, topline);
+	}
+	
 	public DrawTonesView(Context context, int id, int radius, int firstline) {
 		super(context);
+		init(context, id, radius, firstline);
+		
+	}
+	
+	public void init(Context context, int id, int radius, int firstline) {
 		radius_ = radius;
 		this.context = context;
 		first_line_= firstline;
@@ -48,11 +76,13 @@ public class DrawTonesView extends ScrollView {
 			addElement(10 + i);
 		}
 		invalidate();
-		
 	}
+	
+	
 
 	@Override
 	public void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 
 		this.paint.setColor(Color.BLACK);
 		paint.setStyle(Paint.Style.FILL);
@@ -75,6 +105,7 @@ public class DrawTonesView extends ScrollView {
 		
 
 	}
+	
 
 	public void addElement(int midi) {
 		int i = tones.size();

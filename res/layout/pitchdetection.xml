@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"  >
+    
     <LinearLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/analyzeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onRunClick"
-            android:text="Analyze" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/progressLayout">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.72" android:layout_marginLeft="3dp" android:layout_marginRight="3dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/progressText"
+            android:id="@+id/outTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:text="00:00"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+       <!--   <at.tugraz.ist.musicdroid.DrawTonesView
+            android:id="@+id/tonesView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        -->
+
+        <Button
+            android:id="@+id/synthesizeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="onMidiClick"
+            android:text="Synthesize" />
+
+       
+        
     </LinearLayout>
+    
+     <LinearLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp" 
+            android:layout_alignParentBottom="true" >
 
-    <Button
-        android:id="@+id/synthesizeButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="onMidiClick"
-        android:text="Synthesize" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="0.72" />
 
-    <TextView
-        android:id="@+id/outTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/progressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:text="00:00"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</LinearLayout>
+        </LinearLayout>
+   
+</RelativeLayout >

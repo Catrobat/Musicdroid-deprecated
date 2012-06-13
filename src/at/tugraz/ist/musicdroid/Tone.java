@@ -38,7 +38,8 @@ public class Tone extends View {
 
 	private void calculateCoordinates() {
 		// g2=43 x+r, y-r
-		int octave = midiVal / 12 - 1;
+		int octave = midiVal / 12 - 3;
+		//int octave = midiVal / 12 - 1; ->  Korrektur um 2 Oktaven
 		int value = midiVal % 12; // 0=C
 
 		int distance[] = { 6, 6, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0 };
@@ -58,12 +59,12 @@ public class Tone extends View {
 		RectF oval = new RectF(x - r - r / 4, y - r, x + r + r / 4, y + r);
 
 		canvas.drawOval(oval, paint);
-		if (this.midiVal < 36)
-			canvas.drawLine(x + r + r / 4, y, x + r + r / 4, y - 3 * r, paint);// nach
+		if (this.midiVal < 60)  //36 ->  Korrektur um 2 Oktaven
+			canvas.drawLine(x + r + r / 4, y, x + r + r / 4, y - 5 * r, paint);// nach
 		// unten
 		// klappen
 		else {
-			canvas.drawLine(x - r - r / 4, y, x - r - r / 4, y + 3 * r, paint);
+			canvas.drawLine(x - r - r / 4, y, x - r - r / 4, y + 5 * r, paint);
 		}
 		int helpline = y_line + 10 * r;
 		while (helpline <= y) {

@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -42,9 +44,12 @@ public class PitchDetectionActivity extends Activity {
 	private PdService pdService = null;
 	private String path;
 	private boolean isConnected = false;
+	
+	
 	private int patchID = 0;
 	private Handler myProgressHandler = new Handler();
 	private String input_wav;
+	private DrawTonesView toneView;
 	
 	ArrayList<Integer> values;
 	
@@ -55,6 +60,7 @@ public class PitchDetectionActivity extends Activity {
     		try {
     			initPd();
     			loadPatch();
+    			doAnalyze();
     		} catch (IOException e) {
     			Log.e(Appname, e.toString());
     			finish();
@@ -136,15 +142,32 @@ private final PdListener myListener = new PdListener() {
     	if(!inputFile.exists())
     	{
     		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
-    		Log.i("Pitchdet","Sound-file not found!");
-    		Button button = (Button)findViewById(R.id.analyzeButton);
-    		button.setEnabled(false);
+    		Log.e("Pitchdet","Sound-file not found!");
     		return;
     	}    	
         
     	calculateWavLength();
+    	
+    	Resources r = getResources();
+		int radius = r.getInteger(R.integer.radius);
+		int topline = r.getInteger(R.integer.topmarginlines);
+		
+		LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
+		int parentHeight = layout.getHeight();
+		
+		  toneView = new DrawTonesView(this, R.drawable.violine, radius , topline); 
+		  toneView.clearList();
+		  toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));	        
+		  layout.addView(toneView,0);
+		  
 
-        isConnected = bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);        
+        isConnected = bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);  
+        if(!isConnected)
+        {
+    		Toast.makeText(this, "Error while binding Service!", Toast.LENGTH_LONG);
+    		Log.e("Pitchdet","Error while binding Service!");
+    		return;
+    	}        	
     }
     
     private void calculateWavLength()
@@ -176,13 +199,12 @@ private final PdListener myListener = new PdListener() {
     	p.setProgress(0);       	
     }
     
-    public void onRunClick(View view) {
+    public void doAnalyze() {
     	
+    	try {
+		    	
     	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
     	p.setProgress(0); 
-    	
-    	myProgressHandler.removeCallbacks(myHandlerTask);
-    	myProgressHandler.postDelayed(myHandlerTask, 100);   	
     	
     	
     	values.clear();
@@ -190,6 +212,17 @@ private final PdListener myListener = new PdListener() {
 	    t.setText("");
     	
     	PdBase.sendSymbol("input-wav", input_wav);
+    	
+    	
+    	myProgressHandler.removeCallbacks(myHandlerTask);
+    	myProgressHandler.postDelayed(myHandlerTask, 100);   	
+    	
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.e("pitchdet", e.getMessage());
+		}
+
     }
     
     private void printResults()
@@ -210,6 +243,8 @@ private final PdListener myListener = new PdListener() {
 	    
 	    TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText(out);
+	    
+	    doDraw();
 	    
 	    Button b = (Button)findViewById(R.id.synthesizeButton);
 	    b.setEnabled(true);
@@ -368,6 +403,17 @@ private final PdListener myListener = new PdListener() {
 		unbindService(pdConnection);
 	}
     
+    public void doDraw()
+    {	
+		toneView.clearList();
+		
+		for(int i=0;i< values.size();i++)
+	    {
+			toneView.addElement(values.get(i));
+	    }   	
+		toneView.refreshDrawableState();
+    }
+    
     
     
     
@@ -375,10 +421,10 @@ private final PdListener myListener = new PdListener() {
     	   public void run() {
     		    ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
     	    	if(p.getProgress() < p.getMax() - 1)
-    	    		p.incrementProgressBy(1);
-    		   
-    	   // Hier Methode ausführen, Ereignis auslösen, usw...   
-    		   myProgressHandler.postDelayed(myHandlerTask, 100);
+    	    	{
+    	    		p.incrementProgressBy(1);  
+    	    		myProgressHandler.postDelayed(myHandlerTask, 100);
+    	    	}
     	   }
 
     	};
