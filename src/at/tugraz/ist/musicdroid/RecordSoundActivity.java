@@ -138,7 +138,6 @@ public class RecordSoundActivity extends Activity {
     }
 
     private void loadPatch() throws IOException {
-    	Log.e("test", "test");
 		dir = getFilesDir();
 		IoUtils.extractZipResource(getResources().openRawResource(R.raw.recordtest),
 				dir, true);
@@ -229,7 +228,7 @@ public class RecordSoundActivity extends Activity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	stopButton.performClick();
+    	//stopButton.performClick();
     	
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.layout.menu, menu);

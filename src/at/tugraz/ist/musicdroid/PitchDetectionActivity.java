@@ -26,6 +26,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,8 +44,6 @@ public class PitchDetectionActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private String path;
-	private boolean isConnected = false;
-	
 	
 	private int patchID = 0;
 	private Handler myProgressHandler = new Handler();
@@ -137,54 +136,50 @@ private final PdListener myListener = new PdListener() {
         
         
         File inputFile = new File(path);
-    	input_wav = inputFile.getAbsolutePath();		
-    	
     	if(!inputFile.exists())
     	{
     		Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
     		Log.e("Pitchdet","Sound-file not found!");
     		return;
-    	}    	
+    	} 
+    	input_wav = inputFile.getAbsolutePath();
         
     	calculateWavLength();
+    	
+
+        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE); 
     	
     	Resources r = getResources();
 		int radius = r.getInteger(R.integer.radius);
 		int topline = r.getInteger(R.integer.topmarginlines);
 		
 		LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
-		int parentHeight = layout.getHeight();
 		
-		  toneView = new DrawTonesView(this, R.drawable.violine, radius , topline); 
-		  toneView.clearList();
-		  toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));	        
-		  layout.addView(toneView,0);
+	  toneView = new DrawTonesView(this, R.drawable.violine, radius , topline); 
+	  toneView.clearList();
+	  toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));	        
+	  layout.addView(toneView,0);
 		  
 
-        isConnected = bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);  
-        if(!isConnected)
-        {
-    		Toast.makeText(this, "Error while binding Service!", Toast.LENGTH_LONG);
-    		Log.e("Pitchdet","Error while binding Service!");
-    		return;
-    	}        	
+        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);       	
     }
     
     private void calculateWavLength()
     {
-    	MediaPlayer mp = MediaPlayer.create(this, Uri.parse(input_wav));
-    	int duration = mp.getDuration() / 1000;
+    	MediaPlayer mp = MediaPlayer.create(this, Uri.parse(input_wav));    	
+    	int duration_msec = mp.getDuration();
+    	int duration_sec = duration_msec / 1000;
     	mp.release();
     	
     	TextView t = (TextView)findViewById(R.id.progressText);
     	
     	DecimalFormat df =   new DecimalFormat  ( "00" );
     	
-    	if(duration < 60)
-    		t.setText("00:" + df.format(duration));
+    	if(duration_sec < 60)
+    		t.setText("00:" + df.format(duration_sec));
     	else
     	{
-    		int temp = duration;
+    		int temp = duration_sec;
     		int min = 0;
     		while(temp > 60)
     		{
@@ -195,14 +190,14 @@ private final PdListener myListener = new PdListener() {
     	}
     	
     	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
-    	p.setMax(duration*10);
+    	p.setMax(duration_msec/100);
     	p.setProgress(0);       	
     }
     
     public void doAnalyze() {
     	
     	try {
-		    	
+    		
     	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
     	p.setProgress(0); 
     	
@@ -211,8 +206,17 @@ private final PdListener myListener = new PdListener() {
     	TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText("");
     	
-    	PdBase.sendSymbol("input-wav", input_wav);
-    	
+	    File f = new File(input_wav);
+	    
+	    if(!f.exists())
+	    {
+	    	Toast.makeText(this, "Sound-file not found!", Toast.LENGTH_LONG);
+    		Log.e("Pitchdet","Sound-file not found!");
+    		return;
+	    }
+	    
+    	int ret = PdBase.sendSymbol("input-wav", input_wav);
+    	Log.i("PitchDet", Integer.toString(ret));
     	
     	myProgressHandler.removeCallbacks(myHandlerTask);
     	myProgressHandler.postDelayed(myHandlerTask, 100);   	
@@ -363,7 +367,7 @@ private final PdListener myListener = new PdListener() {
     		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
-    	mediaPlayer.start();	
+    	mediaPlayer.start();
     }
 
     private void loadPatch() throws IOException {
@@ -377,20 +381,12 @@ private final PdListener myListener = new PdListener() {
     
     
     private void initPd() throws IOException {
-		String name = getResources().getString(R.string.app_name);
-			
+		String name = getResources().getString(R.string.app_name);	
+		
 		pdService.initAudio(-1, 0, -1, -1);
 		pdService.startAudio();		
-		//.startAudio(new Intent(this, PitchDetectionActivity.class), 
-		//	             R.drawable.musicdroid_launcher, name, "Return to " 
-	    //                                                      + name + ".");
-		    	
-    	/* here is where we bind the print statement catcher defined below */
+		
     	  PdBase.setReceiver(myDispatcher);
-    	  /* here we are adding the listener for various messages
-    	     from Pd sent to "GUI", i.e., anything that goes into the object
-    	     [s GUI] will send to the listener defined below */
-    	  
     	  myDispatcher.addListener("pitch-midi", myListener);
 	}
     
@@ -398,9 +394,9 @@ private final PdListener myListener = new PdListener() {
     
     @Override
 	public void onDestroy() {
-		super.onDestroy();
-		PdBase.closePatch(patchID);
-		unbindService(pdConnection);
+    	PdBase.closePatch(patchID);
+    	unbindService(pdConnection);
+    	super.onDestroy();		
 	}
     
     public void doDraw()
@@ -411,9 +407,28 @@ private final PdListener myListener = new PdListener() {
 	    {
 			toneView.addElement(values.get(i));
 	    }   	
-		toneView.refreshDrawableState();
+		
     }
     
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	  	
+    	
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuAnalyze:     
+            	doAnalyze();
+                                break;
+        }
+        return true;
+    }
     
     
     
@@ -425,6 +440,7 @@ private final PdListener myListener = new PdListener() {
     	    		p.incrementProgressBy(1);  
     	    		myProgressHandler.postDelayed(myHandlerTask, 100);
     	    	}
+    	    	
     	   }
 
     	};
