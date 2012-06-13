@@ -22,19 +22,25 @@ public class PianoActivity extends Activity {
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
 	private NoteMapper mapper;
+	private SoundPlayer soundplayer;
 	static final int SEMIQUAVER = 4;
 	static final int QUAVER = 8;
 	static final int CROTCHET = 16;
 	static final int MINIM = 32;
 	static final int SEMIBREVE = 64;
 	private String ActivityName = "PianoActivity";
+	private Context context;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
         super.onCreate(savedInstanceState);
         setContentView(R.layout.piano);
+        context = this.getApplicationContext();
+        soundplayer = new SoundPlayer(context);
+        soundplayer.initSoundpool();
         createMidiSounds();
         init();
+        
         piano.setOnTouchListener(new OnTouchListener()    {
 
             @Override
@@ -55,6 +61,7 @@ public class PianoActivity extends Activity {
                 if(event.getY() > 2*y/3)
                 {	
                   mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
+                  soundplayer.playSound(mapped_key);
                   Log.e("mappedkey", String.valueOf(mapped_key));                  
                 } 
                 //TODO: blackey map funktioniert noch nicht 
@@ -74,7 +81,7 @@ public class PianoActivity extends Activity {
                 
                 
                 //TODO instead of toast -> play midi :) 
-                if(mapped_key == 24) 
+                if(mapped_key == 48) 
                 {
                 	Context context = getApplicationContext();
     	    		int duration = Toast.LENGTH_SHORT;
@@ -169,6 +176,7 @@ public class PianoActivity extends Activity {
  	   		midiFile.noteOff(SEMIBREVE, midi_value);
  	   		file_name = midi_note + "_" + midi_value + ".mid";
  	   		path = directory.getAbsolutePath() + File.separator + file_name;
+ 	   		soundplayer.setSoundpool(path);
      		try {
 	    			midiFile.writeToFile(path); 	
 	    		} catch (IOException e) {
