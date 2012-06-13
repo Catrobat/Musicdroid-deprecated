@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecToFrequencyActivity">       
+        <activity android:name=".DrawTonesActivity"></activity>
         </activity>
         <service android:name="org.puredata.android.service.PdService" />
     </application>

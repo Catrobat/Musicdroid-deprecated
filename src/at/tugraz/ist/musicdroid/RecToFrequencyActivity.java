@@ -18,13 +18,17 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -38,12 +42,14 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 	private final static String Appname = "rec_to_frequency";
 	private String path;
 	private String midiPath = "";
+	private int i = 1;
 	private File dir;
 	private Button StopRecordButton;
     private Button StartRecordButton;
     private Button SaveFileButton;
     private Button NextNoteButton;
     private Integer pitch;
+    private DrawTonesView toneView;
     ArrayList<Integer> pitches;
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
@@ -68,9 +74,18 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             
-
+            Resources r = getResources();
+    		int radius = r.getInteger(R.integer.radius);
+    		int topline = r.getInteger(R.integer.topmarginlines);
+    		
+    		setContentView(R.layout.record_to_frequency);
+    		toneView = new DrawTonesView(this, R.drawable.violine, radius , topline);	
+    		toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.FILL_PARENT));
+    		//setContentView(toneView);
+    		LinearLayout layout =  (LinearLayout)findViewById(R.id.baseLayout);
+            toneView.setVisibility(View.INVISIBLE);
+            layout.addView(toneView);
             
-            setContentView(R.layout.record_to_frequency);
             Log.i("test", "test");
             pitches = new ArrayList<Integer>();
             StopRecordButton = (Button)findViewById(R.id.stopRecordButton);
@@ -128,6 +143,12 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		Log.i("receiveFloat", ((Float)x).toString());
     		pitch = Math.round(x); 
     		Log.i("Pitch", ((Integer)pitch).toString());
+    		//toneView.deleteElement(0);
+    		toneView.clearList();
+    		toneView.addElement(pitch);
+    		
+    		//toneView.refreshDrawableState();
+    		toneView.invalidate();
     		//values.add( ((Float)x).toString()); 
     	}
     }
@@ -247,6 +268,8 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 					StopRecordButton.setVisibility(View.VISIBLE);
 					NextNoteButton.setVisibility(View.VISIBLE);
 					SaveFileButton.setVisibility(View.GONE);
+					toneView.setVisibility(View.VISIBLE);
+					
 				}
 				else if(state == POSTRECORD)
 				{
@@ -259,7 +282,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 					StopRecordButton.setVisibility(View.VISIBLE);
 					NextNoteButton.setVisibility(View.VISIBLE);
 					SaveFileButton.setVisibility(View.GONE);
-					
+					toneView.setVisibility(View.VISIBLE);
 					//nein:nix tun
 				}
 				else
@@ -273,11 +296,13 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 				{
 					
 					// Stop record
+					toneView.clearList();
 					state = POSTRECORD;
 					StartRecordButton.setVisibility(View.VISIBLE);
 					StopRecordButton.setVisibility(View.GONE);
 					NextNoteButton.setVisibility(View.GONE);
 					SaveFileButton.setVisibility(View.VISIBLE);
+					toneView.setVisibility(View.INVISIBLE);
 				}
 				else
 				{

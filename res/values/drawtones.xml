@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="integer" name="radius">8</item>
+    <item type="integer" name="topmarginlines">120</item>
+    <item name="distancebetween" type="integer">120</item>
+    
+</resources>
