@@ -4,6 +4,10 @@
     <string name="hello">Hello World, MusicdroidActivity!</string>
     <string name="app_name">Musicdroid</string>
     <string name="load_project">Load Project</string>
+    <string name="recordButtonTextField">Record</string>
+    <string name="recordInfoTextField">Keine Aufnahme</string>
+    <string name="stopRecordButtonTextField">Stop</string>
+    <string name="descr">Micro</string>
     <string name="load_sound_recorder">Open Sound Recorder</string>
     <string name="load_sound_player">Open Sound Player</string>
     <string name="new_project">New Project</string>

@@ -29,6 +29,7 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+        
 		OpenRecorderButton = (Button) findViewById(R.id.soundRecorderButton);
 		OpenRecorderButton.setOnClickListener(this);
 		OpenPlayerButton = (Button) findViewById(R.id.soundPlayerButton);
@@ -99,7 +100,9 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 		}
 		if (arg0 == OpenRecorderButton) {
-			// open Recorder
+	        Intent i = new Intent(MusicdroidActivity.this, RecordSoundActivity.class);
+	        startActivity(i);
 		}
 	}
 }
+
