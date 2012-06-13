@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class RecToFrequencyActivity extends Activity implements OnClickListener {
@@ -182,10 +183,11 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		    {
     	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
     		    }
-    		    File f = new File("/sdcard/records/miditest.mid");
-    		    String filename = f.getParentFile() + File.separator + "test.midi";
-    		    mf.writeToFile(filename);
-    		    File f2 = new File(filename);
+    	    	File directory = new File(Environment.getExternalStorageDirectory()+"/records/");
+    	    	directory.mkdirs();
+    	    	//File outputFile = new File(directory, "/miditest.mid");
+    	    	mf.writeToFile(directory + "/miditest.mid");
+    	    	File f2 = new File(directory + "/miditest.mid");
     		    if(f2.exists())
     		    	Log.i("file exists", "file exists");
         	}
