@@ -17,21 +17,21 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 public class DrawTonesActivity extends Activity {
-	private HorizontalScrollView scroll; 
-	private ImageView piano;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.draw_tones);
-		
+		setContentView(R.layout.draw_tones);
+
 		Resources r = getResources();
 		int radius = r.getInteger(R.integer.radius);
 		int topline = r.getInteger(R.integer.topmarginlines);
-		
-		DrawTonesView toneView = new DrawTonesView(this, R.drawable.violine, radius , topline);	
+
+		DrawTonesView toneView = new DrawTonesView(this, R.drawable.violine,
+				radius, topline);
 		setContentView(toneView);
-		
+
 	}
-	
+
 }

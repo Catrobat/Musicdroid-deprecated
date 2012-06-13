@@ -1,14 +1,17 @@
 package at.tugraz.ist.musicdroid.tests;
 
 import java.io.File;
+
 import org.puredata.core.utils.IoUtils;
-import com.jayway.android.robotium.solo.Solo;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import at.tugraz.ist.musicdroid.PitchDetectionActivity;
 import at.tugraz.ist.musicdroid.R;
+
+import com.jayway.android.robotium.solo.Solo;
 
 public class PitchDetectionActivityTest extends ActivityInstrumentationTestCase2<PitchDetectionActivity> {
     private Solo solo;
