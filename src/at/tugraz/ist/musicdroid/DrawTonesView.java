@@ -21,8 +21,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
-public class DrawTonesView extends View {
+public class DrawTonesView extends ScrollView {
 	private Paint paint;
 	private List tones = new ArrayList<Tone>();
 	private Context context;
