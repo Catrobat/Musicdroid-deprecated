@@ -106,7 +106,7 @@ public class PianoActivity extends Activity {
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
-        gradient = (ImageView) findViewById(R.id.imageView2);
+      //  gradient = (ImageView) findViewById(R.id.imageView2);
         notes = (ImageView) findViewById(R.id.imageView1);
         
         Display display = getWindowManager().getDefaultDisplay();
@@ -131,9 +131,9 @@ public class PianoActivity extends Activity {
                 String pos = ""+x; 
                 Log.e("position", pos); 
         
-                gradient.getLayoutParams().width = (int)(white_key_width/2);
-                gradient.getLayoutParams().height = (int)40;
-                gradient.setMaxWidth((int)(white_key_width/2));
+               // gradient.getLayoutParams().width = (int)(white_key_width/2);
+              //  gradient.getLayoutParams().height = (int)40;
+            //    gradient.setMaxWidth((int)(white_key_width/2));
                 scroll.scrollTo(round(position),0);
             	mapper.initializeWhiteKeyMap(white_key_width);
             	mapper.initializeBlackKeyMap(black_key_width);
@@ -188,8 +188,8 @@ public class PianoActivity extends Activity {
       translateAnimation.setDuration(10);
 	  gradient.startAnimation(translateAnimation);*/
 		
-	  gradient.scrollTo(-80, 40);
-	  gradient.setVisibility(View.VISIBLE);
+//	  gradient.scrollTo(-80, 40);
+//	  gradient.setVisibility(View.VISIBLE);
 	}
 	
 	

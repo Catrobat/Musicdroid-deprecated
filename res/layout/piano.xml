@@ -38,11 +38,19 @@
 	            android:padding="0px"
 	            android:src="@drawable/piano" />
 	    </HorizontalScrollView>
-      <RelativeLayout>
+
+ <!--     <RelativeLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="match_parent" >
+
 	    <ImageView
 	        android:id="@+id/imageView2"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:layout_alignParentTop="true"
 	        android:layout_gravity="bottom"
 	        android:src="@drawable/gradient" />
-	   </RelativeLayout>
+
+	   </RelativeLayout> -->
   </FrameLayout>
 </RelativeLayout>
