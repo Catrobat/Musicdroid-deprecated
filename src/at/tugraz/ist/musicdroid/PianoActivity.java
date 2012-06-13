@@ -10,9 +10,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -21,6 +24,9 @@ import android.widget.Toast;
 public class PianoActivity extends Activity {
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
+	private ImageView gradient;
+	private ImageView notes;
+	
 	private NoteMapper mapper;
 	private SoundPlayer soundplayer;
 	static final int SEMIQUAVER = 4;
@@ -60,6 +66,7 @@ public class PianoActivity extends Activity {
                 
                 if(event.getY() > 2*y/3)
                 {	
+                  pressWhiteKeyAnimation(event.getX());  
                   mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
                   soundplayer.playSound(mapped_key);
                   Log.e("mappedkey", String.valueOf(mapped_key));                  
@@ -99,6 +106,16 @@ public class PianoActivity extends Activity {
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
+        gradient = (ImageView) findViewById(R.id.imageView2);
+        notes = (ImageView) findViewById(R.id.imageView1);
+        
+        Display display = getWindowManager().getDefaultDisplay();
+        int height = display.getHeight();
+        
+        notes.setMinimumHeight(height/2);
+        
+        gradient.setVisibility(View.INVISIBLE);
+        
         int x = scroll.getWidth()/2; 
         int y = scroll.getHeight()/2;
         
@@ -113,7 +130,10 @@ public class PianoActivity extends Activity {
                 float black_key_width = (x/(float)60.0);
                 String pos = ""+x; 
                 Log.e("position", pos); 
-                
+        
+                gradient.getLayoutParams().width = (int)(white_key_width/2);
+                gradient.getLayoutParams().height = (int)40;
+                gradient.setMaxWidth((int)(white_key_width/2));
                 scroll.scrollTo(round(position),0);
             	mapper.initializeWhiteKeyMap(white_key_width);
             	mapper.initializeBlackKeyMap(black_key_width);
@@ -159,6 +179,17 @@ public class PianoActivity extends Activity {
 		
 		return "W";			
 			
+	}
+	
+	private void pressWhiteKeyAnimation(float x_pos)
+	{/*
+      TranslateAnimation translateAnimation = new TranslateAnimation(0, 20, 0, 0);
+      translateAnimation.setFillAfter(true);
+      translateAnimation.setDuration(10);
+	  gradient.startAnimation(translateAnimation);*/
+		
+	  gradient.scrollTo(-80, 40);
+	  gradient.setVisibility(View.VISIBLE);
 	}
 	
 	
