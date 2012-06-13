@@ -1,17 +1,13 @@
 package at.tugraz.ist.musicdroid;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 
 public class Tone extends View {
 	private Resources res = getResources();
