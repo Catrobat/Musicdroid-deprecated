@@ -21,9 +21,10 @@ public class Tone extends View {
 	private ArrayList<Integer> y_list = new ArrayList();
 	private ArrayList<Integer> midiVal = new ArrayList();
 	private int help_value;
-	private ArrayList<Boolean> cross= new ArrayList();
+	private ArrayList<Boolean> cross = new ArrayList();
 	private Paint paint;
 	private int y_line;
+	private boolean move_;
 
 	public Tone(Context context, ArrayList<Integer> midiVal, int x, int y,
 			Paint paint) {
@@ -64,6 +65,10 @@ public class Tone extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
+		if(move_)
+			paint.setColor(Color.RED);
+		
 		for (int i = 0; i < midiVal.size(); i++) {
 
 			int y = y_list.get(i);
@@ -110,4 +115,17 @@ public class Tone extends View {
 	public void setX(int new_x) {
 		x = new_x;
 	}
+
+	public ArrayList<Integer> getY() {
+		return y_list;
+	}
+
+	public void setY(ArrayList<Integer> y_values) {
+		y_list = y_values;
+	}
+	
+	public void setMove(boolean b) {
+		move_=b;
+	}
+
 }

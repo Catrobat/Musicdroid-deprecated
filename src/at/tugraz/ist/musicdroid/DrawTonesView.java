@@ -33,6 +33,7 @@ public class DrawTonesView extends View {
 	private Context context;
 	private int first_line_;
 	private int id_;
+	private boolean moving_;
 	private int scrollx_ = 0;
 	private int scrolldis_ = 200;
 	private int radius_;
@@ -70,17 +71,24 @@ public class DrawTonesView extends View {
 				double scrolldist = downx - upx;
 
 				if (scrolldist > 0) {
+
 					scrollx_ += scrolldis_;
 					if (scrollx_ > ((Tone) (tones.get(tones.size() - 1)))
 							.getX() + 50 - v.getWidth())
 						scrollx_ = ((Tone) (tones.get(tones.size() - 1)))
 								.getX() + 50 - v.getWidth();
 					v.scrollTo(scrollx_, 0);
+
 				} else if (scrolldist < 0) {
+
 					scrollx_ -= scrolldis_;
 					if (scrollx_ < 0)
 						scrollx_ = 0;
 					v.scrollTo(scrollx_, 0);
+
+				} else if (scrolldist == 0) {
+					boolean is_note_ = checkNote((int)downx, (int)downy);
+
 				}
 				invalidate();
 				break;
@@ -104,7 +112,7 @@ public class DrawTonesView extends View {
 		this.id_ = id;
 
 		for (int i = 0; i < 20; i++) {
-			addElement(60+i);
+			addElement(60 + i);
 		}
 		invalidate();
 
@@ -204,4 +212,20 @@ public class DrawTonesView extends View {
 		canvas.drawBitmap(bm, null, dst_rct, null);
 	}
 
+	private boolean checkNote(int x_value, int y_value) {
+		
+		for(int i= 0; i<tones.size(); i++) {
+			int act_x_ = ((Tone)(tones.get(i))).getX();
+			ArrayList<Integer>y_s_=((Tone)(tones.get(i))).getY();
+			
+			if(y_s_.size()==1){
+				if( Math.sqrt(Math.pow(x_value-act_x_,2)+Math.pow(y_value-y_s_.get(0),2))<=radius_) {
+					((Tone)(tones.get(i))).setMove(true);
+					invalidate();
+				}
+			}
+		}
+			
+		return false;
+	}
 }
