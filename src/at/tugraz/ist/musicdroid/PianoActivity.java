@@ -65,19 +65,20 @@ public class PianoActivity extends Activity {
                   Log.e("mappedkey", String.valueOf(mapped_key));                  
                 } 
                 //TODO: blackey map funktioniert noch nicht 
-                /*
+                
                 else
                 {
                   mapped_key = mapper.getBlackKeyFromPosition(round(event.getX()));
                   if(mapped_key >= 0)
                   {
+                	soundplayer.playSound(mapped_key);
                 	Log.e("mappedkey", String.valueOf(mapped_key));
                   }
                   else 
                   {
                 	Log.e("nokey", String.valueOf(mapped_key));
                   }
-                } */
+                } 
                 
                 
                 //TODO instead of toast -> play midi :) 
@@ -106,12 +107,16 @@ public class PianoActivity extends Activity {
         scroll.postDelayed(new Runnable() {
             public void run() {
                 int x = piano.getWidth();
-                int key_width = (x/35); 
-                int position = key_width*10; 
+                float white_key_width = (x/(float)35); 
+                float position = white_key_width*10;
+                
+                float black_key_width = (x/(float)60.0);
                 String pos = ""+x; 
                 Log.e("position", pos); 
-            	scroll.scrollTo(position,0);
-            	mapper.initializeNoteMap(round(key_width));
+                
+                scroll.scrollTo(round(position),0);
+            	mapper.initializeWhiteKeyMap(white_key_width);
+            	mapper.initializeBlackKeyMap(black_key_width);
             }
         }, 100L);
 
@@ -176,7 +181,7 @@ public class PianoActivity extends Activity {
  	   		midiFile.noteOff(SEMIBREVE, midi_value);
  	   		file_name = midi_note + "_" + midi_value + ".mid";
  	   		path = directory.getAbsolutePath() + File.separator + file_name;
- 	   		soundplayer.setSoundpool(path);
+
      		try {
 	    			midiFile.writeToFile(path); 	
 	    		} catch (IOException e) {
@@ -188,7 +193,7 @@ public class PianoActivity extends Activity {
      		if (counter == 12)
      			counter = 0;
      		
-     		
+ 	   		soundplayer.setSoundpool(path);     		
  	    }
  	    return success;
 	}
