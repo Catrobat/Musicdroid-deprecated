@@ -17,5 +17,7 @@
     <string name="resume_text">Resume</string>
     <string name="stop_text">Stop</string>
     <string name="load_sound_file_chooser_text">Please select a Sound</string>
+    <string name="record_toast">Aufnahme läuft noch, drücke zuerst Stopp</string>
+    <string name="overwrite_dialog">Ungespeicherte Aufnahmen gehen verloren, bist Du sicher, dass du fortsetzen möchtest?</string>
 
 </resources>
