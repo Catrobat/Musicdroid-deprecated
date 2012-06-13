@@ -4,14 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.String;
 import java.nio.channels.FileChannel;
 
-import org.puredata.android.io.AudioParameters;
 import org.puredata.android.service.PdService;
-import org.puredata.android.utils.PdUiDispatcher;
 import org.puredata.core.PdBase;
-import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 
 import android.app.Activity;
@@ -22,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -38,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import at.tugraz.ist.musicdroid.common.Constants;
 
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
@@ -56,6 +52,7 @@ public class RecordSoundActivity extends Activity {
 	private ImageView recordlight;
 	private AlertDialog.Builder builder;
 	private AlertDialog alert;
+	boolean unsaved_changes = false;
 
 	private final ServiceConnection pdConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName name, IBinder service) {
@@ -93,40 +90,30 @@ public class RecordSoundActivity extends Activity {
 
 	public void initGui() {
 		builder = new AlertDialog.Builder(this);
-		builder.setMessage(R.string.overwrite_dialog)
+		builder.setMessage(R.string.save_dialog)
 				.setCancelable(false)
 				.setPositiveButton("Yes",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								chrono.setBase(SystemClock.elapsedRealtime());
-								chrono.start();
-								stopButton.setEnabled(true);
-								stopButton
-										.setBackgroundResource(R.drawable.stop);
-								playButton.setEnabled(true);
-								playButton
-										.setBackgroundResource(R.drawable.play);
-								recordButton.setEnabled(false);
-								recordButton
-										.setBackgroundResource(R.drawable.recdisabled);
-								recordlight = (ImageView) findViewById(R.id.recordlight);
-								recordlight
-										.setImageResource(R.drawable.recordlighton);
-								recordSoundFile();
+
+								SaveRecord();
 							}
 						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
+
+						chrono.setBase(SystemClock.elapsedRealtime());
+						playButton
+								.setBackgroundResource(R.drawable.playdisabled);
+						playButton.setEnabled(false);
+						stopButton
+								.setBackgroundResource(R.drawable.stopdisabled);
+						stopButton.setEnabled(false);
+						unsaved_changes = false;
 					}
 				});
 
 		alert = builder.create();
-
-		directory = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "records");
-		directory.mkdirs();
-		newFile = new File(directory, "test.wav");
 
 		recordButton = (Button) findViewById(R.id.button2);
 		stopButton = (Button) findViewById(R.id.stopButton);
@@ -149,7 +136,7 @@ public class RecordSoundActivity extends Activity {
 						.getExternalStorageDirectory().getPath()
 						+ "/records/test.wav";
 				File newFile = new File(file);
-				if (newFile.exists()) {
+				if (unsaved_changes) {
 					alert.show();
 				} else {
 					chrono.setBase(SystemClock.elapsedRealtime());
@@ -164,7 +151,6 @@ public class RecordSoundActivity extends Activity {
 					recordlight.setImageResource(R.drawable.recordlighton);
 					recordSoundFile();
 				}
-
 			}
 
 		});
@@ -178,15 +164,9 @@ public class RecordSoundActivity extends Activity {
 				recordButton.setEnabled(true);
 				recordButton.setBackgroundResource(R.drawable.rec);
 				PdBase.sendSymbol("status", status);
+				unsaved_changes = true;
 				File file = new File(dir, "firstrecord.wav");
 				patch = file;
-				try {
-					copyFile(patch, newFile);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 			}
 		});
 
@@ -283,5 +263,49 @@ public class RecordSoundActivity extends Activity {
 			if (outChannel != null)
 				outChannel.close();
 		}
+	}
+
+	public void SaveRecord() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Please enter a filename.");
+		final EditText input = new EditText(this);
+		alert.setView(input);
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			String value = "";
+
+			public void onClick(DialogInterface dialog, int which) {
+				value = input.getText().toString();
+
+				if (value != "") {
+					newFile = new File(Constants.MAIN_DIRECTORY
+							+ Constants.RECORDS_SUB_DIRECTORY, value + ".wav");
+
+					try {
+						copyFile(patch, newFile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					playButton.setBackgroundResource(R.drawable.playdisabled);
+					playButton.setEnabled(false);
+					stopButton.setBackgroundResource(R.drawable.stopdisabled);
+					stopButton.setEnabled(false);
+					chrono.setBase(SystemClock.elapsedRealtime());
+				}
+			}
+
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
+
+		alert.show();
+		unsaved_changes = false;
 	}
 }
