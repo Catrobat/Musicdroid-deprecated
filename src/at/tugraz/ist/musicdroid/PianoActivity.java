@@ -24,7 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class PianoActivity extends Activity {
+public class PianoActivity extends Activity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
 	private ImageView gradient;
@@ -40,6 +40,7 @@ public class PianoActivity extends Activity {
 	static final int SEMIBREVE = 64;
 	private String ActivityName = "PianoActivity";
 	private Context context;
+	private boolean[] buttonStates = null;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -50,61 +51,96 @@ public class PianoActivity extends Activity {
         soundplayer.initSoundpool();
         createMidiSounds();
         init();
+        piano.setOnTouchListener(this);
+        buttonStates = new boolean[61]; //size of pianobuttons, value hardcoded find another possibility!!! 
         
-        piano.setOnTouchListener(new OnTouchListener()    {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                // TODO Auto-generated method stub
-            	String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
-            	Log.e("position", pos);
-                int x = piano.getWidth();
-                int y = piano.getHeight();
-                int key_width = (x/35); 
-                int c = key_width*15-key_width/2;
-            	
-                //String hit = (c - key_width/2) + "x" + (c + key_width/2);
-                //Log.e("c-pos", hit);
-                int mapped_key = 0;
-                
-                if(event.getY() > 2*y/3)
-                {	
-                  pressWhiteKeyAnimation(event.getX());  
-                  mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX()));
-                  soundplayer.playSound(mapped_key);
-                  Log.e("mappedkey", String.valueOf(mapped_key));                  
-                } 
-                //TODO: blackey map funktioniert noch nicht 
-                
-                else
-                {
-                  mapped_key = mapper.getBlackKeyFromPosition(round(event.getX()));
-                  if(mapped_key >= 0)
-                  {
-                	soundplayer.playSound(mapped_key);
-                	Log.e("mappedkey", String.valueOf(mapped_key));
-                  }
-                  else 
-                  {
-                	Log.e("nokey", String.valueOf(mapped_key));
-                  }
-                } 
-                
-                
-                //TODO instead of toast -> play midi :) 
-                if(mapped_key == 48) 
-                {
-                	Context context = getApplicationContext();
-    	    		int duration = Toast.LENGTH_SHORT;
-    	    		Toast toast = Toast.makeText(context, "you hit a c1", duration);
-    	    		toast.show();  	
-                }
-                return false;
-            }
-       }); 
-
 	}
+        
+        //piano.setOnTouchListener(new OnTouchListener()    {
+
+	@Override
+    public boolean onTouch(View v, MotionEvent event)
+    {
+                
+		// TODO Auto-generated method stub
+		boolean[] newButtonStates = new boolean[61];
+		int action = event.getAction();
+		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
+		int mapped_key = 0;
+		
+		String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
+        int x = piano.getWidth();
+        int y = piano.getHeight();
+        int key_width = (x/35); 
+        int c = key_width*15-key_width/2;
+        //dumpEvent(event);
+        
+        
+        for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++){
+        	
+        	if(event.getY(touchIndex) > 2*y/3)
+            {	
+            	int index = 0;
+        		pressWhiteKeyAnimation(event.getX(touchIndex));  
+                mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
+                index = mapped_key-35;
+                newButtonStates[index] = isDownAction;
+                
+                              
+            } 
+            //TODO: blackey map funktioniert noch nicht 
+                    
+            else
+            {
+            	mapped_key = mapper.getBlackKeyFromPosition(round(event.getX(touchIndex)));
+                if(mapped_key >= 0)
+                {
+                	int index = 0;
+                	index = mapped_key-35;
+                    newButtonStates[index] = isDownAction;
+                    
+                   	
+                }
+                else 
+                {
+                 	Log.e("nokey", String.valueOf(mapped_key));
+                }
+             } 
+        }
+        
+        for (int index = 0; index < newButtonStates.length; index++)
+		{
+			if (buttonStates[index] != newButtonStates[index])
+			{
+				int midivalue = 0;
+				buttonStates[index] = newButtonStates[index];
+				midivalue = index + 35;
+				toggleSound(midivalue, newButtonStates[index]);
+			}
+		}
+
+               
+        //String hit = (c - key_width/2) + "x" + (c + key_width/2);
+        //Log.e("c-pos", hit);
+        
+    return true;             
+    }
+     //  }); 
+
+	//}
+	
+	private void toggleSound(int midivalue, boolean down){
+		if (down){
+			if (!soundplayer.isNotePlaying(midivalue)){
+				soundplayer.playNote(midivalue);
+			}
+		}
+		else {
+			soundplayer.stopNote(midivalue);
+		}
+	}
+	
+	
 	
 	private void init()
 	{
@@ -268,5 +304,35 @@ public class PianoActivity extends Activity {
  	    }
  	    return success;
 	}
+
+
+
+/*private void dumpEvent(MotionEvent event) {
+	   String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
+	      "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
+	   StringBuilder sb = new StringBuilder();
+	   int action = event.getAction();
+	   int actionCode = action & MotionEvent.ACTION_MASK;
+	   sb.append("event ACTION_" ).append(names[actionCode]);
+	   if (actionCode == MotionEvent.ACTION_POINTER_DOWN
+	         || actionCode == MotionEvent.ACTION_POINTER_UP) {
+	      sb.append("(pid " ).append(
+	      action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
+	      sb.append(")" );
+	   }
+	   sb.append("[" );
+	   for (int i = 0; i < event.getPointerCount(); i++) {
+	      sb.append("#" ).append(i);
+	      sb.append("(pid " ).append(event.getPointerId(i));
+	      sb.append(")=" ).append((int) event.getX(i));
+	      sb.append("," ).append((int) event.getY(i));
+	      if (i + 1 < event.getPointerCount())
+	         sb.append(";" );
+	   }
+	   sb.append("]" );
+	   Log.d("Multitouchevents:", sb.toString());
+	}*/
+
+
 
 }

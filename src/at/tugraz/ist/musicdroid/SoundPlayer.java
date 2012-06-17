@@ -59,7 +59,7 @@ public class SoundPlayer {
 		int priority = 1;
 		int no_loop = 0;
 		float normal_playback_rate = 1f;
-		soundPool.play(midiValue, leftVolume, rightVolume, priority, no_loop, normal_playback_rate);
+		soundPool.play(soundPoolMap.get(midiValue), leftVolume, rightVolume, priority, no_loop, normal_playback_rate);
 		
 		
 	}
@@ -97,6 +97,7 @@ public class SoundPlayer {
 	{
 		int note;
 		boolean stop = false;
+		int streamId = 0;
 		
 		public PlayThread(int note)
 		{
@@ -106,7 +107,8 @@ public class SoundPlayer {
 
 		public void run()
 		{
-			note = note - 35;
+			 
+			note = note - 36;
 			AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 			float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 			float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -115,12 +117,14 @@ public class SoundPlayer {
 			int priority = 1;
 			int no_loop = 0;
 			float normal_playback_rate = 1f;
-			soundPool.play(note, leftVolume, rightVolume, priority, no_loop, normal_playback_rate);
+			streamId = soundPool.play(soundPoolMap.get(note), leftVolume, rightVolume, priority, no_loop, normal_playback_rate);
 
 		}
 		
 		public synchronized void requestStop()
 		{
+			
+			soundPool.stop(streamId);
 			stop = true;
 		}
 	}
