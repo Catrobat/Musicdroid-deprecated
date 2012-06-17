@@ -83,6 +83,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
             	int index = 0;
         		pressWhiteKeyAnimation(event.getX(touchIndex));  
                 mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
+                toneView.addElement(mapped_key);
                 index = mapped_key-35;
                 newButtonStates[index] = isDownAction;
                 
@@ -95,6 +96,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
             	mapped_key = mapper.getBlackKeyFromPosition(round(event.getX(touchIndex)));
                 if(mapped_key >= 0)
                 {
+                	toneView.addElement(mapped_key);
                 	int index = 0;
                 	index = mapped_key-35;
                     newButtonStates[index] = isDownAction;

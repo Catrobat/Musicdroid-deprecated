@@ -72,9 +72,9 @@ public class DrawTonesView extends ScrollView {
 		this.id_ = id;
 		// TODO Auto-generated constructor stub
 
-		for (int i = 0; i < 20; i++) {
+		/*for (int i = 0; i < 20; i++) {
 			addElement(10 + i);
-		}
+		}*/
 		invalidate();
 	}
 	
