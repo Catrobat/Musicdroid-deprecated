@@ -200,9 +200,9 @@ public class RecordSoundActivity extends Activity {
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		PdBase.closePatch(patchID);
 		unbindService(pdConnection);
+		super.onDestroy();
 	}
 
     
