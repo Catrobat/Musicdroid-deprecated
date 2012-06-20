@@ -103,7 +103,7 @@ public class DrawTonesView extends View {
 				} else if (scrolldist > -30 && scrolldist < 30
 						&& scrolldist_vert < 30 && scrolldist_vert > -30) {
 					downx += scroll_counter_ * 200 + down_help_;
-					boolean is_note_ = checkNote((int) downx, (int) downy);
+					checkNote((int) downx, (int) downy);
 
 				} else if (scrolldist_vert > 30) {
 					moveMarkedNotes(true);
@@ -132,6 +132,13 @@ public class DrawTonesView extends View {
 		this.setBackgroundColor(Color.WHITE);
 		this.id_ = id;
 
+		ArrayList<Integer> lalalal = new ArrayList();
+		lalalal.add(68);
+		lalalal.add(69);
+		lalalal.add(79);
+
+		addElement(lalalal);
+		addElement(90);
 		invalidate();
 
 	}
@@ -234,7 +241,7 @@ public class DrawTonesView extends View {
 		canvas.drawBitmap(bm, null, dst_rct, null);
 	}
 
-	private boolean checkNote(int x_value, int y_value) {
+	private void checkNote(int x_value, int y_value) {
 
 		for (int i = 0; i < tones.size(); i++) {
 			int act_x_ = ((Tone) (tones.get(i))).getX();
@@ -246,10 +253,17 @@ public class DrawTonesView extends View {
 					((Tone) (tones.get(i))).setMove();
 					invalidate();
 				}
+			} else {
+				for (int j = 0; j < y_s_.size(); j++) {
+					if (Math.sqrt(Math.pow(x_value - act_x_, 2)
+							+ Math.pow(y_value - y_s_.get(j), 2)) <= 3 * radius_) {
+						((Tone) (tones.get(i))).setMove();
+						invalidate();
+					}
+				}
 			}
 		}
 
-		return false;
 	}
 
 	private void moveMarkedNotes(boolean up) {

@@ -154,10 +154,8 @@ public class Tone extends View {
 					act_midi++;
 				else
 					act_midi--;
-				System.out.println("Vorher X: " + x + " Y: " + y_list.get(i));
 				midiVal.set(i, act_midi);
 				calculateCoordinates();
-				System.out.println("Nachher X: " + x + " Y: " + y_list.get(i));
 			}
 		}
 		invalidate();
