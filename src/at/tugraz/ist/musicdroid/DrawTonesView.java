@@ -111,9 +111,9 @@ public class DrawTonesView extends View {
 		this.setBackgroundColor(Color.WHITE);
 		this.id_ = id;
 
-		for (int i = 0; i < 20; i++) {
+		/*for (int i = 0; i < 20; i++) {
 			addElement(60 + i);
-		}
+		}*/
 		invalidate();
 
 	}
