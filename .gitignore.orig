@@ -1,0 +1,9 @@
+/bin
+/gen
+<<<<<<< HEAD
+/.project
+libs/pd-for-android/PdCore/gen/
+pdcore.jar
+=======
+.project
+>>>>>>> open_soundfile

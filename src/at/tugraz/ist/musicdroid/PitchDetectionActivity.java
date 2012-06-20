@@ -265,7 +265,6 @@ private final PdListener myListener = new PdListener() {
     {
     	if(instrument <= 0) return;
     	
-    	
     	MidiFile mf = new MidiFile();  
     	
     	try
@@ -276,13 +275,13 @@ private final PdListener myListener = new PdListener() {
 	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
 		    }
 		    File f = new File(path);
-		    String filename = f.getParentFile() + File.separator + "test.mid";
+		    String filename = f.getParentFile() + File.separator + "synt.mid";
 		    mf.writeToFile(filename);
 		    
 		    f = new File(filename);
 		    if(!f.exists()) throw new Exception("Midi file could not be created!");
 		    
-		    playfile();
+		    playfile(f.getAbsolutePath());
     	}
     	catch (Exception e) {
 			Log.e("Midi", e.getMessage());
@@ -339,14 +338,13 @@ private final PdListener myListener = new PdListener() {
         }
     }
     
-    public void playfile() {
-    	File f = new File(path);
-	    String filename = f.getParentFile() + File.separator + "test.mid";
-	    File f2 = new File(filename);
+    public void playfile(String filename) {
+    	
+	    File f = new File(filename);
 	    
-	    if(!f2.exists()) return;
+	    if(!f.exists()) return;
 	    
-    	Uri myUri = Uri.fromFile(f2);
+    	Uri myUri = Uri.fromFile(f);
     	MediaPlayer mediaPlayer = new MediaPlayer();
     	
     	try {
@@ -406,13 +404,14 @@ private final PdListener myListener = new PdListener() {
     
     
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	  	
-    	
+    public boolean onCreateOptionsMenu(Menu menu) {	
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.layout.menu, menu);
+        menu.getItem(1).setVisible(false);
         return true;
     }
+    
+    
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
