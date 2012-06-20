@@ -71,7 +71,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
             super.onCreate(savedInstanceState);
             
             Resources r = getResources();
-    		int radius = r.getInteger(R.integer.radius);
+    		int radius = 20;// r.getInteger(R.integer.radius);
     		int topline = r.getInteger(R.integer.topmarginlines);
     		
     		setContentView(R.layout.record_to_frequency);
