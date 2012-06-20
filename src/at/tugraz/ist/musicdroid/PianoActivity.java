@@ -94,7 +94,8 @@ public class PianoActivity extends Activity implements OnTouchListener{
             } 
             //TODO: blackey map funktioniert noch nicht 
                     
-            else
+            
+        	else
             {
             	mapped_key = mapper.getBlackKeyFromPosition(round(event.getX(touchIndex)));
                 if(mapped_key >= 0)
