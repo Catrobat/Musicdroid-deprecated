@@ -396,7 +396,12 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 		public void onBackPressed() {
 
 			if (state == POSTRECORD)
-				alert.show();
+				{
+					alert.show();
+					state = PRERECORD;
+				}
+			
+			
 			else
 				super.onBackPressed();
 		}
