@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
-   	
+
     <string name="hello">Hello World, MusicdroidActivity!</string>
     <string name="app_name">Musicdroid</string>
     <string name="load_project">Load Project</string>
+    <string name="recordButtonTextField">Record</string>
+    <string name="recordInfoTextField">Keine Aufnahme</string>
+    <string name="stopRecordButtonTextField">Stop</string>
+    <string name="descr">Micro</string>
     <string name="load_sound_recorder">Open Sound Recorder</string>
     <string name="load_sound_player">Open Sound Player</string>
     <string name="new_project">New Project</string>
-    <string name="open_project">Open Project</string>
+    <string name="open_soundfile">Open Soundfile</string>
     <string name="rtof_save_file">Save File</string>
     <string name="rtof_next_note">Next note</string>
+    <string name="start_text">Play</string>
+    <string name="pause_text">Pause</string>
+    <string name="resume_text">Resume</string>
+    <string name="stop_text">Stop</string>
+    <string name="load_sound_file_chooser_text">Please select a Sound</string>
+    <string name="record_toast">Aufnahme läuft noch, drücke zuerst Stopp</string>
+    <string name="save_dialog">There are unsaved changes. Would you like to save your previous record?</string>
 
 </resources>
