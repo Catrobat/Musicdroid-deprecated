@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AbsoluteLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:layout_height="fill_parent" >
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onPlay"
-        android:text="@string/start_text" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_x="33dp"
+        android:layout_y="259dp"
+        android:background="@drawable/play_button"
+        android:onClick="onPlay" />
 
     <Button
         android:id="@+id/pauseResumeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="on_pause_resume"
-        android:text="@string/pause_text" />
-     <Button
+        android:layout_width="74dp"
+        android:layout_height="66dp"
+        android:layout_x="116dp"
+        android:layout_y="260dp"
+        android:background="@drawable/pause_button"
+        android:onClick="on_pause_resume" />
+
+    <Button
         android:id="@+id/stopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onStop"
-        android:text="@string/stop_text" />
+        android:layout_x="209dp"
+        android:layout_y="263dp"
+        android:background="@drawable/stop_buttonpng"
+        android:onClick="onStop" />
 
+    <TextView
+        android:id="@+id/name_of_soundfile"
+        android:layout_width="262dp"
+        android:layout_height="79dp"
+        android:layout_x="28dp"
+        android:layout_y="82dp"
+        android:text="TextView"
+        android:textSize="20dp" />
 
+    <ProgressBar
+        android:id="@+id/soundfile_timeline"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="240dp"
+        android:layout_height="46dp"
+        android:layout_x="39dp"
+        android:layout_y="188dp"
+        android:background="@color/solid_black" />
 
-</LinearLayout>
+</AbsoluteLayout>
