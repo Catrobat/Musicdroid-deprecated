@@ -15,6 +15,7 @@ import at.tugraz.ist.musicdroid.common.Projekt;
 public class MusicdroidActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
+
 	private final int REQUEST_SELECT_MUSIC = 0;
 	TextView my_list_view;
 	String filename_;
@@ -43,14 +44,6 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 
 	}
 
-	/*public void onPlaySound(View v) {
-		startActivity(new Intent(this, PlaySoundActivity.class));
-		/*
-		 * TextView tv=new TextView(this); tv.setText("hugo");
-		 * setContentView(tv);
-		 */
-
-	//}
 
 	public void LoadFile() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -72,16 +65,19 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		}
 	}
 
+
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		
 		if (arg0 == OpenSoundfileButton) {
 			LoadFile();
 		}
+
 		if (arg0 == OpenPlayerButton) {
 			
 
 			String filename = Projekt.getInstance().getLastSoundFile();
+
 			if (new File(filename).exists()) {
 
 				System.out.println("in IF");

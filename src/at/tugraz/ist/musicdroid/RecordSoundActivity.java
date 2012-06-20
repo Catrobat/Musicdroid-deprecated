@@ -1,10 +1,7 @@
 package at.tugraz.ist.musicdroid;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 
 import org.puredata.android.service.PdService;
 import org.puredata.core.PdBase;
@@ -18,61 +15,62 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import at.tugraz.ist.musicdroid.common.Constants;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 import at.tugraz.ist.musicdroid.common.Projekt;
+
 
 public class RecordSoundActivity extends Activity {
 	private final static String Appname = "Record_Sound";
 	private Button recordButton;
 	private Button stopButton;
 	private Button playButton;
-	private TextView testoutput;
+	
 	private Chronometer chrono;
-	private EditText editText;
+
 	private File dir;
 	private PdService pdService = null;
-	private String path;
 	private File patch;
-	private File directory;
-	private File newFile;
 	private ImageView recordlight;
+	private int patchID = 0;
+	
 	private AlertDialog.Builder builder;
 	private AlertDialog alert;
 	boolean unsaved_changes = false;
 	boolean on_back_pressed = false;
 
+
 	private final ServiceConnection pdConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			pdService = ((PdService.PdBinder) service).getService();
-			try {
-				initPd();
-				loadPatch();
-			} catch (IOException e) {
-				Log.e(Appname, e.toString());
-				finish();
-			}
-		}
 
-		public void onServiceDisconnected(ComponentName name) {
-
-		}
-	};
+    	public void onServiceConnected(ComponentName name, IBinder service) {
+    		pdService = ((PdService.PdBinder)service).getService();
+    		try {
+    			initPd();
+    			loadPatch();
+    		} catch (IOException e) {
+    			Log.e(Appname, e.toString());
+    			finish();
+    		} 
+    	}
+    
+    
+    public void onServiceDisconnected(ComponentName name) {    	
+        }
+    };
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,11 +117,6 @@ public class RecordSoundActivity extends Activity {
 	private void guiHandler() {
 		recordButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-
-				String file = android.os.Environment
-						.getExternalStorageDirectory().getPath()
-						+ "/records/test.wav";
-				File newFile = new File(file);
 				if (unsaved_changes) {
 					alert.show();
 				} else {
@@ -175,38 +168,96 @@ public class RecordSoundActivity extends Activity {
 	}
 
 	private void loadPatch() throws IOException {
-		Log.e("test", "test");
 		dir = getFilesDir();
 		IoUtils.extractZipResource(
 				getResources().openRawResource(R.raw.recordtest), dir, true);
-		File patchFile = new File(dir, "recordtest.pd");
-		path = patchFile.getAbsolutePath();
-		PdBase.openPatch(patchFile.getAbsolutePath());
-
+		File patchFile = new File(dir, "recordtest.pd");	
+		patchID = PdBase.openPatch(patchFile.getAbsolutePath());	
+    }
+    
+    
+    
+    private void initPd() throws IOException {		
+		pdService.initAudio(-1, 1, -1, -1);
+		pdService.startAudio();
 	}
 
-	private void initPd() throws IOException {
-		String name = getResources().getString(R.string.app_name);
-		pdService.initAudio(-1, -1, -1, -1);
-		pdService
-				.startAudio(new Intent(this, RecordSoundActivity.class),
-						R.drawable.musicdroid_launcher, name, "Retrun to "
-								+ name + ".");
-
-	}
-
-	public void recordSoundFile() {
-		String filename = "firstrecord.wav";
-		String status = "start";
-		PdBase.sendSymbol("filename", filename);
-		PdBase.sendSymbol("status", status);
-	}
+    
+    public void recordSoundFile() {
+      String filename= "firstrecord.wav";
+      String status = "start";
+      PdBase.sendSymbol("filename", filename);
+      PdBase.sendSymbol("status", status);
+      recordlight.setImageResource(R.drawable.recordlighton);
+    }
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
+		PdBase.closePatch(patchID);
 		unbindService(pdConnection);
+		super.onDestroy();
 	}
+
+    
+    
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	if(patch == null) menu.getItem(1).setEnabled(false);
+        else menu.getItem(1).setEnabled(true);
+    	return true;
+    }
+    	
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.menu, menu);        
+        
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuAnalyze: 
+            	String path = "";
+            	
+            	if(patch != null)
+            	{
+            		path = patch.getAbsolutePath();
+            	}
+            	else  // else-Zweig zum testen
+            	{
+            		
+            		path = "/mnt/sdcard/records/test.wav";
+            		File f = new File(path);
+            		
+            		if(f.exists())
+            		{
+            			Log.i(Appname, "Analyzing test.wav file");
+            		}
+            		else
+            			break;
+            	}
+            	Intent i = new Intent(RecordSoundActivity.this, PitchDetectionActivity.class);
+            	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            	Bundle b = new Bundle();	
+            	
+            	b.putString("path", path); 
+            	i.putExtras(b);
+
+                startActivity(i);
+            	
+                break;
+            case R.id.menuSave:
+            	SaveRecord();
+            	break;
+        }
+        return true;
+    }
 
 	public void playfile() {
 		Intent intent = new Intent(RecordSoundActivity.this,
@@ -230,7 +281,7 @@ public class RecordSoundActivity extends Activity {
 				value = input.getText().toString();
 
 				if (value != "") {
-					newFile = new File(Constants.MAIN_DIRECTORY
+					File newFile = new File(Constants.MAIN_DIRECTORY
 							+ Constants.RECORDS_SUB_DIRECTORY, value + ".wav");
 
 					try {
