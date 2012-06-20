@@ -44,7 +44,6 @@ public class RecordSoundActivity extends Activity {
 	private File dir;
 	private PdService pdService = null;
 	private File patch;
-	private File newFile;
 	private ImageView recordlight;
 	private int patchID = 0;
 	
@@ -118,11 +117,6 @@ public class RecordSoundActivity extends Activity {
 	private void guiHandler() {
 		recordButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-
-				String file = android.os.Environment
-						.getExternalStorageDirectory().getPath()
-						+ "/records/test.wav";
-				File newFile = new File(file);
 				if (unsaved_changes) {
 					alert.show();
 				} else {
@@ -174,7 +168,6 @@ public class RecordSoundActivity extends Activity {
 	}
 
 	private void loadPatch() throws IOException {
-		Log.e("test", "test");
 		dir = getFilesDir();
 		IoUtils.extractZipResource(
 				getResources().openRawResource(R.raw.recordtest), dir, true);
@@ -253,8 +246,8 @@ public class RecordSoundActivity extends Activity {
 
             	Bundle b = new Bundle();	
             	
-            	b.putString("path", path); //Your id
-            	i.putExtras(b); //Put your id to your next Intent
+            	b.putString("path", path); 
+            	i.putExtras(b);
 
                 startActivity(i);
             	
@@ -288,7 +281,7 @@ public class RecordSoundActivity extends Activity {
 				value = input.getText().toString();
 
 				if (value != "") {
-					newFile = new File(Constants.MAIN_DIRECTORY
+					File newFile = new File(Constants.MAIN_DIRECTORY
 							+ Constants.RECORDS_SUB_DIRECTORY, value + ".wav");
 
 					try {
