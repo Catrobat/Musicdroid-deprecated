@@ -1,4 +1,4 @@
-package at.tugraz.ist.musicdroid;
+ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;
@@ -199,10 +199,14 @@ private final PdListener myListener = new PdListener() {
     	ProgressBar p = (ProgressBar)findViewById(R.id.progressBar);
     	p.setProgress(0); 
     	
-    	
+    	toneView.clearList();
+    	toneView.invalidate();
     	values.clear();
     	TextView t = (TextView)findViewById(R.id.outTextView);
 	    t.setText("");
+	    
+	    Button b = (Button)findViewById(R.id.synthesizeButton);
+	    b.setEnabled(false);
     	
 	    File f = new File(input_wav);
 	    
@@ -214,7 +218,8 @@ private final PdListener myListener = new PdListener() {
 	    }
 	    
     	int ret = PdBase.sendSymbol("input-wav", input_wav);
-    	Log.i("PitchDet", Integer.toString(ret));
+    	if(ret != 0)
+    	  Log.i("PitchDet", "PdBase.sendSymbol() returns " + Integer.toString(ret));
     	
     	myProgressHandler.removeCallbacks(myHandlerTask);
     	myProgressHandler.postDelayed(myHandlerTask, 100);   	
@@ -237,8 +242,9 @@ private final PdListener myListener = new PdListener() {
 	    MidiTable midi = new MidiTable();
 	    for(int i=0;i< values.size();i++)
 	    {
-	    	out += values.get(i).toString() +
-	    			" -> " +
+	    	out += /*values.get(i).toString() +
+	    			" -> " +*/
+	    			(i+1) + ": \t" + 
 	    			midi.midiToName(values.get(i))	+ 
 	    			"\n";
 	    }
@@ -248,8 +254,10 @@ private final PdListener myListener = new PdListener() {
 	    
 	    doDraw();
 	    
-	    Button b = (Button)findViewById(R.id.synthesizeButton);
-	    b.setEnabled(true);
+	    if(values.size() > 0){
+		    Button b = (Button)findViewById(R.id.synthesizeButton);
+		    b.setEnabled(true);
+	    }
     }
     
     
@@ -340,32 +348,20 @@ private final PdListener myListener = new PdListener() {
 	    
     	Uri myUri = Uri.fromFile(f2);
     	MediaPlayer mediaPlayer = new MediaPlayer();
-    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    	
     	try {
+    		mediaPlayer.reset();
+        	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     		mediaPlayer.setDataSource(getApplicationContext(), myUri);
-    	} catch (IllegalArgumentException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (SecurityException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IllegalStateException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	try {
     		mediaPlayer.prepare();
-    	} catch (IllegalStateException e) {
+    		mediaPlayer.start();
+    	} catch (Exception e) {
     		// TODO Auto-generated catch block
     		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	mediaPlayer.start();
+    		Log.e("playfile()", e.getMessage());
+    	} 
+    	
+    	
     }
 
     private void loadPatch() throws IOException {

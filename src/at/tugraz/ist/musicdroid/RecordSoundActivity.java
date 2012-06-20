@@ -179,38 +179,23 @@ public class RecordSoundActivity extends Activity {
     public void playfile() {
     	Uri myUri = Uri.fromFile(patch);
     	MediaPlayer mediaPlayer = new MediaPlayer();
-    	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     	try {
+    		mediaPlayer.reset();
+        	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     		mediaPlayer.setDataSource(getApplicationContext(), myUri);
-    	} catch (IllegalArgumentException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (SecurityException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IllegalStateException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	try {
     		mediaPlayer.prepare();
-    	} catch (IllegalStateException e) {
+    		mediaPlayer.start();
+    	} catch (Exception e) {
     		// TODO Auto-generated catch block
     		e.printStackTrace();
-    	} catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}
-    	mediaPlayer.start();	
+    		Log.e("playfile()", e.getMessage());
+    	} 	
     }
     	
     
     public static void copyFile(File src, File dest) throws IOException
     {
-        Log.e("Copy File:", "Copy File");
+        Log.i("Copy File:", "Copy File");
     	FileChannel inChannel = new FileInputStream(src).getChannel();
         FileChannel outChannel = new FileOutputStream(dest).getChannel();
         try

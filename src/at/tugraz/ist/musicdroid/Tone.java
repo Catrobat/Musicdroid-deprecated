@@ -70,11 +70,11 @@ public class Tone extends View {
 
 			canvas.drawOval(oval, paint);
 			if (this.midiVal.get(i) < 72)
-				canvas.drawLine(x + r + r / 4, y, x + r + r / 4, y - 3 * r,
+				canvas.drawLine(x + r + r / 4, y, x + r + r / 4, y - 5 * r,
 						paint);
 
 			else {
-				canvas.drawLine(x - r - r / 4, y, x - r - r / 4, y + 3 * r,
+				canvas.drawLine(x - r - r / 4, y, x - r - r / 4, y + 5 * r,
 						paint);
 			}
 			int helpline = y_line + 10 * r;

@@ -75,6 +75,8 @@ public class DrawTonesView extends View {
 				// System.out.println(event.getX()+":"+event.getY());
 				break;
 			case MotionEvent.ACTION_UP:
+				if(tones.size() <= 0) break;
+				
 				upx = event.getX();
 				upy = event.getY();
 
