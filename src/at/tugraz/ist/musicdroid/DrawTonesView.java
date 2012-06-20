@@ -133,8 +133,9 @@ public class DrawTonesView extends View {
 	}
 
 	private void drawLines(Canvas canvas) {
-
-		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		int last_x = 0;
+		if(tones.size() > 0)
+			last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
 
 		if (last_x < this.getRight())
 			last_x = this.getRight();
