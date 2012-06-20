@@ -277,6 +277,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 					NextNoteButton.setVisibility(View.VISIBLE);
 					SaveFileButton.setVisibility(View.GONE);
 					toneView.setVisibility(View.VISIBLE);
+					toneView.clearList();
 					//nein:nix tun
 				}
 				else
