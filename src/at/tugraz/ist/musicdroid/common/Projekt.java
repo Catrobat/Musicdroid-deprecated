@@ -50,21 +50,11 @@ public class Projekt {
 	}
 
 	public String getLastSoundFile() {
-		if (imported_files_.size() > 0)
-			return imported_files_.get(imported_files_.size() - 1);
-		else
-			return "";
-	}
-
-	public String getLastRecord() {
-		if (records_.size() > 0)
-			return records_.get(records_.size() - 1);
-		else
-			return "";
+		return imported_files_.get(imported_files_.size() - 1);
 	}
 
 	public void addRecord(String file) {
-		records_.add(file);
+
 	}
 
 	public void fillSlot(int index, Object input, int type_code) {
