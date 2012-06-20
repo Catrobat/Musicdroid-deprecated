@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
         android:drawableTop="@drawable/open_recorder"
-        android:text="@string/load_sound_recorder" />
+        android:text="@string/create_new_sound" />
 
     <Button
         android:id="@+id/soundPlayerButton"
@@ -23,15 +23,6 @@
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
         android:drawableTop="@drawable/open_player"
         android:text="@string/load_sound_player" />
-
-    <Button
-        android:id="@+id/newProjectButton"
-        android:layout_width="@dimen/mainButtonWidth"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/new_project"
-        android:text="@string/new_project" />
 
     <Button
         android:id="@+id/openSoundfileButton"

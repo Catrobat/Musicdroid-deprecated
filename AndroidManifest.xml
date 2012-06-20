@@ -35,6 +35,7 @@
             
         </activity>
         <activity android:name=".PlaySoundActivity"></activity>
+        <activity android:name="MusicdroidSubMenu"></activity>
     </application>
   <instrumentation
       android:targetPackage="at.tugraz.ist.musicdroid"
