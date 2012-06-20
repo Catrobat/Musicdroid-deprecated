@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import at.tugraz.ist.musicdroid.common.Constants;
 
 public class PitchDetectionActivity extends Activity {
 	private final static String Appname = "Pitchdetection";
@@ -275,13 +276,16 @@ private final PdListener myListener = new PdListener() {
 	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
 		    }
 		    File f = new File(path);
-		    String filename = f.getParentFile() + File.separator + "synt.mid";
+		    
+		    File syntFile = new File(Constants.MAIN_DIRECTORY
+					+ Constants.RECORDS_SUB_DIRECTORY, "synt.mid");
+		    
+		   String filename = syntFile.getAbsolutePath();
 		    mf.writeToFile(filename);
 		    
-		    f = new File(filename);
-		    if(!f.exists()) throw new Exception("Midi file could not be created!");
+		    if(!((new File(filename)).exists())) throw new Exception("Midi file could not be created!");
 		    
-		    playfile(f.getAbsolutePath());
+		    playfile(filename);
     	}
     	catch (Exception e) {
 			Log.e("Midi", e.getMessage());
