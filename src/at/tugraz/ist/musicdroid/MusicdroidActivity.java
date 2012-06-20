@@ -1,5 +1,7 @@
 package at.tugraz.ist.musicdroid;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +31,6 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-        
 		OpenRecorderButton = (Button) findViewById(R.id.soundRecorderButton);
 		OpenRecorderButton.setOnClickListener(this);
 		OpenPlayerButton = (Button) findViewById(R.id.soundPlayerButton);
@@ -46,9 +47,6 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 
 	}
 
-	public void onPlaySound(View v) {
-		startActivity(new Intent(this, PlaySoundActivity.class));
-	}
 
 	public void LoadFile() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -81,26 +79,26 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		}
 
 		if (arg0 == OpenPlayerButton) {
-			// open player
+			
 
-			// pl.initFile("mnt/sdcard/bluetooth/test.midi");
-			// String filename = Projekt.getInstance().getLastSoundFile();
-			// System.out.println(Projekt.getInstance().getLastSoundFile());
 			String filename = Projekt.getInstance().getLastSoundFile();
-			Intent intent = new Intent(MusicdroidActivity.this,
-					PlaySoundActivity.class);
-			intent.putExtra("filename", filename);
-			// PlaySoundActivity.getInstance().initFile(filename);
-			// PlaySoundActivity.getInstanceCount().initFile(filename);
-			// startActivity(new Intent(this, PlaySoundActivity.class));
-			System.out.println("Vor StartActivity");
-			startActivity(intent);
 
+			if (new File(filename).exists()) {
+
+				System.out.println("in IF");
+				Intent intent = new Intent(MusicdroidActivity.this,
+						PlaySoundActivity.class);
+				intent.putExtra("filename", filename);
+				System.out.println("Vor StartActivity");
+				startActivity(intent);
+				
+				System.out.println("nach player");
+			}
 		}
 		if (arg0 == OpenRecorderButton) {
-	        Intent i = new Intent(MusicdroidActivity.this, RecordSoundActivity.class);
-	        startActivity(i);
+			Intent i = new Intent(MusicdroidActivity.this,
+					RecordSoundActivity.class);
+			startActivity(i);
 		}
 	}
 }
-

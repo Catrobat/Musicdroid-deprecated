@@ -1,10 +1,7 @@
 package at.tugraz.ist.musicdroid;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 
 import org.puredata.android.service.PdService;
 import org.puredata.core.PdBase;
@@ -18,9 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -35,6 +29,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import at.tugraz.ist.musicdroid.common.Constants;
+import at.tugraz.ist.musicdroid.common.DataManagement;
+import at.tugraz.ist.musicdroid.common.Projekt;
 
 
 public class RecordSoundActivity extends Activity {
@@ -55,6 +51,7 @@ public class RecordSoundActivity extends Activity {
 	private AlertDialog.Builder builder;
 	private AlertDialog alert;
 	boolean unsaved_changes = false;
+	boolean on_back_pressed = false;
 
 
 	private final ServiceConnection pdConnection = new ServiceConnection() {
@@ -90,7 +87,6 @@ public class RecordSoundActivity extends Activity {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.record);
 		guiHandler();
-		// initGui();
 	}
 
 	public void initGui() {
@@ -100,21 +96,12 @@ public class RecordSoundActivity extends Activity {
 				.setPositiveButton("Yes",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-
 								SaveRecord();
 							}
 						})
 				.setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-
-						chrono.setBase(SystemClock.elapsedRealtime());
-						playButton
-								.setBackgroundResource(R.drawable.playdisabled);
-						playButton.setEnabled(false);
-						stopButton
-								.setBackgroundResource(R.drawable.stopdisabled);
-						stopButton.setEnabled(false);
-						unsaved_changes = false;
+						setDefaultButtonStatus();
 					}
 				});
 
@@ -123,14 +110,9 @@ public class RecordSoundActivity extends Activity {
 		recordButton = (Button) findViewById(R.id.button2);
 		stopButton = (Button) findViewById(R.id.stopButton);
 		playButton = (Button) findViewById(R.id.playButton);
-		stopButton.setBackgroundResource(R.drawable.stopdisabled);
-		stopButton.setEnabled(false);
-		playButton.setBackgroundResource(R.drawable.playdisabled);
-		playButton.setEnabled(false); // todo
-
-		// testoutput = (TextView) findViewById(R.id.textView1);
 		chrono = (Chronometer) findViewById(R.id.chronometer1);
 
+		setDefaultButtonStatus();
 	}
 
 	private void guiHandler() {
@@ -225,21 +207,6 @@ public class RecordSoundActivity extends Activity {
 
     
     
-    public void playfile() {
-    	Uri myUri = Uri.fromFile(patch);
-    	MediaPlayer mediaPlayer = new MediaPlayer();
-    	try {
-    		mediaPlayer.reset();
-        	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-    		mediaPlayer.setDataSource(getApplicationContext(), myUri);
-    		mediaPlayer.prepare();
-    		mediaPlayer.start();
-    	} catch (Exception e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    		Log.e("playfile()", e.getMessage());
-    	} 	
-    }
     
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -299,19 +266,12 @@ public class RecordSoundActivity extends Activity {
         return true;
     }
 
+	public void playfile() {
+		Intent intent = new Intent(RecordSoundActivity.this,
+				PlaySoundActivity.class);
+		intent.putExtra("filename", patch.getAbsolutePath());
+		startActivity(intent);
 
-	public static void copyFile(File src, File dest) throws IOException {
-		Log.e("Copy File:", "Copy File");
-		FileChannel inChannel = new FileInputStream(src).getChannel();
-		FileChannel outChannel = new FileOutputStream(dest).getChannel();
-		try {
-			inChannel.transferTo(0, inChannel.size(), outChannel);
-		} finally {
-			if (inChannel != null)
-				inChannel.close();
-			if (outChannel != null)
-				outChannel.close();
-		}
 	}
 
 	public void SaveRecord() {
@@ -319,10 +279,12 @@ public class RecordSoundActivity extends Activity {
 		alert.setTitle("Please enter a filename.");
 		final EditText input = new EditText(this);
 		alert.setView(input);
+
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			String value = "";
 
 			public void onClick(DialogInterface dialog, int which) {
+				DataManagement management = new DataManagement();
 				value = input.getText().toString();
 
 				if (value != "") {
@@ -330,9 +292,12 @@ public class RecordSoundActivity extends Activity {
 							+ Constants.RECORDS_SUB_DIRECTORY, value + ".wav");
 
 					try {
-						copyFile(patch, newFile);
+						management.checkDirectory(newFile.getAbsolutePath());
+						management.copyFile(patch, newFile);
+						patch.delete();
+						Projekt.getInstance().addRecord(
+								newFile.getAbsolutePath());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -357,4 +322,23 @@ public class RecordSoundActivity extends Activity {
 		alert.show();
 		unsaved_changes = false;
 	}
+
+	@Override
+	public void onBackPressed() {
+
+		if (unsaved_changes)
+			alert.show();
+		else
+			super.onBackPressed();
+	}
+
+	void setDefaultButtonStatus() {
+		chrono.setBase(SystemClock.elapsedRealtime());
+		playButton.setBackgroundResource(R.drawable.playdisabled);
+		playButton.setEnabled(false);
+		stopButton.setBackgroundResource(R.drawable.stopdisabled);
+		stopButton.setEnabled(false);
+		unsaved_changes = false;
+	}
+
 }
