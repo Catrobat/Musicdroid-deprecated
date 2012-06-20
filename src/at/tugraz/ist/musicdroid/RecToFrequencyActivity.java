@@ -26,10 +26,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 
 public class RecToFrequencyActivity extends Activity implements OnClickListener {
@@ -41,8 +39,6 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 	private PdService pdService = null;
 	private final static String Appname = "rec_to_frequency";
 	private String path;
-	private String midiPath = "";
-	private int i = 1;
 	private File dir;
 	private Button StopRecordButton;
     private Button StartRecordButton;
@@ -148,7 +144,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     		toneView.addElement(pitch);
     		
     		//toneView.refreshDrawableState();
-    		toneView.invalidate();
+    		//toneView.invalidate();
     		//values.add( ((Float)x).toString()); 
     	}
     }
@@ -219,13 +215,11 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
         }
         
         public void playfile() {
-        	File f = new File("/sdcard/records/miditest.mid" );
-    	    String filename = f.getParentFile() + File.separator + "test.midi";
-    	    File f2 = new File(filename);
+        	File f = new File(Environment.getExternalStorageDirectory()+"/records/miditest.mid" );
     	    
-    	    if(!f2.exists()) return;
+    	    if(!f.exists()) return;
     	    
-        	Uri myUri = Uri.fromFile(f2);
+        	Uri myUri = Uri.fromFile(f);
         	MediaPlayer mediaPlayer = new MediaPlayer();
         	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         	try {
