@@ -11,14 +11,16 @@ import org.puredata.core.PdListener;
 import org.puredata.core.utils.IoUtils;
 import org.puredata.core.utils.PdDispatcher;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -27,7 +29,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import at.tugraz.ist.musicdroid.common.Constants;
+import at.tugraz.ist.musicdroid.common.DataManagement;
+import at.tugraz.ist.musicdroid.common.Projekt;
 
 
 public class RecToFrequencyActivity extends Activity implements OnClickListener {
@@ -45,8 +51,11 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
     private Button SaveFileButton;
     private Button NextNoteButton;
     private Integer pitch;
+    private AlertDialog alert;
+    private AlertDialog.Builder builder;
     private DrawTonesView toneView;
     ArrayList<Integer> pitches;
+    private MidiFile mf = new MidiFile();
 	private final ServiceConnection pdConnection = new ServiceConnection() {
     	@Override
     	public void onServiceConnected(ComponentName name, IBinder service) {
@@ -98,6 +107,22 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 			SaveFileButton.setVisibility(View.GONE);
             bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE);
             Log.i("bindService", "bindService");
+    		builder = new AlertDialog.Builder(this);
+    		builder.setMessage(R.string.save_dialog)
+    				.setCancelable(false)
+    				.setPositiveButton("Yes",
+    						new DialogInterface.OnClickListener() {
+    							public void onClick(DialogInterface dialog, int id) {
+    								writeMidiFile(pitches);
+    							}
+    						})
+    				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+    					public void onClick(DialogInterface dialog, int id) {
+    						
+    					}
+    				});
+
+    		alert = builder.create();
         }
         
         /* We'll use this to catch print statements from Pd
@@ -190,28 +215,60 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
         
         public void writeMidiFile(ArrayList<Integer> values) {   
     	    
-        	MidiFile mf = new MidiFile();  
+        	  
         	
         	if(values.size() <= 0) return;
-        	try
-        	{
+        	
     	    	mf.progChange(76);  //select instrument
     	    	for(int i=0;i< values.size();i++)
     		    {
     	    		mf.noteOnOffNow(MidiFile.QUAVER, values.get(i), 127);
     		    }
-    	    	File directory = new File(Environment.getExternalStorageDirectory()+"/records/");
-    	    	directory.mkdirs();
+    	    	
+    	    	AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
+    			alert2.setTitle("Please enter a filename.");
+    			final EditText input = new EditText(this);
+    			alert2.setView(input);
+
+    			alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    				
+    				String value = "";
+
+    				public void onClick(DialogInterface dialog, int which) {
+    					DataManagement management = new DataManagement();
+    					value = input.getText().toString();
+
+    					
+    	    	
+    	    	
+    	    	if (value != "") {
+    	    		try
+    	        	{
+    	    	File directory = new File(Constants.MAIN_DIRECTORY+Constants.RECORDS_SUB_DIRECTORY);
+    	    	management.checkDirectory(directory.getAbsolutePath());
+    	   
     	    	//File outputFile = new File(directory, "/miditest.mid");
-    	    	mf.writeToFile(directory + "/miditest.mid");
-    	    	File f2 = new File(directory + "/miditest.mid");
+    	    	mf.writeToFile(directory + value);
+    	    	File f2 = new File(directory + value);
+    	     	Projekt.getInstance().addRecord(
+						f2.getAbsolutePath());
     		    if(f2.exists())
     		    	Log.i("file exists", "file exists");
-        	}
-        	catch (Exception e) {
-    			Log.e("Midi", e.getMessage());
-    		} 
-        	playfile();  	
+    					}
+    					
+    	
+    	
+    	catch (Exception e) {
+			Log.e("Midi", e.getMessage());
+		} 
+    	    	}}
+        });
+    			alert2.show(); 	
+        	
+        	
+    				
+
+    			
         }
         
         public void playfile() {
@@ -267,10 +324,8 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 				}
 				else if(state == POSTRECORD)
 				{
-					//verwerfen?
-					
-					//ja:
-					//start record
+					alert.show();
+
 					state = RECORD;
 					StartRecordButton.setVisibility(View.GONE);
 					StopRecordButton.setVisibility(View.VISIBLE);
@@ -278,7 +333,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 					SaveFileButton.setVisibility(View.GONE);
 					toneView.setVisibility(View.VISIBLE);
 					toneView.clearList();
-					//nein:nix tun
+
 				}
 				else
 				{
@@ -309,6 +364,7 @@ public class RecToFrequencyActivity extends Activity implements OnClickListener 
 				if(state == POSTRECORD)
 				{
 					// save file
+					
 					writeMidiFile(pitches);
 					Log.i("writeMidiFile", "writeMidiFile");
 					state = PRERECORD;
