@@ -146,8 +146,6 @@ private final PdListener myListener = new PdListener() {
         
     	calculateWavLength();
     	
-
-        bindService(new Intent(this, PdService.class),pdConnection,BIND_AUTO_CREATE); 
     	
     	Resources r = getResources();
 		int radius = r.getInteger(R.integer.radius);
