@@ -20,6 +20,9 @@ import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,13 +37,14 @@ public class DrawTonesView extends View {
 	private int first_line_;
 	private int id_;
 	private boolean moving_;
-	private boolean end_ = false;
+	private boolean auto_scroll_ = false;
 	private int scrollx_ = 0;
 	private int scrolldis_ = 200;
 	private int radius_;
 	private int scroll_counter_ = 0;
 	static int t = 0;
 	private int distance_between_notes_;
+	private int width_ = 0;
 	double downx = 0, downy = 0, upx = 0, upy = 0, down_help_ = 0;
 
 	public OnClickListener onclick = new OnClickListener() {
@@ -57,7 +61,6 @@ public class DrawTonesView extends View {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			int action = event.getAction();
-
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
 				downx = event.getX();
@@ -120,10 +123,13 @@ public class DrawTonesView extends View {
 
 	};
 
-	public DrawTonesView(Context context, int id, int radius, int firstline) {
+	public DrawTonesView(Context context, int id, int radius, int firstline,
+			boolean scroll) {
 		super(context);
 		// super.setOnClickListener(onclick);
+			
 		super.setOnTouchListener(touchlis);
+		auto_scroll_ = scroll;
 		radius_ = radius;
 		this.context = context;
 		first_line_ = firstline;
@@ -131,6 +137,10 @@ public class DrawTonesView extends View {
 		distance_between_notes_ = radius_ * 6;
 		this.setBackgroundColor(Color.WHITE);
 		this.id_ = id;
+		
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		width_ = metrics.widthPixels; 
+		System.out.println(width_);
 
 		ArrayList<Integer> lalalal = new ArrayList();
 		lalalal.add(68);
@@ -138,7 +148,9 @@ public class DrawTonesView extends View {
 		lalalal.add(79);
 
 		addElement(lalalal);
-		addElement(90);
+		for (int i = 0; i < 30; i++) {
+			addElement(i + 20);
+		}
 		invalidate();
 
 	}
@@ -149,7 +161,6 @@ public class DrawTonesView extends View {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		drawLines(canvas);
-
 		for (int i = 0; i < tones.size(); i++) {
 			((Tone) (tones.get(i))).draw(canvas);
 		}
@@ -195,6 +206,14 @@ public class DrawTonesView extends View {
 		tones.add(new Tone(super.getContext(), midi, x, first_line_, paint,
 				radius_));
 		invalidate();
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		if (last_x > this.getWidth()) {
+			if (auto_scroll_) {
+				super.scrollTo(last_x - width_, 0);
+				scroll_counter_ = last_x / 200;
+				down_help_ = last_x % 200;
+			}
+		}
 	}
 
 	public void addElement(int midi) {
@@ -209,6 +228,14 @@ public class DrawTonesView extends View {
 		tones.add(new Tone(super.getContext(), i_list, x, first_line_, paint,
 				radius_));
 		invalidate();
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		if (last_x > this.getWidth()) {
+			if (auto_scroll_) {
+				super.scrollTo(last_x - width_, 0);
+				scroll_counter_ = last_x / 200;
+				down_help_ = last_x % 200;
+			}
+		}
 	}
 
 	public void deleteElement(int i) {

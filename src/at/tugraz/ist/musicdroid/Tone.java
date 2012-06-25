@@ -31,7 +31,7 @@ public class Tone extends View {
 		// bekomme y = oberste Notenzeile
 
 		super(context);
-		r = radius; 
+		r = radius;
 		this.midiVal = midiVal;
 		this.x = x;
 		this.c_2_y = y + 4 * r;
@@ -76,7 +76,6 @@ public class Tone extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-
 		for (int i = 0; i < midiVal.size(); i++) {
 
 			int y = y_list.get(i);
@@ -94,12 +93,14 @@ public class Tone extends View {
 			}
 			int helpline = y_line + 10 * r;
 			while (helpline <= y) {
-				canvas.drawLine(x - 2 * r, helpline, x + 2 * r, helpline, paint_);
+				canvas.drawLine(x - 2 * r, helpline, x + 2 * r, helpline,
+						paint_);
 				helpline += 2 * r;
 			}
 			helpline = y_line - 2 * r;
 			while (helpline >= y) {
-				canvas.drawLine(x - r * 2, helpline, x + r * 2, helpline, paint_);
+				canvas.drawLine(x - r * 2, helpline, x + r * 2, helpline,
+						paint_);
 				helpline -= 2 * r;
 			}
 
@@ -138,7 +139,7 @@ public class Tone extends View {
 			paint_.setColor(Color.RED);
 		else
 			paint_.setColor(Color.BLACK);
-		
+
 	}
 
 	public boolean isMarked() {
