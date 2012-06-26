@@ -1,4 +1,4 @@
- package at.tugraz.ist.musicdroid;
+package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 import java.io.IOException;

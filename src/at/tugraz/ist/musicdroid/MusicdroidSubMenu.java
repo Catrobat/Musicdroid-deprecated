@@ -80,7 +80,9 @@ public class MusicdroidSubMenu extends Activity implements OnClickListener {
 			startActivity(i);
 		}
 		if (arg0 == OpenPianoButton) {
-			
+			Intent i = new Intent(MusicdroidSubMenu.this,
+					PianoActivity.class);
+			startActivity(i);
 		}
 		if (arg0 == OpenNoteCreatorButton) {
 			Intent i = new Intent(MusicdroidSubMenu.this,

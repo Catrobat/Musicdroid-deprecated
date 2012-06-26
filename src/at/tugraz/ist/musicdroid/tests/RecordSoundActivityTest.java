@@ -28,16 +28,7 @@ public class RecordSoundActivityTest extends ActivityInstrumentationTestCase2<Re
 		solo.finishOpenedActivities();
 		super.tearDown();
 	}
-	
-/*	public void testRecordSoundScreen(){
-	  assertTrue("TextView Record not found", solo.searchButton(solo.getString(R.string.recordButtonTextField)));
-	  //assertTrue("TextView Record not found", solo.searchText(solo.getString(R.string.recordButtonTextField))); 
-	}
 
-	public void testRecordButtonFunctionality() {
-	  	solo.clickOnButton(solo.getString(R.string.recordButtonTextField)); 
-	  	assertTrue("Text didn't change", solo.searchText("I'm recording now")); 
-	  } */
 	
 	public void testButtonEnabled() {
 		Button startbutton = (Button) solo.getView(R.id.stopButton);
