@@ -83,6 +83,9 @@ public class MusicdroidSubMenu extends Activity implements OnClickListener {
 			
 		}
 		if (arg0 == OpenNoteCreatorButton) {
+			Intent i = new Intent(MusicdroidSubMenu.this,
+					RecToFrequencyActivity.class);
+			startActivity(i);
 			
 		}
 		

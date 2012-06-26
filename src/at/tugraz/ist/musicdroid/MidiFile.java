@@ -106,7 +106,7 @@ public class MidiFile
     fos.write ((byte) low);
 
   
-    // Write the standard metadata — tempo, etc
+    // Write the standard metadata ï¿½ tempo, etc
     // At present, tempo is stuck at crotchet=60 
     fos.write (intArrayToByteArray (tempoEvent));
     fos.write (intArrayToByteArray (keySigEvent));
@@ -174,7 +174,7 @@ public class MidiFile
 
 
   /** Store a note-on event followed by a note-off event a note length
-      later. There is no delta value — the note is assumed to
+      later. There is no delta value ï¿½ the note is assumed to
       follow the previous one with no gap. */
   public void noteOnOffNow (int duration, int note, int velocity)
   {
