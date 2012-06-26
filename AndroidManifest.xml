@@ -40,6 +40,7 @@
             android:screenOrientation="portrait">  </activity>
                 <activity android:name=".PianoActivity"
                      android:screenOrientation="landscape"></activity>
+                <activity android:name="PitchDetectionActivity"></activity>
     </application>
   <instrumentation
       android:targetPackage="at.tugraz.ist.musicdroid"

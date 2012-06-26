@@ -74,10 +74,11 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 		if (arg0 == OpenSoundfileButton) {
 			LoadFile();
 		}
-
-			
-
+		
+		if(arg0==OpenPlayerButton)
+		{
 			String filename = Projekt.getInstance().getLastSoundFile();
+			System.out.println(filename);
 
 			if (new File(filename).exists()) {
 
@@ -90,6 +91,7 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 				
 				System.out.println("nach player");
 			}
+		}
 		
 		if (arg0 == OpenRecorderButton) {
 			/*Intent i = new Intent(MusicdroidActivity.this,
