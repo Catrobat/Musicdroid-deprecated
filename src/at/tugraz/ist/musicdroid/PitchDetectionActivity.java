@@ -154,7 +154,7 @@ private final PdListener myListener = new PdListener() {
 		
 		LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
 		
-	  toneView = new DrawTonesView(this, R.drawable.violine, radius , topline); 
+	  toneView = new DrawTonesView(this, R.drawable.violine, radius , topline, false); 
 	  toneView.clearList();
 	  toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));	        
 	  layout.addView(toneView,0);

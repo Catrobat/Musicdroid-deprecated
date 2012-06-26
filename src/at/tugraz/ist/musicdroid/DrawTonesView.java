@@ -4,20 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.crypto.spec.IvParameterSpec;
+
+import android.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGestureListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
-import android.util.AttributeSet;
-
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,39 +36,23 @@ public class DrawTonesView extends View {
 	private Context context;
 	private int first_line_;
 	private int id_;
+	private boolean moving_;
+	private boolean auto_scroll_ = false;
 	private int scrollx_ = 0;
 	private int scrolldis_ = 200;
 	private int radius_;
+	private int scroll_counter_ = 0;
 	static int t = 0;
 	private int distance_between_notes_;
+	private int width_ = 0;
+	double downx = 0, downy = 0, upx = 0, upy = 0, down_help_ = 0;
 
 	
-	public DrawTonesView(Context context)
-	{
-		super(context);
-		
-		Resources r = getResources();
-		int radius = r.getInteger(R.integer.radius);
-		int topline = r.getInteger(R.integer.topmarginlines);
-	  
-	  init(context, R.drawable.violine, radius, topline);
-	}
-
-	double downx = 0, downy = 0, upx = 0, upy = 0;
-
-	public OnClickListener onclick = new OnClickListener() {
-
-		public void onClick(View v) {
-			System.out.println("vielleicht so");
-		}
-
-	};
-
 	public OnTouchListener touchlis = new OnTouchListener() {
 
+		//@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			int action = event.getAction();
-
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
 				downx = event.getX();
@@ -73,26 +62,50 @@ public class DrawTonesView extends View {
 				// System.out.println(event.getX()+":"+event.getY());
 				break;
 			case MotionEvent.ACTION_UP:
-				if(tones.size() <= 0) break;
-				
 				upx = event.getX();
 				upy = event.getY();
 
 				double scrolldist = downx - upx;
+				double scrolldist_vert = downy - upy;
 
-				if (scrolldist > 0) {
+				if (scrolldist > 30
+						&& (scrolldist_vert < 60 && scrolldist_vert > -60)) {
+
 					scrollx_ += scrolldis_;
-					if (scrollx_ > ((Tone) (tones.get(tones.size() - 1)))
-							.getX() + 50 - v.getWidth())
+					scroll_counter_++;
+					if (scrollx_ >= ((Tone) (tones.get(tones.size() - 1)))
+							.getX() + 50 - v.getWidth()) {
+
 						scrollx_ = ((Tone) (tones.get(tones.size() - 1)))
 								.getX() + 50 - v.getWidth();
+
+						scroll_counter_--;
+						down_help_ = (scrollx_ + v.getWidth()) % 200;
+					}
 					v.scrollTo(scrollx_, 0);
-				} else if (scrolldist < 0) {
+
+				} else if (scrolldist < -30
+						&& (scrolldist_vert < 60 && scrolldist_vert > -60)) {
 					scrollx_ -= scrolldis_;
-					if (scrollx_ < 0)
+					scroll_counter_--;
+					if (scrollx_ < 0) {
+						down_help_ = 0;
 						scrollx_ = 0;
+						scroll_counter_ = 0;
+					}
 					v.scrollTo(scrollx_, 0);
+
+				} else if (scrolldist > -30 && scrolldist < 30
+						&& scrolldist_vert < 30 && scrolldist_vert > -30) {
+					downx += scroll_counter_ * 200 + down_help_;
+					checkNote((int) downx, (int) downy);
+
+				} else if (scrolldist_vert > 30) {
+					moveMarkedNotes(true);
+				} else if (scrolldist_vert < -30) {
+					moveMarkedNotes(false);
 				}
+
 				invalidate();
 				break;
 			}
@@ -102,39 +115,13 @@ public class DrawTonesView extends View {
 
 	};
 
-	public DrawTonesView(Context context, AttributeSet attrs)
-	{
-	  super(context,attrs);
-	  
-	 Resources r = getResources();
-		int radius = r.getInteger(R.integer.radius);
-		int topline = r.getInteger(R.integer.topmarginlines);
-	  
-	  init(context, R.drawable.violine, radius, topline);
-	}
-	
-	public DrawTonesView(Context context, AttributeSet attrs, int defStyle)
-	{
-	  super(context,attrs, defStyle);
-	  
-	 Resources r = getResources();
-		int radius = r.getInteger(R.integer.radius);
-		int topline = r.getInteger(R.integer.topmarginlines);
-	  
-	  init(context, R.drawable.violine, radius, topline);
-	}
-	
-	public DrawTonesView(Context context, int id, int radius, int firstline) {
+	public DrawTonesView(Context context, int id, int radius, int firstline,
+			boolean scroll) {
 		super(context);
-
-		init(context, id, radius, firstline);
-		
-	}
-	
-	public void init(Context context, int id, int radius, int firstline) {
-
 		// super.setOnClickListener(onclick);
+			
 		super.setOnTouchListener(touchlis);
+		auto_scroll_ = scroll;
 		radius_ = radius;
 		this.context = context;
 		first_line_ = firstline;
@@ -142,24 +129,19 @@ public class DrawTonesView extends View {
 		distance_between_notes_ = radius_ * 6;
 		this.setBackgroundColor(Color.WHITE);
 		this.id_ = id;
-
-		for (int i = 0; i < 20; i++) {
-			addElement(60+i);
-		}
+		
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		width_ = metrics.widthPixels; 
 		invalidate();
+
 	}
-	
-	
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
 
-		this.paint.setColor(Color.BLACK);
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		drawLines(canvas);
-
 		for (int i = 0; i < tones.size(); i++) {
 			((Tone) (tones.get(i))).draw(canvas);
 		}
@@ -167,10 +149,10 @@ public class DrawTonesView extends View {
 	}
 
 	private void drawLines(Canvas canvas) {
-        int last_x = 0;
-        
-        if(tones.size()> 0)
-	      last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		paint.setColor(Color.BLACK);
+		int last_x = 0;
+		if (tones.size() > 0)
+			last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
 
 		if (last_x < this.getRight())
 			last_x = this.getRight();
@@ -202,9 +184,18 @@ public class DrawTonesView extends View {
 		else
 			x = 11 * radius_;
 
-		tones.add(new Tone(super.getContext(), midi, x, first_line_, paint));
+		tones.add(new Tone(super.getContext(), midi, x, first_line_, paint,
+				radius_));
+		invalidate();
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		if (last_x > this.getWidth()) {
+			if (auto_scroll_) {
+				super.scrollTo(last_x - width_, 0);
+				scroll_counter_ = last_x / 200;
+				down_help_ = last_x % 200;
+			}
+		}
 	}
-	
 
 	public void addElement(int midi) {
 		int i = tones.size();
@@ -215,8 +206,17 @@ public class DrawTonesView extends View {
 			x = 12 * radius_;
 		ArrayList<Integer> i_list = new ArrayList();
 		i_list.add(midi);
-		tones.add(new Tone(super.getContext(), i_list, x, first_line_, paint));
+		tones.add(new Tone(super.getContext(), i_list, x, first_line_, paint,
+				radius_));
 		invalidate();
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		if (last_x > this.getWidth()) {
+			if (auto_scroll_) {
+				super.scrollTo(last_x - width_, 0);
+				scroll_counter_ = last_x / 200;
+				down_help_ = last_x % 200;
+			}
+		}
 	}
 
 	public void deleteElement(int i) {
@@ -249,4 +249,39 @@ public class DrawTonesView extends View {
 		canvas.drawBitmap(bm, null, dst_rct, null);
 	}
 
+	private void checkNote(int x_value, int y_value) {
+
+		for (int i = 0; i < tones.size(); i++) {
+			int act_x_ = ((Tone) (tones.get(i))).getX();
+			ArrayList<Integer> y_s_ = ((Tone) (tones.get(i))).getY();
+
+			if (y_s_.size() == 1) {
+				if (Math.sqrt(Math.pow(x_value - act_x_, 2)
+						+ Math.pow(y_value - y_s_.get(0), 2)) <= 3 * radius_) {
+					((Tone) (tones.get(i))).setMove();
+					invalidate();
+				}
+			} else {
+				for (int j = 0; j < y_s_.size(); j++) {
+					if (Math.sqrt(Math.pow(x_value - act_x_, 2)
+							+ Math.pow(y_value - y_s_.get(j), 2)) <= 3 * radius_) {
+						((Tone) (tones.get(i))).setMove();
+						invalidate();
+					}
+				}
+			}
+		}
+
+	}
+
+	private void moveMarkedNotes(boolean up) {
+
+		for (int i = 0; i < tones.size(); i++) {
+			if (((Tone) tones.get(i)).isMarked()) {
+				((Tone) tones.get(i)).moveMidiVal(up);
+			}
+
+		}
+		invalidate();
+	}
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,7 @@ public class DrawTonesActivity extends Activity {
 		int topline = r.getInteger(R.integer.topmarginlines);
 
 		DrawTonesView toneView = new DrawTonesView(this, R.drawable.violine,
-				radius, topline);
+				radius, topline, true);
 		setContentView(toneView);
 
 	}
