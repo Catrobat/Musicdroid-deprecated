@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -46,6 +48,9 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	public void onCreate(Bundle savedInstanceState) {
  
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.piano);
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
@@ -60,7 +65,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
         
         //piano.setOnTouchListener(new OnTouchListener()    {
 
-	@Override
+	//@Override
     public boolean onTouch(View v, MotionEvent event)
     {
         midi_values.clear();        

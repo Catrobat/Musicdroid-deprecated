@@ -43,7 +43,7 @@ public class DrawTonesView extends View {
 
 	public OnClickListener onclick = new OnClickListener() {
 
-		@Override
+		//@Override
 		public void onClick(View v) {
 			System.out.println("vielleicht so");
 		}
@@ -52,7 +52,7 @@ public class DrawTonesView extends View {
 
 	public OnTouchListener touchlis = new OnTouchListener() {
 
-		@Override
+		//@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			int action = event.getAction();
 
