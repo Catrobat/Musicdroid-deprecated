@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/AbsoluteLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/solid_blue"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingTop="40dip" >
-
-    <Button
-        android:id="@+id/openNoteCreator"
-        android:layout_width="@dimen/mainButtonWidth"
-        android:layout_height="wrap_content"
-        android:layout_x="58dp"
-        android:layout_y="314dp"
-        android:drawableTop="@drawable/new_project"
-        android:text="@string/load_note_creator" />
 
     <Button
         android:id="@+id/openRecorderButton"
         android:layout_width="@dimen/mainButtonWidth"
         android:layout_height="wrap_content"
-        android:layout_x="55dp"
-        android:layout_y="37dp"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
         android:drawableTop="@drawable/open_recorder"
         android:text="@string/load_sound_recorder" />
 
@@ -28,9 +20,16 @@
         android:id="@+id/openPianoButton"
         android:layout_width="@dimen/mainButtonWidth"
         android:layout_height="wrap_content"
-        android:layout_x="55dp"
-        android:layout_y="179dp"
         android:drawableTop="@drawable/open_player"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
         android:text="@string/load_piano" />
 
-</AbsoluteLayout>
+    <Button
+        android:id="@+id/openNoteCreator"
+        android:layout_width="@dimen/mainButtonWidth"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:drawableTop="@drawable/new_project"
+        android:text="@string/load_note_creator" />
+
+</LinearLayout>
