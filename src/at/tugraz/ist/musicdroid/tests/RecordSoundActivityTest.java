@@ -11,6 +11,7 @@ import at.tugraz.ist.musicdroid.MusicdroidActivity;
 import at.tugraz.ist.musicdroid.R;
 import at.tugraz.ist.musicdroid.RecordSoundActivity;
 
+
 public class RecordSoundActivityTest extends ActivityInstrumentationTestCase2<RecordSoundActivity> { 
     private
      Solo solo; 
