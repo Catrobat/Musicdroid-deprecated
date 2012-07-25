@@ -155,26 +155,12 @@ public class PianoActivity extends Activity implements OnTouchListener{
      
 	
 	    
-    private void toggleSound(int midivalue, boolean down){
+private void toggleSound(int midivalue, boolean down){
 		
 		if (down){
 			if (!soundplayer.isNotePlaying(midivalue)){
 				soundplayer.playNote(midivalue);
-				//toneView.addElement(midivalue);
-				Log.d("Size of midi_values", " " + midi_values.size());
-				for (int i=0; i< midi_values.size(); i++){
-					Log.d("Value" + i, " " + midi_values.get(i));
-				if (sizeofMidiValues > 1){
-					sizeofMidiValues--;
-				}
-				else {
-					toneView.addElement(midi_values);
-				}
-					
-				}
-				//toneView.addElement(midi_values);
-				//midi_values.clear();
-				//toneView.invalidate();
+				toneView.addElement(midivalue);
 				
 				
 								
