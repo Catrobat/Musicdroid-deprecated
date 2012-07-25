@@ -44,6 +44,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private Context context;
 	private boolean[] buttonStates = null;
 	private ArrayList<Integer> midi_values; // This variable is for the chord functionality
+	private int sizeofMidiValues;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -63,7 +64,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
         
 	}
         
-        //piano.setOnTouchListener(new OnTouchListener()    {
+       
 
 	//@Override
     public boolean onTouch(View v, MotionEvent event)
@@ -83,6 +84,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
         //dumpEvent(event);
         
         
+        
         for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++){
         	
         	if(event.getY(touchIndex) > 2*y/3)
@@ -90,10 +92,9 @@ public class PianoActivity extends Activity implements OnTouchListener{
             	int index = 0;
         		pressWhiteKeyAnimation(event.getX(touchIndex));  
                 mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
-                //toneView.addElement(mapped_key);
-                //toneView.invalidate();
                 index = mapped_key-35;
                 newButtonStates[index] = isDownAction;
+                
                 
                               
             } 
@@ -105,8 +106,6 @@ public class PianoActivity extends Activity implements OnTouchListener{
             	mapped_key = mapper.getBlackKeyFromPosition(round(event.getX(touchIndex)));
                 if(mapped_key >= 0)
                 {
-                	//toneView.addElement(mapped_key);
-                	//toneView.invalidate();
                 	int index = 0;
                 	index = mapped_key-35;
                     newButtonStates[index] = isDownAction;
@@ -120,14 +119,20 @@ public class PianoActivity extends Activity implements OnTouchListener{
              } 
         }
         
-       
+        sizeofMidiValues = 0;
+        for (int index = 0; index < newButtonStates.length; index++){
+        	if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
+				midi_values.add(index + 35);
+			}
+        	sizeofMidiValues = midi_values.size();
+        }
+               
+        
+        
         
         for (int index = 0; index < newButtonStates.length; index++)
 		{
-			if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
-				Log.d("ButtonStates", index + "here should be something added");
-				midi_values.add(index);
-			}
+			
         	if (buttonStates[index] != newButtonStates[index])
 			{
 				int midivalue = 0;
@@ -135,8 +140,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 				midivalue = index + 35;
 				toggleSound(midivalue, newButtonStates[index]);
 			}
-        	
-        	        		
+        	      	        		
 		}
         
         
@@ -148,16 +152,29 @@ public class PianoActivity extends Activity implements OnTouchListener{
         
     return true;             
     }
-     //  }); 
-
-	//}
+     
 	
-	private void toggleSound(int midivalue, boolean down){
+	    
+    private void toggleSound(int midivalue, boolean down){
 		
 		if (down){
 			if (!soundplayer.isNotePlaying(midivalue)){
 				soundplayer.playNote(midivalue);
-				toneView.addElement(midivalue);
+				//toneView.addElement(midivalue);
+				Log.d("Size of midi_values", " " + midi_values.size());
+				for (int i=0; i< midi_values.size(); i++){
+					Log.d("Value" + i, " " + midi_values.get(i));
+				if (sizeofMidiValues > 1){
+					sizeofMidiValues--;
+				}
+				else {
+					toneView.addElement(midi_values);
+				}
+					
+				}
+				//toneView.addElement(midi_values);
+				//midi_values.clear();
+				//toneView.invalidate();
 				
 				
 								
