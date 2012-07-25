@@ -45,6 +45,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private boolean[] buttonStates = null;
 	private ArrayList<Integer> midi_values; // This variable is for the chord functionality
 	private int sizeofMidiValues;
+	private boolean switcher = false;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -69,7 +70,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	//@Override
     public boolean onTouch(View v, MotionEvent event)
     {
-        midi_values.clear();        
+               
 		// TODO Auto-generated method stub
 		boolean[] newButtonStates = new boolean[61];
 		int action = event.getAction();
@@ -98,7 +99,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
                 
                               
             } 
-            //TODO: blackey map funktioniert noch nicht 
+            
                     
             
         	else
@@ -119,14 +120,22 @@ public class PianoActivity extends Activity implements OnTouchListener{
              } 
         }
         
-        sizeofMidiValues = 0;
-        for (int index = 0; index < newButtonStates.length; index++){
-        	if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
-				midi_values.add(index + 35);
-			}
-        	sizeofMidiValues = midi_values.size();
+        
+        if (switcher==false){
+        	for (int index = 0; index < newButtonStates.length; index++){
+        		if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
+					midi_values.add(index + 35);
+				}
+        	
+        	}
         }
-               
+        else
+        	midi_values.clear();
+        
+        Log.d("SizeofMidiValues", " " + midi_values.size());
+        for (int i = 0; i < midi_values.size(); i ++){
+       	 Log.e("Value " + i, " " + midi_values.get(i));
+        } 
         
         
         
@@ -157,19 +166,36 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	    
 private void toggleSound(int midivalue, boolean down){
 		
-		if (down){
-			if (!soundplayer.isNotePlaying(midivalue)){
-				soundplayer.playNote(midivalue);
+    sizeofMidiValues=midi_values.size();
+		
+	if (down){
+		if (!soundplayer.isNotePlaying(midivalue)){
+			soundplayer.playNote(midivalue);
+			if (sizeofMidiValues > 1) {
+				toneView.addElement(midi_values);
+				switcher = true;				
+				sizeofMidiValues--;
+				
+				
+			}
+			else {
 				toneView.addElement(midivalue);
+				Log.w("toggle", "sizeofDeleted");
+				midi_values.clear();
+				sizeofMidiValues=0;
+				switcher = false;
+					
+					
+			}
 				
 				
 								
-			}
-		}
-		else {
-			soundplayer.stopNote(midivalue);
 		}
 	}
+	else {
+		soundplayer.stopNote(midivalue);
+	}
+}
 	
 	
 	
