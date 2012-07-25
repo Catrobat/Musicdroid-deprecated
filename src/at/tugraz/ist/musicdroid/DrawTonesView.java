@@ -21,6 +21,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.view.GestureDetector;
@@ -183,8 +184,7 @@ public class DrawTonesView extends View {
 			x = ((Tone) (tones.get(i - 1))).getX() + distance_between_notes_;
 		else
 			x = 11 * radius_;
-
-		tones.add(new Tone(super.getContext(), midi, x, first_line_, paint,
+        tones.add(new Tone(super.getContext(), midi, x, first_line_, paint,
 				radius_));
 		invalidate();
 		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;

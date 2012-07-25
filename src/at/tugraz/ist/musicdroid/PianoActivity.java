@@ -44,8 +44,9 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private Context context;
 	private boolean[] buttonStates = null;
 	private ArrayList<Integer> midi_values; // This variable is for the chord functionality
-	private int sizeofMidiValues;
+	private int sizeofMidiValues = 0;
 	private boolean switcher = false;
+	private boolean[] newButtonStates = new boolean[61];
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -72,7 +73,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
     {
                
 		// TODO Auto-generated method stub
-		boolean[] newButtonStates = new boolean[61];
+		
 		int action = event.getAction();
 		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
 		int mapped_key = 0;
@@ -97,12 +98,10 @@ public class PianoActivity extends Activity implements OnTouchListener{
                 newButtonStates[index] = isDownAction;
                 
                 
+                
                               
             } 
-            
-                    
-            
-        	else
+            else
             {
             	mapped_key = mapper.getBlackKeyFromPosition(round(event.getX(touchIndex)));
                 if(mapped_key >= 0)
@@ -110,7 +109,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
                 	int index = 0;
                 	index = mapped_key-35;
                     newButtonStates[index] = isDownAction;
-                    
+                   
                    	
                 }
                 else 
@@ -118,10 +117,19 @@ public class PianoActivity extends Activity implements OnTouchListener{
                  	Log.e("nokey", String.valueOf(mapped_key));
                 }
              } 
+        	 if (touchIndex == (event.getPointerCount()-1))
+        		 organizeAction();
         }
         
+        //Log.e("size of midi_values", " " + midi_values.size());
+        /*for (int i = 0; i < midi_values.size(); i ++){
+        	Log.d("Value " + i, " " + midi_values.get(i));
+        	
+        }*/
+       // midi_values.clear();
+
         
-        if (switcher==false){
+        /*if (switcher==false){
         	for (int index = 0; index < newButtonStates.length; index++){
         		if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
 					midi_values.add(index + 35);
@@ -131,26 +139,12 @@ public class PianoActivity extends Activity implements OnTouchListener{
         }
         else
         	midi_values.clear();
-        
-        Log.d("SizeofMidiValues", " " + midi_values.size());
-        for (int i = 0; i < midi_values.size(); i ++){
-       	 Log.e("Value " + i, " " + midi_values.get(i));
-        } 
+        */
         
         
         
-        for (int index = 0; index < newButtonStates.length; index++)
-		{
-			
-        	if (buttonStates[index] != newButtonStates[index])
-			{
-				int midivalue = 0;
-				buttonStates[index] = newButtonStates[index];
-				midivalue = index + 35;
-				toggleSound(midivalue, newButtonStates[index]);
-			}
-        	      	        		
-		}
+        
+        
         
         
         
@@ -161,39 +155,60 @@ public class PianoActivity extends Activity implements OnTouchListener{
         
     return true;             
     }
-     
+
+
+private void organizeAction(){
+	midi_values.clear();
+	for (int index = 0; index < newButtonStates.length; index++){
+		if(newButtonStates[index]==true){
+			midi_values.add(index+35);			
+		}
+	}
+	sizeofMidiValues = midi_values.size();
+	Log.e("organizeAction", ""+midi_values.size());
+	for (int i = 0; i < sizeofMidiValues; i ++){
+   	 Log.d("Value " + i, " " + midi_values.get(i));
+    }
+	
+	Object test = new ArrayList<Integer>(12);
+	test = midi_values.clone();
+	toneView.addElement((ArrayList<Integer>) test);
+
+	
+	for (int index = 0; index < newButtonStates.length; index++)
+	{
+		
+    	if (buttonStates[index] != newButtonStates[index])
+		{
+			int midivalue = 0;
+			buttonStates[index] = newButtonStates[index];
+			midivalue = index + 35;
+			toggleSound(midivalue, newButtonStates[index]);
+		}
+    	      	        		
+	}
+	newButtonStates = new boolean[61];
+	
+}
 	
 	    
+@SuppressWarnings("unchecked")
 private void toggleSound(int midivalue, boolean down){
-		
-    sizeofMidiValues=midi_values.size();
-		
+			
 	if (down){
 		if (!soundplayer.isNotePlaying(midivalue)){
 			soundplayer.playNote(midivalue);
-			if (sizeofMidiValues > 1) {
-				toneView.addElement(midi_values);
-				switcher = true;				
-				sizeofMidiValues--;
-				
-				
-			}
-			else {
-				//toneView.addElement(midivalue);
-				//Log.w("toggle", "sizeofDeleted");
-				midi_values.clear();
-				sizeofMidiValues=0;
-				switcher = false;
-					
-					
-			}
-				
-				
-								
+			Object test = new ArrayList<Integer>(12);
+			test = midi_values.clone();
+			toneView.addElement((ArrayList<Integer>) test);
+			
+			
+										
 		}
 	}
 	else {
 		soundplayer.stopNote(midivalue);
+		
 	}
 }
 	

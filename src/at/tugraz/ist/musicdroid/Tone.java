@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
@@ -75,7 +76,6 @@ public class Tone extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
 		for (int i = 0; i < midiVal.size(); i++) {
 
 			int y = y_list.get(i);
