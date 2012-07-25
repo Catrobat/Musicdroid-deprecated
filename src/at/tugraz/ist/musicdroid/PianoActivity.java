@@ -179,8 +179,8 @@ private void toggleSound(int midivalue, boolean down){
 				
 			}
 			else {
-				toneView.addElement(midivalue);
-				Log.w("toggle", "sizeofDeleted");
+				//toneView.addElement(midivalue);
+				//Log.w("toggle", "sizeofDeleted");
 				midi_values.clear();
 				sizeofMidiValues=0;
 				switcher = false;
