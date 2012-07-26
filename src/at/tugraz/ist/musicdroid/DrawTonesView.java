@@ -196,7 +196,12 @@ public class DrawTonesView extends View {
 			}
 		}
 	}
-
+    
+	public int getTonesSize(){
+		return tones.size();
+	}
+	
+	
 	public void addElement(int midi) {
 		int i = tones.size();
 		int x = 0;

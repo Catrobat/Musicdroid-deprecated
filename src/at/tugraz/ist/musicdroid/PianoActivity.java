@@ -115,41 +115,18 @@ public class PianoActivity extends Activity implements OnTouchListener{
                  	Log.e("nokey", String.valueOf(mapped_key));
                 }
              } 
-        	 if (touchIndex == (event.getPointerCount()-1))
-        		 organizeAction();
-        }
-        
-        //Log.e("size of midi_values", " " + midi_values.size());
-        /*for (int i = 0; i < midi_values.size(); i ++){
-        	Log.d("Value " + i, " " + midi_values.get(i));
-        	
-        }*/
-       // midi_values.clear();
-
-        
-        /*if (switcher==false){
-        	for (int index = 0; index < newButtonStates.length; index++){
-        		if (newButtonStates[index]==true){                                   //TODO This part is for the chord functionality
-					midi_values.add(index + 35);
-				}
-        	
+        	 
+        	if (touchIndex == (event.getPointerCount()-1)){
+        		if ((isDownAction==true) & event.getPointerCount()>1){
+        			int toneSize = toneView.getTonesSize();
+        			toneView.deleteElement(toneSize-1);
+        		}
+        		organizeAction();
         	}
+        		 
         }
-        else
-        	midi_values.clear();
-        */
         
         
-        
-        
-        
-        
-        
-        
-        
-               
-        //String hit = (c - key_width/2) + "x" + (c + key_width/2);
-        //Log.e("c-pos", hit);
         
     return true;             
     }
