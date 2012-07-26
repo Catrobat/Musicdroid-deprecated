@@ -72,8 +72,6 @@ public class PianoActivity extends Activity implements OnTouchListener{
     public boolean onTouch(View v, MotionEvent event)
     {
                
-		// TODO Auto-generated method stub
-		
 		int action = event.getAction();
 		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
 		int mapped_key = 0;
@@ -170,9 +168,7 @@ private void organizeAction(){
    	 Log.d("Value " + i, " " + midi_values.get(i));
     }
 	
-	Object test = new ArrayList<Integer>(12);
-	test = midi_values.clone();
-	toneView.addElement((ArrayList<Integer>) test);
+	
 
 	
 	for (int index = 0; index < newButtonStates.length; index++)
@@ -198,10 +194,12 @@ private void toggleSound(int midivalue, boolean down){
 	if (down){
 		if (!soundplayer.isNotePlaying(midivalue)){
 			soundplayer.playNote(midivalue);
+			
+			
 			Object test = new ArrayList<Integer>(12);
 			test = midi_values.clone();
 			toneView.addElement((ArrayList<Integer>) test);
-			
+						
 			
 										
 		}
