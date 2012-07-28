@@ -43,7 +43,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private String ActivityName = "PianoActivity";
 	private Context context;
 	private boolean[] buttonStates = null;
-	private ArrayList<Integer> midi_values; // This variable is for the chord functionality
+	private ArrayList<Integer> midi_values; 
 	private int sizeofMidiValues = 0;
 	private boolean switcher = false;
 	private boolean[] newButtonStates = new boolean[61];
@@ -207,9 +207,9 @@ private void toggleSound(int midivalue, boolean down){
 		int radius = getResources().getInteger(R.integer.radius);
 		int topline = getResources().getInteger(R.integer.topmarginlines);
   	    toneView = new DrawTonesView(this, R.drawable.violine, radius , topline, true);
-  	    toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,height/2));
+  	    toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,280));
   	    layout.addView(toneView,0);
-  	  
+  	    
   /*	    
         layoutParams = new RelativeLayout.LayoutParams(val_high, val_high);
         layoutParams2 = new RelativeLayout.LayoutParams(val_high, val_high);
