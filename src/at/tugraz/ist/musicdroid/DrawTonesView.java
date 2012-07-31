@@ -197,6 +197,10 @@ public class DrawTonesView extends View {
 		}
 	}
     
+	public List getTonesList(){
+		return tones;
+	}
+	
 	public int getTonesSize(){
 		return tones.size();
 	}

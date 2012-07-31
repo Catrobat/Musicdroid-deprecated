@@ -41,6 +41,10 @@ public class Tone extends View {
 		this.paint_ = new Paint(paint);
 		invalidate();
 	}
+	
+	public ArrayList<Integer>getMidiValues(){
+		return midiVal;
+	}
 
 	private void calculateCoordinates() {
 		// g2=43 x+r, y-r
