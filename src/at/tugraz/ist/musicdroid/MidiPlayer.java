@@ -18,8 +18,10 @@ public class MidiPlayer {
 	public File createMidifile(){
 		File directory;
 		File path;
-		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"piano_midi_sounds");
-		
+		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"Musicfiles");
+		if (!directory.exists()){
+			directory.mkdir();
+		}
 		
 		
 		
