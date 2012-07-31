@@ -28,5 +28,6 @@
     <string name="load_sound_file_chooser_text">Please select a Sound</string>
     <string name="record_toast">Aufnahme läuft noch, drücke zuerst Stopp</string>
     <string name="save_dialog">There are unsaved changes. Would you like to save your previous record?</string>
+    <string name="playMid">Play</string>
 
 </resources>

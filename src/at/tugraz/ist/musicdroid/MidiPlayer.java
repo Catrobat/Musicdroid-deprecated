@@ -48,7 +48,9 @@ public class MidiPlayer {
 	}
 	
 	public void writeToMidiFile(){
+		
 		int numberOfTones = toneView.getTonesSize();
+				
 		List tonesArray = toneView.getTonesList();
 		String path = createMidifile();
 		for(int counter= 0; counter < numberOfTones; counter++){

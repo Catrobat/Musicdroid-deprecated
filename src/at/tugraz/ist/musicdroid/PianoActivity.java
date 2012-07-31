@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -32,7 +33,9 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private ImageView gradient;
 	private ImageView notes;
 	private DrawTonesView toneView;
+	private Button playMidi;
 	
+	private MidiPlayer midiplayer;
 	private NoteMapper mapper;
 	private SoundPlayer soundplayer;
 	static final int SEMIQUAVER = 4;
@@ -59,10 +62,12 @@ public class PianoActivity extends Activity implements OnTouchListener{
         soundplayer = new SoundPlayer(context);
         soundplayer.initSoundpool();
         createMidiSounds();
+        
         init();
         piano.setOnTouchListener(this);
         buttonStates = new boolean[61]; //size of pianobuttons, value hardcoded find another possibility!!! 
         midi_values = new ArrayList<Integer>(12);
+        
         
 	}
         
@@ -193,6 +198,7 @@ private void toggleSound(int midivalue, boolean down){
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
+        playMidi = (Button) findViewById(R.id.PlayMidiButton);
         scroll.setId(2);
       //  gradient = (ImageView) findViewById(R.id.imageView2);
         //notes = (ImageView) findViewById(R.id.imageView1);
@@ -209,6 +215,7 @@ private void toggleSound(int midivalue, boolean down){
   	    toneView = new DrawTonesView(this, R.drawable.violine, radius , topline, true);
   	    toneView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,280));
   	    layout.addView(toneView,0);
+  	    midiplayer = new MidiPlayer(toneView, context);
   	    
   /*	    
         layoutParams = new RelativeLayout.LayoutParams(val_high, val_high);
@@ -262,6 +269,16 @@ private void toggleSound(int midivalue, boolean down){
             	mapper.initializeBlackKeyMap(black_key_width);
             }
         }, 100L);
+        
+        
+        playMidi.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				midiplayer.writeToMidiFile();
+				midiplayer.playMidiFile();
+				
+			}
+
+		});
 
 	}
 	
