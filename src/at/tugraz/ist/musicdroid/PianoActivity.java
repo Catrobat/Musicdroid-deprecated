@@ -34,6 +34,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private ImageView notes;
 	private DrawTonesView toneView;
 	private Button playMidi;
+	private Button stopMidi;
 	
 	private MidiPlayer midiplayer;
 	private NoteMapper mapper;
@@ -198,6 +199,8 @@ private void toggleSound(int midivalue, boolean down){
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         piano = (ImageView) findViewById(R.id.piano); 
+        stopMidi = (Button) findViewById(R.id.StopMidiButton);
+        stopMidi.setEnabled(false);
         playMidi = (Button) findViewById(R.id.PlayMidiButton);
         scroll.setId(2);
       //  gradient = (ImageView) findViewById(R.id.imageView2);
@@ -275,6 +278,15 @@ private void toggleSound(int midivalue, boolean down){
 			public void onClick(View view) {
 				midiplayer.writeToMidiFile();
 				midiplayer.playMidiFile();
+				stopMidi.setEnabled(true);
+				
+			}
+
+		});
+        
+        stopMidi.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				midiplayer.stopMidiPlayer();
 				
 			}
 

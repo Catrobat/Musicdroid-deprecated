@@ -14,7 +14,6 @@ import android.util.Log;
 
 public class MidiPlayer {
 	private DrawTonesView toneView;
-	private MidiFile midiFile;
 	static final int SEMIQUAVER = 4;
 	static final int QUAVER = 8;
 	static final int CROTCHET = 16;
@@ -22,12 +21,12 @@ public class MidiPlayer {
 	static final int SEMIBREVE = 64;
 	private String midi_path;
 	private Context context;
+	private MediaPlayer mediaPlayer;
 	
 
 	
 	public MidiPlayer(DrawTonesView tone, Context cxt){
 		toneView = tone;
-		midiFile = new MidiFile();
 		context = cxt;
 		
 		
@@ -35,44 +34,52 @@ public class MidiPlayer {
 	
 	public String createMidifile(){
 		File directory;
+		File playFile;
 		String path;
 		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"Musicfiles");
 		if (!directory.exists()){
 			directory.mkdir();
 		}
+					
 		path = directory.getAbsolutePath() + File.separator + "play.mid";
-		
-		
+		playFile = new File(path);
+		if(playFile.exists()){
+			playFile.delete();
+		}
 		midi_path = path;
 		return path;
 	}
 	
 	public void writeToMidiFile(){
-		
+		MidiFile midiFile = new MidiFile();
 		int numberOfTones = toneView.getTonesSize();
-				
 		List tonesArray = toneView.getTonesList();
 		String path = createMidifile();
 		for(int counter= 0; counter < numberOfTones; counter++){
 			Tone chordtones = (Tone) tonesArray.get(counter);
 			ArrayList<Integer> midiValues = chordtones.getMidiValues();
-		    for(int inner_counter = 0; inner_counter < midiValues.size(); inner_counter++){
+			for(int inner_counter = 0; inner_counter < midiValues.size(); inner_counter++){
 		    	midiFile.noteOn (0, midiValues.get(inner_counter), 127);
 		    }
 		    for(int inner_counter = 0; inner_counter < midiValues.size(); inner_counter++){
 		    	if (midiValues.size()>1){
-		    		if (counter==0){
-		    			midiFile.noteOff (QUAVER, midiValues.get(inner_counter));
+		    		if (inner_counter==0){
+		    			midiFile.noteOff (CROTCHET, midiValues.get(inner_counter));
 		    		}
 		    		midiFile.noteOff (0, midiValues.get(inner_counter));
 		    	} else {
-		    		midiFile.noteOff (QUAVER, midiValues.get(inner_counter));
+		    		midiFile.noteOff (CROTCHET, midiValues.get(inner_counter));
 		    	}
 		    	
 		    }
 					
 		}
+		
 		try {
+			File midi_File = new File (path);
+			if(midi_File.exists()){
+				midi_File.delete();
+			}
 			midiFile.writeToFile(path);
 		} catch (IOException e) {
 			Log.e("MidiPlayer", e.getMessage());
@@ -83,7 +90,7 @@ public class MidiPlayer {
 	}
 	
 	public void playMidiFile(){
-		File file = new File(Environment.getExternalStorageDirectory()+"/records/Musicfiles/play.mid" );
+		File file = new File(midi_path );
 	    
 	    if(!file.exists()){
 	    	Log.e("MidiPlayer", "Midi File does not exist!");
@@ -91,7 +98,7 @@ public class MidiPlayer {
 	    
 	    }
     	Uri myUri = Uri.fromFile(file);
-    	MediaPlayer mediaPlayer = new MediaPlayer();
+    	mediaPlayer = new MediaPlayer();
     	mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     	try {
     		mediaPlayer.setDataSource(context, myUri);
@@ -119,5 +126,9 @@ public class MidiPlayer {
     	}
     	mediaPlayer.start();	
     }
+	
+	public void stopMidiPlayer(){
+		mediaPlayer.stop();
+	}
 	
 }

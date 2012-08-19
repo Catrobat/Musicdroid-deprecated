@@ -61,5 +61,14 @@
         android:layout_above="@+id/scrollView"
         android:layout_alignParentLeft="true"
         android:text="@string/playMid" />
+
+    <Button
+        android:id="@+id/StopMidiButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/PlayMidiButton"
+        android:layout_toRightOf="@+id/PlayMidiButton"
+        android:text="@string/stop_text" />
 
 </RelativeLayout>

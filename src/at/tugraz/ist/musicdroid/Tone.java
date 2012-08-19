@@ -145,6 +145,15 @@ public class Tone extends View {
 			paint_.setColor(Color.BLACK);
 
 	}
+	
+	public void setColor(String color){
+		if (color.equals("RED")){
+			paint_.setColor(Color.RED);
+		}else if (color.equals("BLACK")){
+			paint_.setColor(Color.BLACK);
+		}
+		
+	}
 
 	public boolean isMarked() {
 		return move_;
