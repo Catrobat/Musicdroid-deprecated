@@ -121,7 +121,7 @@ public class Tone extends View {
 		}
 	}
 
-	public int getX() {
+	public int get_X() {
 		return x;
 	}
 
@@ -129,7 +129,7 @@ public class Tone extends View {
 		x = new_x;
 	}
 
-	public ArrayList<Integer> getY() {
+	public ArrayList<Integer> get_Y() {
 		return y_list;
 	}
 

@@ -75,10 +75,10 @@ public class DrawTonesView extends View {
 					scrollx_ += scrolldis_;
 					scroll_counter_++;
 					if (scrollx_ >= ((Tone) (tones.get(tones.size() - 1)))
-							.getX() + 50 - v.getWidth()) {
+							.get_X() + 50 - v.getWidth()) {
 
 						scrollx_ = ((Tone) (tones.get(tones.size() - 1)))
-								.getX() + 50 - v.getWidth();
+								.get_X() + 50 - v.getWidth();
 
 						scroll_counter_--;
 						down_help_ = (scrollx_ + v.getWidth()) % 200;
@@ -153,7 +153,7 @@ public class DrawTonesView extends View {
 		paint.setColor(Color.BLACK);
 		int last_x = 0;
 		if (tones.size() > 0)
-			last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+			last_x = ((Tone) (tones.get(tones.size() - 1))).get_X() + 50;
 
 		if (last_x < this.getRight())
 			last_x = this.getRight();
@@ -181,13 +181,13 @@ public class DrawTonesView extends View {
 		int i = tones.size();
 		int x = 0;
 		if (i > 0)
-			x = ((Tone) (tones.get(i - 1))).getX() + distance_between_notes_;
+			x = ((Tone) (tones.get(i - 1))).get_X() + distance_between_notes_;
 		else
 			x = 11 * radius_;
         tones.add(new Tone(super.getContext(), midi, x, first_line_, paint,
 				radius_));
 		invalidate();
-		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).get_X() + 50;
 		if (last_x > this.getWidth()) {
 			if (auto_scroll_) {
 				super.scrollTo(last_x - width_, 0);
@@ -210,7 +210,7 @@ public class DrawTonesView extends View {
 		int i = tones.size();
 		int x = 0;
 		if (i > 0)
-			x = ((Tone) (tones.get(i - 1))).getX() + distance_between_notes_;
+			x = ((Tone) (tones.get(i - 1))).get_X() + distance_between_notes_;
 		else
 			x = 12 * radius_;
 		ArrayList<Integer> i_list = new ArrayList();
@@ -218,7 +218,7 @@ public class DrawTonesView extends View {
 		tones.add(new Tone(super.getContext(), i_list, x, first_line_, paint,
 				radius_));
 		invalidate();
-		int last_x = ((Tone) (tones.get(tones.size() - 1))).getX() + 50;
+		int last_x = ((Tone) (tones.get(tones.size() - 1))).get_X() + 50;
 		if (last_x > this.getWidth()) {
 			if (auto_scroll_) {
 				super.scrollTo(last_x - width_, 0);
@@ -235,7 +235,7 @@ public class DrawTonesView extends View {
 
 		tones.remove(i);
 		for (int j = i; j < tones.size(); j++) {
-			int x_value = ((Tone) (tones.get(j))).getX();
+			int x_value = ((Tone) (tones.get(j))).get_X();
 			((Tone) (tones.get(j))).setX(x_value - distance_between_notes_);
 		}
 		invalidate();
@@ -261,8 +261,8 @@ public class DrawTonesView extends View {
 	private void checkNote(int x_value, int y_value) {
 
 		for (int i = 0; i < tones.size(); i++) {
-			int act_x_ = ((Tone) (tones.get(i))).getX();
-			ArrayList<Integer> y_s_ = ((Tone) (tones.get(i))).getY();
+			int act_x_ = ((Tone) (tones.get(i))).get_X();
+			ArrayList<Integer> y_s_ = ((Tone) (tones.get(i))).get_Y();
 
 			if (y_s_.size() == 1) {
 				if (Math.sqrt(Math.pow(x_value - act_x_, 2)
