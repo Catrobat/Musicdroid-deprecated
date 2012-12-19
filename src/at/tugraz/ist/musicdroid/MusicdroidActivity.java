@@ -2,6 +2,12 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 
+
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +18,7 @@ import android.widget.TextView;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 import at.tugraz.ist.musicdroid.common.Projekt;
 
-public class MusicdroidActivity extends Activity implements OnClickListener {
+public class MusicdroidActivity extends SherlockFragmentActivity implements OnClickListener {
 	/** Called when the activity is first created. */
 
 
@@ -29,6 +35,7 @@ public class MusicdroidActivity extends Activity implements OnClickListener {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
         //Intent i = new Intent(MusicdroidActivity.this, RecordSoundActivity.class);
         //startActivity(i);
 		OpenRecorderButton = (Button) findViewById(R.id.soundRecorderButton);

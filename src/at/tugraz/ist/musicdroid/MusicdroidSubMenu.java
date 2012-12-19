@@ -2,6 +2,8 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import android.widget.TextView;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 import at.tugraz.ist.musicdroid.common.Projekt;
 
-public class MusicdroidSubMenu extends Activity implements OnClickListener {
+public class MusicdroidSubMenu extends SherlockFragmentActivity implements OnClickListener {
 	/** Called when the activity is first created. */
 
 	private final int REQUEST_SELECT_MUSIC = 0;
