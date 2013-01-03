@@ -2,7 +2,10 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 
+
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +26,9 @@ public class MusicdroidSubMenu extends SherlockFragmentActivity implements OnCli
 	private Button OpenRecorderButton;
 	private Button OpenPianoButton;
 	private Button OpenNoteCreatorButton;
-
+	private ActionBar actionBar;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -36,6 +41,7 @@ public class MusicdroidSubMenu extends SherlockFragmentActivity implements OnCli
 		OpenPianoButton.setOnClickListener(this);
 		OpenNoteCreatorButton = (Button) findViewById(R.id.openNoteCreator);
 		OpenNoteCreatorButton.setOnClickListener(this);
+		setUpActionBar();
 		
 	}
 
@@ -95,5 +101,30 @@ public class MusicdroidSubMenu extends SherlockFragmentActivity implements OnCli
 		
 		
 		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home: {
+				Intent intent = new Intent(this, MusicdroidActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				return true;
+			}
+			/*case R.id.menu_add: {
+				NewProjectDialog dialog = new NewProjectDialog();
+				dialog.show(getSupportFragmentManager(), NewProjectDialog.DIALOG_FRAGMENT_TAG);
+				return true;
+			}*/
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void setUpActionBar() {
+		String title = "New Project Name";
+		actionBar = getSupportActionBar();
+		actionBar.setTitle(title);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 }
