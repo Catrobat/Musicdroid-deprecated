@@ -2,5 +2,6 @@
 <resources>
     <dimen name="mainButtonWidth">200dip</dimen>
     <dimen name="mainButtonMarginBottom">20dip</dimen>
+    <dimen name="text_size_xxlarge">26sp</dimen>
     
 </resources>

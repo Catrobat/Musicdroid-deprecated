@@ -8,29 +8,24 @@
 
     <Button
         android:id="@+id/soundRecorderButton"
-        android:layout_width="@dimen/mainButtonWidth"
+        style="@style/MainMenuButton"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/open_recorder"
+        android:layout_weight="0.03"
         android:text="@string/create_new_sound" />
 
     <Button
         android:id="@+id/soundPlayerButton"
-        android:layout_width="@dimen/mainButtonWidth"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        style="@style/MainMenuButton"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/open_player"
+        android:layout_weight="0.07"
         android:text="@string/load_sound_player" />
 
     <Button
         android:id="@+id/openSoundfileButton"
-        android:layout_width="@dimen/mainButtonWidth"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        style="@style/MainMenuButton"
         android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/open_project"
+        android:layout_weight="0.04"
         android:text="@string/open_soundfile" />
 
 </LinearLayout>
