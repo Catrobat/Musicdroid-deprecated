@@ -5,38 +5,37 @@ import java.io.IOException;
 import java.lang.Object;
 import java.util.*;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
+
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
+
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PianoActivity extends SherlockFragmentActivity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
-	private ImageView gradient;
-	private ImageView notes;
+	
 	private DrawTonesView toneView;
 	private Button playMidi;
 	private Button stopMidi;
@@ -54,7 +53,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
 	private boolean[] buttonStates = null;
 	private ArrayList<Integer> midi_values; 
 	private int sizeofMidiValues = 0;
-	private boolean switcher = false;
+	
 	private boolean[] newButtonStates = new boolean[61];
 	private ActionBar actionBar;
 	
@@ -210,8 +209,7 @@ private void toggleSound(int midivalue, boolean down){
         stopMidi.setEnabled(false);
         playMidi = (Button) findViewById(R.id.PlayMidiButton);
         scroll.setId(2);
-      //  gradient = (ImageView) findViewById(R.id.imageView2);
-        //notes = (ImageView) findViewById(R.id.imageView1);
+      
 
         LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
         
@@ -227,37 +225,7 @@ private void toggleSound(int midivalue, boolean down){
   	    layout.addView(toneView,0);
   	    midiplayer = new MidiPlayer(toneView, context);
   	    
-  /*	    
-        layoutParams = new RelativeLayout.LayoutParams(val_high, val_high);
-        layoutParams2 = new RelativeLayout.LayoutParams(val_high, val_high);
-        layoutParams3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
-            (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()));
-
-        sssImageView.setMaxHeight(val_high);
-        sssImageView.setMaxWidth(val_high);
-        relativeLayout.updateViewLayout(sssImageView, layoutParams);            
-
-        layoutParams3.addRule(RelativeLayout.BELOW, sssImageView.getId());
-        relativeLayout.updateViewLayout(spacing, layoutParams3);
-
-        layoutParams2.addRule(RelativeLayout.BELOW, spacing.getId());
-        gaImageView.setMaxHeight(val_high);
-        gaImageView.setMaxWidth(val_high);
-        relativeLayout.updateViewLayout(gaImageView, layoutParams2);  
-  	    
-  	    */
-  	    
-
-        //RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //p.addRule(RelativeLayout.ALIGN_BOTTOM, scroll.getId());
-        //p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, scroll.getId());
-        //layout.addView(toneView, p);
-
-       // gradient.setVisibility(View.INVISIBLE);
-        
-        int x = scroll.getWidth()/2; 
-        int y = scroll.getHeight()/2;
+  
         
         mapper = new NoteMapper();
         
@@ -271,9 +239,7 @@ private void toggleSound(int midivalue, boolean down){
                 String pos = ""+x; 
                 Log.e("position", pos); 
         
-               // gradient.getLayoutParams().width = (int)(white_key_width/2);
-              //  gradient.getLayoutParams().height = (int)40;
-            //    gradient.setMaxWidth((int)(white_key_width/2));
+               
                 scroll.scrollTo(round(position),0);
             	mapper.initializeWhiteKeyMap(white_key_width);
             	mapper.initializeBlackKeyMap(black_key_width);
@@ -413,31 +379,7 @@ private void toggleSound(int midivalue, boolean down){
 	}
 
 
-/*private void dumpEvent(MotionEvent event) {
-	   String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
-	      "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
-	   StringBuilder sb = new StringBuilder();
-	   int action = event.getAction();
-	   int actionCode = action & MotionEvent.ACTION_MASK;
-	   sb.append("event ACTION_" ).append(names[actionCode]);
-	   if (actionCode == MotionEvent.ACTION_POINTER_DOWN
-	         || actionCode == MotionEvent.ACTION_POINTER_UP) {
-	      sb.append("(pid " ).append(
-	      action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
-	      sb.append(")" );
-	   }
-	   sb.append("[" );
-	   for (int i = 0; i < event.getPointerCount(); i++) {
-	      sb.append("#" ).append(i);
-	      sb.append("(pid " ).append(event.getPointerId(i));
-	      sb.append(")=" ).append((int) event.getX(i));
-	      sb.append("," ).append((int) event.getY(i));
-	      if (i + 1 < event.getPointerCount())
-	         sb.append(";" );
-	   }
-	   sb.append("]" );
-	   Log.d("Multitouchevents:", sb.toString());
-	}*/
+
 
 
 
