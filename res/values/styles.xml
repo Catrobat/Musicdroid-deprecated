@@ -2,6 +2,28 @@
 
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.Musicdroid" parent="Theme.Sherlock.ForceOverflow">
+        <item name="actionBarStyle">@style/Widget.Musicdroid.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.Musicdroid.ActionBar</item>
+    </style>
+
+    <style name="Widget.Musicdroid.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@color/actionbar_background</item>
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="homeAsUpIndicator">@drawable/actionbar_ic_back</item>
+        <item name="android:homeAsUpIndicator">@drawable/actionbar_ic_back</item>
+        <item name="titleTextStyle">@style/Widget.Musicdroid.ActionBar.Title</item>
+        <item name="android:titleTextStyle">@style/Widget.Musicdroid.ActionBar.Title</item>
+        <item name="height">@dimen/actionbar_height</item>
+    </style>
+
+    <style name="Widget.Musicdroid.ActionBar.Title" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/actionbar_title_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+
 <style name="MainMenuButton">
         <item name="android:layout_marginTop">3dp</item>
         <item name="android:layout_width">match_parent</item>

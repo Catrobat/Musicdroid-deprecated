@@ -2,30 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@color/main_menu_button_background_gradient_start_color"
     android:orientation="vertical"
     android:paddingTop="40dip" >
 
     <Button
         android:id="@+id/soundRecorderButton"
         style="@style/MainMenuButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
         android:layout_weight="0.03"
         android:text="@string/create_new_sound" />
 
     <Button
         android:id="@+id/soundPlayerButton"
         style="@style/MainMenuButton"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:layout_weight="0.07"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        
+        android:layout_weight="0.03"
         android:text="@string/load_sound_player" />
 
     <Button
         android:id="@+id/openSoundfileButton"
         style="@style/MainMenuButton"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:layout_weight="0.04"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        
+        android:layout_weight="0.03"
         android:text="@string/open_soundfile" />
+
+    <Button
+        android:id="@+id/openForumButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:text="@string/open_forum" />
+
+    <Button
+        android:id="@+id/openCatroidButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:text="@string/open_catroid" />
 
 </LinearLayout>

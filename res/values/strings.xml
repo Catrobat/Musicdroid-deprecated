@@ -29,5 +29,7 @@
     <string name="record_toast">Aufnahme läuft noch, drücke zuerst Stopp</string>
     <string name="save_dialog">There are unsaved changes. Would you like to save your previous record?</string>
     <string name="playMid">Play</string>
+    <string name="open_forum">Forum</string>
+    <string name="open_catroid">Catroid</string>
 
 </resources>
