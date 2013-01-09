@@ -2,14 +2,13 @@ package at.tugraz.ist.musicdroid;
 
 import java.io.File;
 
-
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +28,8 @@ public class MusicdroidActivity extends SherlockFragmentActivity implements OnCl
 	private Button OpenRecorderButton;
 	private Button OpenPlayerButton;
 	private Button OpenSoundfileButton;
+	private Button OpenCatroidButton;
+	private Button OpenCatroidForum;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,10 @@ public class MusicdroidActivity extends SherlockFragmentActivity implements OnCl
 		OpenPlayerButton.setOnClickListener(this);
 		OpenSoundfileButton = (Button) findViewById(R.id.openSoundfileButton);
 		OpenSoundfileButton.setOnClickListener(this);
+		OpenCatroidButton = (Button)findViewById(R.id.openCatroidButton);
+		OpenCatroidButton.setOnClickListener(this);
+		OpenCatroidForum = (Button) findViewById(R.id.openForumButton);
+		OpenCatroidForum.setOnClickListener(this);
 	}
 
 	public void handleLoadFileButton(View v) {
@@ -107,6 +112,16 @@ public class MusicdroidActivity extends SherlockFragmentActivity implements OnCl
 			Intent i = new Intent(MusicdroidActivity.this,
 			MusicdroidSubMenu.class);
 	        startActivity(i);			
+		}
+		
+		if (arg0 == OpenCatroidButton){
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getText(R.string.catroid_website).toString()));
+			startActivity(browserIntent);
+		}
+		
+		if (arg0 == OpenCatroidForum){
+			Intent browerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getText(R.string.catrobat_forum).toString()));
+			startActivity(browerIntent);
 		}
 	}
 }
