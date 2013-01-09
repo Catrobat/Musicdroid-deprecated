@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     android:background="@color/main_menu_button_background_gradient_start_color"
     android:orientation="vertical"
-    android:paddingTop="40dip" >
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip" >
 
     <Button
         android:id="@+id/soundRecorderButton"

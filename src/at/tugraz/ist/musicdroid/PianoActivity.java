@@ -7,6 +7,7 @@ import java.util.*;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -26,8 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
-public class PianoActivity extends Activity implements OnTouchListener{
+public class PianoActivity extends SherlockFragmentActivity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
 	private ImageView gradient;
@@ -51,6 +56,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private int sizeofMidiValues = 0;
 	private boolean switcher = false;
 	private boolean[] newButtonStates = new boolean[61];
+	private ActionBar actionBar;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -59,6 +65,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.piano);
+        setUpActionBar();
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
         soundplayer.initSoundpool();
@@ -380,7 +387,30 @@ private void toggleSound(int midivalue, boolean down){
  	    }
  	    return success;
 	}
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home: {
+				Intent intent = new Intent(this, MusicdroidActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				return true;
+			}
+			/*case R.id.menu_add: {
+				NewProjectDialog dialog = new NewProjectDialog();
+				dialog.show(getSupportFragmentManager(), NewProjectDialog.DIALOG_FRAGMENT_TAG);
+				return true;
+			}*/
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void setUpActionBar() {
+		String title = "New Project Name";
+		actionBar = getSupportActionBar();
+		actionBar.setTitle(title);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
 
 
 /*private void dumpEvent(MotionEvent event) {

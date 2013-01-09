@@ -8,11 +8,11 @@
     <string name="recordInfoTextField">Keine Aufnahme</string>
     <string name="stopRecordButtonTextField">Stop</string>
     <string name="descr">Micro</string>
-    <string name="create_new_sound">Create new Sound</string>
-    <string name="load_sound_recorder">Open Sound Recorder</string>
-    <string name="load_piano">Open Piano</string>
-    <string name="load_note_creator">Open note Creator</string>
-    <string name="load_sound_player">Open Sound Player</string>
+    <string name="create_new_sound">New</string>
+    <string name="load_sound_recorder">Recorder</string>
+    <string name="load_piano">Piano</string>
+    <string name="load_note_creator">Note Creator</string>
+    <string name="load_sound_player">Player</string>
     <string name="new_project">New Project</string>
     <string name="open_soundfile">Open Soundfile</string>
     <string name="rtof_save_file">Save File</string>
@@ -31,5 +31,6 @@
     <string name="playMid">Play</string>
     <string name="open_forum">Forum</string>
     <string name="open_catroid">Catroid</string>
+    <string name="singing">Singing</string>
 
 </resources>

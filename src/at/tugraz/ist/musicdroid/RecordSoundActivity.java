@@ -31,6 +31,9 @@ import android.widget.Toast;
 import at.tugraz.ist.musicdroid.common.Constants;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 import at.tugraz.ist.musicdroid.common.Projekt;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 
 public class RecordSoundActivity extends Activity {

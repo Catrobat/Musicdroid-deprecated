@@ -3,33 +3,42 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@color/main_menu_button_background_gradient_start_color"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="40dip" >
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip" >
 
     <Button
         android:id="@+id/openRecorderButton"
-        android:layout_width="@dimen/mainButtonWidth"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/open_recorder"
+        android:layout_weight="0.03"
         android:text="@string/load_sound_recorder" />
 
     <Button
         android:id="@+id/openPianoButton"
-        android:layout_width="@dimen/mainButtonWidth"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/open_player"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
+        android:layout_weight="0.03"
         android:text="@string/load_piano" />
 
     <Button
-        android:id="@+id/openNoteCreator"
-        android:layout_width="@dimen/mainButtonWidth"
+        android:id="@+id/singingButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/mainButtonMarginBottom"
-        android:drawableTop="@drawable/new_project"
+        android:layout_weight="0.03"
+        android:text="@string/singing" />
+
+    <Button
+        android:id="@+id/openNoteCreator"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
         android:text="@string/load_note_creator" />
 
 </LinearLayout>
