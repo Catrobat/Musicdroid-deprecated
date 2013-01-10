@@ -15,10 +15,11 @@
     <color name="dark_gray">#5a5858</color>
     <color name="gray">#808080</color>
     <color name="website_blue">#d8e0f5</color>
-    <color name="actionbar_background">#001554</color>
-    <color name="actionbar_title_color">#A8DFF4</color>
+    <color name="actionbar_background">#104b4a</color>
+    <color name="actionbar_title_color">#FCBB20</color>
     
     <!-- Main Menu Colors -->
+    
     <color name="main_menu_button_text_color">#A8DFF4</color>
     <color name="main_menu_button_text_shadow_color">#7F000000</color>
     <color name="main_menu_button_background_gradient_start_color">#001554</color>
