@@ -316,24 +316,31 @@ private void toggleSound(int midivalue, boolean down){
 		int midi_value = 0;
 		int counter = 0;
 		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"piano_midi_sounds");
- 	    directory.mkdirs();
+ 	    if (!directory.exists()){
+ 	    	Log.i( ActivityName, "new midi directory for piano created" );
+ 	    	directory.mkdirs();
+ 	    }
  	    counter = 0;
  	    for(midi_value = 36; midi_value < 96; midi_value++ ){
  	    	
  	    	midi_note = getMidiNote(counter);
- 	    	MidiFile midiFile = new MidiFile();
- 	   		midiFile.noteOn(0, midi_value, 127);
- 	   		midiFile.noteOff(SEMIBREVE, midi_value);
  	   		file_name = midi_note + "_" + midi_value + ".mid";
  	   		path = directory.getAbsolutePath() + File.separator + file_name;
+ 	   		File file = new File(path);
+ 	   		if (!file.exists()){
+ 	   			Log.i(ActivityName, "had to write"+ file_name);
+ 	   			MidiFile midiFile = new MidiFile();
+ 	   			midiFile.noteOn(0, midi_value, 127);
+ 	   			midiFile.noteOff(SEMIBREVE, midi_value);
 
-     		try {
-	    			midiFile.writeToFile(path); 	
-	    		} catch (IOException e) {
- 	    			Log.e(ActivityName, e.toString());
- 	    			finish();
- 	    		}
- 	    	
+ 	   			try {
+ 	   					midiFile.writeToFile(path); 	
+ 	   				} catch (IOException e) {
+ 	   					Log.e(ActivityName, e.toString());
+ 	   					finish();
+ 	   				}
+ 	   			}
+ 	   		 	    	
      		counter++;
      		if (counter == 12)
      			counter = 0;
