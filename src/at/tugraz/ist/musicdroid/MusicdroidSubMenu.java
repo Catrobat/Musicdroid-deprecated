@@ -122,7 +122,7 @@ public class MusicdroidSubMenu extends SherlockFragmentActivity implements OnCli
 	}
 	
 	private void setUpActionBar() {
-		String title = "New Project Name";
+		String title = "Back";
 		actionBar = getSupportActionBar();
 		actionBar.setTitle(title);
 		actionBar.setDisplayHomeAsUpEnabled(true);

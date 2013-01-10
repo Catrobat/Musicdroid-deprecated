@@ -77,7 +77,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
         
         
 	}
-        
+    
        
 
 	//@Override
@@ -88,12 +88,10 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
 		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
 		int mapped_key = 0;
 		
-		String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
-        int x = piano.getWidth();
+		
         int y = piano.getHeight();
-        int key_width = (x/35); 
-        int c = key_width*15-key_width/2;
-        //dumpEvent(event);
+        
+        
         
         
         
@@ -102,7 +100,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
         	if(event.getY(touchIndex) > 2*y/3)
             {	
             	int index = 0;
-        		pressWhiteKeyAnimation(event.getX(touchIndex));  
+    
                 mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
                 index = mapped_key-35;
                 newButtonStates[index] = isDownAction;
@@ -201,6 +199,7 @@ private void toggleSound(int midivalue, boolean down){
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	private void init()
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
@@ -305,17 +304,7 @@ private void toggleSound(int midivalue, boolean down){
 		return "W";			
 			
 	}
-	
-	private void pressWhiteKeyAnimation(float x_pos)
-	{/*
-      TranslateAnimation translateAnimation = new TranslateAnimation(0, 20, 0, 0);
-      translateAnimation.setFillAfter(true);
-      translateAnimation.setDuration(10);
-	  gradient.startAnimation(translateAnimation);*/
-		
-//	  gradient.scrollTo(-80, 40);
-//	  gradient.setVisibility(View.VISIBLE);
-	}
+
 	
 	
 	private boolean createMidiSounds(){
@@ -357,22 +346,18 @@ private void toggleSound(int midivalue, boolean down){
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home: {
-				Intent intent = new Intent(this, MusicdroidActivity.class);
+				Intent intent = new Intent(this, MusicdroidSubMenu.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				return true;
 			}
-			/*case R.id.menu_add: {
-				NewProjectDialog dialog = new NewProjectDialog();
-				dialog.show(getSupportFragmentManager(), NewProjectDialog.DIALOG_FRAGMENT_TAG);
-				return true;
-			}*/
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	private void setUpActionBar() {
-		String title = "New Project Name";
+		String title = "Back";
 		actionBar = getSupportActionBar();
 		actionBar.setTitle(title);
 		actionBar.setDisplayHomeAsUpEnabled(true);
