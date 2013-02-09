@@ -6,6 +6,7 @@ import java.lang.Object;
 import java.util.*;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,13 +27,15 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import at.tugraz.ist.musicdroid.common.Constants;
+
 
 import com.actionbarsherlock.app.ActionBar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PianoActivity extends SherlockFragmentActivity implements OnTouchListener{
+public class PianoActivity extends Activity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
 	
@@ -55,7 +58,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
 	private int sizeofMidiValues = 0;
 	
 	private boolean[] newButtonStates = new boolean[61];
-	private ActionBar actionBar;
+	//private ActionBar actionBar;
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -64,7 +67,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.piano);
-        setUpActionBar();
+        //setUpActionBar();
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
         soundplayer.initSoundpool();
@@ -72,7 +75,7 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
         
         init();
         piano.setOnTouchListener(this);
-        buttonStates = new boolean[61]; //size of pianobuttons, value hardcoded find another possibility!!! 
+        buttonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS]; //size of pianobuttons, value hardcoded find another possibility!!! 
         midi_values = new ArrayList<Integer>(12);
         
         
@@ -170,7 +173,7 @@ private void organizeAction(){
 		}
     	      	        		
 	}
-	newButtonStates = new boolean[61];
+	newButtonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS];
 	
 }
 	
@@ -340,6 +343,9 @@ private void toggleSound(int midivalue, boolean down){
  	   					finish();
  	   				}
  	   			}
+ 	   		else {
+ 	   			Log.i("ActivityName", ""+ file_name + " was already present");
+ 	   		}
  	   		 	    	
      		counter++;
      		if (counter == 12)
@@ -349,6 +355,8 @@ private void toggleSound(int midivalue, boolean down){
  	    }
  	    return success;
 	}
+	
+	/*
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -368,7 +376,7 @@ private void toggleSound(int midivalue, boolean down){
 		actionBar = getSupportActionBar();
 		actionBar.setTitle(title);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
+	} */
 
 
 
