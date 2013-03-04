@@ -7,8 +7,9 @@ import java.util.*;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -30,10 +31,7 @@ import android.widget.RelativeLayout;
 import at.tugraz.ist.musicdroid.common.Constants;
 
 
-import com.actionbarsherlock.app.ActionBar;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 
 public class PianoActivity extends Activity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
@@ -57,7 +55,8 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	private ArrayList<Integer> midi_values; 
 	private int sizeofMidiValues = 0;
 	
-	private boolean[] newButtonStates = new boolean[61];
+	private boolean[] newButtonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS];
+	ProgressDialog progress;
 	//private ActionBar actionBar;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,20 +69,35 @@ public class PianoActivity extends Activity implements OnTouchListener{
         //setUpActionBar();
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
-        soundplayer.initSoundpool();
-        createMidiSounds();
+        
+        
+        
+        
+        progress = ProgressDialog.show(this, ActivityName, "Piano is loading sounds", true);
+        new Thread(new Runnable() {
+        	public void run()
+        	{
+        		soundplayer.initSoundpool();
+        		createMidiSounds();
+        		runOnUiThread(new Runnable() {
+        			public void run()
+        			{
+        				progress.dismiss();
+        			}
+        		});
+        	}
+        }).start();
+        
         
         init();
         piano.setOnTouchListener(this);
-        buttonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS]; //size of pianobuttons, value hardcoded find another possibility!!! 
+        buttonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS]; 
         midi_values = new ArrayList<Integer>(12);
         
         
 	}
     
-       
-
-	//@Override
+    //@Override
     public boolean onTouch(View v, MotionEvent event)
     {
                
