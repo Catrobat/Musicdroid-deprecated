@@ -34,5 +34,4 @@ public class DrawTonesActivity extends Activity {
 		setContentView(toneView);
 
 	}
-
 }
