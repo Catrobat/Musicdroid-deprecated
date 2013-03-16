@@ -25,13 +25,14 @@ public class DrawTonesView extends View {
 	private int scrolldis_ = 200;
 	private int radius_;
 	private int scroll_counter_ = 0;
-	static int t_ = 0;
 	private int distance_between_notes_;
 	private int width_ = 0;
 	double downx_ = 0, downy_ = 0, upx_ = 0, upy_ = 0, down_help_ = 0;
+	
+	private static final int MOVE_VALUE = 30;
 
 	
-	public OnTouchListener touchlis = new OnTouchListener() {
+	public OnTouchListener touchListener = new OnTouchListener() {
 
 		//@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -42,7 +43,6 @@ public class DrawTonesView extends View {
 				downy_ = event.getY();
 				break;
 			case MotionEvent.ACTION_MOVE:
-				// System.out.println(event.getX()+":"+event.getY());
 				break;
 			case MotionEvent.ACTION_UP:
 				upx_ = event.getX();
@@ -51,7 +51,7 @@ public class DrawTonesView extends View {
 				double scrolldist = downx_ - upx_;
 				double scrolldist_vert = downy_ - upy_;
 
-				if (scrolldist > 30
+				if (scrolldist > MOVE_VALUE
 						&& (scrolldist_vert < 60 && scrolldist_vert > -60)) {
 
 					scrollx_ += scrolldis_;
@@ -67,7 +67,7 @@ public class DrawTonesView extends View {
 					}
 					v.scrollTo(scrollx_, 0);
 
-				} else if (scrolldist < -30
+				} else if (scrolldist < -MOVE_VALUE
 						&& (scrolldist_vert < 60 && scrolldist_vert > -60)) {
 					scrollx_ -= scrolldis_;
 					scroll_counter_--;
@@ -78,14 +78,14 @@ public class DrawTonesView extends View {
 					}
 					v.scrollTo(scrollx_, 0);
 
-				} else if (scrolldist > -30 && scrolldist < 30
-						&& scrolldist_vert < 30 && scrolldist_vert > -30) {
+				} else if (scrolldist > -MOVE_VALUE && scrolldist < MOVE_VALUE
+						&& scrolldist_vert < MOVE_VALUE && scrolldist_vert > -MOVE_VALUE) {
 					downx_ += scroll_counter_ * 200 + down_help_;
 					checkNote((int) downx_, (int) downy_);
 
-				} else if (scrolldist_vert > 30) {
+				} else if (scrolldist_vert > MOVE_VALUE) {
 					moveMarkedNotes(true);
-				} else if (scrolldist_vert < -30) {
+				} else if (scrolldist_vert < -MOVE_VALUE) {
 					moveMarkedNotes(false);
 				}
 
@@ -101,9 +101,8 @@ public class DrawTonesView extends View {
 	public DrawTonesView(Context context, int id, int radius, int firstline,
 			boolean scroll) {
 		super(context);
-		// super.setOnClickListener(onclick);
 			
-		super.setOnTouchListener(touchlis);
+		super.setOnTouchListener(touchListener);
 		auto_scroll_ = scroll;
 		radius_ = radius;
 		this.context_ = context;
@@ -140,7 +139,7 @@ public class DrawTonesView extends View {
 		if (last_x < this.getRight())
 			last_x = this.getRight();
 
-		drawViolinschluessel(canvas);
+		drawViolinClef(canvas);
 		for (int i = 0; i < 5; i++) {
 			canvas.drawLine(this.getLeft(), first_line_ + i * radius_ * 2,
 					last_x, first_line_ + i * radius_ * 2, paint_);
@@ -231,10 +230,9 @@ public class DrawTonesView extends View {
 
 	}
 
-	private void drawViolinschluessel(Canvas canvas) {
+	private void drawViolinClef(Canvas canvas) {
 		Resources res = context_.getResources();
 		Bitmap bm = BitmapFactory.decodeResource(res, id_);
-		// canvas.drawBitmap(bm, 10, 120, null);
 		Rect dst_rct = new Rect(20, first_line_ - 60, 7 * radius_ + 10,
 				first_line_ + 8 * radius_ + 60);
 		canvas.drawBitmap(bm, null, dst_rct, null);
