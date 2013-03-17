@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
+@SuppressWarnings("unused")
 public class DrawTonesActivity extends Activity {
 
 	@Override
@@ -34,5 +35,4 @@ public class DrawTonesActivity extends Activity {
 		setContentView(toneView);
 
 	}
-
 }
