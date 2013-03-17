@@ -57,7 +57,7 @@ public class PianoActivity extends Activity implements OnTouchListener{
 	
 	private boolean[] newButtonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS];
 	ProgressDialog progress;
-	//private ActionBar actionBar;
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -66,14 +66,9 @@ public class PianoActivity extends Activity implements OnTouchListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.piano);
-        //setUpActionBar();
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
-        
-        
-        
-        
-        progress = ProgressDialog.show(this, ActivityName, "Piano is loading sounds", true);
+        progress = ProgressDialog.show(this, ActivityName, getString(R.string.piano_loading_sounds), true);
         new Thread(new Runnable() {
         	public void run()
         	{
@@ -104,27 +99,16 @@ public class PianoActivity extends Activity implements OnTouchListener{
 		int action = event.getAction();
 		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
 		int mapped_key = 0;
-		
-		
         int y = piano.getHeight();
-        
-        
-        
-        
-        
         for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++){
         	
         	if(event.getY(touchIndex) > 2*y/3)
             {	
             	int index = 0;
-    
                 mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
                 index = mapped_key-35;
                 newButtonStates[index] = isDownAction;
-                
-                
-                
-                              
+                     
             } 
             else
             {
@@ -233,7 +217,7 @@ private void toggleSound(int midivalue, boolean down){
         int height = display.getHeight();
         int width = display.getWidth();
         layout.setLayoutParams(new RelativeLayout.LayoutParams(width,height/2));
-        //notes.setMinimumHeight(height/2);
+        
 		int radius = getResources().getInteger(R.integer.radius);
 		int topline = getResources().getInteger(R.integer.topmarginlines);
   	    toneView = new DrawTonesView(this, R.drawable.violine, radius , topline, true);
@@ -334,7 +318,7 @@ private void toggleSound(int midivalue, boolean down){
 		int counter = 0;
 		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"piano_midi_sounds");
  	    if (!directory.exists()){
- 	    	Log.i( ActivityName, "new midi directory for piano created" );
+ 	    	
  	    	directory.mkdirs();
  	    }
  	    counter = 0;
@@ -345,7 +329,7 @@ private void toggleSound(int midivalue, boolean down){
  	   		path = directory.getAbsolutePath() + File.separator + file_name;
  	   		File file = new File(path);
  	   		if (!file.exists()){
- 	   			Log.i(ActivityName, "had to write"+ file_name);
+ 	   			
  	   			MidiFile midiFile = new MidiFile();
  	   			midiFile.noteOn(0, midi_value, 127);
  	   			midiFile.noteOff(SEMIBREVE, midi_value);
@@ -353,12 +337,12 @@ private void toggleSound(int midivalue, boolean down){
  	   			try {
  	   					midiFile.writeToFile(path); 	
  	   				} catch (IOException e) {
- 	   					Log.e(ActivityName, e.toString());
+ 	   					
  	   					finish();
  	   				}
  	   			}
  	   		else {
- 	   			Log.i("ActivityName", ""+ file_name + " was already present");
+ 	   			// at the moment, do nothing
  	   		}
  	   		 	    	
      		counter++;
@@ -370,27 +354,7 @@ private void toggleSound(int midivalue, boolean down){
  	    return success;
 	}
 	
-	/*
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home: {
-				Intent intent = new Intent(this, MusicdroidSubMenu.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				return true;
-			}
-			
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
-	private void setUpActionBar() {
-		String title = "Back";
-		actionBar = getSupportActionBar();
-		actionBar.setTitle(title);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	} */
 
 
 
