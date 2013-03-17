@@ -17,6 +17,7 @@ import android.widget.TextView;
 import at.tugraz.ist.musicdroid.common.DataManagement;
 import at.tugraz.ist.musicdroid.common.Projekt;
 
+@SuppressWarnings("unused")
 public class MusicdroidActivity extends SherlockFragmentActivity implements OnClickListener {
 	/** Called when the activity is first created. */
 
