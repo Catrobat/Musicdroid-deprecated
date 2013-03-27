@@ -3,11 +3,11 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/main_menu_button_background_gradient_start_color"
+    android:background="@color/solid_black"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip" >
+    android:paddingBottom="5dip"
+    android:paddingTop="0dip" >
 
     <Button
         android:id="@+id/openRecorderButton"
@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/load_sound_recorder" />
 
     <Button
@@ -23,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/load_piano" />
 
     <Button
@@ -31,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/singing" />
 
     <Button
@@ -39,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/load_note_creator" />
 
 </LinearLayout>

@@ -5,38 +5,38 @@ import java.io.IOException;
 import java.lang.Object;
 import java.util.*;
 
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
+
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
+
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
+import at.tugraz.ist.musicdroid.common.Constants;
 
-public class PianoActivity extends SherlockFragmentActivity implements OnTouchListener{
+
+
+
+public class PianoActivity extends Activity implements OnTouchListener{
 	private HorizontalScrollView scroll; 
 	private ImageView piano; 
-	private ImageView gradient;
-	private ImageView notes;
+	
 	private DrawTonesView toneView;
 	private Button playMidi;
 	private Button stopMidi;
@@ -54,9 +54,10 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
 	private boolean[] buttonStates = null;
 	private ArrayList<Integer> midi_values; 
 	private int sizeofMidiValues = 0;
-	private boolean switcher = false;
-	private boolean[] newButtonStates = new boolean[61];
-	private ActionBar actionBar;
+	
+	private boolean[] newButtonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS];
+	ProgressDialog progress;
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
  
@@ -65,52 +66,49 @@ public class PianoActivity extends SherlockFragmentActivity implements OnTouchLi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.piano);
-        setUpActionBar();
         context = this.getApplicationContext();
         soundplayer = new SoundPlayer(context);
-        soundplayer.initSoundpool();
-        createMidiSounds();
+        progress = ProgressDialog.show(this, ActivityName, getString(R.string.piano_loading_sounds), true);
+        new Thread(new Runnable() {
+        	public void run()
+        	{
+        		soundplayer.initSoundpool();
+        		createMidiSounds();
+        		runOnUiThread(new Runnable() {
+        			public void run()
+        			{
+        				progress.dismiss();
+        			}
+        		});
+        	}
+        }).start();
+        
         
         init();
         piano.setOnTouchListener(this);
-        buttonStates = new boolean[61]; //size of pianobuttons, value hardcoded find another possibility!!! 
+        buttonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS]; 
         midi_values = new ArrayList<Integer>(12);
         
         
 	}
-        
-       
-
-	//@Override
+    
+    //@Override
     public boolean onTouch(View v, MotionEvent event)
     {
                
 		int action = event.getAction();
 		boolean isDownAction = (action & 0x5) == 0x5 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE;
 		int mapped_key = 0;
-		
-		String pos = String.valueOf(event.getX()) + "x" + String.valueOf(event.getY());
-        int x = piano.getWidth();
         int y = piano.getHeight();
-        int key_width = (x/35); 
-        int c = key_width*15-key_width/2;
-        //dumpEvent(event);
-        
-        
-        
         for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++){
         	
         	if(event.getY(touchIndex) > 2*y/3)
             {	
             	int index = 0;
-        		pressWhiteKeyAnimation(event.getX(touchIndex));  
                 mapped_key = mapper.getWhiteKeyFromPosition(round(event.getX(touchIndex)));
                 index = mapped_key-35;
                 newButtonStates[index] = isDownAction;
-                
-                
-                
-                              
+                     
             } 
             else
             {
@@ -173,7 +171,7 @@ private void organizeAction(){
 		}
     	      	        		
 	}
-	newButtonStates = new boolean[61];
+	newButtonStates = new boolean[Constants.NUMBER_PIANO_BUTTONS];
 	
 }
 	
@@ -202,6 +200,7 @@ private void toggleSound(int midivalue, boolean down){
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	private void init()
 	{
 		scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
@@ -210,8 +209,7 @@ private void toggleSound(int midivalue, boolean down){
         stopMidi.setEnabled(false);
         playMidi = (Button) findViewById(R.id.PlayMidiButton);
         scroll.setId(2);
-      //  gradient = (ImageView) findViewById(R.id.imageView2);
-        //notes = (ImageView) findViewById(R.id.imageView1);
+      
 
         LinearLayout layout =  (LinearLayout)findViewById(R.id.parentLayout);
         
@@ -219,7 +217,7 @@ private void toggleSound(int midivalue, boolean down){
         int height = display.getHeight();
         int width = display.getWidth();
         layout.setLayoutParams(new RelativeLayout.LayoutParams(width,height/2));
-        //notes.setMinimumHeight(height/2);
+        
 		int radius = getResources().getInteger(R.integer.radius);
 		int topline = getResources().getInteger(R.integer.topmarginlines);
   	    toneView = new DrawTonesView(this, R.drawable.violine, radius , topline, true);
@@ -227,37 +225,7 @@ private void toggleSound(int midivalue, boolean down){
   	    layout.addView(toneView,0);
   	    midiplayer = new MidiPlayer(toneView, context);
   	    
-  /*	    
-        layoutParams = new RelativeLayout.LayoutParams(val_high, val_high);
-        layoutParams2 = new RelativeLayout.LayoutParams(val_high, val_high);
-        layoutParams3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
-            (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()));
-
-        sssImageView.setMaxHeight(val_high);
-        sssImageView.setMaxWidth(val_high);
-        relativeLayout.updateViewLayout(sssImageView, layoutParams);            
-
-        layoutParams3.addRule(RelativeLayout.BELOW, sssImageView.getId());
-        relativeLayout.updateViewLayout(spacing, layoutParams3);
-
-        layoutParams2.addRule(RelativeLayout.BELOW, spacing.getId());
-        gaImageView.setMaxHeight(val_high);
-        gaImageView.setMaxWidth(val_high);
-        relativeLayout.updateViewLayout(gaImageView, layoutParams2);  
-  	    
-  	    */
-  	    
-
-        //RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //p.addRule(RelativeLayout.ALIGN_BOTTOM, scroll.getId());
-        //p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, scroll.getId());
-        //layout.addView(toneView, p);
-
-       // gradient.setVisibility(View.INVISIBLE);
-        
-        int x = scroll.getWidth()/2; 
-        int y = scroll.getHeight()/2;
+  
         
         mapper = new NoteMapper();
         
@@ -271,9 +239,7 @@ private void toggleSound(int midivalue, boolean down){
                 String pos = ""+x; 
                 Log.e("position", pos); 
         
-               // gradient.getLayoutParams().width = (int)(white_key_width/2);
-              //  gradient.getLayoutParams().height = (int)40;
-            //    gradient.setMaxWidth((int)(white_key_width/2));
+               
                 scroll.scrollTo(round(position),0);
             	mapper.initializeWhiteKeyMap(white_key_width);
             	mapper.initializeBlackKeyMap(black_key_width);
@@ -339,17 +305,7 @@ private void toggleSound(int midivalue, boolean down){
 		return "W";			
 			
 	}
-	
-	private void pressWhiteKeyAnimation(float x_pos)
-	{/*
-      TranslateAnimation translateAnimation = new TranslateAnimation(0, 20, 0, 0);
-      translateAnimation.setFillAfter(true);
-      translateAnimation.setDuration(10);
-	  gradient.startAnimation(translateAnimation);*/
-		
-//	  gradient.scrollTo(-80, 40);
-//	  gradient.setVisibility(View.VISIBLE);
-	}
+
 	
 	
 	private boolean createMidiSounds(){
@@ -361,24 +317,34 @@ private void toggleSound(int midivalue, boolean down){
 		int midi_value = 0;
 		int counter = 0;
 		directory = new File(Environment.getExternalStorageDirectory()+File.separator+"records"+File.separator+"piano_midi_sounds");
- 	    directory.mkdirs();
+ 	    if (!directory.exists()){
+ 	    	
+ 	    	directory.mkdirs();
+ 	    }
  	    counter = 0;
  	    for(midi_value = 36; midi_value < 96; midi_value++ ){
  	    	
  	    	midi_note = getMidiNote(counter);
- 	    	MidiFile midiFile = new MidiFile();
- 	   		midiFile.noteOn(0, midi_value, 127);
- 	   		midiFile.noteOff(SEMIBREVE, midi_value);
  	   		file_name = midi_note + "_" + midi_value + ".mid";
  	   		path = directory.getAbsolutePath() + File.separator + file_name;
+ 	   		File file = new File(path);
+ 	   		if (!file.exists()){
+ 	   			
+ 	   			MidiFile midiFile = new MidiFile();
+ 	   			midiFile.noteOn(0, midi_value, 127);
+ 	   			midiFile.noteOff(SEMIBREVE, midi_value);
 
-     		try {
-	    			midiFile.writeToFile(path); 	
-	    		} catch (IOException e) {
- 	    			Log.e(ActivityName, e.toString());
- 	    			finish();
- 	    		}
- 	    	
+ 	   			try {
+ 	   					midiFile.writeToFile(path); 	
+ 	   				} catch (IOException e) {
+ 	   					
+ 	   					finish();
+ 	   				}
+ 	   			}
+ 	   		else {
+ 	   			// at the moment, do nothing
+ 	   		}
+ 	   		 	    	
      		counter++;
      		if (counter == 12)
      			counter = 0;
@@ -387,57 +353,11 @@ private void toggleSound(int midivalue, boolean down){
  	    }
  	    return success;
 	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home: {
-				Intent intent = new Intent(this, MusicdroidActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				return true;
-			}
-			/*case R.id.menu_add: {
-				NewProjectDialog dialog = new NewProjectDialog();
-				dialog.show(getSupportFragmentManager(), NewProjectDialog.DIALOG_FRAGMENT_TAG);
-				return true;
-			}*/
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
-	private void setUpActionBar() {
-		String title = "New Project Name";
-		actionBar = getSupportActionBar();
-		actionBar.setTitle(title);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
+	
 
 
-/*private void dumpEvent(MotionEvent event) {
-	   String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
-	      "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
-	   StringBuilder sb = new StringBuilder();
-	   int action = event.getAction();
-	   int actionCode = action & MotionEvent.ACTION_MASK;
-	   sb.append("event ACTION_" ).append(names[actionCode]);
-	   if (actionCode == MotionEvent.ACTION_POINTER_DOWN
-	         || actionCode == MotionEvent.ACTION_POINTER_UP) {
-	      sb.append("(pid " ).append(
-	      action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
-	      sb.append(")" );
-	   }
-	   sb.append("[" );
-	   for (int i = 0; i < event.getPointerCount(); i++) {
-	      sb.append("#" ).append(i);
-	      sb.append("(pid " ).append(event.getPointerId(i));
-	      sb.append(")=" ).append((int) event.getX(i));
-	      sb.append("," ).append((int) event.getY(i));
-	      if (i + 1 < event.getPointerCount())
-	         sb.append(";" );
-	   }
-	   sb.append("]" );
-	   Log.d("Multitouchevents:", sb.toString());
-	}*/
+
 
 
 
