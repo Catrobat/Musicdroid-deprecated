@@ -19,7 +19,7 @@ public class MidiPlayer {
 	static final int CROTCHET = 16;
 	static final int MINIM = 32;
 	static final int SEMIBREVE = 64;
-	private String midi_path;
+	private String pathToMidi;
 	private Context context;
 	private MediaPlayer mediaPlayer;
 	
@@ -28,8 +28,6 @@ public class MidiPlayer {
 	public MidiPlayer(DrawTonesView tone, Context cxt){
 		toneView = tone;
 		context = cxt;
-		
-		
 	}
 	
 	public String createMidifile(){
@@ -46,30 +44,31 @@ public class MidiPlayer {
 		if(playFile.exists()){
 			playFile.delete();
 		}
-		midi_path = path;
+		pathToMidi = path;
 		return path;
 	}
 	
 	public void writeToMidiFile(){
 		MidiFile midiFile = new MidiFile();
 		int numberOfTones = toneView.getTonesSize();
-		List tonesArray = toneView.getTonesList();
+		List<Tone> tonesArray = toneView.getTonesList();
 		String path = createMidifile();
 		for(int counter= 0; counter < numberOfTones; counter++){
 			Tone chordtones = (Tone) tonesArray.get(counter);
 			ArrayList<Integer> midiValues = chordtones.getMidiValues();
-			for(int inner_counter = 0; inner_counter < midiValues.size(); inner_counter++){
-		    	midiFile.noteOn (0, midiValues.get(inner_counter), 127);
+			for(int innerCounterNoteOn = 0; innerCounterNoteOn < midiValues.size(); innerCounterNoteOn++){
+		    	midiFile.noteOn (0, midiValues.get(innerCounterNoteOn), 127);
 		    }
-		    for(int inner_counter = 0; inner_counter < midiValues.size(); inner_counter++){
+		    for(int innerCounterNoteOff = 0; innerCounterNoteOff < midiValues.size(); innerCounterNoteOff++){
 		    	if (midiValues.size()>1){
-		    		if (inner_counter==0){
-		    			midiFile.noteOff (CROTCHET, midiValues.get(inner_counter));
+		    		if (innerCounterNoteOff==0){
+		    			midiFile.noteOff (CROTCHET, midiValues.get(innerCounterNoteOff));
 		    		}
-		    		midiFile.noteOff (0, midiValues.get(inner_counter));
+		    		midiFile.noteOff (0, midiValues.get(innerCounterNoteOff));
 		    	} else {
-		    		midiFile.noteOff (CROTCHET, midiValues.get(inner_counter));
+		    		midiFile.noteOff (CROTCHET, midiValues.get(innerCounterNoteOff));
 		    	}
+		    	
 		    	
 		    }
 					
@@ -90,7 +89,7 @@ public class MidiPlayer {
 	}
 	
 	public void playMidiFile(){
-		File file = new File(midi_path );
+		File file = new File(pathToMidi );
 	    
 	    if(!file.exists()){
 	    	Log.e("MidiPlayer", "Midi File does not exist!");
@@ -129,6 +128,10 @@ public class MidiPlayer {
 	
 	public void stopMidiPlayer(){
 		mediaPlayer.stop();
+	}
+	
+	public void releaseMidiPlayer(){
+		mediaPlayer.release();
 	}
 	
 }
