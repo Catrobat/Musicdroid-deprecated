@@ -34,5 +34,6 @@
     <string name="singing">Singing</string>
     <string name="catroid_website">http://www.catroid.org</string>
     <string name="catrobat_forum">https://groups.google.com/group/catrobat</string>
+    <string name="piano_loading_sounds">Tastentöne werden geladen</string>
 
 </resources>
