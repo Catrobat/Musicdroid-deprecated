@@ -1,15 +1,13 @@
 package at.tugraz.ist.musicdroid;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.media.SoundPool;
-import android.util.Log;
 
 
 public class SoundPlayer {
@@ -21,6 +19,7 @@ public class SoundPlayer {
 	private HashMap<Integer, PlayThread> threadMap = null;
 	
 	
+	@SuppressLint("UseSparseArrays")
 	public SoundPlayer(Context cxt){
 		context = cxt;
 		threadMap = new HashMap<Integer, SoundPlayer.PlayThread>();
@@ -35,6 +34,7 @@ public class SoundPlayer {
 	}
 	
 	
+	@SuppressLint("UseSparseArrays")
 	public void initSoundpool () {
 		
 		soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 100);
@@ -42,6 +42,7 @@ public class SoundPlayer {
         
 	}
 	
+	@SuppressLint("UseSparseArrays")
 	public void setSoundpool(String path){
 		
 		fillSoundpool(path);
@@ -96,6 +97,7 @@ public class SoundPlayer {
 	private class PlayThread extends Thread
 	{
 		int note;
+		@SuppressWarnings("unused")
 		boolean stop = false;
 		int streamId = 0;
 		

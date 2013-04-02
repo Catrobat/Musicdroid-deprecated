@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/main_menu_button_background_gradient_start_color"
+    android:background="@color/solid_black"
     android:orientation="vertical"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip" >
+    android:paddingBottom="5dip"
+    android:paddingTop="0dip" >
 
     <Button
         android:id="@+id/soundRecorderButton"
@@ -13,24 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/create_new_sound" />
 
     <Button
         android:id="@+id/soundPlayerButton"
         style="@style/MainMenuButton"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        
+        android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/load_sound_player" />
 
     <Button
         android:id="@+id/openSoundfileButton"
         style="@style/MainMenuButton"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        
+        android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/open_soundfile" />
 
     <Button
@@ -39,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/open_forum" />
 
     <Button
@@ -47,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
         android:text="@string/open_catroid" />
 
 </LinearLayout>
