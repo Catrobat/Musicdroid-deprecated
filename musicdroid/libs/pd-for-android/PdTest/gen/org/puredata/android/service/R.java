@@ -10,8 +10,8 @@ public final class R {
 	public static final class raw {
 		public static final int silence = 0x7f050003;
 		public static final int extra_ext_v7a = 0x7f050002;
-		public static final int extra_abs = 0x7f050000;
 		public static final int extra_ext = 0x7f050001;
+		public static final int extra_abs = 0x7f050000;
 	}
 	public static final class style {
 		public static final int DisableSoundEffects = 0x7f080000;
@@ -24,8 +24,8 @@ public final class R {
 		public static final int pref_key_outchannels = 0x7f070008;
 		public static final int pref_key_srate = 0x7f070002;
 		public static final int pref_key_inchannels = 0x7f070005;
-		public static final int pref_key_bufsize_millis = 0x7f07000b;
 		public static final int pref_sum_inchannels = 0x7f070007;
+		public static final int pref_key_bufsize_millis = 0x7f07000b;
 		public static final int pref_title = 0x7f070000;
 		public static final int pref_title_inchannels = 0x7f070006;
 		public static final int pref_title_outchannels = 0x7f070009;

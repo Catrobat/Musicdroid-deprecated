@@ -10,8 +10,8 @@ public final class R {
 	public static final class raw {
 		public static final int silence = 0x7f050004;
 		public static final int extra_ext_v7a = 0x7f050002;
-		public static final int extra_abs = 0x7f050000;
 		public static final int extra_ext = 0x7f050001;
+		public static final int extra_abs = 0x7f050000;
 	}
 	public static final class style {
 		public static final int DisableSoundEffects = 0x7f080000;
