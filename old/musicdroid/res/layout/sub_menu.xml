@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/solid_black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="5dip"
+    android:paddingTop="0dip" >
+
+    <Button
+        android:id="@+id/openRecorderButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
+        android:text="@string/load_sound_recorder" />
+
+    <Button
+        android:id="@+id/openPianoButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
+        android:text="@string/load_piano" />
+
+    <Button
+        android:id="@+id/singingButton"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
+        android:text="@string/singing" />
+
+    <Button
+        android:id="@+id/openNoteCreator"
+        style="@style/MainMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:paddingTop="@dimen/padding_between_buttons"
+        android:text="@string/load_note_creator" />
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+/bin
+/gen
+/.project
+libs/pd-for-android/PdCore/gen/
+pdcore.jar
+/.settings

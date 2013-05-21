@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actionbar_height">48dip</dimen>
+    <dimen name="mainButtonWidth">200dip</dimen>
+    <dimen name="mainButtonMarginBottom">20dip</dimen>
+    <dimen name="text_size_xxlarge">26sp</dimen>
+    
+</resources>
