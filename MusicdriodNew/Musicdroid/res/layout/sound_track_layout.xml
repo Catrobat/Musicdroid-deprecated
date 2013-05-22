@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<at.tugraz.musicdroid.soundtracks.SoundTrackView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+ <!--  <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"            
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/box">
+             
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/img_sound_track_type"            
+            />
+        
+        <View 
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignRight="@+id/img_sound_track_type"
+            android:background="@color/sound_view_mic_color"
+            android:id="@+id/vertical_seperator"
+            />
+
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"    
+            android:textColor="@color/custom_background_color"
+            android:layout_alignRight="@+id/vertical_seperator"      
+            android:layout_marginLeft="10dp"
+            android:id="@+id/sound_track_text"
+            />
+         
+        <View 
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_alignRight="@+id/vertical_seperator"
+            android:layout_alignBottom="@+id/sound_track_text"
+            android:background="@color/sound_view_mic_color"
+            android:id="@+id/horizontal_seperator"
+            />       
+            
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontal_seperator"
+            android:layout_alignRight="@+id/vertical_seperator"
+            android:background="@android:color/transparent"/>
+        
+     </RelativeLayout>   -->   
+
+</at.tugraz.musicdroid.soundtracks.SoundTrackView>
