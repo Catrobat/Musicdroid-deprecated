@@ -2,8 +2,8 @@ package at.tugraz.musicdroid.menutest;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.musicdroid.musicdroidmenu.MainActivity;
-import com.musicdroid.musicdroidmenu.SoundManager;
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.SoundManager;
 
 
 public class SoundManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {
