@@ -14,9 +14,9 @@ public class SoundTrackMic extends SoundTrack {
 	public SoundTrackMic() {
 		type = SoundType.MIC;
 		name = "SoundfileMic";
-		soundfile_raw_id = R.raw.test_wav;
-		duration =  SoundManager.getSoundfileDuration(soundfile_raw_id);
-		soundpool_id = SoundManager.loadSound(soundfile_raw_id);
+		soundfileRawId = R.raw.test_wav;
+		duration =  SoundManager.getSoundfileDuration(soundfileRawId);
+		soundpoolId = SoundManager.loadSound(soundfileRawId);
 	}
 	
 	public SoundTrackMic(SoundTrackMic stm)

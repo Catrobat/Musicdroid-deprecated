@@ -18,14 +18,14 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 OnItemLongClickListener {
 	
 	private static AddSoundDialog instance;
-	private MainActivity mParent;
-	private AddSoundAdapter mAddSoundButtonAdapter;
+	private MainActivity parent;
+	private AddSoundAdapter addSoundButtonAdapter;
 	
 	
 	private AddSoundDialog(Context context) {
 		super(context);
-		mParent = (MainActivity) context;
-		mAddSoundButtonAdapter = new AddSoundAdapter(context,
+		parent = (MainActivity) context;
+		addSoundButtonAdapter = new AddSoundAdapter(context,
 				false);
 	}
 
@@ -48,7 +48,7 @@ OnItemLongClickListener {
 		setTitle(R.string.dialog_add_sound_title);
 		setCanceledOnTouchOutside(true);
 		GridView gridView = (GridView) findViewById(R.id.gridview_add_sound_menu);
-		gridView.setAdapter(mAddSoundButtonAdapter);
+		gridView.setAdapter(addSoundButtonAdapter);
 		gridView.setOnItemClickListener(this);
 		gridView.setOnItemLongClickListener(this);
 	}
@@ -56,20 +56,20 @@ OnItemLongClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View button,
 			int position, long id) {
-		SoundType toolType = mAddSoundButtonAdapter.getSoundType(position);
+		SoundType toolType = addSoundButtonAdapter.getSoundType(position);
 		
 		switch(toolType) {
 			case DRUMS:
 				SoundTrackDrums stvd = new SoundTrackDrums();
-				mParent.addSoundTrack(new SoundTrackView(mParent, stvd));
+				parent.addSoundTrack(new SoundTrackView(parent, stvd));
 				break;
 			case PIANO:
 				SoundTrackPiano stvp = new SoundTrackPiano();
-				mParent.addSoundTrack(new SoundTrackView(mParent, stvp));
+				parent.addSoundTrack(new SoundTrackView(parent, stvp));
 				break;
 			case MIC:
 				SoundTrackMic stvm = new SoundTrackMic();
-				mParent.addSoundTrack(new SoundTrackView(mParent, stvm));
+				parent.addSoundTrack(new SoundTrackView(parent, stvm));
 				break;		
 			default:
 				break;

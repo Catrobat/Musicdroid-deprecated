@@ -11,16 +11,16 @@ import at.tugraz.musicdroid.soundtracks.SoundTrack;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;
-	private int longest_track;
-	private int screen_width;
-	private int second_in_pixel;
-	private boolean should_continue;
+	private int longestTrack;
+	private int screenWidth;
+	private int secondInPixel;
+	private boolean shouldContinue;
 	
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
-		longest_track = 0;
-		screen_width = Helper.getInstance().getScreenWidth();
+		longestTrack = 0;
+		screenWidth = Helper.getInstance().getScreenWidth();
 	}
 	
 	public void play()
@@ -31,8 +31,8 @@ public class SoundMixerEventHandler extends Observable {
 		        @Override
 		        public void run() {
 		        	int time = 0;
-		        	should_continue = true;
-		            while (should_continue && time <= longest_track) {
+		        	shouldContinue = true;
+		            while (shouldContinue && time <= longestTrack) {
 		                try {
 		                    Thread.sleep(1000);
 		        			setChanged();
@@ -42,7 +42,7 @@ public class SoundMixerEventHandler extends Observable {
 		                    // TODO: handle exception
 		                }
 		            }
-		            Log.e("TIME: " + time, "Sec: " + second_in_pixel);
+		            Log.e("TIME: " + time, "Sec: " + secondInPixel);
 		            return;
 		        }
 		    }).start();
@@ -51,25 +51,26 @@ public class SoundMixerEventHandler extends Observable {
 	
 	public void stopNotifyThread()
 	{
-		should_continue = false;
+		shouldContinue = false;
 	}
 	
 	public void setLongestTrack(int length)
 	{
 		
-		longest_track = length;
+		longestTrack = length;
 		computeSecondInPixel();
 	}
 	
 	public void computeSecondInPixel()
 	{
-		Log.e("Longest Track ", "" + longest_track);
-		second_in_pixel = screen_width/longest_track;
+		Log.e("Longest Track ", "" + longestTrack);
+		secondInPixel = screenWidth/longestTrack;
 	}
 
+	
 	public int computeStartPointInSecondsByPixel(int start_pos_pixel)
 	{
-		return start_pos_pixel/second_in_pixel;
+		return start_pos_pixel/secondInPixel;
 	}
 	
 	

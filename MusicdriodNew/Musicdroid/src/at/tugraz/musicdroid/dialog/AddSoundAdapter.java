@@ -20,25 +20,25 @@ import android.widget.TextView;
 
 public class AddSoundAdapter extends BaseAdapter {
 
-	private Context mContext;
+	private Context context;
 
-	private ArrayList<SoundType> mButtonsList;
+	private ArrayList<SoundType> buttonsList;
 
 	public AddSoundAdapter(Context context, boolean fromCatrobat) {
-		this.mContext = context;
+		this.context = context;
 		initButtons();
 	}
 
 	private void initButtons() {
-		mButtonsList = new ArrayList<SoundType>();
-		mButtonsList.add(SoundType.PIANO);
-		mButtonsList.add(SoundType.DRUMS);
-		mButtonsList.add(SoundType.MIC);
+		buttonsList = new ArrayList<SoundType>();
+		buttonsList.add(SoundType.PIANO);
+		buttonsList.add(SoundType.DRUMS);
+		buttonsList.add(SoundType.MIC);
 	}
 
 	@Override
 	public int getCount() {
-		return mButtonsList.size();
+		return buttonsList.size();
 	}
 
 	@Override
@@ -52,26 +52,26 @@ public class AddSoundAdapter extends BaseAdapter {
 	}
 
 	public SoundType getSoundType(int position) {
-		return mButtonsList.get(position);
+		return buttonsList.get(position);
 	}
 
 	public ArrayList<SoundType> getSoundTypes() {
-		return mButtonsList;
+		return buttonsList;
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View rowView = convertView;
 		if (rowView == null) {
-			LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			rowView = inflater.inflate(R.layout.add_sound_button, null);
 			ImageView imageView = (ImageView) rowView
 					.findViewById(R.id.add_sound_button_image);
-			imageView.setImageResource(mButtonsList.get(position)
+			imageView.setImageResource(buttonsList.get(position)
 					.getImageResource());
 			TextView textView = (TextView) rowView
 					.findViewById(R.id.add_sound_button_text);
-			textView.setText(mButtonsList.get(position).getNameResource());
+			textView.setText(buttonsList.get(position).getNameResource());
 		}
 		return rowView;
 	}

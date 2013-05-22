@@ -19,17 +19,17 @@ public class Timeline extends RelativeLayout {
 	private Helper helper = null;
 	private Context context = null;
 	private View seperator = null;
-	private TextView start_time = null;
-	private TextView end_time = null;
-	private int start_id = 9876;
-	private HashMap<Integer, TimelineTrackPosition> track_positions = null;
+	private TextView startTimeTextView = null;
+	private TextView endTimeTextView = null;
+	private int startId = 9876;
+	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 
 	public Timeline(Context context) {
 		super(context);
 		this.context = context;
 		helper = Helper.getInstance();
-		track_positions = new HashMap<Integer, TimelineTrackPosition>();
-		init();
+		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
+		initTimeline();
 	}
 	
 	public Timeline(Context context, AttributeSet attrs) {
@@ -38,7 +38,7 @@ public class Timeline extends RelativeLayout {
 	}
 
 	
-	private void init()
+	private void initTimeline()
 	{
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(helper.getScreenWidth(), 
 				   helper.getScreenHeight()/18);
@@ -51,14 +51,14 @@ public class Timeline extends RelativeLayout {
 	}
 	
 	
-	public void addNewTrackPosition(int id, int color_res)
+	public void addNewTrackPosition(int id, int colorRes)
 	{
-		track_positions.put(id, new TimelineTrackPosition(this, context, color_res));
+		trackPositions.put(id, new TimelineTrackPosition(this, context, colorRes));
 	}
 	
 	public void updateTrackEndText(int duration)
 	{		
-		if(end_time == null) return;
+		if(endTimeTextView == null) return;
 		
 		int minutes = duration/60;
 	    int seconds = duration%60;
@@ -70,57 +70,57 @@ public class Timeline extends RelativeLayout {
 	    if(seconds < 10)
 	    	sec = "0" + sec;
 	    	
-		end_time.setText(min + ":" + sec);
+		endTimeTextView.setText(min + ":" + sec);
 	}	
 	
-	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos)
+	public void updateTimelineOnMove(int id, int pixPos, int secPos)
 	{
-		track_positions.get(id).updateTrackPosition(pix_pos, sec_pos);
+		trackPositions.get(id).updateTrackPosition(pixPos, secPos);
 	}
 
 	public void removeTrackPosition(int id)
 	{
-		TimelineTrackPosition tp = track_positions.get(id);
+		TimelineTrackPosition tp = trackPositions.get(id);
 		this.removeView(tp.getTrackPosition());
 		this.removeView(tp.getTrackPositionText());
-		track_positions.remove(id);
+		trackPositions.remove(id);
 	}
 	
 	private void addStartTime()
 	{
-		start_time = new TextView(context);
+		startTimeTextView = new TextView(context);
 	
-		start_time.setText("00:00");
-		start_time.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams text_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		text_params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		text_params.addRule(RelativeLayout.CENTER_VERTICAL);
-		start_time.setLayoutParams(text_params);
+		startTimeTextView.setText("00:00");
+		startTimeTextView.setTextColor(context.getResources().getColor(R.color.custom_background_color));
+		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		textParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
+		startTimeTextView.setLayoutParams(textParams);
 		
-		addView(start_time);
+		addView(startTimeTextView);
 	}
 	
 	private void addEndTime()
 	{
-		end_time = new TextView(context);
+		endTimeTextView = new TextView(context);
 		
-		end_time.setText("");
-		end_time.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams text_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		text_params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		text_params.addRule(RelativeLayout.CENTER_VERTICAL);
-		end_time.setLayoutParams(text_params);
+		endTimeTextView.setText("");
+		endTimeTextView.setTextColor(context.getResources().getColor(R.color.custom_background_color));
+		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		textParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
+		endTimeTextView.setLayoutParams(textParams);
 		
-		addView(end_time);
+		addView(endTimeTextView);
 	}
 	
 	private void addSeperator()
 	{		
 		seperator = new View(context);
-		LayoutParams seperator_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,2);
-		seperator_params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		seperator_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		seperator.setLayoutParams(seperator_params);
+		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,2);
+		seperatorParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		seperator.setLayoutParams(seperatorParams);
 		//int reference_id = getNewId();
 		//seperator.setId(reference_id);
 		seperator.setBackgroundColor(getResources().getColor(R.color.custom_background_color));
@@ -130,8 +130,8 @@ public class Timeline extends RelativeLayout {
 	
 	public int getNewId()
 	{
-	  int id = start_id;
-	  start_id = start_id + 1;
+	  int id = startId;
+	  startId = startId + 1;
 	  return id;
 	}
 	

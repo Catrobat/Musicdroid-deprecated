@@ -34,8 +34,8 @@ public class MainActivity extends MenuFileActivity {
 		return statusbar;
 	}
     
-    private ActionMode.Callback mCallback; //TEST
-    private ActionMode mMode; //TEST
+    private ActionMode.Callback callback;
+    private ActionMode actionMode; 
  
  
 	@Override
@@ -47,13 +47,13 @@ public class MainActivity extends MenuFileActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        SoundMixer.getInstance().init(this, (RelativeLayout)findViewById(R.id.sound_mixer_view));
+        SoundMixer.getInstance().initSoundMixer(this, (RelativeLayout)findViewById(R.id.sound_mixer_view));
         
         initTopStatusBar();
         statusbar = new Statusbar(this);
         
         //TEST 
-        mCallback = new ActionMode.Callback() {
+        callback = new ActionMode.Callback() {
         	 
             /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends MenuFileActivity {
             @Override
             public void onDestroyActionMode(ActionMode mode) {
                 SoundMixer.getInstance().enableUnselectedViews();
-                mMode = null;
+                actionMode = null;
             }
  
             /** This is called when the action mode is created. This is called by startActionMode() */
@@ -164,12 +164,12 @@ public class MainActivity extends MenuFileActivity {
 	public void startActionMode(int id, SoundTrack soundTrack)
 	{
 		SoundMixer.getInstance().setCallingParameters(id, soundTrack);
-		startActionMode(mCallback);
+		startActionMode(callback);
 	}
 	
     public void addSoundTrack(SoundTrackView track)
     {
-    	SoundMixer.getInstance().addTrack(track);
+    	SoundMixer.getInstance().addSoundTrackViewToSoundMixer(track);
     }
 
     private void initTopStatusBar()

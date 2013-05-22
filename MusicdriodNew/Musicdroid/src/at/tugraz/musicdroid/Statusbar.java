@@ -27,7 +27,7 @@ public class Statusbar extends Observable implements OnTouchListener {
 	   playButton = (ImageButton) mainActivity.findViewById(R.id.btn_play);
 	   playButton.setOnTouchListener(this);
 	
-	//ADD UNDO AND REDO SUPPORT
+	   //ADD UNDO AND REDO SUPPORT
     }
     
 	@Override
@@ -48,7 +48,7 @@ public class Statusbar extends Observable implements OnTouchListener {
 			playButton.setImageResource(R.drawable.pause_button);
 			displayPlayButton = false;
 			
-			SoundMixer.getInstance().playSounds();
+			SoundMixer.getInstance().playAllSoundsInSoundmixer();
 			//TESTING - Demonstrates playing midi and wav sounds at the same time	
 		    //SoundManager.playSound(1, 1);
 		    //SoundManager.playSound(2, 1);
@@ -56,7 +56,7 @@ public class Statusbar extends Observable implements OnTouchListener {
 		  }
 		  else {
 			playButton.setImageResource(R.drawable.play_button);
-			SoundMixer.getInstance().stopSounds();
+			SoundMixer.getInstance().stopAllSoundsInSoundmixer();
 			
 			//TESTING
 			//SoundManager.stopAllSounds();

@@ -13,10 +13,10 @@ public class SoundTrack implements Observer {
 	protected SoundType type = null;
 	protected String name = null;
 	protected int duration = 0; //in seconds
-	protected int start_point = 0;
-	protected boolean is_midi;
-	protected int soundfile_raw_id;
-	protected int soundpool_id;
+	protected int startPoint = 0;
+	protected boolean isMidi;
+	protected int soundfileRawId;
+	protected int soundpoolId;
 	
 	public SoundTrack() {}
 	
@@ -30,7 +30,7 @@ public class SoundTrack implements Observer {
 	public void setStartPoint(int start)
 	{
 		Log.e("START POINT", "" + start);
-		start_point = start;
+		startPoint = start;
 	}
 	
 	public SoundType getType() {
@@ -45,17 +45,17 @@ public class SoundTrack implements Observer {
 		return duration;
 	}
 	
-	public boolean ismidi() {
-		return is_midi;
+	public boolean isMidi() {
+		return isMidi;
 	}
 
 	public int getSoundfileId() {
-		return soundfile_raw_id;
+		return soundfileRawId;
 	}
 	
 	public int getSoundPoolId()
 	{
-		return soundpool_id;
+		return soundpoolId;
 	}
 
 	@Override
@@ -63,9 +63,9 @@ public class SoundTrack implements Observer {
 		// TODO Auto-generated method stub
 		int cur_time = (Integer)data;
 		Log.e("Incoming Object: ", "" + cur_time);
-		if(cur_time == start_point)
+		if(cur_time == startPoint)
 		{
-			SoundManager.playSound(soundpool_id, 1);
+			SoundManager.playSound(soundpoolId, 1);
 		}
 	}
 

@@ -9,30 +9,30 @@ import android.widget.RelativeLayout.LayoutParams;
 public class TimelineTrackPosition {
 	private Timeline parent;
 	private Context context;
-	private int color_id;
-	private View track_position = null;
-	private TextView track_position_text = null;
+	private int colorId;
+	private View trackPositionView = null;
+	private TextView trackPositionText = null;
 	
-	public TimelineTrackPosition(Timeline t, Context c, int col_id)
+	public TimelineTrackPosition(Timeline t, Context c, int colId)
 	{
 		parent = t;
 		context = c;
-		color_id = col_id;
+		colorId = colId;
 		addTrackPosition();
 		addTrackPositionText();
 	}
 	
-	public void updateTrackPosition(int pix_pos, int sec_pos)
+	public void updateTrackPosition(int pixPos, int secPos)
 	{
-		track_position.setVisibility(View.VISIBLE);
-		track_position_text.setVisibility(View.VISIBLE);
+		trackPositionView.setVisibility(View.VISIBLE);
+		trackPositionText.setVisibility(View.VISIBLE);
 		
-		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) track_position.getLayoutParams();
-		layoutParams.leftMargin = pix_pos;
-		track_position.setLayoutParams(layoutParams);
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) trackPositionView.getLayoutParams();
+		layoutParams.leftMargin = pixPos;
+		trackPositionView.setLayoutParams(layoutParams);
 		
-		int minutes = sec_pos/60;
-	    int seconds = sec_pos%60;
+		int minutes = secPos/60;
+	    int seconds = secPos%60;
 	    String min = "" + minutes;
 	    String sec = "" + seconds;
 	    
@@ -42,43 +42,43 @@ public class TimelineTrackPosition {
 	    	sec = "0" + sec;
 	    	
 		
-		track_position_text.setText(min + ":" + sec);
+		trackPositionText.setText(min + ":" + sec);
 	}
 	
 	private void addTrackPosition()
 	{
-		track_position = new View(context);
-		LayoutParams seperator_params = new RelativeLayout.LayoutParams(2, LayoutParams.WRAP_CONTENT);
-		seperator_params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		track_position.setLayoutParams(seperator_params);
-		track_position.setId(parent.getNewId());
-		track_position.setBackgroundColor(context.getResources().getColor(color_id));
-		track_position.setVisibility(View.INVISIBLE);
-		parent.addView(track_position);
+		trackPositionView = new View(context);
+		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2, LayoutParams.WRAP_CONTENT);
+		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		trackPositionView.setLayoutParams(seperatorParams);
+		trackPositionView.setId(parent.getNewId());
+		trackPositionView.setBackgroundColor(context.getResources().getColor(colorId));
+		trackPositionView.setVisibility(View.INVISIBLE);
+		parent.addView(trackPositionView);
 	}
 	
 	private void addTrackPositionText()
 	{
-		track_position_text = new TextView(context);
+		trackPositionText = new TextView(context);
 		
-		track_position_text.setText("00:00");
-		track_position_text.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams text_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		text_params.addRule(RelativeLayout.ALIGN_LEFT, track_position.getId());
-		text_params.addRule(RelativeLayout.CENTER_VERTICAL);
-		text_params.leftMargin = 5;
-		track_position_text.setLayoutParams(text_params);
-		track_position_text.setVisibility(View.INVISIBLE);
-		parent.addView(track_position_text);
+		trackPositionText.setText("00:00");
+		trackPositionText.setTextColor(context.getResources().getColor(R.color.custom_background_color));
+		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		textParams.addRule(RelativeLayout.ALIGN_LEFT, trackPositionView.getId());
+		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
+		textParams.leftMargin = 5;
+		trackPositionText.setLayoutParams(textParams);
+		trackPositionText.setVisibility(View.INVISIBLE);
+		parent.addView(trackPositionText);
 	}
 	
 
 	public View getTrackPosition() {
-		return track_position;
+		return trackPositionView;
 	}
 
 	public TextView getTrackPositionText() {
-		return track_position_text;
+		return trackPositionText;
 	}
 	
 }

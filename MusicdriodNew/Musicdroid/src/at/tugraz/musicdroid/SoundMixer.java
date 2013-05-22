@@ -19,14 +19,14 @@ import android.widget.RelativeLayout.LayoutParams;
 public class SoundMixer{
 	public static SoundMixer instance = null;
 	public static final int DEFAULT_LENGTH = 45;
-	protected RelativeLayout parent_layout;
+	protected RelativeLayout parentLayout;
 	protected MainActivity parent;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
-	protected int view_id;
-	private int longest_sound_track;
-	private int calling_id;
-	private SoundTrack calling_track = null;
-	private SoundMixerEventHandler event_handler = null;
+	protected int viewId;
+	private int longestSoundTrack;
+	private int callingId;
+	private SoundTrack callingTrack = null;
+	private SoundMixerEventHandler eventHandler = null;
 	private Timeline timeline = null;
 	
 	public static SoundMixer getInstance() {
@@ -36,34 +36,34 @@ public class SoundMixer{
         return instance;
     }
 	
-	public void init(MainActivity activity, RelativeLayout layout)
+	public void initSoundMixer(MainActivity activity, RelativeLayout layout)
 	{
 		parent = activity;
-		parent_layout = layout;
-		event_handler = new SoundMixerEventHandler(this);
-		longest_sound_track = DEFAULT_LENGTH;
-		event_handler.setLongestTrack(longest_sound_track);
+		parentLayout = layout;
+		eventHandler = new SoundMixerEventHandler(this);
+		longestSoundTrack = DEFAULT_LENGTH;
+		eventHandler.setLongestTrack(longestSoundTrack);
 		timeline = new Timeline(parent);
 
         LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
         LayoutInflater inflater = LayoutInflater.from(parent);
         inflater.inflate(R.layout.timeline_layout, timeline);
         timeline.setId(getNewViewID());
-        parent_layout.addView(timeline, lp); 
+        parentLayout.addView(timeline, lp); 
 	}
 	
 	public SoundMixer() {
-		view_id = 1234;
+		viewId = 1234;
 	}
 	
 	public void handleCopy()
 	{
-		SoundTrack copy = new SoundTrack(calling_track);
-		addTrack(new SoundTrackView(parent, copy));
+		SoundTrack copy = new SoundTrack(callingTrack);
+		addSoundTrackViewToSoundMixer(new SoundTrackView(parent, copy));
 	}
 	
 	
-	public void addTrack(SoundTrackView track)
+	public void addSoundTrackViewToSoundMixer(SoundTrackView track)
 	{
 		track.setId(getNewViewID());
 		checkLongestTrack(track.getSoundTrack().getDuration());
@@ -71,20 +71,20 @@ public class SoundMixer{
         LayoutInflater inflater = LayoutInflater.from(parent);
         inflater.inflate(R.layout.sound_track_layout, track);
         tracks.add(track);
-        parent_layout.addView(track, params);    
-        event_handler.addObserver(track.getSoundTrack());
+        parentLayout.addView(track, params);    
+        eventHandler.addObserver(track.getSoundTrack());
         timeline.addNewTrackPosition(track.getId(), track.getSoundTrack().getType().getColorResource());
 	}
 	
-	public void playSounds()
+	public void playAllSoundsInSoundmixer()
 	{
 		if(tracks.size() > 0)
-		  event_handler.play();
+		  eventHandler.play();
 	}
 	
-	public void stopSounds()
+	public void stopAllSoundsInSoundmixer()
 	{
-		event_handler.stopNotifyThread();
+		eventHandler.stopNotifyThread();
 		SoundManager.stopAllSounds(); 
 	}
 	
@@ -95,17 +95,17 @@ public class SoundMixer{
 	
 	public void deleteCallingTrack()
 	{
-		deleteTrack(calling_id);
-		timeline.removeTrackPosition(calling_id);
+		deleteTrackById(callingId);
+		timeline.removeTrackPosition(callingId);
 	}
 	
-	public void deleteTrack(int track_id)
+	public void deleteTrackById(int tId)
 	{
 		for(int i = 0; i < tracks.size(); i++)
 		{
-			if(tracks.get(i).getId() == track_id)
+			if(tracks.get(i).getId() == tId)
 			{
-				parent_layout.removeView(tracks.get(i));
+				parentLayout.removeView(tracks.get(i));
 				reorderLayout(i);
 				tracks.remove(i);
 			}
@@ -114,32 +114,32 @@ public class SoundMixer{
 	
 	public void disableUnselectedViews()
 	{
-		for(int child = 0; child < parent_layout.getChildCount(); child++)
+		for(int child = 0; child < parentLayout.getChildCount(); child++)
 		{
-			View view = parent_layout.getChildAt(child);
-			if(view.getId() != timeline.getId() && view.getId() != calling_id)
+			View view = parentLayout.getChildAt(child);
+			if(view.getId() != timeline.getId() && view.getId() != callingId)
 				((SoundTrackView)view).disableView();
 		}
 	}
 	
 	public void enableUnselectedViews()
 	{
-		for(int child = 0; child < parent_layout.getChildCount(); child++)
+		for(int child = 0; child < parentLayout.getChildCount(); child++)
 		{
-			View view = parent_layout.getChildAt(child);
-			if(view.getId() != timeline.getId() && view.getId() != calling_id)
+			View view = parentLayout.getChildAt(child);
+			if(view.getId() != timeline.getId() && view.getId() != callingId)
 				((SoundTrackView)view).enableView();
 		}
 	}
 	
-	private void checkLongestTrack(int new_track_length)
+	private void checkLongestTrack(int newTrackLength)
 	{
-		if(new_track_length > longest_sound_track)
+		if(newTrackLength > longestSoundTrack)
 		{
-			longest_sound_track = new_track_length;
-			event_handler.setLongestTrack(longest_sound_track);
+			longestSoundTrack = newTrackLength;
+			eventHandler.setLongestTrack(longestSoundTrack);
 			Log.e("ABOUT TO UPDATE", "UPDATE");
-			timeline.updateTrackEndText(new_track_length);
+			timeline.updateTrackEndText(newTrackLength);
 			for(int i = 0; i < tracks.size(); i++)
 			{
 				tracks.get(i).resize();
@@ -191,35 +191,35 @@ public class SoundMixer{
 		{
 			tracks.get(i).removeAllViews();
 		}
-		longest_sound_track = 0;
+		longestSoundTrack = 0;
 		
-		for(int child = 0; child < parent_layout.getChildCount(); child++)
+		for(int child = 0; child < parentLayout.getChildCount(); child++)
 		{
-			View view = parent_layout.getChildAt(child);
+			View view = parentLayout.getChildAt(child);
 			if(view.getId() != timeline.getId())
-				parent_layout.removeView(view);
+				parentLayout.removeView(view);
 		}
 		
-		longest_sound_track = DEFAULT_LENGTH;
+		longestSoundTrack = DEFAULT_LENGTH;
 		tracks.clear();
 	}
 	
 	
 	public int getStartPointByPixel(int pixel)
 	{
-		return event_handler.computeStartPointInSecondsByPixel(pixel);
+		return eventHandler.computeStartPointInSecondsByPixel(pixel);
 	}
 	
-	public void setCallingParameters(int id, SoundTrack track)
+		public void setCallingParameters(int id, SoundTrack track)
 	{
-		calling_id = id;
-		calling_track = track;
+		callingId = id;
+		callingTrack = track;
 	}
 	
 	public int getNewViewID()
 	{
-		view_id = view_id + 1;
-		return view_id;
+		viewId = viewId + 1;
+		return viewId;
 	}
 	
 	public ArrayList<SoundTrackView> getTracks() {
@@ -232,11 +232,11 @@ public class SoundMixer{
 	
 	public SoundTrack getCallingTrack()
 	{
-		return calling_track;
+		return callingTrack;
 	}
 	
 	public int getDurationLongestTrack()
 	{
-		return longest_sound_track;
+		return longestSoundTrack;
 	}
 }

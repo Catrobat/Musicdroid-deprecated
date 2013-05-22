@@ -13,20 +13,15 @@ import android.util.Log;
 public class SoundManager {
 	 
     static private SoundManager _instance;
-    private static SoundPool mSoundPool;
-    private static HashMap<Integer, Integer> mSoundPoolMap;
-    private static HashMap<Integer, Integer> mSoundPlayMap;
-    private static AudioManager  mAudioManager;
-    private static Context mContext;
+    private static SoundPool soundPool;
+    private static HashMap<Integer, Integer> soundPoolMap;
+    private static HashMap<Integer, Integer> soundPlayMap;
+    private static AudioManager  audioManager;
+    private static Context context;
 
     private SoundManager(){}
 
-    /**
-     * Requests the instance of the Sound Manager and creates it
-     * if it does not exist.
-     *
-     * @return Returns the single instance of the SoundManager
-     */
+
     static synchronized public SoundManager getInstance()
     {
         if (_instance == null)
@@ -34,51 +29,38 @@ public class SoundManager {
         return _instance;
      }
 
-    /**
-     * Initialises the storage for the sounds
-     *
-     * @param theContext The Application context
-     */
+
     public static  void initSounds(Context theContext)
     {
-         mContext = theContext;
-         mSoundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
-         mSoundPoolMap = new HashMap<Integer, Integer>();
-         mSoundPlayMap = new HashMap<Integer, Integer>();
-         mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+         context = theContext;
+         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
+         soundPoolMap = new HashMap<Integer, Integer>();
+         soundPlayMap = new HashMap<Integer, Integer>();
+         audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
     } 
 
-    /**
-     * Add a new Sound to the SoundPool
-     *
-     * @param Index - The Sound Index for Retrieval
-     * @param SoundID - The Android ID for the Sound asset.
-     */
     public static void addSound(int Index,int SoundID)
     {
-            mSoundPoolMap.put(Index, mSoundPool.load(mContext, SoundID, 1));
+            soundPoolMap.put(Index, soundPool.load(context, SoundID, 1));
     }
 
     
     public static int loadSound(int raw_id)
     {
-    	int position = mSoundPoolMap.size()+1;
-    	mSoundPoolMap.put(position, mSoundPool.load(mContext, raw_id, 1));
+    	int position = soundPoolMap.size()+1;
+    	soundPoolMap.put(position, soundPool.load(context, raw_id, 1));
     	return position;
     }    
-    /**
-     * Loads the various sound assets
-     * Currently hardcoded but could easily be changed to be flexible.
-     */
+
     public static void loadSounds()
     {
-            mSoundPoolMap.put(1, mSoundPool.load(mContext, R.raw.test_midi, 1));
-            mSoundPoolMap.put(2, mSoundPool.load(mContext, R.raw.test_wav, 1));
+            soundPoolMap.put(1, soundPool.load(context, R.raw.test_midi, 1));
+            soundPoolMap.put(2, soundPool.load(context, R.raw.test_wav, 1));
     }
 
     public static void playSoundByRawId(int raw_id, float speed)
     {
-        Iterator<Entry<Integer, Integer>> it = mSoundPoolMap.entrySet().iterator();
+        Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>)it.next();
             if(pairs.getValue() == raw_id)
@@ -91,7 +73,7 @@ public class SoundManager {
     
     public static void stopSoundByRawId(int raw_id)
     {
-        Iterator<Entry<Integer, Integer>> it = mSoundPoolMap.entrySet().iterator();
+        Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>)it.next();
             if(pairs.getValue() == raw_id)
@@ -101,60 +83,50 @@ public class SoundManager {
             }
         }
     }
+
     
-    /**
-     * Plays a Sound
-     *
-     * @param index - The Index of the Sound to be played
-     * @param speed - The Speed to play not, not currently used but included for compatibility
-     */
     public static void playSound(int index,float speed)
     {
-            float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            Integer stream_id = mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, speed);
+            float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            Integer stream_id = soundPool.play(soundPoolMap.get(index), streamVolume, streamVolume, 1, 0, speed);
             Log.e("PUT: ", "" + index + " " + stream_id);
-            mSoundPlayMap.put(index, stream_id);
+            soundPlayMap.put(index, stream_id);
     }
 
     
     public static void stopAllSounds()
     {
-        Iterator<Entry<Integer, Integer>> it = mSoundPlayMap.entrySet().iterator();
+        Iterator<Entry<Integer, Integer>> it = soundPlayMap.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>)it.next();
-            mSoundPool.stop(pairs.getValue());
+            soundPool.stop(pairs.getValue());
         }
-        mSoundPlayMap.clear();
+        soundPlayMap.clear();
  
     }
     
-    /**
-     * Stop a Sound
-     * @param index - index of the sound to be stopped
-     */
+
     public static void stopSound(int index)
     {
-            mSoundPool.stop(mSoundPlayMap.get(index));
-            mSoundPlayMap.remove(index);
+            soundPool.stop(soundPlayMap.get(index));
+            soundPlayMap.remove(index);
     }
 
-    /**
-     * Deallocates the resources and Instance of SoundManager
-     */
+    
     public static void cleanup()
     {
-        mSoundPool.release();
-        mSoundPool = null;
-        mSoundPoolMap.clear();
-        mAudioManager.unloadSoundEffects();
+        soundPool.release();
+        soundPool = null;
+        soundPoolMap.clear();
+        audioManager.unloadSoundEffects();
         _instance = null;
     }
     
     
     public static int getSoundfileDuration(int soundfile_id)
     {
-		MediaPlayer player = MediaPlayer.create(mContext, soundfile_id);
+		MediaPlayer player = MediaPlayer.create(context, soundfile_id);
 		int duration = player.getDuration();
 		return duration/1000; 	
     }

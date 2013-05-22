@@ -13,9 +13,9 @@ public class SoundTrackDrums extends SoundTrack {
 	public SoundTrackDrums() {
 		type = SoundType.DRUMS;
 		name = "SoundfileDrums";
-		soundfile_raw_id = R.raw.test_midi;
-		duration =  SoundManager.getSoundfileDuration(soundfile_raw_id);
-		soundpool_id = SoundManager.loadSound(soundfile_raw_id);
+		soundfileRawId = R.raw.test_midi;
+		duration =  SoundManager.getSoundfileDuration(soundfileRawId);
+		soundpoolId = SoundManager.loadSound(soundfileRawId);
 	}
 
 	public SoundTrackDrums(SoundTrackDrums stm)

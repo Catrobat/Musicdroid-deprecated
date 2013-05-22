@@ -26,14 +26,14 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	private SoundTrack soundTrack = null;
 	private int xDelta;
 	private boolean moveable_locked = true;
-	private boolean display_play_button = true;
+	private boolean displayPlayButton = true;
 	
-	protected ImageView sound_type_img = null;
-	protected View seperator_vert = null;
-	protected TextView text = null;
-	protected View seperator_hor = null;
-	protected ImageButton play_button = null;
-	protected ImageButton lock = null;
+	protected ImageView soundTypeImageView = null;
+	protected View verticalSeperatorView = null;
+	protected TextView soundtrackDescriptionTextView = null;
+	protected View horizontalSeperatorView = null;
+	protected ImageButton playImageButton = null;
+	protected ImageButton lockImageButton = null;
 	
 	
 	public SoundTrackView(Context context, SoundTrack st) {
@@ -41,14 +41,14 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		soundTrack = st;
 		helper = Helper.getInstance();
 		factory = new SoundTrackComponentFactory(context);
-		init();
+		initSoundTrackView();
 	}
 	
 	public SoundTrackView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 	
-	public void init() {
+	public void initSoundTrackView() {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(computeWidthRelativeToDuration(), 
 				 																   helper.getScreenHeight()/6);
 	    setLayoutParams(layoutParams);
@@ -68,25 +68,25 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	
 	protected void setRessources(int id, String name, int duration)
 	{
-		sound_type_img = factory.newSoundTypeImageComponent(id);
-		seperator_vert = factory.newVerticalSeperator(sound_type_img.getId());
-		text = factory.newSoundFileTitleText(name, duration, seperator_vert.getId());
-		seperator_hor = factory.newHorizontalSeperator(seperator_vert.getId(), text.getId());
-		play_button = factory.newImageButton(R.drawable.play_button_sound_track, seperator_hor.getId(), seperator_vert.getId());
-		lock = factory.newImageButton(R.drawable.lock_locked, seperator_hor.getId(), play_button.getId());
+		soundTypeImageView = factory.newSoundTypeImageComponent(id);
+		verticalSeperatorView = factory.newVerticalSeperator(soundTypeImageView.getId());
+		soundtrackDescriptionTextView = factory.newSoundFileTitleText(name, duration, verticalSeperatorView.getId());
+		horizontalSeperatorView = factory.newHorizontalSeperator(verticalSeperatorView.getId(), soundtrackDescriptionTextView.getId());
+		playImageButton = factory.newImageButton(R.drawable.play_button_sound_track, horizontalSeperatorView.getId(), verticalSeperatorView.getId());
+		lockImageButton = factory.newImageButton(R.drawable.lock_locked, horizontalSeperatorView.getId(), playImageButton.getId());
 
-		sound_type_img.setPadding(10, 0, 10, 0);
+		soundTypeImageView.setPadding(10, 0, 10, 0);
 		
-		LayoutParams button_params = (LayoutParams) lock.getLayoutParams();
+		LayoutParams button_params = (LayoutParams) lockImageButton.getLayoutParams();
 		button_params.setMargins(-30, 0,0,0); //dirty but don't know how to bring play and lock button closer together		
-		lock.setLayoutParams(button_params);
+		lockImageButton.setLayoutParams(button_params);
 
-        addView(sound_type_img);
-		addView(seperator_vert);
-		addView(text);
-		addView(seperator_hor);
-		addView(play_button);
-		addView(lock);
+        addView(soundTypeImageView);
+		addView(verticalSeperatorView);
+		addView(soundtrackDescriptionTextView);
+		addView(horizontalSeperatorView);
+		addView(playImageButton);
+		addView(lockImageButton);
 
 		
 		this.setOnClickListener(new OnClickListener() {
@@ -95,7 +95,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 			}
 		});
 		
-		sound_type_img.setOnLongClickListener(new OnLongClickListener() {
+		soundTypeImageView.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				((MainActivity)getContext()).startActionMode(getId(), soundTrack);
@@ -103,32 +103,32 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 			}
 		});
 		
-		play_button.setOnClickListener(new OnClickListener() {
+		playImageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if(display_play_button)
+				if(displayPlayButton)
 				{
-					display_play_button = false;
-					play_button.setImageResource(R.drawable.pause_button_sound_track);
+					displayPlayButton = false;
+					playImageButton.setImageResource(R.drawable.pause_button_sound_track);
 					SoundManager.playSound(soundTrack.getSoundPoolId(), 1);	
 				}
 				else
 				{
-					display_play_button = true;
-					play_button.setImageResource(R.drawable.play_button_sound_track);
+					displayPlayButton = true;
+					playImageButton.setImageResource(R.drawable.play_button_sound_track);
 					SoundManager.stopSound(soundTrack.getSoundPoolId());
 					
 				}
 			}
 		});
 		
-		lock.setOnClickListener(new OnClickListener() {
+		lockImageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(moveable_locked) {
-				  lock.setImageResource(R.drawable.lock_unlocked);
+				  lockImageButton.setImageResource(R.drawable.lock_unlocked);
 				  moveable_locked = false;
 				}
 				else {
-				  lock.setImageResource(R.drawable.lock_locked);
+				  lockImageButton.setImageResource(R.drawable.lock_locked);
 				  moveable_locked = true;	
 				}
 				  
@@ -191,27 +191,27 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	public void disableView()
 	{
 		setBackgroundColor(Color.GRAY);
-	    sound_type_img.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    play_button.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    lock.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    text.setTextColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
-	    seperator_hor.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
-	    seperator_vert.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
-		play_button.setEnabled(false);
-		lock.setEnabled(false);
+	    soundTypeImageView.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
+	    playImageButton.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
+	    lockImageButton.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
+	    soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
+	    horizontalSeperatorView.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
+	    verticalSeperatorView.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
+		playImageButton.setEnabled(false);
+		lockImageButton.setEnabled(false);
 	}
 	
 	public void enableView()
 	{
 	    setBackgroundColor(getResources().getColor(soundTrack.getType().getColorResource()));
-	    sound_type_img.setColorFilter(Color.WHITE);
-	    play_button.setColorFilter(Color.WHITE);
-	    lock.setColorFilter(Color.WHITE);
-		text.setTextColor(getResources().getColor(R.color.custom_background_color));
-	    seperator_hor.setBackgroundColor(Color.WHITE);
-	    seperator_vert.setBackgroundColor(Color.WHITE);
-		play_button.setEnabled(true);
-		lock.setEnabled(true);
+	    soundTypeImageView.setColorFilter(Color.WHITE);
+	    playImageButton.setColorFilter(Color.WHITE);
+	    lockImageButton.setColorFilter(Color.WHITE);
+		soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.custom_background_color));
+	    horizontalSeperatorView.setBackgroundColor(Color.WHITE);
+	    verticalSeperatorView.setBackgroundColor(Color.WHITE);
+		playImageButton.setEnabled(true);
+		lockImageButton.setEnabled(true);
 	}
 	
 	
@@ -222,17 +222,17 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	
 	public ImageView getSoundTypeImage()
 	{
-		return sound_type_img;
+		return soundTypeImageView;
 	}
 	
 	public ImageButton getPlayButton()
 	{
-		return play_button;
+		return playImageButton;
 	}
 	
 	public ImageButton getLock()
 	{
-		return lock;
+		return lockImageButton;
 	}
 
 

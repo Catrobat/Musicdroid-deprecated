@@ -16,7 +16,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class SoundTrackComponentFactory {
 	private Context context = null;
-	private int local_id = 4321;
+	private int localId = 4321;
 	
 	public SoundTrackComponentFactory(Context c)
 	{
@@ -48,29 +48,29 @@ public class SoundTrackComponentFactory {
 	
 	public ImageButton newImageButton(int image_ressource, int align_below_id, int align_right_of_id )
 	{
-		ImageButton play_button = new ImageButton(context);
-		play_button.setImageResource(image_ressource);
-		LayoutParams button_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		ImageButton playButton = new ImageButton(context);
+		playButton.setImageResource(image_ressource);
+		LayoutParams buttonParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		//LayoutParams button_params = new RelativeLayout.LayoutParams(getHeight()/3, getHeight()/3);
-		button_params.addRule(RelativeLayout.BELOW, align_below_id);
-		button_params.addRule(RelativeLayout.RIGHT_OF, align_right_of_id);
-		play_button.setLayoutParams(button_params);
-		play_button.setBackgroundColor(Color.TRANSPARENT);
-		play_button.setId(getNewId());
-		return play_button;
+		buttonParams.addRule(RelativeLayout.BELOW, align_below_id);
+		buttonParams.addRule(RelativeLayout.RIGHT_OF, align_right_of_id);
+		playButton.setLayoutParams(buttonParams);
+		playButton.setBackgroundColor(Color.TRANSPARENT);
+		playButton.setId(getNewId());
+		return playButton;
 	}
 	
 	public View newVerticalSeperator(int align_right_of_id)
 	{		
-		View seperator = new View(context);
-		LayoutParams seperator_params = new RelativeLayout.LayoutParams(2, LayoutParams.WRAP_CONTENT);
-		seperator_params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		seperator_params.addRule(RelativeLayout.ALIGN_RIGHT, align_right_of_id);
-		seperator.setLayoutParams(seperator_params);
+		View seperatorView = new View(context);
+		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2, LayoutParams.WRAP_CONTENT);
+		seperatorParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		seperatorParams.addRule(RelativeLayout.ALIGN_RIGHT, align_right_of_id);
+		seperatorView.setLayoutParams(seperatorParams);
 		int reference_id = getNewId();
-		seperator.setId(reference_id);
-		seperator.setBackgroundColor(Color.WHITE);
-		return seperator;
+		seperatorView.setId(reference_id);
+		seperatorView.setBackgroundColor(Color.WHITE);
+		return seperatorView;
 	}
 	
 	public LinearLayout newRelativeLayout(int width, int height)
@@ -82,17 +82,17 @@ public class SoundTrackComponentFactory {
 	public View newHorizontalSeperator(int align_left_of_id, int align_bottom_id)
 	{		
 		View seperator = new View(context);
-		LayoutParams seperator_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,2);
-		seperator_params.addRule(RelativeLayout.ALIGN_LEFT, align_left_of_id);
-		seperator_params.addRule(RelativeLayout.ALIGN_BOTTOM, align_bottom_id);
-		seperator.setLayoutParams(seperator_params);
+		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,2);
+		seperatorParams.addRule(RelativeLayout.ALIGN_LEFT, align_left_of_id);
+		seperatorParams.addRule(RelativeLayout.ALIGN_BOTTOM, align_bottom_id);
+		seperator.setLayoutParams(seperatorParams);
 		seperator.setId(getNewId());
 		seperator.setBackgroundColor(Color.WHITE);
 		return seperator;
 	}
 	
 	
-	public TextView newSoundFileTitleText(String str,int duration, int align_right_of_id)
+	public TextView newSoundFileTitleText(String str,int duration, int alignRightOfId)
 	{
 		TextView text = new TextView(context);
 		
@@ -106,17 +106,17 @@ public class SoundTrackComponentFactory {
 		
 		text.setText(str + " | " + min + ":" + seconds);
 		text.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams text_params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		text_params.addRule(RelativeLayout.RIGHT_OF, align_right_of_id);
-		text_params.setMargins(10, 0, 0, 0);
+		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		textParams.addRule(RelativeLayout.RIGHT_OF, alignRightOfId);
+		textParams.setMargins(10, 0, 0, 0);
 		text.setId(getNewId());
-		text.setLayoutParams(text_params);
+		text.setLayoutParams(textParams);
 		return text;
 	}
 
 	private int getNewId()
 	{
-	  local_id = local_id+1;
-	  return local_id;
+	  localId = localId+1;
+	  return localId;
 	}
 }
