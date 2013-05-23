@@ -1,6 +1,7 @@
 package at.tugraz.musicdroid.soundtracks;
 
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.helper.Helper;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -96,15 +97,7 @@ public class SoundTrackComponentFactory {
 	{
 		TextView text = new TextView(context);
 		
-		int minutes = duration/60;
-	    int seconds = duration%60;
-	    String min = "" + minutes; 
-	    
-	    if(minutes < 10)
-	      min = "0" + min;
-	    	
-		
-		text.setText(str + " | " + min + ":" + seconds);
+		text.setText(str + " | " + Helper.getInstance().durationStringFromInt(duration));
 		text.setTextColor(context.getResources().getColor(R.color.custom_background_color));
 		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		textParams.addRule(RelativeLayout.RIGHT_OF, alignRightOfId);

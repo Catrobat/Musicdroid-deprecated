@@ -1,6 +1,8 @@
 package at.tugraz.musicdroid;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import at.tugraz.musicdroid.helper.Helper;
 
@@ -24,12 +26,12 @@ public class Timeline extends RelativeLayout {
 	private int startId = 9876;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 
-	public Timeline(Context context) {
+	public Timeline(Context context, int defaultLength) {
 		super(context);
 		this.context = context;
 		helper = Helper.getInstance();
 		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
-		initTimeline();
+		initTimeline(defaultLength);
 	}
 	
 	public Timeline(Context context, AttributeSet attrs) {
@@ -38,7 +40,7 @@ public class Timeline extends RelativeLayout {
 	}
 
 	
-	private void initTimeline()
+	private void initTimeline(int defaultLength)
 	{
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(helper.getScreenWidth(), 
 				   helper.getScreenHeight()/18);
@@ -48,8 +50,20 @@ public class Timeline extends RelativeLayout {
 		addSeperator();
 		addStartTime();
 		addEndTime();
+		updateTrackEndText(defaultLength);
 	}
 	
+	
+	public void resetTimeline()
+	{
+		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
+		
+        while (it.hasNext()) {
+            HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>)it.next();
+            removeView(pairs.getValue().getTrackPositionText());
+            removeView(pairs.getValue().getTrackPosition());
+        }
+	}
 	
 	public void addNewTrackPosition(int id, int colorRes)
 	{
@@ -59,18 +73,8 @@ public class Timeline extends RelativeLayout {
 	public void updateTrackEndText(int duration)
 	{		
 		if(endTimeTextView == null) return;
-		
-		int minutes = duration/60;
-	    int seconds = duration%60;
-	    String min = "" + minutes;
-	    String sec = "" + seconds;
-	    
-	    if(minutes < 10)
-	    	min = "0" + min;
-	    if(seconds < 10)
-	    	sec = "0" + sec;
-	    	
-		endTimeTextView.setText(min + ":" + sec);
+
+		endTimeTextView.setText(Helper.getInstance().durationStringFromInt(duration));
 	}	
 	
 	public void updateTimelineOnMove(int id, int pixPos, int secPos)

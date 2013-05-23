@@ -55,4 +55,20 @@ public class Helper {
 		    throw new IllegalStateException("Helper not initialized");
 		return getScreenSize().x;
 	}
+	
+	public String durationStringFromInt(int duration)
+	{		
+		int minutes = duration/60;
+		int seconds = duration%60;
+		String min = "" + minutes;
+		String sec = "" + seconds;
+		
+		if(minutes < 10)
+			min = "0" + min;
+		if(seconds < 10)
+			sec = "0" + sec;
+		
+		return min + ":" + sec;
+	}
+	
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
+import at.tugraz.musicdroid.helper.Helper;
 
 public class TimelineTrackPosition {
 	private Timeline parent;
@@ -31,18 +32,7 @@ public class TimelineTrackPosition {
 		layoutParams.leftMargin = pixPos;
 		trackPositionView.setLayoutParams(layoutParams);
 		
-		int minutes = secPos/60;
-	    int seconds = secPos%60;
-	    String min = "" + minutes;
-	    String sec = "" + seconds;
-	    
-	    if(minutes < 10)
-	    	min = "0" + min;
-	    if(seconds < 10)
-	    	sec = "0" + sec;
-	    	
-		
-		trackPositionText.setText(min + ":" + sec);
+		trackPositionText.setText(Helper.getInstance().durationStringFromInt(secPos));
 	}
 	
 	private void addTrackPosition()

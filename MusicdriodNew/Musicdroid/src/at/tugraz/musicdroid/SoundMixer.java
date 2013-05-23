@@ -43,7 +43,7 @@ public class SoundMixer{
 		eventHandler = new SoundMixerEventHandler(this);
 		longestSoundTrack = DEFAULT_LENGTH;
 		eventHandler.setLongestTrack(longestSoundTrack);
-		timeline = new Timeline(parent);
+		timeline = new Timeline(parent, DEFAULT_LENGTH);
 
         LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
         LayoutInflater inflater = LayoutInflater.from(parent);
@@ -78,7 +78,7 @@ public class SoundMixer{
 	
 	public void playAllSoundsInSoundmixer()
 	{
-		if(tracks.size() > 0)
+		if(tracks.size() > 0) 
 		  eventHandler.play();
 	}
 	
@@ -138,7 +138,6 @@ public class SoundMixer{
 		{
 			longestSoundTrack = newTrackLength;
 			eventHandler.setLongestTrack(longestSoundTrack);
-			Log.e("ABOUT TO UPDATE", "UPDATE");
 			timeline.updateTrackEndText(newTrackLength);
 			for(int i = 0; i < tracks.size(); i++)
 			{
@@ -190,15 +189,18 @@ public class SoundMixer{
 		for(int i = 0; i < tracks.size(); i++)
 		{
 			tracks.get(i).removeAllViews();
+			parentLayout.removeView(tracks.get(i));
 		}
 		longestSoundTrack = 0;
+//		
+//		for(int child = 0; child < parentLayout.getChildCount(); child++)
+//		{
+//			View view = parentLayout.getChildAt(child);
+//			if(view.getId() != timeline.getId())
+//				parentLayout.removeView(view);
+//		}
 		
-		for(int child = 0; child < parentLayout.getChildCount(); child++)
-		{
-			View view = parentLayout.getChildAt(child);
-			if(view.getId() != timeline.getId())
-				parentLayout.removeView(view);
-		}
+		timeline.resetTimeline();
 		
 		longestSoundTrack = DEFAULT_LENGTH;
 		tracks.clear();
