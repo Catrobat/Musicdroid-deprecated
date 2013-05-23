@@ -833,6 +833,8 @@ containing a value of this type.
         public static final int play_button=0x7f020067;
         public static final int play_button_sound_track=0x7f020068;
         public static final int scrollbar_layout=0x7f020069;
+        public static final int volume_button=0x7f02006a;
+        public static final int volume_button_mute=0x7f02006b;
     }
     public static final class id {
         public static final int StatusbarLayout=0x7f05002c;

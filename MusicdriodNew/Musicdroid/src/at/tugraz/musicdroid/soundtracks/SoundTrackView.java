@@ -9,6 +9,7 @@ import at.tugraz.musicdroid.helper.Helper;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,8 +26,9 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	private Helper helper = null;
 	private SoundTrack soundTrack = null;
 	private int xDelta;
-	private boolean moveable_locked = true;
+	private boolean moveableLocked = true;
 	private boolean displayPlayButton = true;
+	private boolean isMuted = false;
 	
 	protected ImageView soundTypeImageView = null;
 	protected View verticalSeperatorView = null;
@@ -34,6 +36,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	protected View horizontalSeperatorView = null;
 	protected ImageButton playImageButton = null;
 	protected ImageButton lockImageButton = null;
+	protected ImageButton volumeImageButton = null;
 	
 	
 	public SoundTrackView(Context context, SoundTrack st) {
@@ -73,13 +76,15 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		soundtrackDescriptionTextView = factory.newSoundFileTitleText(name, duration, verticalSeperatorView.getId());
 		horizontalSeperatorView = factory.newHorizontalSeperator(verticalSeperatorView.getId(), soundtrackDescriptionTextView.getId());
 		playImageButton = factory.newImageButton(R.drawable.play_button_sound_track, horizontalSeperatorView.getId(), verticalSeperatorView.getId());
-		lockImageButton = factory.newImageButton(R.drawable.lock_locked, horizontalSeperatorView.getId(), playImageButton.getId());
-
+		volumeImageButton = factory.newImageButton(R.drawable.volume_button, horizontalSeperatorView.getId(), playImageButton.getId());
+		lockImageButton = factory.newImageButton(R.drawable.lock_locked, horizontalSeperatorView.getId(), volumeImageButton.getId());
+		
+		
 		soundTypeImageView.setPadding(10, 0, 10, 0);
 		
-		LayoutParams button_params = (LayoutParams) lockImageButton.getLayoutParams();
+		LayoutParams button_params = (LayoutParams) volumeImageButton.getLayoutParams();
 		button_params.setMargins(-30, 0,0,0); //dirty but don't know how to bring play and lock button closer together		
-		lockImageButton.setLayoutParams(button_params);
+		volumeImageButton.setLayoutParams(button_params);
 
         addView(soundTypeImageView);
 		addView(verticalSeperatorView);
@@ -87,6 +92,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		addView(horizontalSeperatorView);
 		addView(playImageButton);
 		addView(lockImageButton);
+		addView(volumeImageButton);
 
 		
 		this.setOnClickListener(new OnClickListener() {
@@ -103,13 +109,33 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 			}
 		});
 		
+		volumeImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(isMuted)
+				{
+					soundTrack.setVolume(1);
+				    volumeImageButton.setImageResource(R.drawable.volume_button);
+				    isMuted = false;
+				}
+				else
+				{
+					soundTrack.setVolume(0);
+					volumeImageButton.setImageResource(R.drawable.volume_button_mute);
+				    isMuted = true;					
+				}
+				  
+			}
+		});
+		
 		playImageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(displayPlayButton)
 				{
 					displayPlayButton = false;
 					playImageButton.setImageResource(R.drawable.pause_button_sound_track);
-					SoundManager.playSound(soundTrack.getSoundPoolId(), 1);	
+					Log.e("VOLUME: ", ""+soundTrack.getVolume());
+					SoundManager.playSound(soundTrack.getSoundPoolId(), 1, soundTrack.getVolume());	
 				}
 				else
 				{
@@ -123,13 +149,13 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		
 		lockImageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if(moveable_locked) {
+				if(moveableLocked) {
 				  lockImageButton.setImageResource(R.drawable.lock_unlocked);
-				  moveable_locked = false;
+				  moveableLocked = false;
 				}
 				else {
 				  lockImageButton.setImageResource(R.drawable.lock_locked);
-				  moveable_locked = true;	
+				  moveableLocked = true;	
 				}
 				  
 			}
@@ -155,7 +181,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	            xDelta = X - lParams.leftMargin;
 	            break;
 	        case MotionEvent.ACTION_MOVE:
-	        	if(moveable_locked) break;
+	        	if(moveableLocked) break;
 	            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 	            int old_margin = layoutParams.leftMargin;
 	            int margin = X - xDelta;

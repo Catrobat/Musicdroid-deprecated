@@ -65,7 +65,7 @@ public class SoundManager {
             HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>)it.next();
             if(pairs.getValue() == raw_id)
             {
-              playSound(pairs.getKey(), speed);
+              playSound(pairs.getKey(), speed, 1);
               return;
             }
         }
@@ -85,11 +85,11 @@ public class SoundManager {
     }
 
     
-    public static void playSound(int index,float speed)
+    public static void playSound(int index,float speed, float volume)
     {
             float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            Integer stream_id = soundPool.play(soundPoolMap.get(index), streamVolume, streamVolume, 1, 0, speed);
+            Integer stream_id = soundPool.play(soundPoolMap.get(index), volume, volume, 1, 0, speed);
             Log.e("PUT: ", "" + index + " " + stream_id);
             soundPlayMap.put(index, stream_id);
     }

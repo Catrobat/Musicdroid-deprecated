@@ -239,6 +239,8 @@ int drawable piano_button 0x7f020066
 int drawable play_button 0x7f020067
 int drawable play_button_sound_track 0x7f020068
 int drawable scrollbar_layout 0x7f020069
+int drawable volume_button 0x7f02006a
+int drawable volume_button_mute 0x7f02006b
 int id StatusbarLayout 0x7f05002c
 int id abs__action_bar 0x7f050022
 int id abs__action_bar_container 0x7f050021

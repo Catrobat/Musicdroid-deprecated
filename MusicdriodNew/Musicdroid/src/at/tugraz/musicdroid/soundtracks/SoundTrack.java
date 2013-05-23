@@ -17,20 +17,30 @@ public class SoundTrack implements Observer {
 	protected boolean isMidi;
 	protected int soundfileRawId;
 	protected int soundpoolId;
+	protected float volume; 
 	
-	public SoundTrack() {}
+	public SoundTrack() {
+		volume = 1;
+	}
 	
 	public SoundTrack(SoundTrack s)
 	{
 	  this.type = s.getType();
 	  this.name = s.getName();
 	  this.duration = s.duration;
+	  this.volume = s.volume;
 	}
 	
 	public void setStartPoint(int start)
 	{
 		Log.e("START POINT", "" + start);
 		startPoint = start;
+	}
+	
+	public void setVolume(float vol)
+	{
+		Log.e("SET VOLUME", "" + vol);
+		volume = vol;
 	}
 	
 	public SoundType getType() {
@@ -57,6 +67,11 @@ public class SoundTrack implements Observer {
 	{
 		return soundpoolId;
 	}
+	
+	public float getVolume()
+	{
+		return volume;
+	}
 
 	@Override
 	public void update(Observable observable, Object data) {
@@ -65,7 +80,7 @@ public class SoundTrack implements Observer {
 		Log.e("Incoming Object: ", "" + cur_time);
 		if(cur_time == startPoint)
 		{
-			SoundManager.playSound(soundpoolId, 1);
+			SoundManager.playSound(soundpoolId, 1, volume);
 		}
 	}
 
