@@ -1,8 +1,8 @@
 package at.tugraz.musicdroid;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
+import android.content.DialogInterface;
 import android.view.MenuItem;
 import android.widget.Toast;
 

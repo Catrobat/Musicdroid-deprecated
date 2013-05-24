@@ -24,6 +24,7 @@ public class SoundMixer{
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
 	protected int viewId;
 	private int longestSoundTrack;
+	private int soundTrackLength;
 	private int callingId;
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
@@ -41,7 +42,8 @@ public class SoundMixer{
 		parent = activity;
 		parentLayout = layout;
 		eventHandler = new SoundMixerEventHandler(this);
-		longestSoundTrack = DEFAULT_LENGTH;
+		soundTrackLength = longestSoundTrack = DEFAULT_LENGTH;
+		
 		eventHandler.setLongestTrack(longestSoundTrack);
 		timeline = new Timeline(parent, DEFAULT_LENGTH);
 
@@ -192,32 +194,36 @@ public class SoundMixer{
 			parentLayout.removeView(tracks.get(i));
 		}
 		longestSoundTrack = 0;
-//		
-//		for(int child = 0; child < parentLayout.getChildCount(); child++)
-//		{
-//			View view = parentLayout.getChildAt(child);
-//			if(view.getId() != timeline.getId())
-//				parentLayout.removeView(view);
-//		}
 		
 		timeline.resetTimeline();
 		
-		longestSoundTrack = DEFAULT_LENGTH;
+		longestSoundTrack = soundTrackLength = DEFAULT_LENGTH;
 		tracks.clear();
 	}
 	
-	
-	public int getStartPointByPixel(int pixel)
+	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds)
 	{
-		return eventHandler.computeStartPointInSecondsByPixel(pixel);
+		soundTrackLength = minutes*60 + seconds;
+		timeline.updateTrackEndText(soundTrackLength);
+		
+		for(int i = 0; i < tracks.size(); i++)
+		{
+			tracks.get(i).resize(); 
+		}
 	}
 	
-		public void setCallingParameters(int id, SoundTrack track)
+
+	public void setCallingParameters(int id, SoundTrack track)
 	{
 		callingId = id;
 		callingTrack = track;
 	}
 	
+	public int getStartPointByPixel(int pixel)
+	{
+		return eventHandler.computeStartPointInSecondsByPixel(pixel);
+	}
+		
 	public int getNewViewID()
 	{
 		viewId = viewId + 1;
@@ -240,5 +246,10 @@ public class SoundMixer{
 	public int getDurationLongestTrack()
 	{
 		return longestSoundTrack;
+	}
+	
+	public int getSoundTrackLength()
+	{
+		return soundTrackLength;
 	}
 }

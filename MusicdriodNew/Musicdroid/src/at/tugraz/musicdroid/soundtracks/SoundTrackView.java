@@ -60,12 +60,19 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	    setRessources(soundTrack.getType().getImageResource(), soundTrack.getName(), soundTrack.getDuration());
 	}
 	
+	public void resizeTrack()
+	{
+		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams(); 
+		layoutParams.width = computeWidthRelativeToDuration();
+		setLayoutParams(layoutParams);
+	}
+	
 	private int computeWidthRelativeToDuration()
 	{
 		int width_total = helper.getScreenWidth();
 		int duration = soundTrack.getDuration();
 		
-		return duration*width_total/Math.max(SoundMixer.getInstance().getDurationLongestTrack(), soundTrack.getDuration());
+		return duration*width_total/Math.max(SoundMixer.getInstance().getSoundTrackLength(), soundTrack.getDuration());
 	}
 	
 	protected void setRessources(int id, String name, int duration)

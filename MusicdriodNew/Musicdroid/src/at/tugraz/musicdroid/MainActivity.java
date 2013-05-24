@@ -7,7 +7,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem; */
 import at.tugraz.musicdroid.dialog.AddSoundDialog;
+import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.preferences.PreferenceActivity;
+import at.tugraz.musicdroid.preferences.SettingsFragment;
 import at.tugraz.musicdroid.soundtracks.*;
 
 import android.os.Build;
@@ -20,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,6 +33,7 @@ public class MainActivity extends MenuFileActivity {
 	private static final int ANDROID_VERSION_ICE_CREAM_SANDWICH = 14;
 	protected Statusbar statusbar;
 	protected SoundMixer mixer;
+	protected SoundLenghtDialog settingsDialog = null;
 	
     public Statusbar getStatusbar() {
 		return statusbar;
@@ -40,11 +45,13 @@ public class MainActivity extends MenuFileActivity {
  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-    	AddSoundDialog.init(this);
+        super.onCreate(savedInstanceState);
+        
+		AddSoundDialog.init(this);
+    	
     	Helper helper = Helper.getInstance();
     	helper.init(this);
     	
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
         SoundMixer.getInstance().initSoundMixer(this, (RelativeLayout)findViewById(R.id.sound_mixer_view));
@@ -130,6 +137,10 @@ public class MainActivity extends MenuFileActivity {
 			return true;
 		case R.id.btn_add:
 			AddSoundDialog.getInstance().show();
+			return true;
+		case R.id.btn_settings:
+			Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
+			MainActivity.this.startActivity(intent);
 			return true;
 		default:
 			//calls MenuFileActivitys onOptionItemSelect for all File-Related entries

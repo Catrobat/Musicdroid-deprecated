@@ -32,6 +32,18 @@
   
   <string name ="play_button_text">Play Song</string>
   <string name ="stop_button_text">Stop Song</string>
+   
+  <string name="settings_dialog_title">Maximal Song Length</string>
+  <string name="settings_sound_track_length_description">Set maximal duration of your Song</string>
+  <string name="settings_button_apply">Apply</string>
+  <string name="settings_button_discard">Discard</string>
+  
+  <string name="preferences_category_soundmixer_title">Sound Mixer Settings</string>
+  <string name="preferences_max_soundmixer_length_summary">Click so you can set the default length of the sound mixer </string>
+  <string name="preferences_max_soundmixer_length_title">Default Sound Length</string>
+  <string name="preferences_category_sound_title">Song Settings</string>
+  <string name="preferences_set_bpm_summary">Here you can set the default value for Beats Per Minute (bpm) </string>
+  <string name="preferences_set_bpm_title">Default BPM</string>
   
   <string name="help_menu_new_recording">Click me if you want to record yourself</string>
   <string name="help_menu_new_piano">Click me if you want to play the piano and add it to your song</string>
