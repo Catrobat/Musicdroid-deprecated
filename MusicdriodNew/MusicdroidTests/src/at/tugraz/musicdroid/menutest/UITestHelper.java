@@ -27,7 +27,7 @@ public class UITestHelper {
 		{
 		   solo.sleep(100);
 		   solo.clickOnText(solo.getString(type.getNameResource()));
-		   solo.sleep(100);
+		   solo.sleep(1000);
 		   return;
 		}
 		

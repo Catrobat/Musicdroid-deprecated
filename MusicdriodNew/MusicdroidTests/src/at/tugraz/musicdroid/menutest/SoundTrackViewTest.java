@@ -4,14 +4,13 @@ import com.jayway.android.robotium.solo.Solo;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundMixer;
+import at.tugraz.musicdroid.Timeline;
 import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -19,6 +18,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	protected SoundMixer mixer = null;
 	protected UITestHelper ui_helper;
 	private Helper helper;
+	private Timeline timeline = null;
 	
 	public SoundTrackViewTest() {
 		super(MainActivity.class);
@@ -31,16 +31,18 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		 ui_helper = new UITestHelper(solo, getActivity());
 		 helper = Helper.getInstance();
 		 helper.init(getActivity());
+		 
+		 timeline = (Timeline)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(0);
 	}
 	
 	public void testSoundTrackViewInactive()
 	{
 		ui_helper.addTrack(SoundType.DRUMS);
 		ui_helper.addTrack(SoundType.PIANO);
-		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildCount() == 2);
+		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() == 2);
 		
-		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildAt(0);
-		SoundTrackView check = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildAt(1);
+		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
+		SoundTrackView check = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(2);
 		assertTrue(check.getPlayButton().isEnabled());
 		assertTrue(check.getLock().isEnabled());
 		
@@ -67,7 +69,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		int[] location = new int[2];
 		int[] new_location = new int[2];
 		ui_helper.addTrack(SoundType.DRUMS);
-		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildAt(0);
+		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
 		
 		v.getLocationOnScreen(location);
 		int start_x = location[0];
@@ -94,9 +96,10 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	{
 		int[] location = new int[2];
 		int[] new_location = new int[2];
+
+		ui_helper.addTrack(SoundType.PIANO);
 		
-		ui_helper.addTrack(SoundType.DRUMS);
-		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildAt(0);
+		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
 		
 		v.getLocationOnScreen(location);
 		int start_x = location[0];
@@ -136,5 +139,9 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	}
 	
 	
-
+	public void testCollapseAndExpand()
+	{
+		ui_helper.addTrack(SoundType.PIANO);
+		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
+	}
 }

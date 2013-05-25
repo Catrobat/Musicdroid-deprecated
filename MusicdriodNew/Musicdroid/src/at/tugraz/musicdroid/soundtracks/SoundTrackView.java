@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener{ 
+public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener{
+	public final static int MINIMAL_WIDTH = 280;	
+	public final static int EXPANDED_WIDTH = 400; 
+	
+	private Context context = null;
 	private SoundTrackComponentFactory factory = null;
 	private Helper helper = null;
 	private SoundTrack soundTrack = null;
@@ -28,6 +33,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	private boolean moveableLocked = true;
 	private boolean displayPlayButton = true;
 	private boolean isMuted = false;
+	private boolean collapsed = false;
 	
 	protected ImageView soundTypeImageView = null;
 	protected View verticalSeperatorView = null;
@@ -36,13 +42,19 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	protected ImageButton playImageButton = null;
 	protected ImageButton lockImageButton = null;
 	protected ImageButton volumeImageButton = null;
-	
+	protected ImageButton expandImageButton = null;
+	protected RelativeLayout soundTrackViewSubMenuLayout = null;
 	
 	public SoundTrackView(Context context, SoundTrack st) {
 		super(context);
+		this.context = context;
 		soundTrack = st;
 		helper = Helper.getInstance();
 		factory = new SoundTrackComponentFactory(context);
+		
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.sound_track_layout, this);
+		
 		initSoundTrackView();
 	}
 	
@@ -58,47 +70,52 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	    setOnClickListener(this);
 	    setOnTouchListener(this);
 	    setRessources(soundTrack.getType().getImageResource(), soundTrack.getName(), soundTrack.getDuration());
+	    setFocusableInTouchMode(true);
+	    
+	    if(collapsed)
+	    	collapse();
 	}
 	
 	public void resizeTrack()
 	{
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams(); 
 		layoutParams.width = computeWidthRelativeToDuration();
+		if(collapsed)
+			collapse();
 		setLayoutParams(layoutParams);
 	}
 	
 	private int computeWidthRelativeToDuration()
 	{
-		int width_total = helper.getScreenWidth();
 		int duration = soundTrack.getDuration();
-		
-		return duration*width_total/Math.max(SoundMixer.getInstance().getSoundTrackLength(), soundTrack.getDuration());
+		int width = duration*SoundMixer.getInstance().getPixelPerSecond();
+		if(width < 280)
+		{
+			collapsed = true;
+		}
+		Log.i("WIDTH", "W = " + width);
+		return width;
 	}
 	
 	protected void setRessources(int id, String name, int duration)
 	{
-		soundTypeImageView = factory.newSoundTypeImageComponent(id);
-		verticalSeperatorView = factory.newVerticalSeperator(soundTypeImageView.getId());
-		soundtrackDescriptionTextView = factory.newSoundFileTitleText(name, duration, verticalSeperatorView.getId());
-		horizontalSeperatorView = factory.newHorizontalSeperator(verticalSeperatorView.getId(), soundtrackDescriptionTextView.getId());
-		playImageButton = factory.newImageButton(R.drawable.play_button_sound_track, horizontalSeperatorView.getId(), verticalSeperatorView.getId());
-		volumeImageButton = factory.newImageButton(R.drawable.volume_button, horizontalSeperatorView.getId(), playImageButton.getId());
-		lockImageButton = factory.newImageButton(R.drawable.lock_locked, horizontalSeperatorView.getId(), volumeImageButton.getId());
+		soundTypeImageView = (ImageView) findViewById(R.id.img_sound_track_type);
+		soundTrackViewSubMenuLayout = (RelativeLayout) findViewById(R.id.sound_track_view_sub_layout);
+		verticalSeperatorView = (View) findViewById(R.id.vertical_seperator);
+		soundtrackDescriptionTextView = (TextView) findViewById(R.id.sound_track_text);
+		horizontalSeperatorView = (View) findViewById(R.id.horizontal_seperator);
+		playImageButton = (ImageButton) findViewById(R.id.play_button);
+		volumeImageButton = (ImageButton) findViewById(R.id.volume_button);
+		lockImageButton = (ImageButton) findViewById(R.id.lock_button);
+		expandImageButton = (ImageButton) findViewById(R.id.expand_button);
 		
+        RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
+                                										 LayoutParams.WRAP_CONTENT);
+        vp.addRule(RelativeLayout.CENTER_VERTICAL);
+        soundTypeImageView.setLayoutParams(vp);
+        soundTypeImageView.setImageResource(id);
 		
-		soundTypeImageView.setPadding(10, 0, 10, 0);
-		
-		LayoutParams button_params = (LayoutParams) volumeImageButton.getLayoutParams();
-		button_params.setMargins(-30, 0,0,0); //dirty but don't know how to bring play and lock button closer together		
-		volumeImageButton.setLayoutParams(button_params);
-
-        addView(soundTypeImageView);
-		addView(verticalSeperatorView);
-		addView(soundtrackDescriptionTextView);
-		addView(horizontalSeperatorView);
-		addView(playImageButton);
-		addView(lockImageButton);
-		addView(volumeImageButton);
+        soundtrackDescriptionTextView.setText(name + " | " + Helper.getInstance().durationStringFromInt(duration));
 
 		
 		this.setOnClickListener(new OnClickListener() {
@@ -166,6 +183,22 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 				  
 			}
 		});
+		
+		expandImageButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if(collapsed) {
+				  expandImageButton.setImageResource(R.drawable.collapse_button);
+				  collapsed = false;
+				  expand();
+				}
+				else {
+				  expandImageButton.setImageResource(R.drawable.expand_button);
+				  collapsed = true;
+				  collapse();
+				}
+				  
+			}
+		});
 	}
 	
 	
@@ -175,25 +208,25 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	}
 	
 	
-	/*
-     * Move SoundTracks on Touch  
-	 */
 	public boolean onTouch(View view, MotionEvent event) {
 	    final int X = (int) event.getRawX();
-	    boolean ret = false;
+	    boolean ret = true;
 	    switch (event.getAction() & MotionEvent.ACTION_MASK) {
 	        case MotionEvent.ACTION_DOWN:
+		   		getParent().requestDisallowInterceptTouchEvent(true);
 	            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 	            xDelta = X - lParams.leftMargin;
 	            break;
 	        case MotionEvent.ACTION_MOVE:
 	        	if(moveableLocked) break;
+
+		   		getParent().requestDisallowInterceptTouchEvent(true);
 	            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 	            int old_margin = layoutParams.leftMargin;
 	            int margin = X - xDelta;
 	            
 	            if(margin < 0) margin = 0;
-	            if(margin > helper.getScreenWidth()-layoutParams.width) margin = helper.getScreenWidth()-layoutParams.width;
+	            //if(margin > helper.getScreenWidth()-layoutParams.width) margin = helper.getScreenWidth()-layoutParams.width;
 	            
 	            if(margin != old_margin) {
 	              layoutParams.leftMargin = margin;
@@ -202,21 +235,45 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	              SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, start_point);
 	              view.setLayoutParams(layoutParams);
 	    		}	
-	            ret = false;
+	            ret = true;
 	            break;
 	    }
-	    invalidate();
-	    //SoundMixer.getInstance().hideTimelineMovePosition();
+	    //invalidate();
 	    return ret;
 	}
 	
+	private void collapse()
+	{	
+		soundtrackDescriptionTextView.setVisibility(GONE);
+		horizontalSeperatorView.setVisibility(GONE);
+		playImageButton.setVisibility(GONE);
+		lockImageButton.setVisibility(GONE);
+		volumeImageButton.setVisibility(GONE);
+		expandImageButton.setVisibility(VISIBLE);
+		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
+		layoutParams.width = computeWidthRelativeToDuration();
+		setLayoutParams(layoutParams);
+		//soundTrackViewSubMenuLayout.setBackgroundColor(soundTrack.getType().getColorResource());
+	}
+	
+	private void expand()
+	{	
+		soundtrackDescriptionTextView.setVisibility(VISIBLE);
+		horizontalSeperatorView.setVisibility(VISIBLE);
+		playImageButton.setVisibility(VISIBLE);
+		lockImageButton.setVisibility(VISIBLE);
+		volumeImageButton.setVisibility(VISIBLE);
+		expandImageButton.setVisibility(VISIBLE);
+		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
+		layoutParams.width = EXPANDED_WIDTH;
+		setLayoutParams(layoutParams);
+	}
 	
 	public void resize()
 	{
 		RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
 		lParams.width = computeWidthRelativeToDuration(); 
 		lParams.height = helper.getScreenHeight()/6;
-				
 		setLayoutParams(lParams);
 	}
 	

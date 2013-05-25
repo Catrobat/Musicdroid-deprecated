@@ -46,19 +46,32 @@ public class SoundTrackComponentFactory {
         return imageView;
 	}
 
+	public ImageButton newImageButton(int image_ressource, int align_right_of_id )
+	{
+		ImageButton button = new ImageButton(context);
+		button.setImageResource(image_ressource);
+		LayoutParams buttonParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		//buttonParams.addRule(RelativeLayout.RIGHT_OF, align_right_of_id);
+		buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		buttonParams.addRule(RelativeLayout.CENTER_VERTICAL);
+		button.setLayoutParams(buttonParams);
+		button.setBackgroundColor(Color.TRANSPARENT);
+		button.setId(getNewId());
+		return button;
+	}
 	
 	public ImageButton newImageButton(int image_ressource, int align_below_id, int align_right_of_id )
 	{
-		ImageButton playButton = new ImageButton(context);
-		playButton.setImageResource(image_ressource);
+		ImageButton button = new ImageButton(context);
+		button.setImageResource(image_ressource);
 		LayoutParams buttonParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		//LayoutParams button_params = new RelativeLayout.LayoutParams(getHeight()/3, getHeight()/3);
 		buttonParams.addRule(RelativeLayout.BELOW, align_below_id);
 		buttonParams.addRule(RelativeLayout.RIGHT_OF, align_right_of_id);
-		playButton.setLayoutParams(buttonParams);
-		playButton.setBackgroundColor(Color.TRANSPARENT);
-		playButton.setId(getNewId());
-		return playButton;
+		button.setLayoutParams(buttonParams);
+		button.setBackgroundColor(Color.TRANSPARENT);
+		button.setId(getNewId());
+		return button;
 	}
 	
 	public View newVerticalSeperator(int align_right_of_id)

@@ -5,20 +5,28 @@ import java.util.ArrayList;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
+import at.tugraz.musicdroid.types.SoundType;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Choreographer.FrameCallback;
+import android.view.View.OnTouchListener;
+import android.webkit.WebView.FindListener;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class SoundMixer{
 	public static SoundMixer instance = null;
-	public static final int DEFAULT_LENGTH = 45;
+	public static final int DEFAULT_LENGTH = 60;
+	protected HorizontalScrollView horScrollView;
 	protected RelativeLayout parentLayout;
 	protected MainActivity parent;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
@@ -29,6 +37,7 @@ public class SoundMixer{
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
 	private Timeline timeline = null;
+	private int pixelPerSecond;
 	
 	public static SoundMixer getInstance() {
         if (instance == null) {
@@ -37,12 +46,15 @@ public class SoundMixer{
         return instance;
     }
 	
-	public void initSoundMixer(MainActivity activity, RelativeLayout layout)
+	public void initSoundMixer(MainActivity activity, HorizontalScrollView scrollView)
 	{
 		parent = activity;
-		parentLayout = layout;
+		horScrollView = scrollView;
+		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative); 
+				
 		eventHandler = new SoundMixerEventHandler(this);
 		soundTrackLength = longestSoundTrack = DEFAULT_LENGTH;
+		pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
 		
 		eventHandler.setLongestTrack(longestSoundTrack);
 		timeline = new Timeline(parent, DEFAULT_LENGTH);
@@ -70,8 +82,8 @@ public class SoundMixer{
 		track.setId(getNewViewID());
 		checkLongestTrack(track.getSoundTrack().getDuration());
 		RelativeLayout.LayoutParams params = positionTrack(track);
-        LayoutInflater inflater = LayoutInflater.from(parent);
-        inflater.inflate(R.layout.sound_track_layout, track);
+//        LayoutInflater inflater = LayoutInflater.from(parent);
+//        inflater.inflate(R.layout.sound_track_layout, track);
         tracks.add(track);
         parentLayout.addView(track, params);    
         eventHandler.addObserver(track.getSoundTrack());
@@ -133,6 +145,7 @@ public class SoundMixer{
 				((SoundTrackView)view).enableView();
 		}
 	}
+	
 	
 	private void checkLongestTrack(int newTrackLength)
 	{
@@ -251,5 +264,10 @@ public class SoundMixer{
 	public int getSoundTrackLength()
 	{
 		return soundTrackLength;
+	}
+	
+	public int getPixelPerSecond()
+	{
+		return pixelPerSecond;
 	}
 }

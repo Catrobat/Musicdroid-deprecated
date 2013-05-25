@@ -33,7 +33,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	{
 		helper.addTrack(SoundType.PIANO);
 		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.MIC);
+		helper.addTrack(SoundType.DRUMS);
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildCount() == 3);
 		
 		solo.clickOnMenuItem(getActivity().getResources().getString(R.string.menu_new_song));
@@ -50,7 +50,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	{
 		helper.addTrack(SoundType.PIANO);
 		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.MIC);
+		helper.addTrack(SoundType.DRUMS);
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildCount() == 3);
 		
 		solo.clickOnMenuItem(getActivity().getResources().getString(R.string.menu_new_song));
@@ -67,7 +67,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	{
 		testAddSpecificTrack(SoundType.DRUMS);
 		testAddSpecificTrack(SoundType.PIANO);
-		testAddSpecificTrack(SoundType.MIC);
+		testAddSpecificTrack(SoundType.DRUMS);
 	}
 	
 	public void testDeleteTrack()
@@ -118,7 +118,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	{
 		helper.addTrack(SoundType.DRUMS);
 		helper.addTrack(SoundType.PIANO);
-		helper.addTrack(SoundType.MIC);
+		helper.addTrack(SoundType.DRUMS);
 		
 		testDeleteTrack();
 	}
@@ -133,6 +133,8 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		assertTrue("No " + type + " sound track added", number_of_tracks_old < SoundMixer.getInstance().getNumberOfTracks());
 		assertTrue("No child layout added", number_of_childs_old < ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_view)).getChildCount());
 	}
+	
+	
 	
 
 }

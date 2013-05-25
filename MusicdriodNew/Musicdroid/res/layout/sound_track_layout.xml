@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <at.tugraz.musicdroid.soundtracks.SoundTrackView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-</at.tugraz.musicdroid.soundtracks.SoundTrackView>
-<!--
-<at.tugraz.musicdroid.soundtracks.SoundTrackView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         
         <ImageView 
             android:layout_width="wrap_content"
@@ -24,55 +17,81 @@
             android:layout_width="2dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_alignRight="@+id/img_sound_track_type"
+            android:layout_toRightOf="@+id/img_sound_track_type"
             android:background="@android:color/white"
             android:id="@+id/vertical_seperator"
             />
-
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"    
-            android:textColor="@color/custom_background_color"
-            android:layout_alignLeft="@+id/vertical_seperator"      
-            android:layout_marginLeft="10dp"
-            android:id="@+id/sound_track_text"
-            />
-         
-        <View 
-            android:layout_width="wrap_content"
-            android:layout_height="2dp"
-            android:layout_alignLeft="@+id/img_sound_track_type"
-            android:layout_alignBottom="@+id/sound_track_text"
-            android:background="@android:color/white"
-            android:id="@+id/horizontal_seperator"
-            />       
-            
-        <ImageButton
-            android:id="@+id/play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/horizontal_seperator"
-            android:layout_alignRight="@+id/vertical_seperator"
-            android:background="@android:color/transparent"
-            android:src="@drawable/play_button_sound_track"/>
         
-        <ImageButton 
-            android:id="@+id/volume_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/horizontal_seperator"
-            android:layout_alignRight="@+id/play_button"
-            android:background="@android:color/transparent"
-            android:src="@drawable/volume_button"           
-            />
-        
-        <ImageButton 
-            android:id="@+id/lock_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/horizontal_seperator"
-            android:layout_alignRight="@+id/volume_button"
-            android:background="@android:color/transparent"
-            android:src="@drawable/lock_locked"           
-            />   -->
+		<RelativeLayout 
+		    android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/vertical_seperator"
+            android:id="@+id/sound_track_view_sub_layout">
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"    
+	            android:textColor="@color/custom_background_color"
+	            android:layout_toRightOf="@+id/vertical_seperator"      
+	            android:layout_marginLeft="5dp"
+	            android:id="@+id/sound_track_text"
+	            />
+	         
+	        <View 
+	            android:layout_width="wrap_content"
+	            android:layout_height="2dp"
+	            android:layout_toRightOf="@+id/vertical_seperator"
+	            android:layout_below="@+id/sound_track_text"
+	            android:background="@android:color/white"
+	            android:id="@+id/horizontal_seperator"
+	            />       
+	            
+	        <ImageButton
+	            android:id="@+id/play_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/horizontal_seperator"
+	            android:layout_toRightOf="@+id/vertical_seperator"
+	            android:background="@android:color/transparent"
+	            android:src="@drawable/play_button_sound_track"/>
+	        
+	        <ImageButton 
+	            android:id="@+id/volume_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/horizontal_seperator"
+	            android:layout_toRightOf="@+id/play_button"
+	            android:background="@android:color/transparent"
+	            android:src="@drawable/volume_button"           
+	            />
+	        
+	        <ImageButton 
+	            android:id="@+id/lock_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/horizontal_seperator"
+	            android:layout_toRightOf="@+id/volume_button"
+	            android:layout_marginLeft="20dp"
+	            android:background="@android:color/transparent"
+	            android:src="@drawable/lock_locked"           
+	            />   
+	            
+	        <ImageButton 
+	            android:id="@+id/expand_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_alignParentRight="true"
+	            android:background="@android:color/transparent"
+	            android:visibility="gone"
+	            android:src="@drawable/expand_button"           
+	            />  
+        </RelativeLayout>
+            <!-- 
+        <at.tugraz.musicdroid.soundtracks.SoundTrackView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+        -->
+</at.tugraz.musicdroid.soundtracks.SoundTrackView>
          

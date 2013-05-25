@@ -21,6 +21,10 @@
         <color name="sound_view_piano_color">#00A0B0</color>
         <color name="sound_view_drums_color">#CC333F</color>
         <color name="sound_view_mic_color">#F2AC00</color>
+
+        <color name="sound_view_piano_expanded_color">#9600A0B0</color>
+        <color name="sound_view_drums_expanded_color">#96CC333F</color>
+        <color name="sound_view_mic_expanded_color">#fdc961</color>
         
         <color name="scrollbar_color">#6633B5E5</color>
         

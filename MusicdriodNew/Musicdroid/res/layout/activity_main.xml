@@ -5,9 +5,14 @@
    android:layout_height="wrap_content"
    android:fadeScrollbars="false"
    android:scrollbarThumbVertical="@drawable/scrollbar_layout">   
-	<RelativeLayout
-        android:id="@+id/sound_mixer_view"
-	    android:layout_width="fill_parent"
+   <HorizontalScrollView
+       android:id="@+id/sound_mixer_view" 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+	  <RelativeLayout
+	    android:id="@+id/sound_mixer_relative"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content">
-	</RelativeLayout>
+	  </RelativeLayout>
+   </HorizontalScrollView>
 </ScrollView>

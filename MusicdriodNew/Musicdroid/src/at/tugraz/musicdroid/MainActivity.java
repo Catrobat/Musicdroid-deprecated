@@ -19,6 +19,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.app.AlertDialog;
@@ -54,7 +55,7 @@ public class MainActivity extends MenuFileActivity {
     	
         setContentView(R.layout.activity_main);
         
-        SoundMixer.getInstance().initSoundMixer(this, (RelativeLayout)findViewById(R.id.sound_mixer_view));
+        SoundMixer.getInstance().initSoundMixer(this, (HorizontalScrollView)findViewById(R.id.sound_mixer_view));
         
         initTopStatusBar();
         statusbar = new Statusbar(this);
