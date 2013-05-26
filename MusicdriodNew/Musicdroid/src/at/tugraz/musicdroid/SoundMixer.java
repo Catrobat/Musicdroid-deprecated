@@ -82,8 +82,6 @@ public class SoundMixer{
 		track.setId(getNewViewID());
 		checkLongestTrack(track.getSoundTrack().getDuration());
 		RelativeLayout.LayoutParams params = positionTrack(track);
-//        LayoutInflater inflater = LayoutInflater.from(parent);
-//        inflater.inflate(R.layout.sound_track_layout, track);
         tracks.add(track);
         parentLayout.addView(track, params);    
         eventHandler.addObserver(track.getSoundTrack());
@@ -218,6 +216,7 @@ public class SoundMixer{
 	{
 		soundTrackLength = minutes*60 + seconds;
 		timeline.updateTrackEndText(soundTrackLength);
+		pixelPerSecond = Helper.getInstance().getScreenWidth()/soundTrackLength;
 		
 		for(int i = 0; i < tracks.size(); i++)
 		{

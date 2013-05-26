@@ -264,12 +264,27 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		setLayoutParams(layoutParams);
 	}
 	
+	private void expandToFullSize()
+	{
+		soundtrackDescriptionTextView.setVisibility(VISIBLE);
+		horizontalSeperatorView.setVisibility(VISIBLE);
+		playImageButton.setVisibility(VISIBLE);
+		lockImageButton.setVisibility(VISIBLE);
+		volumeImageButton.setVisibility(VISIBLE); 
+		expandImageButton.setVisibility(GONE);
+	}
+	
 	public void resize()
 	{
 		RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
-		lParams.width = computeWidthRelativeToDuration(); 
+		lParams.width = computeWidthRelativeToDuration();
 		lParams.height = helper.getScreenHeight()/6;
 		setLayoutParams(lParams);
+		
+		if(lParams.width < MINIMAL_WIDTH)
+			collapse();
+		if(expandImageButton.getVisibility() == View.VISIBLE && lParams.width >= MINIMAL_WIDTH)
+			expandToFullSize();
 	}
 	
 	public void disableView()
