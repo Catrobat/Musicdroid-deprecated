@@ -1,10 +1,12 @@
-package at.tugraz.musicdroid;
+package at.tugraz.musicdroid.soundmixer;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.R.color;
 import at.tugraz.musicdroid.helper.Helper;
 
 public class TimelineTrackPosition {

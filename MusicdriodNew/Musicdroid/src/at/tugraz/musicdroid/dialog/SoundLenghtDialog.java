@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.SoundMixer;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 
 
@@ -58,7 +58,6 @@ public class SoundLenghtDialog extends DialogFragment {
         pickerSec.setMinValue(0);
         pickerSec.setMaxValue(59);
         pickerSec.setValue(currentLength%60);
-        pickerSec.setWrapSelectorWheel(false);
         
         return dialog;
     }

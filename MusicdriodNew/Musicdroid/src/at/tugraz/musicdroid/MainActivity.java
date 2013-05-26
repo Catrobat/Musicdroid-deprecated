@@ -6,11 +6,20 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem; */
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.R.color;
+import at.tugraz.musicdroid.R.drawable;
+import at.tugraz.musicdroid.R.id;
+import at.tugraz.musicdroid.R.layout;
+import at.tugraz.musicdroid.R.menu;
+import at.tugraz.musicdroid.R.string;
 import at.tugraz.musicdroid.dialog.AddSoundDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.preferences.PreferenceActivity;
 import at.tugraz.musicdroid.preferences.SettingsFragment;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
+import at.tugraz.musicdroid.soundmixer.Statusbar;
 import at.tugraz.musicdroid.soundtracks.*;
 
 import android.os.Build;

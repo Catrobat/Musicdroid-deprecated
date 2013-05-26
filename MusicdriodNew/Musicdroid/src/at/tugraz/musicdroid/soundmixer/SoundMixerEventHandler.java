@@ -1,4 +1,4 @@
-package at.tugraz.musicdroid;
+package at.tugraz.musicdroid.soundmixer;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -56,7 +56,6 @@ public class SoundMixerEventHandler extends Observable {
 	
 	public void setLongestTrack(int length)
 	{
-		
 		longestTrack = length;
 		computeSecondInPixel();
 	}

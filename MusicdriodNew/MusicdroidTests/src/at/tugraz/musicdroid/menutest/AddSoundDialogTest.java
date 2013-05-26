@@ -3,6 +3,7 @@ package at.tugraz.musicdroid.menutest;
 import java.util.ArrayList;
 
 import com.jayway.android.robotium.solo.Solo;
+
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.types.SoundType;

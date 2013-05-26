@@ -1,7 +1,12 @@
-package at.tugraz.musicdroid;
+package at.tugraz.musicdroid.soundmixer;
 
 import java.util.ArrayList;
 
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.SoundManager;
+import at.tugraz.musicdroid.R.id;
+import at.tugraz.musicdroid.R.layout;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
@@ -215,6 +220,9 @@ public class SoundMixer{
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds)
 	{
 		soundTrackLength = minutes*60 + seconds;
+		longestSoundTrack = soundTrackLength;
+		Log.i("LongestSoundTrack", "" + longestSoundTrack);
+		eventHandler.setLongestTrack(soundTrackLength);
 		timeline.updateTrackEndText(soundTrackLength);
 		pixelPerSecond = Helper.getInstance().getScreenWidth()/soundTrackLength;
 		

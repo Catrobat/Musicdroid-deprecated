@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.R.id;
+import at.tugraz.musicdroid.R.string;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class MenuFileActivity extends FragmentActivity { 
 	

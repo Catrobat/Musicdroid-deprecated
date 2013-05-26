@@ -1,9 +1,11 @@
-package at.tugraz.musicdroid;
+package at.tugraz.musicdroid.soundmixer;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.R.color;
 import at.tugraz.musicdroid.helper.Helper;
 
 import android.content.Context;

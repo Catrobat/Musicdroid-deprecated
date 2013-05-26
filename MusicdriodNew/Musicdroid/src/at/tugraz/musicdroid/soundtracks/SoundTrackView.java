@@ -1,10 +1,10 @@
 package at.tugraz.musicdroid.soundtracks;
 
-import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
-import at.tugraz.musicdroid.SoundMixer;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -28,10 +28,10 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	private Helper helper = null;
 	private SoundTrack soundTrack = null;
 	private int xDelta;
-	private boolean moveableLocked = true;
-	private boolean displayPlayButton = true;
-	private boolean isMuted = false;
-	private boolean collapsed = false;
+	public boolean moveableLocked = true;
+	public boolean displayPlayButton = true;
+	public boolean isMuted = false;
+	public boolean collapsed = false;
 	
 	protected ImageView soundTypeImageView = null;
 	protected View verticalSeperatorView = null;
@@ -72,15 +72,6 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	    	collapse();
 	}
 	
-	public void resizeTrack()
-	{
-		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams(); 
-		layoutParams.width = computeWidthRelativeToDuration();
-		if(collapsed)
-			collapse();
-		setLayoutParams(layoutParams);
-	}
-	
 	private int computeWidthRelativeToDuration()
 	{
 		int duration = soundTrack.getDuration();
@@ -112,12 +103,10 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		
         soundtrackDescriptionTextView.setText(name + " | " + Helper.getInstance().durationStringFromInt(duration));
 
-		
-		this.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				//TODO Do something to signal that this button is clickable
-			}
-		});
+		volumeImageButton.setOnClickListener(soundTrackViewOnClickListener);
+		playImageButton.setOnClickListener(soundTrackViewOnClickListener);
+		lockImageButton.setOnClickListener(soundTrackViewOnClickListener);
+		expandImageButton.setOnClickListener(soundTrackViewOnClickListener);
 		
 		soundTypeImageView.setOnLongClickListener(new OnLongClickListener() {
 			@Override
@@ -126,74 +115,89 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 				return true;
 			}
 		});
-		
-		volumeImageButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(isMuted)
-				{
-					soundTrack.setVolume(1);
-				    volumeImageButton.setImageResource(R.drawable.volume_button);
-				    isMuted = false;
-				}
-				else
-				{
-					soundTrack.setVolume(0);
-					volumeImageButton.setImageResource(R.drawable.volume_button_mute);
-				    isMuted = true;					
-				}
-				  
+	}
+	
+	
+	final OnClickListener soundTrackViewOnClickListener = new OnClickListener() {
+	    public void onClick(final View v) {
+            switch(v.getId()) {
+                case R.id.volume_button:
+                    handleOnClickVolumeButton();                
+                    break;
+                case R.id.play_button:
+                	handleOnClickPlayButton();
+                	break;
+                case R.id.lock_button:
+                	handleOnClickLockButton();
+                	break;
+                case R.id.expand_button:
+                	handleOnClickExpandButton();
+                	break;                	
+                default:
+                	break;
+            }
+        }
+	};
+	
+	
+	private void handleOnClickVolumeButton()
+	{
+		if(isMuted)
+		{
+			soundTrack.setVolume(1);
+		    volumeImageButton.setImageResource(R.drawable.volume_button);
+		    isMuted = false;
+		}
+		else
+		{
+			soundTrack.setVolume(0);
+			volumeImageButton.setImageResource(R.drawable.volume_button_mute);
+		    isMuted = true;					
+		}
+	}
+	
+	
+	private void handleOnClickPlayButton()
+	{
+		if(displayPlayButton)
+		{
+			displayPlayButton = false;
+			playImageButton.setImageResource(R.drawable.pause_button_sound_track);
+			Log.e("VOLUME: ", ""+soundTrack.getVolume());
+			SoundManager.playSound(soundTrack.getSoundPoolId(), 1, soundTrack.getVolume());	
+		}
+		else
+		{
+			displayPlayButton = true;
+			playImageButton.setImageResource(R.drawable.play_button_sound_track);
+			SoundManager.stopSound(soundTrack.getSoundPoolId());
+		}
+	}
+	
+	private void handleOnClickLockButton()
+	{
+		if(moveableLocked) {
+			  lockImageButton.setImageResource(R.drawable.lock_unlocked);
+			  moveableLocked = false;
 			}
-		});
-		
-		playImageButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if(displayPlayButton)
-				{
-					displayPlayButton = false;
-					playImageButton.setImageResource(R.drawable.pause_button_sound_track);
-					Log.e("VOLUME: ", ""+soundTrack.getVolume());
-					SoundManager.playSound(soundTrack.getSoundPoolId(), 1, soundTrack.getVolume());	
-				}
-				else
-				{
-					displayPlayButton = true;
-					playImageButton.setImageResource(R.drawable.play_button_sound_track);
-					SoundManager.stopSound(soundTrack.getSoundPoolId());
-					
-				}
+			else {
+			  lockImageButton.setImageResource(R.drawable.lock_locked);
+			  moveableLocked = true;	
 			}
-		});
-		
-		lockImageButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if(moveableLocked) {
-				  lockImageButton.setImageResource(R.drawable.lock_unlocked);
-				  moveableLocked = false;
-				}
-				else {
-				  lockImageButton.setImageResource(R.drawable.lock_locked);
-				  moveableLocked = true;	
-				}
-				  
-			}
-		});
-		
-		expandImageButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if(collapsed) {
-				  expandImageButton.setImageResource(R.drawable.collapse_button);
-				  collapsed = false;
-				  expand();
-				}
-				else {
-				  expandImageButton.setImageResource(R.drawable.expand_button);
-				  collapsed = true;
-				  collapse();
-				}
-				  
-			}
-		});
+	}
+	
+	private void handleOnClickExpandButton()
+	{
+		if(collapsed) {
+		  expandImageButton.setImageResource(R.drawable.collapse_button);
+		  collapsed = false;
+		  expand();
+		}
+		else {
+		  expandImageButton.setImageResource(R.drawable.expand_button);
+		  collapsed = true;
+		  collapse();
+		}
 	}
 	
 	
@@ -236,6 +240,17 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	    //invalidate();
 	    return ret;
 	}
+
+	
+	public void resizeTrack()
+	{
+		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams(); 
+		layoutParams.width = computeWidthRelativeToDuration();
+		if(collapsed)
+			collapse();
+		setLayoutParams(layoutParams);
+	}
+	
 	
 	private void collapse()
 	{	
