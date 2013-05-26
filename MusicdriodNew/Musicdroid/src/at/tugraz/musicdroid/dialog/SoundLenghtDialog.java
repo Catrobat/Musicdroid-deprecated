@@ -47,7 +47,7 @@ public class SoundLenghtDialog extends DialogFragment {
         
         AlertDialog dialog = builder.create();
         
-        int currentLength = SoundMixer.getInstance().getSoundTrackLength();
+        int currentLength = SoundMixer.getInstance().getSoundMixerLength();
         
         pickerMin = (NumberPicker) view.findViewById(R.id.numberpicker_min);
         pickerMin.setMinValue(0);

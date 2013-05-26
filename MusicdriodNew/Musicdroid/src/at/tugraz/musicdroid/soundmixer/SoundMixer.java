@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Choreographer.FrameCallback;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -30,14 +31,14 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class SoundMixer{
 	public static SoundMixer instance = null;
-	public static final int DEFAULT_LENGTH = 60;
+	public static final int DEFAULT_LENGTH = 45;
 	protected HorizontalScrollView horScrollView;
 	protected RelativeLayout parentLayout;
 	protected MainActivity parent;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
 	protected int viewId;
 	private int longestSoundTrack;
-	private int soundTrackLength;
+	private int soundMixerLength;
 	private int callingId;
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
@@ -56,13 +57,13 @@ public class SoundMixer{
 		parent = activity;
 		horScrollView = scrollView;
 		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative); 
-				
 		eventHandler = new SoundMixerEventHandler(this);
-		soundTrackLength = longestSoundTrack = DEFAULT_LENGTH;
+		timeline = new Timeline(parent, DEFAULT_LENGTH);
+		
+		soundMixerLength = longestSoundTrack = DEFAULT_LENGTH;
 		pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
 		
-		eventHandler.setLongestTrack(longestSoundTrack);
-		timeline = new Timeline(parent, DEFAULT_LENGTH);
+		//eventHandler.setLongestTrack(longestSoundTrack);
 
         LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
         LayoutInflater inflater = LayoutInflater.from(parent);
@@ -152,17 +153,32 @@ public class SoundMixer{
 	
 	private void checkLongestTrack(int newTrackLength)
 	{
-		if(newTrackLength > longestSoundTrack)
+		if(newTrackLength > soundMixerLength)
+		{
+			soundMixerLength = newTrackLength;
+			resizeSoundMixer(newTrackLength);
+			timeline.resizeTimeline(newTrackLength);
+			timeline.updateTrackEndText(newTrackLength);
+		}
+		
+		/*if(newTrackLength < DEFAULT_LENGTH)
 		{
 			longestSoundTrack = newTrackLength;
 			eventHandler.setLongestTrack(longestSoundTrack);
-			timeline.updateTrackEndText(newTrackLength);
 			for(int i = 0; i < tracks.size(); i++)
 			{
 				tracks.get(i).resize();
 			}
-		}
+		} */
 	}
+	
+	private void resizeSoundMixer(int length)
+	{
+		ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) parentLayout.getLayoutParams();
+		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * length;
+		parentLayout.setLayoutParams(layoutParams);
+	}
+	
 	
 	private void reorderLayout(int position)
 	{
@@ -213,23 +229,50 @@ public class SoundMixer{
 		
 		timeline.resetTimeline();
 		
-		longestSoundTrack = soundTrackLength = DEFAULT_LENGTH;
+		longestSoundTrack = soundMixerLength = DEFAULT_LENGTH;
 		tracks.clear();
 	}
 	
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds)
 	{
-		soundTrackLength = minutes*60 + seconds;
-		longestSoundTrack = soundTrackLength;
-		Log.i("LongestSoundTrack", "" + longestSoundTrack);
-		eventHandler.setLongestTrack(soundTrackLength);
-		timeline.updateTrackEndText(soundTrackLength);
-		pixelPerSecond = Helper.getInstance().getScreenWidth()/soundTrackLength;
-		
-		for(int i = 0; i < tracks.size(); i++)
+		int newLength = minutes*60 + seconds;
+		if(newLength > soundMixerLength)
 		{
-			tracks.get(i).resize(); 
+			soundMixerLength = newLength;
+			resizeSoundMixer(newLength);
+			timeline.resizeTimeline(newLength);
+			timeline.updateTrackEndText(newLength);
 		}
+		else if(newLength < soundMixerLength && newLength >= DEFAULT_LENGTH)
+		{
+			soundMixerLength = newLength;
+			resizeSoundMixer(newLength);
+			timeline.resizeTimeline(newLength);
+			timeline.updateTrackEndText(newLength);
+			//TODO ms check if new size is too small for current tracks!
+			
+//		    if(newLength < DEFAULT_LENGTH)
+//		    {
+//		    	for(int i = 0; i < tracks.size(); i++)
+//		    	{
+//		    		tracks.get(i).resize(); 
+//		    	}
+//		    }	
+		}
+		//soundTrackLength = minutes*60 + seconds;
+		//longestSoundTrack = soundTrackLength;
+		//eventHandler.setLongestTrack(soundTrackLength);
+		
+		//if(soundTrackLength > DEFAULT_LENGTH)
+		//	timeline.resizeTimeline(soundTrackLength);
+		
+		//timeline.updateTrackEndText(soundTrackLength);
+		//pixelPerSecond = Helper.getInstance().getScreenWidth()/soundTrackLength;
+		
+		//for(int i = 0; i < tracks.size(); i++)
+		//{
+		//	tracks.get(i).resize(); 
+		//}
 	}
 	
 
@@ -268,9 +311,9 @@ public class SoundMixer{
 		return longestSoundTrack;
 	}
 	
-	public int getSoundTrackLength()
+	public int getSoundMixerLength()
 	{
-		return soundTrackLength;
+		return soundMixerLength;
 	}
 	
 	public int getPixelPerSecond()

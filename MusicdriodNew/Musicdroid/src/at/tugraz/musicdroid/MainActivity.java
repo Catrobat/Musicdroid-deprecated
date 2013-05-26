@@ -19,6 +19,7 @@ import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.preferences.PreferenceActivity;
 import at.tugraz.musicdroid.preferences.SettingsFragment;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
+import at.tugraz.musicdroid.soundmixer.SoundMixerMenuCallback;
 import at.tugraz.musicdroid.soundmixer.Statusbar;
 import at.tugraz.musicdroid.soundtracks.*;
 
@@ -50,8 +51,9 @@ public class MainActivity extends MenuFileActivity {
 		return statusbar;
 	}
     
-    private ActionMode.Callback callback;
-    private ActionMode actionMode; 
+    //private ActionMode.Callback callbackSoundTrackViewDialog;
+    private SoundTrackViewMenuCallback callbackSoundTrackViewMenu;
+    private SoundMixerMenuCallback callbackSoundMixerMenu;
  
  
 	@Override
@@ -70,56 +72,8 @@ public class MainActivity extends MenuFileActivity {
         initTopStatusBar();
         statusbar = new Statusbar(this);
         
-        //TEST 
-        callback = new ActionMode.Callback() {
-        	 
-            /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
- 
-            /** Called when user exits action mode */
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                SoundMixer.getInstance().enableUnselectedViews();
-                actionMode = null;
-            }
- 
-            /** This is called when the action mode is created. This is called by startActionMode() */
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                getMenuInflater().inflate(R.menu.sound_track_dialog_menu, menu);
-                SoundMixer.getInstance().disableUnselectedViews();
-                
-                String name = null;
-                if((name = SoundMixer.getInstance().getCallingTrack().getName()) != null)
-                	mode.setTitle(name);
-                else
-                	mode.setTitle("Fix this");
-                return true;
-            }
- 
-            /** This is called when an item in the context menu is selected */
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                switch(item.getItemId()){
-                case R.id.soundtrack_context_edit:
-                    Toast.makeText(getBaseContext(), "Editing of tracks not yet implemented ", Toast.LENGTH_LONG).show();
-                    mode.finish();    // Automatically exists the action mode, when the user selects this action
-                    break;
-                case R.id.soundtrack_context_copy:
-    				SoundMixer.getInstance().handleCopy();
-    				mode.finish();
-                    break;
-                case R.id.soundtrack_context_delete:
-    				SoundMixer.getInstance().deleteCallingTrack();
-                    mode.finish();
-                    break;
-                }
-                return false;
-            }
-        };
+        callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
+        callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
 
         
         //TESTING
@@ -150,8 +104,9 @@ public class MainActivity extends MenuFileActivity {
 			AddSoundDialog.getInstance().show();
 			return true;
 		case R.id.btn_settings:
-			Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
-			MainActivity.this.startActivity(intent);
+			startActionMode(callbackSoundMixerMenu);
+			//Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
+			//MainActivity.this.startActivity(intent);
 			return true;
 		default:
 			//calls MenuFileActivitys onOptionItemSelect for all File-Related entries
@@ -194,7 +149,7 @@ public class MainActivity extends MenuFileActivity {
 	public void startActionMode(int id, SoundTrack soundTrack)
 	{
 		SoundMixer.getInstance().setCallingParameters(id, soundTrack);
-		startActionMode(callback);
+		startActionMode(callbackSoundTrackViewMenu);
 	}
 	
     public void addSoundTrack(SoundTrackView track)

@@ -21,6 +21,7 @@ public class SoundMixerEventHandler extends Observable {
 		mixer = m;
 		longestTrack = 0;
 		screenWidth = Helper.getInstance().getScreenWidth();
+		secondInPixel = screenWidth/mixer.DEFAULT_LENGTH;
 	}
 	
 	public void play()

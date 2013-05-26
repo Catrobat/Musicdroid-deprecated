@@ -55,17 +55,12 @@ public class Timeline extends RelativeLayout {
 		updateTrackEndText(defaultLength);
 	}
 	
-	
-	public void resetTimeline()
+	public void resizeTimeline(int newLength)
 	{
-		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
-		
-        while (it.hasNext()) {
-            HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>)it.next();
-            removeView(pairs.getValue().getTrackPositionText());
-            removeView(pairs.getValue().getTrackPosition());
-        }
+		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
+		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
 	}
+	
 	
 	public void addNewTrackPosition(int id, int colorRes)
 	{
@@ -91,6 +86,18 @@ public class Timeline extends RelativeLayout {
 		this.removeView(tp.getTrackPositionText());
 		trackPositions.remove(id);
 	}
+	
+	public void resetTimeline()
+	{
+		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
+		
+        while (it.hasNext()) {
+            HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>)it.next();
+            removeView(pairs.getValue().getTrackPositionText());
+            removeView(pairs.getValue().getTrackPosition());
+        }
+	}
+	
 	
 	private void addStartTime()
 	{
@@ -127,8 +134,6 @@ public class Timeline extends RelativeLayout {
 		seperatorParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		seperator.setLayoutParams(seperatorParams);
-		//int reference_id = getNewId();
-		//seperator.setId(reference_id);
 		seperator.setBackgroundColor(getResources().getColor(R.color.custom_background_color));
 		
 		addView(seperator);

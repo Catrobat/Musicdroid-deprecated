@@ -12,7 +12,9 @@
   <string name="sound_track_menu_entry_delete">Delete</string>
   <string name="sound_track_menu_entry_edit">Edit</string>
   <string name="sound_track_menu_entry_copy">Copy</string>
-
+  <string name="sound_mixer_menu_entry_length">Track Length</string>
+  <string name="sound_mixer_menu_entry_bpm">Beats per Minute</string>
+  
   <string name="menu_new_song">New song</string>
   <string name="menu_load_song">Load song</string>
   <string name="menu_save_song">Save song</string>

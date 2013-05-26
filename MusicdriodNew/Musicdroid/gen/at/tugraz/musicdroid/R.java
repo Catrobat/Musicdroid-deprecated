@@ -839,8 +839,10 @@ containing a value of this type.
         public static final int play_button_sound_track=0x7f02006a;
         public static final int scrollbar_layout=0x7f02006b;
         public static final int settings_button=0x7f02006c;
-        public static final int volume_button=0x7f02006d;
-        public static final int volume_button_mute=0x7f02006e;
+        public static final int sm_action_bpm=0x7f02006d;
+        public static final int sm_action_length=0x7f02006e;
+        public static final int volume_button=0x7f02006f;
+        public static final int volume_button_mute=0x7f020070;
     }
     public static final class id {
         public static final int StatusbarLayout=0x7f06003a;
@@ -905,9 +907,11 @@ containing a value of this type.
         public static final int sound_mixer_view=0x7f060027;
         public static final int sound_track_text=0x7f060034;
         public static final int sound_track_view_sub_layout=0x7f060033;
-        public static final int soundtrack_context_copy=0x7f060044;
-        public static final int soundtrack_context_delete=0x7f060045;
-        public static final int soundtrack_context_edit=0x7f060043;
+        public static final int soundmixer_context_bpm=0x7f060043;
+        public static final int soundmixer_context_length=0x7f060044;
+        public static final int soundtrack_context_copy=0x7f060046;
+        public static final int soundtrack_context_delete=0x7f060047;
+        public static final int soundtrack_context_edit=0x7f060045;
         public static final int tabMode=0x7f060003;
         public static final int useLogo=0x7f060004;
         public static final int vertical_seperator=0x7f060030;
@@ -951,7 +955,8 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int main_menu=0x7f0d0000;
-        public static final int sound_track_dialog_menu=0x7f0d0001;
+        public static final int sound_mixer_menu=0x7f0d0001;
+        public static final int sound_track_dialog_menu=0x7f0d0002;
     }
     public static final class raw {
         public static final int test_midi=0x7f050000;
@@ -990,46 +995,48 @@ containing a value of this type.
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0009;
         public static final int action_settings=0x7f0b000b;
         public static final int app_name=0x7f0b000a;
-        public static final int closing_security_question=0x7f0b001f;
-        public static final int dialog_add_sound_title=0x7f0b001b;
-        public static final int dialog_sound_track_menu=0x7f0b001c;
-        public static final int dialog_warning_new_song=0x7f0b001d;
+        public static final int closing_security_question=0x7f0b0021;
+        public static final int dialog_add_sound_title=0x7f0b001d;
+        public static final int dialog_sound_track_menu=0x7f0b001e;
+        public static final int dialog_warning_new_song=0x7f0b001f;
         public static final int hello_world=0x7f0b000c;
-        public static final int help_menu_new_drums=0x7f0b0030;
-        public static final int help_menu_new_piano=0x7f0b002f;
-        public static final int help_menu_new_recording=0x7f0b002e;
-        public static final int help_sound_track_menu_entry_copy=0x7f0b0033;
-        public static final int help_sound_track_menu_entry_delete=0x7f0b0031;
-        public static final int help_sound_track_menu_entry_edit=0x7f0b0032;
-        public static final int menu_about=0x7f0b0018;
-        public static final int menu_hide_menu=0x7f0b0017;
+        public static final int help_menu_new_drums=0x7f0b0032;
+        public static final int help_menu_new_piano=0x7f0b0031;
+        public static final int help_menu_new_recording=0x7f0b0030;
+        public static final int help_sound_track_menu_entry_copy=0x7f0b0035;
+        public static final int help_sound_track_menu_entry_delete=0x7f0b0033;
+        public static final int help_sound_track_menu_entry_edit=0x7f0b0034;
+        public static final int menu_about=0x7f0b001a;
+        public static final int menu_hide_menu=0x7f0b0019;
         public static final int menu_item_add=0x7f0b0010;
         public static final int menu_item_drums=0x7f0b000f;
         public static final int menu_item_mic=0x7f0b000d;
         public static final int menu_item_piano=0x7f0b000e;
-        public static final int menu_load_song=0x7f0b0015;
-        public static final int menu_new_song=0x7f0b0014;
-        public static final int menu_preferences=0x7f0b001a;
-        public static final int menu_quit=0x7f0b0019;
-        public static final int menu_save_song=0x7f0b0016;
-        public static final int no=0x7f0b0021;
-        public static final int play_button_text=0x7f0b0022;
-        public static final int preferences_category_sound_title=0x7f0b002b;
-        public static final int preferences_category_soundmixer_title=0x7f0b0028;
-        public static final int preferences_max_soundmixer_length_summary=0x7f0b0029;
-        public static final int preferences_max_soundmixer_length_title=0x7f0b002a;
-        public static final int preferences_set_bpm_summary=0x7f0b002c;
-        public static final int preferences_set_bpm_title=0x7f0b002d;
-        public static final int save_suggestion=0x7f0b001e;
-        public static final int settings_button_apply=0x7f0b0026;
-        public static final int settings_button_discard=0x7f0b0027;
-        public static final int settings_dialog_title=0x7f0b0024;
-        public static final int settings_sound_track_length_description=0x7f0b0025;
+        public static final int menu_load_song=0x7f0b0017;
+        public static final int menu_new_song=0x7f0b0016;
+        public static final int menu_preferences=0x7f0b001c;
+        public static final int menu_quit=0x7f0b001b;
+        public static final int menu_save_song=0x7f0b0018;
+        public static final int no=0x7f0b0023;
+        public static final int play_button_text=0x7f0b0024;
+        public static final int preferences_category_sound_title=0x7f0b002d;
+        public static final int preferences_category_soundmixer_title=0x7f0b002a;
+        public static final int preferences_max_soundmixer_length_summary=0x7f0b002b;
+        public static final int preferences_max_soundmixer_length_title=0x7f0b002c;
+        public static final int preferences_set_bpm_summary=0x7f0b002e;
+        public static final int preferences_set_bpm_title=0x7f0b002f;
+        public static final int save_suggestion=0x7f0b0020;
+        public static final int settings_button_apply=0x7f0b0028;
+        public static final int settings_button_discard=0x7f0b0029;
+        public static final int settings_dialog_title=0x7f0b0026;
+        public static final int settings_sound_track_length_description=0x7f0b0027;
+        public static final int sound_mixer_menu_entry_bpm=0x7f0b0015;
+        public static final int sound_mixer_menu_entry_length=0x7f0b0014;
         public static final int sound_track_menu_entry_copy=0x7f0b0013;
         public static final int sound_track_menu_entry_delete=0x7f0b0011;
         public static final int sound_track_menu_entry_edit=0x7f0b0012;
-        public static final int stop_button_text=0x7f0b0023;
-        public static final int yes=0x7f0b0020;
+        public static final int stop_button_text=0x7f0b0025;
+        public static final int yes=0x7f0b0022;
     }
     public static final class style {
         /** 
