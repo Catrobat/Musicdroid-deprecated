@@ -15,6 +15,7 @@ import at.tugraz.musicdroid.soundtracks.*;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -150,18 +151,26 @@ public class MainActivity extends MenuFileActivity {
 	}
 	
 	
+	
+	@Override
+    public void onBackPressed() {
+		showSecurityQuestionBeforeExit();
+    }
+	
+	
 	private void showSecurityQuestionBeforeExit() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.closing_security_question);
 		builder.setCancelable(true);
-		builder.setPositiveButton(R.string.yes,
+		builder.setNegativeButton(R.string.yes,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+						SoundMixer.getInstance().resetSoundMixer();
 						finish();
 					}
 				});
-		builder.setNegativeButton(R.string.no,
+		builder.setPositiveButton(R.string.no,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
