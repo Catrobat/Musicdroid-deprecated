@@ -11,6 +11,7 @@ import at.tugraz.musicdroid.types.SoundType;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -18,7 +19,6 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	protected SoundMixer mixer = null;
 	protected UITestHelper ui_helper;
 	private Helper helper;
-	private Timeline timeline = null;
 	
 	public SoundTrackViewTest() {
 		super(MainActivity.class);
@@ -32,38 +32,37 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		 helper = Helper.getInstance();
 		 helper.init(getActivity());
 		 
-		 timeline = (Timeline)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(0);
 	}
 	
 	public void testSoundTrackViewInactive()
 	{
 		ui_helper.addTrack(SoundType.DRUMS);
 		ui_helper.addTrack(SoundType.PIANO);
-		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() == 2);
+		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 2);
 		
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
 		SoundTrackView check = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(2);
-		assertTrue(check.getPlayButton().isEnabled());
-		assertTrue(check.getLock().isEnabled());
+		assertTrue(check.findViewById(R.id.play_button).isEnabled());
+		assertTrue(check.findViewById(R.id.lock_button).isEnabled());
 		
 		//Open Context Menu of first view
-		solo.clickLongOnView(v.getSoundTypeImage());
+		solo.clickLongOnView(v.findViewById(R.id.img_sound_track_type));
 		solo.waitForText(v.getSoundTrack().getName(), 1, 10000, true);
 		
 		//Buttons of second view should be disabled
-		assertFalse(check.getPlayButton().isEnabled());
-		assertFalse(check.getLock().isEnabled());
+		assertFalse(check.findViewById(R.id.play_button).isEnabled());
+		assertFalse(check.findViewById(R.id.lock_button).isEnabled());
 		
 		//Close context menu by clicking on an entry
 		solo.clickOnText(solo.getString(R.string.sound_track_menu_entry_copy));
 		solo.sleep(1000);
 		
 		//Buttons of second view should be enabled again
-		assertTrue(check.getPlayButton().isEnabled());
-		assertTrue(check.getLock().isEnabled());
+		assertTrue(check.findViewById(R.id.play_button).isEnabled());
+		assertTrue(check.findViewById(R.id.lock_button).isEnabled());
 	}
 	
-	
+	//will fail
 	public void testDragOnlyInsideScreen()
 	{
 		int[] location = new int[2];
@@ -75,7 +74,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		int start_x = location[0];
 		int start_y = location[1];
 		solo.sleep(100);
-		solo.clickOnView(v.getLock());
+		solo.clickOnView(v.findViewById(R.id.lock_button));
 		solo.sleep(100);
 		
 		solo.drag(start_x+v.getWidth()/2, -300, start_y, start_y, 1);
@@ -114,7 +113,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		
 		//Unlock Sound Track
 		solo.sleep(100);
-		solo.clickOnView(v.getLock());
+		solo.clickOnView(v.findViewById(R.id.lock_button));
 		solo.sleep(100);
 		
 		//Drag again, view should move  
@@ -127,7 +126,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		
 		//Unlock again
 		solo.sleep(100);
-		solo.clickOnView(v.getLock());
+		solo.clickOnView(v.findViewById(R.id.lock_button));
 		solo.sleep(100);
 		
 		//Drag again, view should not move  
@@ -141,7 +140,41 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	
 	public void testCollapseAndExpand()
 	{
-		ui_helper.addTrack(SoundType.PIANO);
+		ui_helper.addTrack(SoundType.MIC);
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
+		assertTrue(v.getLayoutParams().width < SoundTrackView.MINIMAL_WIDTH);
+		
+		assertTrue(isCollapsed(v));
+		
+		solo.clickOnView(v.findViewById(R.id.expand_button));
+		solo.sleep(1000);
+		
+		assertTrue(isExpanded(v));
+		
+		solo.clickOnView(v.findViewById(R.id.expand_button));
+		solo.sleep(1000);
+		
+		assertTrue(isCollapsed(v));
+	}
+	
+	private boolean isCollapsed(SoundTrackView view)
+	{
+		return (
+			view.findViewById(R.id.sound_track_text).getVisibility() == View.GONE &&
+			view.findViewById(R.id.horizontal_seperator).getVisibility() == View.GONE &&
+			view.findViewById(R.id.play_button).getVisibility() == View.GONE &&
+			view.findViewById(R.id.lock_button).getVisibility() == View.GONE &&
+			view.findViewById(R.id.volume_button).getVisibility() == View.GONE &&
+			view.findViewById(R.id.expand_button).getVisibility() == View.VISIBLE);
+	}
+	
+	private boolean isExpanded(SoundTrackView view)
+	{
+		return (
+			view.findViewById(R.id.sound_track_text).getVisibility() == View.VISIBLE &&
+			view.findViewById(R.id.horizontal_seperator).getVisibility() == View.VISIBLE &&
+			view.findViewById(R.id.play_button).getVisibility() == View.VISIBLE &&
+			view.findViewById(R.id.lock_button).getVisibility() == View.VISIBLE &&
+			view.findViewById(R.id.volume_button).getVisibility() == View.VISIBLE);
 	}
 }

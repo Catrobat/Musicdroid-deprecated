@@ -3,6 +3,7 @@ package at.tugraz.musicdroid;
 import android.app.AlertDialog;
 import android.support.v4.app.FragmentActivity;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -53,5 +54,13 @@ public class MenuFileActivity extends FragmentActivity {
 	{
 		SoundMixer.getInstance().resetSoundMixer();
 	}
+	
+	
+	@Override
+    public void onBackPressed() {
+		Log.i("BACKPRESSED", "MenuFileActivity");
+		SoundMixer.getInstance().resetSoundMixer();
+        this.finish();
+    }
 
 }

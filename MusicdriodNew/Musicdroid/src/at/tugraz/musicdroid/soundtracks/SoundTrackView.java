@@ -25,8 +25,6 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	public final static int MINIMAL_WIDTH = 280;	
 	public final static int EXPANDED_WIDTH = 400; 
 	
-	private Context context = null;
-	private SoundTrackComponentFactory factory = null;
 	private Helper helper = null;
 	private SoundTrack soundTrack = null;
 	private int xDelta;
@@ -47,10 +45,8 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	
 	public SoundTrackView(Context context, SoundTrack st) {
 		super(context);
-		this.context = context;
 		soundTrack = st;
 		helper = Helper.getInstance();
-		factory = new SoundTrackComponentFactory(context);
 		
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.sound_track_layout, this);
@@ -93,7 +89,6 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		{
 			collapsed = true;
 		}
-		Log.i("WIDTH", "W = " + width);
 		return width;
 	}
 	
@@ -262,7 +257,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		horizontalSeperatorView.setVisibility(VISIBLE);
 		playImageButton.setVisibility(VISIBLE);
 		lockImageButton.setVisibility(VISIBLE);
-		volumeImageButton.setVisibility(VISIBLE);
+		volumeImageButton.setVisibility(VISIBLE); 
 		expandImageButton.setVisibility(VISIBLE);
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = EXPANDED_WIDTH;
@@ -308,21 +303,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	{
 		return soundTrack;
 	}
-	
-	public ImageView getSoundTypeImage()
-	{
-		return soundTypeImageView;
-	}
-	
-	public ImageButton getPlayButton()
-	{
-		return playImageButton;
-	}
-	
-	public ImageButton getLock()
-	{
-		return lockImageButton;
-	}
+
 
 
 }
