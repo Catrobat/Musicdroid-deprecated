@@ -26,21 +26,24 @@ public class Timeline extends RelativeLayout {
 	private TextView startTimeTextView = null;
 	private TextView endTimeTextView = null;
 	private ImageView arrowView = null;
-	private ImageButton startPoint = null;
-	private ImageButton endPoint = null;
 	
 	private int startId = 9876;
 	private int height = 0;
 	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
+	private TimelineEventMarkers eventMarkers = null;
+	private TimelineOnTouchListener onTouchListener = null;
 
 	public Timeline(Context context, int defaultLength) {
 		super(context);
 		this.context = context;
 		helper = Helper.getInstance();
 		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
+		onTouchListener = new TimelineOnTouchListener(this);
+		eventMarkers = new TimelineEventMarkers(context, this, onTouchListener);
+		
 		initTimeline(defaultLength);
-		this.setOnTouchListener(new TimelineOnTouchListener(this));
+		this.setOnTouchListener(onTouchListener);
 	}
 	
 	public Timeline(Context context, AttributeSet attrs) {
@@ -139,53 +142,13 @@ public class Timeline extends RelativeLayout {
 	
 	public void setStartPoint(int x)
 	{
-		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		if(startPoint == null)
-		{
-		  startPoint = new ImageButton(context);
-		  startPoint.setImageDrawable(getResources().getDrawable(R.drawable.timeline_start_point));
-		  RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(pixelPerSecond, getHeight());
-		  layout.addRule(ALIGN_PARENT_LEFT);
-		  layout.addRule(ALIGN_PARENT_BOTTOM);
-		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
-		  startPoint.setPadding(0, 0, 0, 0);
-		  startPoint.setLayoutParams(layout);
-		  startPoint.setBackgroundColor(Color.TRANSPARENT);
-		  startPoint.setColorFilter(Color.BLACK);
-		  addView(startPoint);
-		}
-		
-		{
-		  RelativeLayout.LayoutParams layout = (LayoutParams) startPoint.getLayoutParams();
-		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
-		  startPoint.setLayoutParams(layout);
-		}
+		eventMarkers.setStartPoint(x);
 	}
 	
 	
 	public void setEndPoint(int x)
 	{
-		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		if(endPoint == null)
-		{
-			endPoint = new ImageButton(context);
-			endPoint.setImageDrawable(getResources().getDrawable(R.drawable.timeline_end_point));
-			RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(pixelPerSecond, getHeight());
-			layout.addRule(ALIGN_PARENT_LEFT);
-			layout.addRule(ALIGN_PARENT_BOTTOM);
-			layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
-			endPoint.setPadding(0, 0, 0, 0);
-			endPoint.setLayoutParams(layout);
-			endPoint.setBackgroundColor(Color.TRANSPARENT);
-			endPoint.setColorFilter(Color.BLACK);
-			addView(endPoint);
-		}
-		else 
-		{
-		  RelativeLayout.LayoutParams layout = (LayoutParams) endPoint.getLayoutParams();
-		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
-		  endPoint.setLayoutParams(layout);
-		}
+		eventMarkers.setEndPoint(x);
 	}
 	
 	public void resetTimeline()

@@ -6,9 +6,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.ImageButton;
 
 public class TimelineOnTouchListener implements OnTouchListener {
-	public Timeline timeline;
+	private Timeline timeline;
+	private ImageButton startPoint = null;
+	private ImageButton endPoint = null;
+	
 	
 	public TimelineOnTouchListener(Timeline t)
 	{
@@ -18,7 +22,31 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
+		if(startPoint != null)
+		{
+			int[] startPointLocation = {0,0};
+			startPoint.getLocationOnScreen(startPointLocation);
+			if(v.getX() > startPointLocation[0]-10 && v.getX() < startPointLocation[0]+10)
+			{
+				Log.i("TOUCH: ", "StartPoint");
+				return true;
+			}
+			
+		}		
+		if(endPoint != null)
+		{
+			int[] endPointLocation = {0,0};
+			endPoint.getLocationOnScreen(endPointLocation);
+			if(v.getX() > endPointLocation[0]-10 && v.getX() < endPointLocation[0]+10)
+			{
+				Log.i("TOUCH: ", "EndPoint");
+				return true;
+			}
+		}
+		
+		Log.i("TOUCH: ", "Timeline");
 		return gestureDetector.onTouchEvent(event);
+		
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -30,5 +58,15 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	    	timeline.startTimelineActionMode();
 	    }
 	});
+	
+
+	public void setStartPoint(ImageButton startPoint) {
+		this.startPoint = startPoint;
+	}
+
+	public void setEndPoint(ImageButton endPoint) {
+		this.endPoint = endPoint;
+	}
+
 
 }
