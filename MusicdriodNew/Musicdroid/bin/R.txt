@@ -425,6 +425,7 @@ int string sound_track_menu_entry_edit 0x7f0b0012
 int string stop_button_text 0x7f0b0027
 int string timeline_menu_entry_end_point 0x7f0b0020
 int string timeline_menu_entry_start_point 0x7f0b001f
+int string toast_empty_soundmixer 0x7f0b003b
 int string yes 0x7f0b0024
 int style AppBaseTheme 0x7f0c0058
 int style AppTheme 0x7f0c0059

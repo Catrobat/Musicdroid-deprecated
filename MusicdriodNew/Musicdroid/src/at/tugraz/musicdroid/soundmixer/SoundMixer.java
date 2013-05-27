@@ -113,10 +113,15 @@ public class SoundMixer implements HorizontalScrollViewListener{
         timeline.addNewTrackPosition(track.getId(), track.getSoundTrack().getType().getColorResource());
 	}
 	
-	public void playAllSoundsInSoundmixer()
+	public boolean playAllSoundsInSoundmixer()
 	{
-		if(tracks.size() > 0) 
-		  eventHandler.play();
+		if(tracks.size() == 0)
+		{
+			return false;
+		}
+		
+		eventHandler.play();
+		return true;
 	}
 	
 	public void stopAllSoundsInSoundmixer()

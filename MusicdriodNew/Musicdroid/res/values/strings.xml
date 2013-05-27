@@ -60,6 +60,7 @@
   <string name="help_sound_track_menu_entry_edit">Edit this track if it is a MIDI File</string>
   <string name="help_sound_track_menu_entry_copy">Copy this track</string>
   
+  <string name="toast_empty_soundmixer">Sorry, no sounds to play.\nAdd your own sounds by clicking the top-right add-button</string>
   
   
 </resources>

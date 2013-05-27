@@ -1,23 +1,18 @@
 package at.tugraz.musicdroid.soundmixer;
 
-import java.util.HashMap;
-import java.util.Vector;
-
-import android.content.Context;
 import android.database.Observable;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.webkit.WebView.FindListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.R.drawable;
-import at.tugraz.musicdroid.R.id;
+import at.tugraz.musicdroid.animation.HighlightAnimation;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	private ImageButton playButton;
@@ -48,22 +43,21 @@ public class Statusbar extends Observable implements OnTouchListener {
 	private void onPlayTouch(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		  if(displayPlayButton)	{
-			//Toast.makeText(mainActivity.getApplicationContext(), "Someday you will hear a sound now", Toast.LENGTH_SHORT).show();
 			playButton.setImageResource(R.drawable.pause_button);
 			displayPlayButton = false;
 			
-			SoundMixer.getInstance().playAllSoundsInSoundmixer();
-			//TESTING - Demonstrates playing midi and wav sounds at the same time	
-		    //SoundManager.playSound(1, 1);
-		    //SoundManager.playSound(2, 1);
-			//TESTING
+			if(!SoundMixer.getInstance().playAllSoundsInSoundmixer())
+			{
+				playButton.setImageResource(R.drawable.play_button);
+				Toast.makeText(mainActivity.getApplicationContext(), R.string.toast_empty_soundmixer, Toast.LENGTH_LONG).show();
+				
+				HighlightAnimation.getInstance().highlightViewAnimation(mainActivity.findViewById(R.id.btn_add));
+			}
 		  }
 		  else {
 			playButton.setImageResource(R.drawable.play_button);
 			SoundMixer.getInstance().stopAllSoundsInSoundmixer();
 			
-			//TESTING
-			//SoundManager.stopAllSounds();
 			displayPlayButton = true;
 		  }
 		}

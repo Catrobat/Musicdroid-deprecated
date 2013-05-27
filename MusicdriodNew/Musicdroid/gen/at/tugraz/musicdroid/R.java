@@ -1051,6 +1051,7 @@ containing a value of this type.
         public static final int stop_button_text=0x7f0b0027;
         public static final int timeline_menu_entry_end_point=0x7f0b0020;
         public static final int timeline_menu_entry_start_point=0x7f0b001f;
+        public static final int toast_empty_soundmixer=0x7f0b003b;
         public static final int yes=0x7f0b0024;
     }
     public static final class style {
