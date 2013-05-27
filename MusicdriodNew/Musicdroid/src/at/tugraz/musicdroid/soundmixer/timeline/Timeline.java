@@ -151,6 +151,7 @@ public class Timeline extends RelativeLayout {
 		  startPoint.setPadding(0, 0, 0, 0);
 		  startPoint.setLayoutParams(layout);
 		  startPoint.setBackgroundColor(Color.TRANSPARENT);
+		  startPoint.setColorFilter(Color.BLACK);
 		  addView(startPoint);
 		}
 		
@@ -176,6 +177,7 @@ public class Timeline extends RelativeLayout {
 			endPoint.setPadding(0, 0, 0, 0);
 			endPoint.setLayoutParams(layout);
 			endPoint.setBackgroundColor(Color.TRANSPARENT);
+			endPoint.setColorFilter(Color.BLACK);
 			addView(endPoint);
 		}
 		else 

@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import android.util.Log;
 
+import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 
@@ -21,6 +22,7 @@ public class SoundMixerEventHandler extends Observable {
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
+		endPoint = mixer.DEFAULT_LENGTH;
 		screenWidth = Helper.getInstance().getScreenWidth();
 		secondInPixel = screenWidth/mixer.DEFAULT_LENGTH;
 	}
@@ -32,7 +34,7 @@ public class SoundMixerEventHandler extends Observable {
 			new Thread(new Runnable() {
 		        @Override
 		        public void run() {
-		        	int time = 0;
+		        	int time = startPoint;
 		        	shouldContinue = true;
 		            while (shouldContinue && time <= endPoint) {
 		                try {
@@ -44,7 +46,8 @@ public class SoundMixerEventHandler extends Observable {
 		                    // TODO: handle exception
 		                }
 		            }
-		            Log.e("TIME: " + time, "Sec: " + secondInPixel);
+		            Log.i("TIME: " + time, "Sec: " + secondInPixel);
+		            SoundManager.stopAllSounds();
 		            return;
 		        }
 		    }).start();
@@ -74,5 +77,24 @@ public class SoundMixerEventHandler extends Observable {
 		return start_pos_pixel/secondInPixel;
 	}
 	
+	
+
+	public int getEndPoint() {
+		return endPoint;
+	}
+
+	public void setEndPoint(int endPoint) {
+		this.endPoint = endPoint;
+	}
+
+	public int getStartPoint() {
+		return startPoint;
+	}
+
+	public void setStartPoint(int startPoint) {
+		this.startPoint = startPoint;
+	}
+
+
 	
 }

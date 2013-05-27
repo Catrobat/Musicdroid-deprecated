@@ -297,12 +297,13 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	
 	public void setStartPoint(int[] location)
 	{
-		//eventHandler.setStartPoint()
+		eventHandler.setStartPoint(location[0]/pixelPerSecond);
 		timeline.setStartPoint(location[0]);
 	}
 	
 	public void setEndPoint(int[] location)
 	{
+		eventHandler.setEndPoint(location[0]/pixelPerSecond);
 		timeline.setEndPoint(location[0]);
 	}
 
