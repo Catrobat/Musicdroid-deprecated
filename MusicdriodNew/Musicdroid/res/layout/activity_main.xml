@@ -5,7 +5,7 @@
    android:layout_height="wrap_content"
    android:fadeScrollbars="false"
    android:scrollbarThumbVertical="@drawable/scrollbar_layout">   
-   <HorizontalScrollView
+   <at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView
        android:id="@+id/sound_mixer_view" 
        android:layout_width="wrap_content"
        android:layout_height="wrap_content">
@@ -14,5 +14,5 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content">
 	  </RelativeLayout>
-   </HorizontalScrollView>
+   </at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView>
 </ScrollView>

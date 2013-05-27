@@ -1,4 +1,4 @@
-package at.tugraz.musicdroid.soundmixer;
+package at.tugraz.musicdroid.soundmixer.timeline;
 
 import android.content.Context;
 import android.view.View;
@@ -57,7 +57,6 @@ public class TimelineTrackPosition {
 		trackPositionText.setTextColor(context.getResources().getColor(R.color.custom_background_color));
 		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		textParams.addRule(RelativeLayout.ALIGN_LEFT, trackPositionView.getId());
-		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
 		textParams.leftMargin = 5;
 		trackPositionText.setLayoutParams(textParams);
 		trackPositionText.setVisibility(View.INVISIBLE);

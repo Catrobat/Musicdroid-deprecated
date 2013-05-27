@@ -12,7 +12,6 @@ import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 
-
 public class SoundLenghtDialog extends DialogFragment {
 	private NumberPicker pickerMin = null;
 	private NumberPicker pickerSec = null;
@@ -29,7 +28,7 @@ public class SoundLenghtDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.settings_menu, null);
         builder.setView(view);
                 
-        builder.setTitle(R.string.settings_dialog_title)
+        builder.setTitle(R.string.settings_default_length_title)
                .setNegativeButton(R.string.settings_button_apply, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                 	   int minutes = pickerMin.getValue();

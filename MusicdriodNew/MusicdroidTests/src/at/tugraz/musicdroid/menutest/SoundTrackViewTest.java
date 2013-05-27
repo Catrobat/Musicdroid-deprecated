@@ -6,7 +6,7 @@ import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
-import at.tugraz.musicdroid.soundmixer.Timeline;
+import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
 

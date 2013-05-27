@@ -25,6 +25,8 @@
   <string name="dialog_add_sound_title">Add Sound</string>
   <string name="dialog_sound_track_menu">What do you want to do</string>
   
+  <string name="timeline_menu_entry_start_point">Add Start Point</string>
+  <string name="timeline_menu_entry_end_point">Add End Point</string>
   
   <string name="dialog_warning_new_song">Your song will be lost!\nContinue anyways?</string>
   <string name="save_suggestion">If you want to save your song click Menu and Save Song</string>
@@ -35,7 +37,8 @@
   <string name ="play_button_text">Play Song</string>
   <string name ="stop_button_text">Stop Song</string>
    
-  <string name="settings_dialog_title">Maximal Song Length</string>
+  <string name="settings_current_length_title">Maximal Song Length</string>
+  <string name="settings_default_length_title">Default Song Length</string>
   <string name="settings_sound_track_length_description">Set maximal duration of your Song</string>
   <string name="settings_button_apply">Apply</string>
   <string name="settings_button_discard">Discard</string>
@@ -43,6 +46,8 @@
   <string name="preferences_category_soundmixer_title">Sound Mixer Settings</string>
   <string name="preferences_max_soundmixer_length_summary">Click so you can set the default length of the sound mixer </string>
   <string name="preferences_max_soundmixer_length_title">Default Sound Length</string>
+  <string name="preferences_bpm_second_summary">Display Beats per Minute (BPM) in Timeline instead of Seconds?</string>
+  <string name="preferences_bpm_second_title">SoundMixer-Timeline Unit</string>
   <string name="preferences_category_sound_title">Song Settings</string>
   <string name="preferences_set_bpm_summary">Here you can set the default value for Beats Per Minute (bpm) </string>
   <string name="preferences_set_bpm_title">Default BPM</string>

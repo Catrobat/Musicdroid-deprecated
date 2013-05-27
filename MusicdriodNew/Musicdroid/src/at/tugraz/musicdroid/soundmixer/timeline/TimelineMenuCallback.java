@@ -1,4 +1,4 @@
-package at.tugraz.musicdroid.soundmixer;
+package at.tugraz.musicdroid.soundmixer.timeline;
 
 import android.view.ActionMode;
 import android.view.Menu;
@@ -7,15 +7,16 @@ import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
-public class SoundMixerMenuCallback implements ActionMode.Callback {
+public class TimelineMenuCallback implements ActionMode.Callback {
 		MainActivity parent = null;
-		private SoundLenghtDialog settingsDialog = null;
+		Timeline timeline = null;
 	
-		public SoundMixerMenuCallback(MainActivity p)
+		public TimelineMenuCallback(MainActivity p, Timeline t)
 		{
+			timeline = t;
 			parent = p;
-			settingsDialog = new SoundLenghtDialog();
 		}
 	
         /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
@@ -33,8 +34,8 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         /** This is called when the action mode is created. This is called by startActionMode() */
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            parent.getMenuInflater().inflate(R.menu.sound_mixer_menu, menu);
-            mode.setTitle("Mixer Settings");
+            parent.getMenuInflater().inflate(R.menu.timeline_menu, menu);
+            mode.setTitle("Timeline");
             return true;
         }
 
@@ -42,11 +43,10 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch(item.getItemId()){
-            case R.id.soundmixer_context_bpm:
-                mode.finish();    // Automatically exists the action mode, when the user selects this action
+            case R.id.timeline_context_add_start_point:
+            	timeline.setStartPoint();
                 break;
-            case R.id.soundmixer_context_length:
-            	settingsDialog.show(parent.getFragmentManager(), null);
+            case R.id.timeline_context_add_end_point:
 				mode.finish();
                 break;
             }

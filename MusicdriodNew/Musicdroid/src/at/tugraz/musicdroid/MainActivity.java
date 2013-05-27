@@ -18,9 +18,11 @@ import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.preferences.PreferenceActivity;
 import at.tugraz.musicdroid.preferences.SettingsFragment;
+import at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 import at.tugraz.musicdroid.soundmixer.SoundMixerMenuCallback;
 import at.tugraz.musicdroid.soundmixer.Statusbar;
+import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import at.tugraz.musicdroid.soundtracks.*;
 
 import android.os.Build;
@@ -54,6 +56,7 @@ public class MainActivity extends MenuFileActivity {
     //private ActionMode.Callback callbackSoundTrackViewDialog;
     private SoundTrackViewMenuCallback callbackSoundTrackViewMenu;
     private SoundMixerMenuCallback callbackSoundMixerMenu;
+    private TimelineMenuCallback callbackTimelineMenu;
  
  
 	@Override
@@ -67,14 +70,13 @@ public class MainActivity extends MenuFileActivity {
     	
         setContentView(R.layout.activity_main);
         
-        SoundMixer.getInstance().initSoundMixer(this, (HorizontalScrollView)findViewById(R.id.sound_mixer_view));
+        SoundMixer.getInstance().initSoundMixer(this, (ObservableHorizontalScrollView)findViewById(R.id.sound_mixer_view));
         
         initTopStatusBar();
         statusbar = new Statusbar(this);
         
         callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
         callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
-
         
         //TESTING
 	    SoundManager.getInstance();
@@ -97,6 +99,10 @@ public class MainActivity extends MenuFileActivity {
 		case R.id.menu_item_quit:
 			showSecurityQuestionBeforeExit();
 			return true;
+		case R.id.menu_item_preferences:
+			Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
+			MainActivity.this.startActivity(intent);
+			return true;
 		case android.R.id.home:
 			showSecurityQuestionBeforeExit();
 			return true;
@@ -105,8 +111,6 @@ public class MainActivity extends MenuFileActivity {
 			return true;
 		case R.id.btn_settings:
 			startActionMode(callbackSoundMixerMenu);
-			//Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
-			//MainActivity.this.startActivity(intent);
 			return true;
 		default:
 			//calls MenuFileActivitys onOptionItemSelect for all File-Related entries
@@ -152,9 +156,19 @@ public class MainActivity extends MenuFileActivity {
 		startActionMode(callbackSoundTrackViewMenu);
 	}
 	
+	public void startTimelineActionMode()
+	{
+		startActionMode(callbackTimelineMenu);
+	}
+	
     public void addSoundTrack(SoundTrackView track)
     {
     	SoundMixer.getInstance().addSoundTrackViewToSoundMixer(track);
+    }
+    
+    public void setCallbackTimelineMenu(TimelineMenuCallback callback)
+    {
+    	callbackTimelineMenu = callback;
     }
 
     private void initTopStatusBar()
@@ -176,6 +190,8 @@ public class MainActivity extends MenuFileActivity {
 		}
 		
     }
+    
+    
     
 
 }

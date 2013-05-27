@@ -34,6 +34,11 @@
             android:title="@string/menu_load_song"/>
 
         <item
+            android:id="@+id/menu_item_preferences"
+            android:showAsAction="never"
+            android:title="@string/menu_preferences"/>
+        
+        <item
             android:id="@+id/menu_item_about"
             android:icon="@android:drawable/ic_menu_info_details"
             android:showAsAction="never"

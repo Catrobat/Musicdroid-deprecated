@@ -24,6 +24,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
         Preference dialogPreference = (Preference) getPreferenceScreen().findPreference("preferences_max_soundmixer_length");
         dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
+                	//TODO ms This is not the right dialog to call here!
         			settingsDialog.show(getFragmentManager(), null);
                     return true;
                 }

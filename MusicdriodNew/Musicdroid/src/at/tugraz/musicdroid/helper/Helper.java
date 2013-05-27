@@ -70,5 +70,4 @@ public class Helper {
 		
 		return min + ":" + sec;
 	}
-	
 }
