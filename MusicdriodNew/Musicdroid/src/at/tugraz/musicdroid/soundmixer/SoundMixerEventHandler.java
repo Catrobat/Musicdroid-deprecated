@@ -11,7 +11,9 @@ import at.tugraz.musicdroid.soundtracks.SoundTrack;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;
-	private int longestTrack;
+	private int longestTrack = 0;
+	private int endPoint = 0;
+	private int startPoint = 0;
 	private int screenWidth;
 	private int secondInPixel;
 	private boolean shouldContinue;
@@ -19,7 +21,6 @@ public class SoundMixerEventHandler extends Observable {
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
-		longestTrack = 0;
 		screenWidth = Helper.getInstance().getScreenWidth();
 		secondInPixel = screenWidth/mixer.DEFAULT_LENGTH;
 	}
@@ -33,7 +34,7 @@ public class SoundMixerEventHandler extends Observable {
 		        public void run() {
 		        	int time = 0;
 		        	shouldContinue = true;
-		            while (shouldContinue && time <= longestTrack) {
+		            while (shouldContinue && time <= endPoint) {
 		                try {
 		                    Thread.sleep(1000);
 		        			setChanged();

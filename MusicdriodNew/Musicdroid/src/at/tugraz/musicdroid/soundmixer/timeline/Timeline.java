@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,9 +26,12 @@ public class Timeline extends RelativeLayout {
 	private TextView startTimeTextView = null;
 	private TextView endTimeTextView = null;
 	private ImageView arrowView = null;
+	private ImageButton startPoint = null;
+	private ImageButton endPoint = null;
 	
 	private int startId = 9876;
 	private int height = 0;
+	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 
 	public Timeline(Context context, int defaultLength) {
@@ -79,7 +83,7 @@ public class Timeline extends RelativeLayout {
 		
 		if(newLength > defaultLength && arrowView == null)
 		{
-			addArrow();
+			//addArrow(); //TODO ms
 		}			
 	}
 	
@@ -133,6 +137,55 @@ public class Timeline extends RelativeLayout {
 		trackPositions.remove(id);
 	}
 	
+	public void setStartPoint(int x)
+	{
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		if(startPoint == null)
+		{
+		  startPoint = new ImageButton(context);
+		  startPoint.setImageDrawable(getResources().getDrawable(R.drawable.timeline_start_point));
+		  RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(pixelPerSecond, getHeight());
+		  layout.addRule(ALIGN_PARENT_LEFT);
+		  layout.addRule(ALIGN_PARENT_BOTTOM);
+		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		  startPoint.setPadding(0, 0, 0, 0);
+		  startPoint.setLayoutParams(layout);
+		  startPoint.setBackgroundColor(Color.TRANSPARENT);
+		  addView(startPoint);
+		}
+		
+		{
+		  RelativeLayout.LayoutParams layout = (LayoutParams) startPoint.getLayoutParams();
+		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		  startPoint.setLayoutParams(layout);
+		}
+	}
+	
+	
+	public void setEndPoint(int x)
+	{
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		if(endPoint == null)
+		{
+			endPoint = new ImageButton(context);
+			endPoint.setImageDrawable(getResources().getDrawable(R.drawable.timeline_end_point));
+			RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(pixelPerSecond, getHeight());
+			layout.addRule(ALIGN_PARENT_LEFT);
+			layout.addRule(ALIGN_PARENT_BOTTOM);
+			layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+			endPoint.setPadding(0, 0, 0, 0);
+			endPoint.setLayoutParams(layout);
+			endPoint.setBackgroundColor(Color.TRANSPARENT);
+			addView(endPoint);
+		}
+		else 
+		{
+		  RelativeLayout.LayoutParams layout = (LayoutParams) endPoint.getLayoutParams();
+		  layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		  endPoint.setLayoutParams(layout);
+		}
+	}
+	
 	public void resetTimeline()
 	{
 		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
@@ -143,7 +196,6 @@ public class Timeline extends RelativeLayout {
             removeView(pairs.getValue().getTrackPosition());
         }
 	}
-	
 	
 	private void addStartTime()
 	{
@@ -212,9 +264,21 @@ public class Timeline extends RelativeLayout {
 		return positionMarker;
 	}
 	
+	
+	
 	public void startTimelineActionMode()
 	{
 		((MainActivity)context).startTimelineActionMode();
+	}
+	
+	public void setClickLocation(int[] l)
+	{
+		clickLocation = l;
+	}
+	
+	public int[] getClickLocation()
+	{
+		return clickLocation;
 	}
 	
 	public int getNewId()

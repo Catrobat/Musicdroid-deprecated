@@ -3,14 +3,14 @@
     <item
         android:id="@+id/timeline_context_add_start_point"
         android:title="@string/timeline_menu_entry_start_point"
-        android:icon="@drawable/tl_icon_start"
+        android:icon="@drawable/timeline_icon_start"
         android:showAsAction="ifRoom|withText"  
     />
  
     <item
         android:id="@+id/timeline_context_add_end_point"
         android:title="@string/timeline_menu_entry_end_point"
-        android:icon="@drawable/tl_icon_end"
+        android:icon="@drawable/timeline_icon_end"
         android:showAsAction="ifRoom|withText"         
     />
 </menu>

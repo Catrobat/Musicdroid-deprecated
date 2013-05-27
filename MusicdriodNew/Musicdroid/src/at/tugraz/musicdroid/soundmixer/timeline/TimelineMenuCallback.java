@@ -44,10 +44,12 @@ public class TimelineMenuCallback implements ActionMode.Callback {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch(item.getItemId()){
             case R.id.timeline_context_add_start_point:
-            	timeline.setStartPoint();
+            	SoundMixer.getInstance().setStartPoint(timeline.getClickLocation());
+            	mode.finish();
                 break;
             case R.id.timeline_context_add_end_point:
-				mode.finish();
+            	SoundMixer.getInstance().setEndPoint(timeline.getClickLocation());
+            	mode.finish();
                 break;
             }
             return false;

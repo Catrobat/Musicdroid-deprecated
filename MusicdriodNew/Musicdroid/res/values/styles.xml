@@ -50,4 +50,8 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
     
+    <style name="customImageButton" parent="@android:style/Widget.ImageButton">
+    <item name="android:background">@drawable/btn_default_transparent_custom</item>
+</style>
+    
 </resources>

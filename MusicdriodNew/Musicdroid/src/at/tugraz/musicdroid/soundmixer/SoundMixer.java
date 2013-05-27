@@ -133,6 +133,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public void deleteCallingTrack()
 	{
 		deleteTrackById(callingId);
+		eventHandler.deleteObserver(getCallingTrack());
 		timeline.removeTrackPosition(callingId);
 	}
 	
@@ -294,6 +295,16 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		//}
 	}
 	
+	public void setStartPoint(int[] location)
+	{
+		//eventHandler.setStartPoint()
+		timeline.setStartPoint(location[0]);
+	}
+	
+	public void setEndPoint(int[] location)
+	{
+		timeline.setEndPoint(location[0]);
+	}
 
 	public void setCallingParameters(int id, SoundTrack track)
 	{

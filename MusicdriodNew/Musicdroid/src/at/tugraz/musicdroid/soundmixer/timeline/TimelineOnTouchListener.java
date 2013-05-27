@@ -24,6 +24,9 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	@SuppressWarnings("deprecation")
 	final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 	    public void onLongPress(final MotionEvent e) {
+	    	//Log.i("Location: ", "X = " + e.getX() + " | Y = " + e.getY());
+	    	int[] location = {(int) e.getX(), (int) e.getY()};
+	    	timeline.setClickLocation(location);
 	    	timeline.startTimelineActionMode();
 	    }
 	});
