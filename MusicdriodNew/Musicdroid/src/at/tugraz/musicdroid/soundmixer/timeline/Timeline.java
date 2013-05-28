@@ -13,11 +13,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Toast;
 
 public class Timeline extends RelativeLayout {
 	private Helper helper = null;
@@ -26,12 +29,13 @@ public class Timeline extends RelativeLayout {
 	private TextView startTimeTextView = null;
 	private TextView endTimeTextView = null;
 	private ImageView arrowView = null;
+	private ImageButton startPoint = null;
+	private ImageButton endPoint = null;
 	
 	private int startId = 9876;
 	private int height = 0;
 	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
-	private TimelineEventMarkers eventMarkers = null;
 	private TimelineOnTouchListener onTouchListener = null;
 
 	public Timeline(Context context, int defaultLength) {
@@ -39,10 +43,13 @@ public class Timeline extends RelativeLayout {
 		this.context = context;
 		helper = Helper.getInstance();
 		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
-		onTouchListener = new TimelineOnTouchListener(this);
-		eventMarkers = new TimelineEventMarkers(context, this, onTouchListener);
+		//eventMarkers = new TimelineEventMarkers(context, this, onTouchListener);
+		
+        LayoutInflater inflater = LayoutInflater.from(this.context);
+        inflater.inflate(R.layout.timeline_layout, this);
 		
 		initTimeline(defaultLength);
+		onTouchListener = new TimelineOnTouchListener(this);
 		this.setOnTouchListener(onTouchListener);
 	}
 	
@@ -50,7 +57,7 @@ public class Timeline extends RelativeLayout {
 		super(context, attrs);
 		this.context = context;
 	}
-
+ 
 	
 	private void initTimeline(int defaultLength)
 	{
@@ -59,9 +66,14 @@ public class Timeline extends RelativeLayout {
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(R.color.abs__background_holo_light));
 		
-		addSeperator();
-		addStartTime();
-		addEndTime();
+		seperator = (View) findViewById(R.id.timeline_seperator);
+		startTimeTextView = (TextView) findViewById(R.id.timeline_start_time);
+		endTimeTextView = (TextView) findViewById(R.id.timeline_end_time);
+		startPoint = (ImageButton) findViewById(R.id.timeline_start_point);
+		endPoint = (ImageButton) findViewById(R.id.timeline_end_point);
+		
+		startTimeTextView.setText("00:00");
+		
 		addPositionMarker(defaultLength);
 		updateTrackEndText(defaultLength);
 	}
@@ -74,7 +86,7 @@ public class Timeline extends RelativeLayout {
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
 		
-		Log.i("NewLenght " + newLength, "OldLength " + oldLength);
+		updateTrackEndText(newLength);
 		
 		if(newLength > oldLength)
 		{
@@ -88,32 +100,8 @@ public class Timeline extends RelativeLayout {
 		{
 			//addArrow(); //TODO ms
 		}			
-	}
-	
-	
-	public void updateArrowOnScroll(int scrollX)
-	{
-		if(arrowView == null) return;
-		
-		RelativeLayout.LayoutParams layout = (LayoutParams) arrowView.getLayoutParams();
-		int oldMargin = layout.leftMargin;
-		layout.setMargins(oldMargin+scrollX, 0, 0, 0);
-		arrowView.setLayoutParams(layout);
-	}
-	
-	private void addArrow()
-	{
-		arrowView = new ImageView(context);
-		arrowView.setImageDrawable(getResources().getDrawable(R.drawable.timeline_arrow));
-		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, getHeight());
-		layout.addRule(ALIGN_PARENT_LEFT);
-		layout.addRule(ALIGN_PARENT_TOP);
-		layout.setMargins(Helper.getInstance().getScreenWidth()-50, 0, 0, 0);
-		arrowView.setLayoutParams(layout);
-		arrowView.setColorFilter(Color.BLACK);
-		addView(arrowView);
-	}
-	
+	}	
+
 	
 	public void addNewTrackPosition(int id, int colorRes)
 	{
@@ -124,12 +112,18 @@ public class Timeline extends RelativeLayout {
 	{		
 		if(endTimeTextView == null) return;
 
+		Log.i("Timeline", "Set EndText: " + Helper.getInstance().durationStringFromInt(duration));
 		endTimeTextView.setText(Helper.getInstance().durationStringFromInt(duration));
 	}	
 	
-	public void updateTimelineOnMove(int id, int pixPos, int secPos)
+	public void updateTimelineOnMove(int id, int pixPos, int secPos, int duration)
 	{
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
 		trackPositions.get(id).updateTrackPosition(pixPos, secPos);
+		if((secPos+duration)*pixelPerSecond > getWidth())
+		{
+			resizeTimeline(secPos+duration);
+		}
 	}
 
 	public void removeTrackPosition(int id)
@@ -140,15 +134,44 @@ public class Timeline extends RelativeLayout {
 		trackPositions.remove(id);
 	}
 	
-	public void setStartPoint(int x)
-	{
-		eventMarkers.setStartPoint(x);
+	public boolean setStartPoint(int x)
+	{	
+		/*
+		if(!checkValidPosition(x, true))
+		{
+			Toast.makeText(context, R.string.warning_invalid_marker_position, Toast.LENGTH_LONG ).show();
+			return false;
+		} */
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		RelativeLayout.LayoutParams layout = (LayoutParams) startPoint.getLayoutParams();
+		layout.height = getHeight();
+		layout.width = pixelPerSecond;
+		layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		startPoint.setColorFilter(Color.BLACK);
+		startPoint.setVisibility(VISIBLE);
+		startPoint.setLayoutParams(layout);
+		startPoint.setOnTouchListener(onTouchListener);
+		return true;
 	}
+
 	
-	
-	public void setEndPoint(int x)
+	public boolean setEndPoint(int x)
 	{
-		eventMarkers.setEndPoint(x);
+		/*if(!checkValidPosition(x, false))
+		{
+			Toast.makeText(context, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT ).show();
+			return false;
+		} */
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		RelativeLayout.LayoutParams layout = (LayoutParams) endPoint.getLayoutParams();
+		layout.height = getHeight();
+		layout.width = pixelPerSecond;
+		layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		endPoint.setColorFilter(Color.BLACK);
+		endPoint.setVisibility(VISIBLE);
+		endPoint.setLayoutParams(layout);
+		endPoint.setOnTouchListener(onTouchListener);
+		return true;
 	}
 	
 	public void resetTimeline()
@@ -161,45 +184,25 @@ public class Timeline extends RelativeLayout {
             removeView(pairs.getValue().getTrackPosition());
         }
 	}
+
 	
-	private void addStartTime()
+	private boolean checkValidPosition(int pos, boolean isStartPoint)
 	{
-		startTimeTextView = new TextView(context);
-	
-		startTimeTextView.setText("00:00");
-		startTimeTextView.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		textParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
-		startTimeTextView.setLayoutParams(textParams);
+		int[] location = {0,0};
+		if(isStartPoint)
+		{
+			endPoint.getLocationOnScreen(location);
+			Log.i("CheckInvalidPosition", "Pos: " + pos + " Loc: " + location[0]);
+			if(location[0] > 0 && pos >= location[0]) return false;
+		}
+		else
+		{
+			startPoint.getLocationOnScreen(location);
+			Log.i("CheckInvalidPosition", "Pos: " + pos + " Loc: " + location[0] + " Width: " + startPoint.getLayoutParams().width);
+			if(pos <= location[0]+startPoint.getLayoutParams().width) return false;
+		}
+		return true;
 		
-		addView(startTimeTextView);
-	}
-	
-	private void addEndTime()
-	{
-		endTimeTextView = new TextView(context);
-		
-		endTimeTextView.setText("");
-		endTimeTextView.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		textParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		textParams.addRule(RelativeLayout.CENTER_VERTICAL);
-		endTimeTextView.setLayoutParams(textParams);
-		endTimeTextView.setVisibility(GONE);
-		addView(endTimeTextView);
-	}
-	
-	private void addSeperator()
-	{		
-		seperator = new View(context);
-		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,2);
-		seperatorParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		seperator.setLayoutParams(seperatorParams);
-		seperator.setBackgroundColor(getResources().getColor(R.color.custom_background_color));
-		
-		addView(seperator);
 	}
 	
 	private void addPositionMarker(int defaultLength)
@@ -229,8 +232,6 @@ public class Timeline extends RelativeLayout {
 		return positionMarker;
 	}
 	
-	
-	
 	public void startTimelineActionMode()
 	{
 		((MainActivity)context).startTimelineActionMode();
@@ -253,5 +254,28 @@ public class Timeline extends RelativeLayout {
 	  return id;
 	}
 	
+	/*
+	public void updateArrowOnScroll(int scrollX)
+	{
+		if(arrowView == null) return;
+		
+		RelativeLayout.LayoutParams layout = (LayoutParams) arrowView.getLayoutParams();
+		int oldMargin = layout.leftMargin;
+		layout.setMargins(oldMargin+scrollX, 0, 0, 0);
+		arrowView.setLayoutParams(layout);
+	}
 	
+	private void addArrow()
+	{
+		arrowView = new ImageView(context);
+		arrowView.setImageDrawable(getResources().getDrawable(R.drawable.timeline_arrow));
+		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, getHeight());
+		layout.addRule(ALIGN_PARENT_LEFT);
+		layout.addRule(ALIGN_PARENT_TOP);
+		layout.setMargins(Helper.getInstance().getScreenWidth()-50, 0, 0, 0);
+		arrowView.setLayoutParams(layout);
+		arrowView.setColorFilter(Color.BLACK);
+		addView(arrowView);
+	}
+	 */	
 }

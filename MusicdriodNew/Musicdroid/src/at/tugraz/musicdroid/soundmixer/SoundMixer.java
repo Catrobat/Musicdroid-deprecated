@@ -30,6 +30,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Toast;
 
 public class SoundMixer implements HorizontalScrollViewListener{
 	public static SoundMixer instance = null;
@@ -69,8 +70,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
 		
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
-        LayoutInflater inflater = LayoutInflater.from(parent);
-        inflater.inflate(R.layout.timeline_layout, timeline);
         timeline.setId(getNewViewID());
         parentLayout.addView(timeline, lp); 
 
@@ -130,9 +129,9 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		SoundManager.stopAllSounds(); 
 	}
 	
-	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos)
+	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration)
 	{
-		timeline.updateTimelineOnMove(id, pix_pos, sec_pos);
+		timeline.updateTimelineOnMove(id, pix_pos, sec_pos, duration);
 	}
 	
 	public void deleteCallingTrack()
@@ -302,14 +301,19 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	
 	public void setStartPoint(int[] location)
 	{
-		eventHandler.setStartPoint(location[0]/pixelPerSecond);
-		timeline.setStartPoint(location[0]);
-	}
+		if(eventHandler.setStartPoint(location[0]/pixelPerSecond))
+		  timeline.setStartPoint(location[0]);
+		else
+		  Toast.makeText(parent, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT ).show();
+		  
+	} 
 	
 	public void setEndPoint(int[] location)
 	{
-		eventHandler.setEndPoint(location[0]/pixelPerSecond);
-		timeline.setEndPoint(location[0]);
+		if(eventHandler.setEndPoint(location[0]/pixelPerSecond))
+		  timeline.setEndPoint(location[0]);
+		else
+		  Toast.makeText(parent, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT ).show();
 	}
 
 	public void setCallingParameters(int id, SoundTrack track)

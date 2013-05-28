@@ -231,7 +231,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	              layoutParams.leftMargin = margin;
 	              int start_point = SoundMixer.getInstance().getStartPointByPixel(margin);
 	              soundTrack.setStartPoint(start_point);
-	              SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, start_point);
+	              SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, start_point, soundTrack.getDuration());
 	              view.setLayoutParams(layoutParams);
 	    		}	
 	            ret = true;

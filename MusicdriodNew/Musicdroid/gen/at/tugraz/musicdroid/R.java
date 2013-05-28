@@ -883,9 +883,9 @@ containing a value of this type.
         public static final int abs__up=0x7f06000b;
         public static final int add_sound_button_image=0x7f060029;
         public static final int add_sound_button_text=0x7f06002a;
-        public static final int btn_add=0x7f06003d;
+        public static final int btn_add=0x7f060042;
         public static final int btn_play=0x7f06003b;
-        public static final int btn_settings=0x7f06003c;
+        public static final int btn_settings=0x7f060041;
         public static final int disableHome=0x7f060009;
         public static final int expand_button=0x7f060039;
         public static final int gridview_add_sound_menu=0x7f06002b;
@@ -894,12 +894,12 @@ containing a value of this type.
         public static final int img_sound_track_type=0x7f060032;
         public static final int listMode=0x7f060002;
         public static final int lock_button=0x7f060038;
-        public static final int menu_item_about=0x7f060042;
-        public static final int menu_item_load_song=0x7f060040;
-        public static final int menu_item_new_song=0x7f06003f;
-        public static final int menu_item_preferences=0x7f060041;
-        public static final int menu_item_quit=0x7f060043;
-        public static final int menu_item_save_song=0x7f06003e;
+        public static final int menu_item_about=0x7f060047;
+        public static final int menu_item_load_song=0x7f060045;
+        public static final int menu_item_new_song=0x7f060044;
+        public static final int menu_item_preferences=0x7f060046;
+        public static final int menu_item_quit=0x7f060048;
+        public static final int menu_item_save_song=0x7f060043;
         public static final int normal=0x7f060001;
         public static final int numberpicker_min=0x7f06002f;
         public static final int numberpicker_sec=0x7f060031;
@@ -914,14 +914,19 @@ containing a value of this type.
         public static final int sound_mixer_view=0x7f060027;
         public static final int sound_track_text=0x7f060034;
         public static final int sound_track_view_sub_layout=0x7f060033;
-        public static final int soundmixer_context_bpm=0x7f060044;
-        public static final int soundmixer_context_length=0x7f060045;
-        public static final int soundtrack_context_copy=0x7f060047;
-        public static final int soundtrack_context_delete=0x7f060048;
-        public static final int soundtrack_context_edit=0x7f060046;
+        public static final int soundmixer_context_bpm=0x7f060049;
+        public static final int soundmixer_context_length=0x7f06004a;
+        public static final int soundtrack_context_copy=0x7f06004c;
+        public static final int soundtrack_context_delete=0x7f06004d;
+        public static final int soundtrack_context_edit=0x7f06004b;
         public static final int tabMode=0x7f060003;
-        public static final int timeline_context_add_end_point=0x7f06004a;
-        public static final int timeline_context_add_start_point=0x7f060049;
+        public static final int timeline_context_add_end_point=0x7f06004f;
+        public static final int timeline_context_add_start_point=0x7f06004e;
+        public static final int timeline_end_point=0x7f060040;
+        public static final int timeline_end_time=0x7f06003e;
+        public static final int timeline_seperator=0x7f06003c;
+        public static final int timeline_start_point=0x7f06003f;
+        public static final int timeline_start_time=0x7f06003d;
         public static final int useLogo=0x7f060004;
         public static final int vertical_seperator=0x7f060030;
         public static final int volume_button=0x7f060037;
@@ -1052,6 +1057,7 @@ containing a value of this type.
         public static final int timeline_menu_entry_end_point=0x7f0b0020;
         public static final int timeline_menu_entry_start_point=0x7f0b001f;
         public static final int toast_empty_soundmixer=0x7f0b003b;
+        public static final int warning_invalid_marker_position=0x7f0b003c;
         public static final int yes=0x7f0b0024;
     }
     public static final class style {

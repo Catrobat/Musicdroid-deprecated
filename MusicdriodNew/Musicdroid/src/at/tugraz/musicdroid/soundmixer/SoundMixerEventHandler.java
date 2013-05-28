@@ -22,7 +22,7 @@ public class SoundMixerEventHandler extends Observable {
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
-		endPoint = mixer.DEFAULT_LENGTH;
+		setEndPoint(mixer.DEFAULT_LENGTH);
 		screenWidth = Helper.getInstance().getScreenWidth();
 		secondInPixel = screenWidth/mixer.DEFAULT_LENGTH;
 	}
@@ -46,7 +46,7 @@ public class SoundMixerEventHandler extends Observable {
 		                    // TODO: handle exception
 		                }
 		            }
-		            Log.i("TIME: " + time, "Sec: " + secondInPixel);
+		            Log.i("TIME: " + time, "EndPoint: " + endPoint);
 		            SoundManager.stopAllSounds();
 		            return;
 		        }
@@ -83,16 +83,24 @@ public class SoundMixerEventHandler extends Observable {
 		return endPoint;
 	}
 
-	public void setEndPoint(int endPoint) {
+	public boolean setEndPoint(int endPoint) {
+		Log.i("Set EndPoint", "EndPoint = " + endPoint);
+		
+		if(endPoint < startPoint) return false;
+		
 		this.endPoint = endPoint;
+		return true;
 	}
 
 	public int getStartPoint() {
 		return startPoint;
 	}
 
-	public void setStartPoint(int startPoint) {
+	public boolean setStartPoint(int startPoint) {
+		if(startPoint > endPoint) return false;
+		
 		this.startPoint = startPoint;
+		return true;
 	}
 
 

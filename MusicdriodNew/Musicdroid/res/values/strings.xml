@@ -25,8 +25,8 @@
   <string name="dialog_add_sound_title">Add Sound</string>
   <string name="dialog_sound_track_menu">What do you want to do</string>
   
-  <string name="timeline_menu_entry_start_point">Set Start Point</string>
-  <string name="timeline_menu_entry_end_point">Set End Point</string>
+  <string name="timeline_menu_entry_start_point">Set Start</string>
+  <string name="timeline_menu_entry_end_point">Set End</string>
   
   <string name="dialog_warning_new_song">Your song will be lost!\nContinue anyways?</string>
   <string name="save_suggestion">If you want to save your song click Menu and Save Song</string>
@@ -61,6 +61,6 @@
   <string name="help_sound_track_menu_entry_copy">Copy this track</string>
   
   <string name="toast_empty_soundmixer">Sorry, no sounds to play.\nAdd your own sounds by clicking the top-right add-button</string>
-  
+  <string name="warning_invalid_marker_position">Sorry, EndPoint can not be put before StartPoint!</string>
   
 </resources>

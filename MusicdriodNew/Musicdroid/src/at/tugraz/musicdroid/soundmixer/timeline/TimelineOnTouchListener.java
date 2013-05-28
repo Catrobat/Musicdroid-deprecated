@@ -1,5 +1,6 @@
 package at.tugraz.musicdroid.soundmixer.timeline;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -7,45 +8,40 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineOnTouchListener implements OnTouchListener {
 	private Timeline timeline;
 	private ImageButton startPoint = null;
 	private ImageButton endPoint = null;
+	private int xDelta = 0;
 	
 	
 	public TimelineOnTouchListener(Timeline t)
 	{
 		this.timeline = t;
+		startPoint = (ImageButton) timeline.findViewById(R.id.timeline_start_point);
+		endPoint = (ImageButton) timeline.findViewById(R.id.timeline_end_point);
 	}
 	
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
-		if(startPoint != null)
+		if(v.getId() == startPoint.getId())
 		{
-			int[] startPointLocation = {0,0};
-			startPoint.getLocationOnScreen(startPointLocation);
-			if(v.getX() > startPointLocation[0]-10 && v.getX() < startPointLocation[0]+10)
-			{
-				Log.i("TOUCH: ", "StartPoint");
-				return true;
-			}
-			
-		}		
-		if(endPoint != null)
-		{
-			int[] endPointLocation = {0,0};
-			endPoint.getLocationOnScreen(endPointLocation);
-			if(v.getX() > endPointLocation[0]-10 && v.getX() < endPointLocation[0]+10)
-			{
-				Log.i("TOUCH: ", "EndPoint");
-				return true;
-			}
+			Log.i("TOUCH: ", "StartPoint");
+			return handleStartPointOnTouch(event);
 		}
-		
+		if(v.getId() == endPoint.getId())
+		{
+			Log.i("TOUCH: ", "EndPoint");
+			return handleEndPointOnTouch(event);	
+		}
 		Log.i("TOUCH: ", "Timeline");
-		return gestureDetector.onTouchEvent(event);
+		return gestureDetector.onTouchEvent(event);	
+			
 		
 	}
 	
@@ -59,6 +55,60 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	    }
 	});
 	
+	
+	private boolean handleStartPointOnTouch(MotionEvent event)
+	{
+		final int X = (int) event.getRawX();
+	    boolean ret = true;
+	    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	        case MotionEvent.ACTION_DOWN:
+		   		timeline.requestDisallowInterceptTouchEvent(true);
+	            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
+	            xDelta = X - lParams.leftMargin;
+	            break;
+	        case MotionEvent.ACTION_MOVE:
+		   		timeline.requestDisallowInterceptTouchEvent(true);
+	            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
+	            int old_margin = layoutParams.leftMargin;
+	            int margin = X - xDelta;
+	            
+	            if(margin != old_margin) {
+	              layoutParams.leftMargin = margin;
+	              int[] location = {margin,0};
+	              SoundMixer.getInstance().setStartPoint(location);
+	    		}	
+	            ret = true;
+	            break;
+	    }
+	    return ret;
+	}
+	
+	private boolean handleEndPointOnTouch(MotionEvent event)
+	{
+		final int X = (int) event.getRawX();
+	    boolean ret = true;
+	    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	        case MotionEvent.ACTION_DOWN:
+		   		timeline.requestDisallowInterceptTouchEvent(true);
+	            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
+	            xDelta = X - lParams.leftMargin;
+	            break;
+	        case MotionEvent.ACTION_MOVE:
+		   		timeline.requestDisallowInterceptTouchEvent(true);
+	            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
+	            int old_margin = layoutParams.leftMargin;
+	            int margin = X - xDelta;
+	            
+	            if(margin != old_margin) {
+	              layoutParams.leftMargin = margin; 
+	              int[] location = {margin,0};
+	              SoundMixer.getInstance().setEndPoint(location);
+	    		}	
+	            ret = true;
+	            break;
+	    }
+	    return ret;
+	}
 
 	public void setStartPoint(ImageButton startPoint) {
 		this.startPoint = startPoint;
