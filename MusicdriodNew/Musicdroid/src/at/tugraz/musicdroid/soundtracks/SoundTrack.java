@@ -72,12 +72,12 @@ public class SoundTrack implements Observer {
 	{
 		return volume;
 	}
-
+ 
 	@Override
 	public void update(Observable observable, Object data) {
 		// TODO Auto-generated method stub
 		int cur_time = (Integer)data;
-		Log.e("Incoming Object: ", "" + cur_time);
+		Log.i("Incoming Object: ", "" + cur_time);
 		if(cur_time == startPoint)
 		{
 			SoundManager.playSound(soundpoolId, 1, volume);

@@ -11,30 +11,32 @@ import at.tugraz.musicdroid.helper.Helper;
 
 public class TimelineTrackPosition {
 	private Timeline parent;
+	private RelativeLayout parentLayout;
 	private Context context;
 	private int colorId;
 	private View trackPositionView = null;
-	private TextView trackPositionText = null;
+	//private TextView trackPositionText = null;
 	
 	public TimelineTrackPosition(Timeline t, Context c, int colId)
 	{
 		parent = t;
+		parentLayout = (RelativeLayout) parent.findViewById(R.id.timeline_bottom);
 		context = c;
 		colorId = colId;
 		addTrackPosition();
-		addTrackPositionText();
+		//addTrackPositionText();
 	}
 	
 	public void updateTrackPosition(int pixPos, int secPos)
 	{
 		trackPositionView.setVisibility(View.VISIBLE);
-		trackPositionText.setVisibility(View.VISIBLE);
+		//trackPositionText.setVisibility(View.VISIBLE);
 		
 		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) trackPositionView.getLayoutParams();
 		layoutParams.leftMargin = pixPos;
 		trackPositionView.setLayoutParams(layoutParams);
 		
-		trackPositionText.setText(Helper.getInstance().durationStringFromInt(secPos));
+		//trackPositionText.setText(Helper.getInstance().durationStringFromInt(secPos));
 	}
 	
 	private void addTrackPosition()
@@ -46,30 +48,30 @@ public class TimelineTrackPosition {
 		trackPositionView.setId(parent.getNewId());
 		trackPositionView.setBackgroundColor(context.getResources().getColor(colorId));
 		trackPositionView.setVisibility(View.INVISIBLE);
-		parent.addView(trackPositionView);
+		parentLayout.addView(trackPositionView);
 	}
 	
-	private void addTrackPositionText()
-	{
-		trackPositionText = new TextView(context);
-		
-		trackPositionText.setText("00:00");
-		trackPositionText.setTextColor(context.getResources().getColor(R.color.custom_background_color));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		textParams.addRule(RelativeLayout.ALIGN_LEFT, trackPositionView.getId());
-		textParams.leftMargin = 5;
-		trackPositionText.setLayoutParams(textParams);
-		trackPositionText.setVisibility(View.INVISIBLE);
-		parent.addView(trackPositionText);
-	}
-	
+//	private void addTrackPositionText()
+//	{
+//		trackPositionText = new TextView(context);
+//		
+//		trackPositionText.setText("00:00");
+//		trackPositionText.setTextColor(context.getResources().getColor(R.color.custom_background_color));
+//		LayoutParams textParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//		textParams.addRule(RelativeLayout.ALIGN_LEFT, trackPositionView.getId());
+//		textParams.leftMargin = 5;
+//		trackPositionText.setLayoutParams(textParams);
+//		trackPositionText.setVisibility(View.INVISIBLE);
+//		parent.addView(trackPositionText);
+//	}
+//	
 
 	public View getTrackPosition() {
 		return trackPositionView;
 	}
 
-	public TextView getTrackPositionText() {
-		return trackPositionText;
-	}
+//	public TextView getTrackPositionText() {
+//		return trackPositionText;
+//	}
 	
 }

@@ -35,6 +35,7 @@ import android.view.MenuItem;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,15 +55,15 @@ public class MainActivity extends MenuFileActivity {
 	}
     
     //private ActionMode.Callback callbackSoundTrackViewDialog;
-    private SoundTrackViewMenuCallback callbackSoundTrackViewMenu;
-    private SoundMixerMenuCallback callbackSoundMixerMenu;
+    //private SoundTrackViewMenuCallback callbackSoundTrackViewMenu;
+    //private SoundMixerMenuCallback callbackSoundMixerMenu;
     private TimelineMenuCallback callbackTimelineMenu;
  
  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+       
 		AddSoundDialog.init(this);
     	
     	Helper helper = Helper.getInstance();
@@ -75,13 +76,10 @@ public class MainActivity extends MenuFileActivity {
         initTopStatusBar();
         statusbar = new Statusbar(this);
         
-        callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
-        callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
-        
-        //TESTING
+        //TESTING 
 	    SoundManager.getInstance();
 	    SoundManager.initSounds(this);
-	   // SoundManager.loadSounds();
+	   // SoundManager.loadSounds(); 
     }
     
     @Override
@@ -110,6 +108,7 @@ public class MainActivity extends MenuFileActivity {
 			AddSoundDialog.getInstance().show();
 			return true;
 		case R.id.btn_settings:
+			SoundMixerMenuCallback callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
 			startActionMode(callbackSoundMixerMenu);
 			return true;
 		default:
@@ -152,7 +151,8 @@ public class MainActivity extends MenuFileActivity {
 	
 	public void startActionMode(int id, SoundTrack soundTrack)
 	{
-		SoundMixer.getInstance().setCallingParameters(id, soundTrack);
+		SoundMixer.getInstance().setCallingParameters(id, soundTrack); 
+        SoundTrackViewMenuCallback callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
 		startActionMode(callbackSoundTrackViewMenu);
 	}
 	
@@ -177,18 +177,7 @@ public class MainActivity extends MenuFileActivity {
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayShowCustomEnabled(true);
-		getActionBar().setIcon(R.drawable.ic_launcher);
-		
-		if (Build.VERSION.SDK_INT < ANDROID_VERSION_ICE_CREAM_SANDWICH) {
-			Bitmap bitmapActionBarBackground = Bitmap.createBitmap(1, 1,
-					Config.ARGB_8888);
-			bitmapActionBarBackground.eraseColor(getResources().getColor(
-					R.color.custom_background_color));
-			Drawable drawable = new BitmapDrawable(bitmapActionBarBackground);
-			getActionBar().setBackgroundDrawable(drawable);
-			getActionBar().setSplitBackgroundDrawable(drawable);
-		}
-		
+		getActionBar().setIcon(R.drawable.ic_launcher); 		
     }
     
     

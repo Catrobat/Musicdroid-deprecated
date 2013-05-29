@@ -1,6 +1,7 @@
 package at.tugraz.musicdroid.soundmixer;
 
 import android.database.Observable;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -9,13 +10,16 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.webkit.WebView.FindListener;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.animation.HighlightAnimation;
+import at.tugraz.musicdroid.helper.Helper;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	private ImageButton playButton;
+	private ImageButton rewindButton;
 	protected Boolean displayPlayButton;
 	protected MainActivity mainActivity;
 
@@ -25,6 +29,13 @@ public class Statusbar extends Observable implements OnTouchListener {
 	
 	   playButton = (ImageButton) mainActivity.findViewById(R.id.btn_play);
 	   playButton.setOnTouchListener(this);
+	   
+	   rewindButton = (ImageButton) mainActivity.findViewById(R.id.btn_rewind);
+	   //((RelativeLayout.LayoutParams)playButton.getLayoutParams()).setMargins(Helper.getInstance().getScreenWidth()/3-10, 0,0,0);
+	   ((RelativeLayout.LayoutParams)playButton.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+	   ((RelativeLayout.LayoutParams)rewindButton.getLayoutParams()).addRule(RelativeLayout.LEFT_OF, playButton.getId());
+	   rewindButton.setOnTouchListener(this);
+	   rewindButton.setVisibility(View.INVISIBLE);
 	
 	   //ADD UNDO AND REDO SUPPORT
     }
@@ -34,6 +45,9 @@ public class Statusbar extends Observable implements OnTouchListener {
 		switch (view.getId()) {
 		case R.id.btn_play:
 			onPlayTouch(event);
+			return true;
+		case R.id.btn_rewind:
+			onRewindTouch(event);
 			return true;
 		default:
 			return false;
@@ -45,12 +59,11 @@ public class Statusbar extends Observable implements OnTouchListener {
 		  if(displayPlayButton)	{
 			playButton.setImageResource(R.drawable.pause_button);
 			displayPlayButton = false;
-			
+			rewindButton.setVisibility(View.VISIBLE);
 			if(!SoundMixer.getInstance().playAllSoundsInSoundmixer())
 			{
 				playButton.setImageResource(R.drawable.play_button);
 				Toast.makeText(mainActivity.getApplicationContext(), R.string.toast_empty_soundmixer, Toast.LENGTH_LONG).show();
-				
 				HighlightAnimation.getInstance().highlightViewAnimation(mainActivity.findViewById(R.id.btn_add));
 			}
 		  }
@@ -62,6 +75,13 @@ public class Statusbar extends Observable implements OnTouchListener {
 		  }
 		}
 	}	
+	
+	private void onRewindTouch(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			SoundMixer.getInstance().rewind();
+			rewindButton.setVisibility(View.INVISIBLE);
+		}
+	}
 
 
 	public Boolean getDisplayPlayButton() {

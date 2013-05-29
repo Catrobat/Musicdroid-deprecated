@@ -1,6 +1,7 @@
 package at.tugraz.musicdroid.soundmixer;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
@@ -54,7 +55,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
         }
         return instance;
     }
-	
+	 
 	public void initSoundMixer(MainActivity activity, ObservableHorizontalScrollView scrollView)
 	{
 		parent = activity;
@@ -63,7 +64,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		eventHandler = new SoundMixerEventHandler(this);
 		timeline = new Timeline(parent, DEFAULT_LENGTH);
 		
-
         activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity, timeline));
         
 		soundMixerLength = longestSoundTrack = DEFAULT_LENGTH;
@@ -71,13 +71,10 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
         timeline.setId(getNewViewID());
-        parentLayout.addView(timeline, lp); 
-
-        horScrollView.setScrollViewListener(this);
+        parentLayout.addView(timeline, lp);
+        horScrollView.setScrollViewListener(this); 
 	}
 	
-	
-
 	@Override
 	public void onScrollChanged(ObservableHorizontalScrollView scrollView,
 			int x, int y, int oldx, int oldy) {
@@ -88,7 +85,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		//}
 		
 	}
-	
 	
 	public SoundMixer() {
 		viewId = 1234;
@@ -127,6 +123,11 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	{
 		eventHandler.stopNotifyThread();
 		SoundManager.stopAllSounds(); 
+	}
+	
+	public void rewind()
+	{
+		eventHandler.rewind();
 	}
 	
 	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration)
@@ -182,7 +183,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			soundMixerLength = newTrackLength;
 			resizeSoundMixer(newTrackLength);
 			timeline.resizeTimeline(newTrackLength);
-			timeline.updateTrackEndText(newTrackLength);
+			//timeline.updateTrackEndText(newTrackLength);
 		}
 		
 		/*if(newTrackLength < DEFAULT_LENGTH)
@@ -257,6 +258,12 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		tracks.clear();
 	}
 	
+	public void setSoundMixerLength(int length)
+	{
+		if(length > soundMixerLength)
+			soundMixerLength = length;
+	}
+	
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds)
 	{
 		int newLength = minutes*60 + seconds;
@@ -265,14 +272,14 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
-			timeline.updateTrackEndText(newLength);
+			//timeline.updateTrackEndText(newLength);
 		}
 		else if(newLength < soundMixerLength && newLength >= DEFAULT_LENGTH)
 		{
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
-			timeline.updateTrackEndText(newLength);
+			//timeline.updateTrackEndText(newLength);
 			//TODO ms check if new size is too small for current tracks!
 			
 //		    if(newLength < DEFAULT_LENGTH)

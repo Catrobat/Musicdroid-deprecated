@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Observable;
 
 import android.util.Log;
+import android.view.View;
 
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
@@ -15,6 +16,8 @@ public class SoundMixerEventHandler extends Observable {
 	private int longestTrack = 0;
 	private int endPoint = 0;
 	private int startPoint = 0;
+	private int stopPoint = 0;
+	private int time = 0;
 	private int screenWidth;
 	private int secondInPixel;
 	private boolean shouldContinue;
@@ -34,7 +37,7 @@ public class SoundMixerEventHandler extends Observable {
 			new Thread(new Runnable() {
 		        @Override
 		        public void run() {
-		        	int time = startPoint;
+		        	time = setStartTime();
 		        	shouldContinue = true;
 		            while (shouldContinue && time <= endPoint) {
 		                try {
@@ -56,7 +59,13 @@ public class SoundMixerEventHandler extends Observable {
 	
 	public void stopNotifyThread()
 	{
+		stopPoint = time;
 		shouldContinue = false;
+	}
+	
+	public void rewind()
+	{
+		stopPoint = startPoint;
 	}
 	
 	public void setLongestTrack(int length)
@@ -77,8 +86,6 @@ public class SoundMixerEventHandler extends Observable {
 		return start_pos_pixel/secondInPixel;
 	}
 	
-	
-
 	public int getEndPoint() {
 		return endPoint;
 	}
@@ -103,6 +110,12 @@ public class SoundMixerEventHandler extends Observable {
 		return true;
 	}
 
-
+	private int setStartTime()
+	{
+		if(stopPoint > startPoint)
+			return stopPoint; 
+		else
+			return startPoint;
+	}
 	
 }
