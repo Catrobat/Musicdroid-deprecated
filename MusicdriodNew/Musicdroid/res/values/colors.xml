@@ -28,6 +28,8 @@
         
         <color name="scrollbar_color">#6633B5E5</color>
         
+        <color name="recorder_dark_background_color">#535351</color>
+        
         <color name="dialog_background_pre_v14_color">#FF1E1E1E</color>        
         
 </resources>

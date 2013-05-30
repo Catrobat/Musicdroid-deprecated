@@ -1,11 +1,5 @@
 package at.tugraz.musicdroid.soundtracks;
 
-import at.tugraz.musicdroid.MainActivity;
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.SoundManager;
-import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.soundmixer.SoundMixer;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -19,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.RelativeLayout.LayoutParams;
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.SoundManager;
+import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener{
 	public final static int MINIMAL_WIDTH = 280;	

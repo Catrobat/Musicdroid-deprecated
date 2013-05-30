@@ -6,59 +6,36 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem; */
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.R.color;
-import at.tugraz.musicdroid.R.drawable;
-import at.tugraz.musicdroid.R.id;
-import at.tugraz.musicdroid.R.layout;
-import at.tugraz.musicdroid.R.menu;
-import at.tugraz.musicdroid.R.string;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import at.tugraz.musicdroid.dialog.AddSoundDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.preferences.PreferenceActivity;
-import at.tugraz.musicdroid.preferences.SettingsFragment;
 import at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 import at.tugraz.musicdroid.soundmixer.SoundMixerMenuCallback;
 import at.tugraz.musicdroid.soundmixer.Statusbar;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
-import at.tugraz.musicdroid.soundtracks.*;
-
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import at.tugraz.musicdroid.soundtracks.SoundTrack;
+import at.tugraz.musicdroid.soundtracks.SoundTrackView;
+import at.tugraz.musicdroid.soundtracks.SoundTrackViewMenuCallback;
 
 public class MainActivity extends MenuFileActivity { 
-	private static final int ANDROID_VERSION_ICE_CREAM_SANDWICH = 14;
 	protected Statusbar statusbar;
 	protected SoundMixer mixer;
 	protected SoundLenghtDialog settingsDialog = null;
+    private TimelineMenuCallback callbackTimelineMenu;
 	
     public Statusbar getStatusbar() {
 		return statusbar;
 	}
     
-    //private ActionMode.Callback callbackSoundTrackViewDialog;
-    //private SoundTrackViewMenuCallback callbackSoundTrackViewMenu;
-    //private SoundMixerMenuCallback callbackSoundMixerMenu;
-    private TimelineMenuCallback callbackTimelineMenu;
- 
  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,9 @@
 package at.tugraz.musicdroid.soundtracks;
 
+import android.util.Log;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.types.SoundType;
-
-import android.content.Context;
-import android.util.Log;
 
 public class SoundTrackPiano extends SoundTrack {
 	

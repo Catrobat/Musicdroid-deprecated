@@ -1,9 +1,12 @@
 package at.tugraz.musicdroid.menutest;
 
 import android.app.Activity;
+import android.util.Log;
+import android.view.View;
 
 import com.jayway.android.robotium.solo.Solo;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.types.SoundType;
 
 public class UITestHelper {
@@ -30,6 +33,30 @@ public class UITestHelper {
 		   solo.sleep(1000);
 		   return;
 		}
+		 
+	}
+	
+	public boolean scrollToSide(View v)
+	{
+		int[] location = {0,0};
+		v.getLocationOnScreen(location);
 		
+		int start_x = location[0];
+		int start_y = location[1];
+		solo.sleep(100);
+		int width = Helper.getInstance().getScreenWidth();
+		solo.drag(start_x+width/2, 0, start_y, start_y, 1);
+		
+		int[] newLocation = {0,0};
+		v.getLocationOnScreen(newLocation);
+		return(location[0] != newLocation[0]);
+	}
+	
+	public void addTimelineMarker(int positionX, int positionY, int markerId)
+	{
+		solo.clickLongOnScreen(positionX, positionY);
+		solo.waitForText(activity.getString(markerId));
+		solo.clickOnText(activity.getString(markerId));
+		solo.sleep(1000);	
 	}
 }

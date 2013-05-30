@@ -4,11 +4,6 @@ package at.tugraz.musicdroid.dialog;
 
 import java.util.ArrayList;
 
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.R.id;
-import at.tugraz.musicdroid.R.layout;
-import at.tugraz.musicdroid.types.SoundType;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.types.SoundType;
 
 public class AddSoundAdapter extends BaseAdapter {
 

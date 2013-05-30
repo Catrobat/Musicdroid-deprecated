@@ -1,8 +1,6 @@
 package at.tugraz.musicdroid.types;
 
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.R.drawable;
-import at.tugraz.musicdroid.R.string;
 
 public enum SoundTrackMenuEntryType {
 	EDIT(

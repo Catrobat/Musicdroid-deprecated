@@ -3,10 +3,8 @@ package at.tugraz.musicdroid.soundmixer.timeline;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineMenuCallback implements ActionMode.Callback {

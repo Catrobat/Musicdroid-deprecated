@@ -42,6 +42,7 @@
   <string name="settings_sound_track_length_description">Set maximal duration of your Song</string>
   <string name="settings_button_apply">Apply</string>
   <string name="settings_button_discard">Discard</string>
+  <string name="soundmixer_context_title">"Mixer Settings"</string>
   
   <string name="preferences_category_soundmixer_title">Sound Mixer Settings</string>
   <string name="preferences_max_soundmixer_length_summary">Click so you can set the default length of the sound mixer </string>

@@ -4,7 +4,10 @@ import com.jayway.android.robotium.solo.Solo;
 
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
+import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
@@ -12,11 +15,13 @@ import at.tugraz.musicdroid.types.SoundType;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView.FindListener;
 import android.widget.RelativeLayout;
 
 public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
+	protected Timeline timeline = null;
 	protected UITestHelper helper;
 	
 	public SoundMixerTest() {
@@ -28,6 +33,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		 solo = new Solo(getInstrumentation(), getActivity());
 		 mixer = SoundMixer.getInstance();
 		 helper = new UITestHelper(solo, getActivity());
+		 timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 	}
 	
 	public void testResetSoundMixerAtNewSongYes()
@@ -125,6 +131,8 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		testDeleteTrack();
 	}
 	
+	
+	
 	private void testAddSpecificTrack(SoundType type)
 	{
 		int number_of_childs_old = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
@@ -137,6 +145,125 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	}
 	
 	
+	//Timeline Tests
+	
+	public void testTrackLengthSettinsg()
+	{
+		int numTextViewsTopBegin = ((RelativeLayout)timeline.getChildAt(0)).getChildCount();
+		int numViewsBottomBegin = ((RelativeLayout)timeline.getChildAt(1)).getChildCount();
+		solo.clickOnView(getActivity().findViewById(R.id.btn_settings));
+		solo.waitForText(getActivity().getString(R.string.soundmixer_context_title));
+		solo.clickOnView(getActivity().findViewById(R.id.soundmixer_context_length));
+		solo.sleep(1000);
+		solo.drag(Helper.getInstance().getScreenWidth()/2-50, Helper.getInstance().getScreenHeight()/2, 
+				  Helper.getInstance().getScreenWidth()/2-50, Helper.getInstance().getScreenHeight()/3, 1);
+		solo.sleep(1000);
+		solo.clickOnText(getActivity().getString(R.string.settings_button_apply));
+		solo.sleep(1000);
+		assertTrue("SoundMixer is not scrollable", helper.scrollToSide(timeline));
+		
+		int numTextViewsTopEnd = ((RelativeLayout)timeline.getChildAt(0)).getChildCount();
+		int numViewsBottomEnd = ((RelativeLayout)timeline.getChildAt(1)).getChildCount();
+		
+		Log.i("Begin: " + numTextViewsTopBegin, "End: " + numTextViewsTopEnd);
+		Log.i("Begin: " + numViewsBottomBegin, "End: " + numViewsBottomEnd);
+		assertFalse(numTextViewsTopBegin == numTextViewsTopEnd);
+		assertFalse(numViewsBottomBegin == numViewsBottomEnd);
+		
+		//add one View for each second but only one TextView each 5 seconds
+		assertTrue(numViewsBottomBegin >= numTextViewsTopBegin*5); 
+		assertTrue(numViewsBottomEnd >= numTextViewsTopEnd*5);
+		
+	}
+	
+	
+	public void startEndMarkerTest()
+	{
+		int[] timelineLocation = {0,0};
+		timeline.getLocationOnScreen(timelineLocation);
+		
+		int clickXPosition = timelineLocation[0]+200;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		View startMarker = timeline.findViewById(R.id.timeline_start_point);
+		int margin = ((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin;
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		
+		Log.i("StartEndMarkerTest", "Margin: " + margin + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
+		assertTrue(margin >= clickXPosition-pixelPerSecond*2 && margin <= clickXPosition+pixelPerSecond*2);
+		
+		//End Marker
+		clickXPosition = timelineLocation[0] + 600;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		View endMarker = timeline.findViewById(R.id.timeline_end_point);
+		int marginEnd = ((RelativeLayout.LayoutParams)endMarker.getLayoutParams()).leftMargin;
+		
+		Log.i("StartEndMarkerTest", "Margin: " + marginEnd + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
+		assertTrue(marginEnd >= clickXPosition-pixelPerSecond && marginEnd <= clickXPosition+pixelPerSecond);
+	}
+	
+	public void testStartMarkerBeforeEndMarker()
+	{
+		int[] timelineLocation = {0,0};
+		timeline.getLocationOnScreen(timelineLocation);
+		int clickXPosition = timelineLocation[0]+200;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		View startMarker = timeline.findViewById(R.id.timeline_start_point); 
+		
+		//place endMarker before startMarker - will fail
+		clickXPosition = timelineLocation[0] + 100;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		
+		View endMarker = timeline.findViewById(R.id.timeline_end_point);
+		assertTrue(endMarker.getVisibility() == View.GONE);
+		
+		//place endMarker behind startMarker
+		clickXPosition = timelineLocation[0] + 400;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		
+		//place startMarker behind endMarker - will fail
+		int oldMarginStartMarker = ((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin;
+		clickXPosition = timelineLocation[0]+600;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		int newMarginStartMarker = ((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin;
+		assertTrue(oldMarginStartMarker == newMarginStartMarker);
+		
+	}
+	
+	public void testMoveMarker()
+	{
+		int[] timelineLocation = {0,0};
+		timeline.getLocationOnScreen(timelineLocation);
+		int clickXPosition = timelineLocation[0]+200;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		View startMarker = timeline.findViewById(R.id.timeline_start_point);
+		
+		
+		clickXPosition = timelineLocation[0] + 400;
+		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		View endMarker = timeline.findViewById(R.id.timeline_end_point);
+		
+		int[] startMarkerLocation = {0,0};
+		startMarker.getLocationOnScreen(startMarkerLocation);
+		
+		int startMargin = ((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin;
+		int endMargin = ((RelativeLayout.LayoutParams)endMarker.getLayoutParams()).leftMargin;
+		
+		int drag = endMargin - startMargin;
+		
+		solo.drag(startMarkerLocation[0], startMarkerLocation[0]+ drag + 10, 
+		          startMarkerLocation[1], startMarkerLocation[1], 20);
+		
+		solo.sleep(1000);
+		
+		assertTrue(((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin <
+					((RelativeLayout.LayoutParams)endMarker.getLayoutParams()).leftMargin);
+	}
+
+	
+	
 	
 
 }
+
+
+

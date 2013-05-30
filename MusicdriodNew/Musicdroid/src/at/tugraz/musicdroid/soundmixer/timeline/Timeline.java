@@ -3,27 +3,20 @@ package at.tugraz.musicdroid.soundmixer.timeline;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Observable;
-import java.util.Observer;
-
-import at.tugraz.musicdroid.MainActivity;
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.SoundManager;
-import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.Toast;
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class Timeline extends RelativeLayout {
 	private Helper helper = null;
@@ -83,7 +76,6 @@ public class Timeline extends RelativeLayout {
 		startTimeTextView.setText("00:00");
 
 		addPositionMarker(defaultLength);
-		//updateTrackEndText(defaultLength);
 	}
 
 	
@@ -94,8 +86,6 @@ public class Timeline extends RelativeLayout {
 		
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
-		
-		//updateTrackEndText(newLength);
 		
 		if(newLength > oldLength)
 		{
@@ -116,14 +106,7 @@ public class Timeline extends RelativeLayout {
 	{
 		trackPositions.put(id, new TimelineTrackPosition(this, context, colorRes));
 	}
-	
-//	public void updateTrackEndText(int duration)
-//	{		
-//		if(endTimeTextView == null) return;
-//
-//		Log.i("Timeline", "Set EndText: " + Helper.getInstance().durationStringFromInt(duration));
-//		endTimeTextView.setText(Helper.getInstance().durationStringFromInt(duration));
-//	}	
+
 	
 	public void updateTimelineOnMove(int id, int pixPos, int secPos, int duration)
 	{
@@ -150,7 +133,9 @@ public class Timeline extends RelativeLayout {
 		RelativeLayout.LayoutParams layout = (LayoutParams) startPointImageButton.getLayoutParams();
 		layout.height = getHeight();
 		layout.width = pixelPerSecond;
-		layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		int leftMargin = x-(x % pixelPerSecond)-pixelPerSecond+1;
+		
+		layout.setMargins(leftMargin, 0, 0, 0);
 		startPointImageButton.setColorFilter(Color.BLACK);
 		startPointImageButton.setVisibility(VISIBLE);
 		startPointImageButton.setLayoutParams(layout);
@@ -164,7 +149,7 @@ public class Timeline extends RelativeLayout {
 		RelativeLayout.LayoutParams layout = (LayoutParams) endPointImageButton.getLayoutParams();
 		layout.height = getHeight();
 		layout.width = pixelPerSecond;
-		layout.setMargins(x-(x % pixelPerSecond)-pixelPerSecond+1, 0, 0, 0);
+		layout.setMargins(x-(x % pixelPerSecond), 0, 0, 0);
 		endPointImageButton.setColorFilter(Color.BLACK);
 		endPointImageButton.setVisibility(VISIBLE);
 		endPointImageButton.setLayoutParams(layout);
@@ -177,7 +162,6 @@ public class Timeline extends RelativeLayout {
 		
         while (it.hasNext()) {
             HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>)it.next();
-           // removeView(pairs.getValue().getTrackPositionText());
             removeView(pairs.getValue().getTrackPosition());
         }
 	}

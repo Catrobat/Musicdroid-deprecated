@@ -1,15 +1,10 @@
 package at.tugraz.musicdroid.soundmixer;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Observable;
 
 import android.util.Log;
-import android.view.View;
-
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.soundtracks.SoundTrack;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;

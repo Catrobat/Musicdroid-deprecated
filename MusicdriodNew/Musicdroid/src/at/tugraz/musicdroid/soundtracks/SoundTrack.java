@@ -3,9 +3,7 @@ package at.tugraz.musicdroid.soundtracks;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.media.MediaPlayer;
 import android.util.Log;
-
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.types.SoundType;
 
@@ -75,7 +73,6 @@ public class SoundTrack implements Observer {
  
 	@Override
 	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
 		int cur_time = (Integer)data;
 		Log.i("Incoming Object: ", "" + cur_time);
 		if(cur_time == startPoint)

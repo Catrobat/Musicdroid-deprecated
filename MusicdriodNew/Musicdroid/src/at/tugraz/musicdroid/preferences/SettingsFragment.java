@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import android.util.Log;
-import android.widget.Toast;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 

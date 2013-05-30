@@ -1,21 +1,15 @@
 package at.tugraz.musicdroid.soundmixer;
 
 import android.database.Observable;
-import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.webkit.WebView.FindListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.animation.HighlightAnimation;
-import at.tugraz.musicdroid.helper.Helper;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	private ImageButton playButton;

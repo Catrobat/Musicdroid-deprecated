@@ -1,17 +1,19 @@
 package at.tugraz.musicdroid.dialog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
-
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.soundtracks.*;
+import at.tugraz.musicdroid.soundtracks.SoundTrackDrums;
+import at.tugraz.musicdroid.soundtracks.SoundTrackMic;
+import at.tugraz.musicdroid.soundtracks.SoundTrackPiano;
+import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
 
 public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
@@ -70,6 +72,8 @@ OnItemLongClickListener {
 			case MIC:
 				SoundTrackMic stvm = new SoundTrackMic();
 				parent.addSoundTrack(new SoundTrackView(parent, stvm));
+				//Intent intent = new Intent(parent, RecorderActivity.class);
+			    //parent.startActivity(intent);
 				break;		
 			default:
 				break;

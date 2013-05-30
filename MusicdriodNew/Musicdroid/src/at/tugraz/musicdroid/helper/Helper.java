@@ -1,9 +1,8 @@
 package at.tugraz.musicdroid.helper;
 
-import at.tugraz.musicdroid.MainActivity;
-
 import android.content.Context;
 import android.graphics.Point;
+import at.tugraz.musicdroid.MainActivity;
 
 public class Helper {
 	private static Helper instance = null;

@@ -1,37 +1,20 @@
 package at.tugraz.musicdroid.soundmixer;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
-import at.tugraz.musicdroid.R.id;
-import at.tugraz.musicdroid.R.layout;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
-import at.tugraz.musicdroid.types.SoundType;
-
-import android.content.Context;
-import android.graphics.Color;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Choreographer.FrameCallback;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.Toast;
 
 public class SoundMixer implements HorizontalScrollViewListener{
 	public static SoundMixer instance = null;
@@ -183,7 +166,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			soundMixerLength = newTrackLength;
 			resizeSoundMixer(newTrackLength);
 			timeline.resizeTimeline(newTrackLength);
-			//timeline.updateTrackEndText(newTrackLength);
 		}
 		
 		/*if(newTrackLength < DEFAULT_LENGTH)
@@ -368,6 +350,11 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		if(pixelPerSecond == 0)
 			pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
 		return pixelPerSecond;
+	}
+	
+	public SoundMixerEventHandler getEventHandler()
+	{
+		return eventHandler;
 	}
 
 }

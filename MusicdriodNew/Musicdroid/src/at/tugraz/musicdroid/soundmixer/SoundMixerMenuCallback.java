@@ -3,7 +3,6 @@ package at.tugraz.musicdroid.soundmixer;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
@@ -34,7 +33,7 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             parent.getMenuInflater().inflate(R.menu.sound_mixer_menu, menu);
-            mode.setTitle("Mixer Settings");
+            mode.setTitle(R.string.soundmixer_context_title);
             return true;
         }
 

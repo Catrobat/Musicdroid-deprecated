@@ -1,9 +1,8 @@
 package at.tugraz.musicdroid.dialog;
 
-import at.tugraz.musicdroid.R;
-
 import android.app.Dialog;
 import android.content.Context;
+import at.tugraz.musicdroid.R;
 
 public class BaseDialog extends Dialog {
 	public BaseDialog(Context context) {

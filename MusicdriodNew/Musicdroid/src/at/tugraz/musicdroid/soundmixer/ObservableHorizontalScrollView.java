@@ -1,10 +1,8 @@
 package at.tugraz.musicdroid.soundmixer;
 
-import android.widget.HorizontalScrollView;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ScrollView;
+import android.widget.HorizontalScrollView;
 
 public class ObservableHorizontalScrollView extends HorizontalScrollView {
 
