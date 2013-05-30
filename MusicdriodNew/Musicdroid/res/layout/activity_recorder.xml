@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent" 
+   android:layout_height="fill_parent"
+   android:background="@color/abs__background_holo_light">
+   
+   <RelativeLayout
+     android:layout_width="0dp" 
+     android:layout_height="fill_parent"
+     android:layout_weight="1"
+       >
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:src="@drawable/microphone_background"
+	        android:id="@+id/microphone_background"            
+	        /> 
+	     
+	     <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="1dp"
+	        android:layout_centerHorizontal="true"
+	        android:layout_alignBottom="@+id/microphone_background"
+	        android:layout_alignParentTop="true"
+	        android:id="@+id/microphone_equalizer"            
+	        /> 
+	                 
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:layout_centerHorizontal="true"
+	        android:layout_alignParentTop="true"
+	        android:src="@drawable/microphone"
+	        android:id="@+id/microphone"            
+	        />   
+	    
+	    <View 
+	        android:layout_width="2dp"
+	        android:layout_height="fill_parent"
+	        android:layout_alignParentRight="true"
+	        android:background="@color/recorder_dark_background_color"	        
+	        />
+	        
+    </RelativeLayout>
+
+    
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"	
+        android:background="@color/abs__background_holo_light"
+    	android:layout_weight="1">
+	    
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:paddingTop="20dp"
+            android:textColor="@color/recorder_dark_background_color"
+			android:id="@+id/microphone_duration_text"                       
+        />
+        
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/microphone_duration_text"
+            android:src="@drawable/record_button"
+            android:id="@+id/microphone_record_button"/>
+            
+        
+    </RelativeLayout>
+</LinearLayout>
