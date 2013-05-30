@@ -28,6 +28,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="at.tugraz.musicdroid.RecorderActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="at.tugraz.musicdroid.preferences.PreferenceActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >

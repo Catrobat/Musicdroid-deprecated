@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.RecorderActivity;
 import at.tugraz.musicdroid.soundtracks.SoundTrackDrums;
 import at.tugraz.musicdroid.soundtracks.SoundTrackMic;
 import at.tugraz.musicdroid.soundtracks.SoundTrackPiano;
@@ -70,10 +71,10 @@ OnItemLongClickListener {
 				parent.addSoundTrack(new SoundTrackView(parent, stvp));
 				break;
 			case MIC:
-				SoundTrackMic stvm = new SoundTrackMic();
-				parent.addSoundTrack(new SoundTrackView(parent, stvm));
-				//Intent intent = new Intent(parent, RecorderActivity.class);
-			    //parent.startActivity(intent);
+				//SoundTrackMic stvm = new SoundTrackMic();
+				//parent.addSoundTrack(new SoundTrackView(parent, stvm));
+				Intent intent = new Intent(parent, RecorderActivity.class);
+			    parent.startActivity(intent);
 				break;		
 			default:
 				break;
