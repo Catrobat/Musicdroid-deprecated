@@ -1,36 +1,24 @@
 package at.tugraz.musicdroid;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import at.tugraz.musicdroid.recorder.Recorder;
+import at.tugraz.musicdroid.recorder.AudioHandler;
+import at.tugraz.musicdroid.recorder.RecorderLayout;
 
-public class RecorderActivity extends FragmentActivity implements OnClickListener {
-	private Recorder recorder = null;
-	private ImageButton recordImageButton = null; 
-	private TextView recordDurationTextView = null;
+public class RecorderActivity extends FragmentActivity {
+	private RecorderLayout layout = null;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recorder);
-		findViewById(R.id.microphone_record_button).setBackgroundColor(Color.RED);
+
+		layout = new RecorderLayout(this);
+		AudioHandler.getInstance().init(this, layout);
 		
-		recordImageButton = (ImageButton) findViewById(R.id.microphone_record_button);
-		recordImageButton.setOnClickListener(this);
-		
-		recordDurationTextView = (TextView) findViewById(R.id.microphone_duration_text);
-		recordDurationTextView.setText("00:00");
-		
-		
-		recorder = new Recorder("myv.mp3");
 	}
 	
     @Override
@@ -41,14 +29,6 @@ public class RecorderActivity extends FragmentActivity implements OnClickListene
 		return true;
 	}
 
-	@Override
-	public void onClick(View v) {
-		if(v.getId() == R.id.microphone_record_button)
-		{
-			Log.i("ONCLICK", "RECORD");
-			recorder.record();
-		}
-	}
 
 
     

@@ -2,6 +2,8 @@ package at.tugraz.musicdroid.helper;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
+import android.webkit.WebView.FindListener;
 import at.tugraz.musicdroid.MainActivity;
 
 public class Helper {
@@ -68,5 +70,31 @@ public class Helper {
 			sec = "0" + sec;
 		
 		return min + ":" + sec;
+	}
+	
+	public String getFilenameFromPath(String path)
+	{
+		String filename = path;
+		int pos = path.lastIndexOf('/');
+		if(pos != -1)
+		{
+			filename = path.substring(pos+1);
+		}
+		
+		filename = removeFileEnding(filename);
+
+		return filename;
+				
+	}
+	
+	public String removeFileEnding(String file)
+	{
+		int pos = file.lastIndexOf('.');
+		
+		if(pos != -1)
+		{
+			file = file.substring(0, pos);
+		}
+		return file;
 	}
 }

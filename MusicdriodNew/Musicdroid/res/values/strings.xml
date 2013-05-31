@@ -24,6 +24,8 @@
   <string name="menu_preferences">Settings</string>
   <string name="dialog_add_sound_title">Add Sound</string>
   <string name="dialog_sound_track_menu">What do you want to do</string>
+  <string name="dialog_warning_file_overwritten_at_record">A file with this name already exists. It will be lost if you record a new sound. Continue anyways?</string>
+  <string name="dialog_change_filename_title">Enter a new Filename</string>
   
   <string name="timeline_menu_entry_start_point">Set Start</string>
   <string name="timeline_menu_entry_end_point">Set End</string>
@@ -33,6 +35,8 @@
   <string name="closing_security_question">Exit?\n\nYour song will be lost if it is not saved!</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_abort">Abort</string>
   
   <string name ="play_button_text">Play Song</string>
   <string name ="stop_button_text">Stop Song</string>
@@ -64,4 +68,6 @@
   <string name="toast_empty_soundmixer">Sorry, no sounds to play.\nAdd your own sounds by clicking the top-right add-button</string>
   <string name="warning_invalid_marker_position">Sorry, EndPoint can not be put before StartPoint!</string>
   
+  <string name="recorder_toast_no_file_recorded">Sorry, no sound to play, have you recorded one?</string>
+  <string name="recorder_add_to_sound_mixer_text">Add Sound to SoundMixer</string>
 </resources>
