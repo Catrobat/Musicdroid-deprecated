@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/recorder_context_playback"
+        android:title="@string/recorder_menu_entry_playback"
+        android:icon="@drawable/checkbox_unchecked"
+        android:showAsAction="ifRoom|withText"  
+    />
+</menu>

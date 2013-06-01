@@ -26,7 +26,6 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         /** Called when user exits action mode */
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            SoundMixer.getInstance().enableUnselectedViews();
         }
 
         /** This is called when the action mode is created. This is called by startActionMode() */

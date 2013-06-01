@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
+import android.util.Log;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class AudioHandler {
 	public static AudioHandler instance = null;
@@ -19,6 +21,7 @@ public class AudioHandler {
 	private Recorder recorder = null;
 	private Player player = null;
 	private AudioVisualizer visualizer = null;
+	private boolean playPlayback = false; 
 	//private Player = null;
 	
 	private AudioHandler()
@@ -55,6 +58,8 @@ public class AudioHandler {
 		}
 		else
 		{
+			if(playPlayback)
+				SoundMixer.getInstance().playAllSoundsInSoundmixer();
 			recorder.record();
 		}
 		return true;
@@ -89,6 +94,8 @@ public class AudioHandler {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 								recorder.record();
+								if(playPlayback)
+									SoundMixer.getInstance().playAllSoundsInSoundmixer();
 							}
 						});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
@@ -114,6 +121,17 @@ public class AudioHandler {
 	public void setContext(Context context)
 	{
 		this.context = context;
+	}
+	
+	public void setPlayPlayback(boolean play)
+	{
+		Log.i("AudioHandler", "Playplayback " + play);
+		playPlayback = play;
+	}
+	
+	public boolean getPlayPlayback()
+	{
+		return playPlayback;
 	}
 	
 	public void reset()

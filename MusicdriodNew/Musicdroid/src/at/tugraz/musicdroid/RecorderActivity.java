@@ -6,9 +6,14 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
+import at.tugraz.musicdroid.dialog.AddSoundDialog;
+import at.tugraz.musicdroid.preferences.PreferenceActivity;
 import at.tugraz.musicdroid.recorder.AudioHandler;
 import at.tugraz.musicdroid.recorder.RecorderLayout;
+import at.tugraz.musicdroid.recorder.RecorderMenuCallback;
+import at.tugraz.musicdroid.soundmixer.SoundMixerMenuCallback;
 
 public class RecorderActivity extends FragmentActivity {
 	private RecorderLayout layout = null;
@@ -53,6 +58,20 @@ public class RecorderActivity extends FragmentActivity {
     	Log.i("RecorderActivity", "OnPause: "+ ((LinearLayout)findViewById(R.id.recorder_activity_layout)).getChildCount());
     }
     
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		Log.i("RecorderActivity", "onOptionsItemSelected");
+		switch (item.getItemId()) {
+		case R.id.btn_settings:
+			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(this);
+			startActionMode(callbackSoundMixerMenu);
+			return true;
+		}
+		return false;
+	}
+	
     
     public void returnToMainActivtiy()
     {

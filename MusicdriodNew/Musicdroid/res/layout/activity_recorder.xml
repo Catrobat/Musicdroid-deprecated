@@ -63,7 +63,7 @@
 	        android:textSize="14sp"
 	        android:id="@+id/microphone_filename" 
             />
-
+   
        	 <View 
 	        android:layout_width="fill_parent"
 	        android:layout_height="2dp"
@@ -86,6 +86,7 @@
             android:textColor="@color/recorder_dark_background_color"
 			android:id="@+id/microphone_duration_text"                       
         />
+
         
         <RelativeLayout
             android:layout_width="fill_parent"

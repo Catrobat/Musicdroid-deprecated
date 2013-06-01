@@ -49,6 +49,7 @@
   <string name="soundmixer_context_title">"Mixer Settings"</string>
   
   <string name="preferences_category_soundmixer_title">Sound Mixer Settings</string>
+  <string name="preferences_category_recorder_title">Recorder Settings</string>
   <string name="preferences_max_soundmixer_length_summary">Click so you can set the default length of the sound mixer </string>
   <string name="preferences_max_soundmixer_length_title">Default Sound Length</string>
   <string name="preferences_bpm_second_summary">Display Beats per Minute (BPM) in Timeline instead of Seconds?</string>
@@ -56,6 +57,11 @@
   <string name="preferences_category_sound_title">Song Settings</string>
   <string name="preferences_set_bpm_summary">Here you can set the default value for Beats Per Minute (bpm) </string>
   <string name="preferences_set_bpm_title">Default BPM</string>
+  <string name="preferences_playback_summary">Do you want to here all Sounds inside the SoundMixer while Recording? (Headphones recommended) </string>
+  <string name="preferences_playback">Play Playback</string>
+  <string name="preferences_add_at_current_position_summary">Do you want to add recorded Sounds at the SoundMixer\'s current position? </string>
+  <string name="preferences_add_at_current_position">Add to current position</string>
+  
   
   <string name="help_menu_new_recording">Click me if you want to record yourself</string>
   <string name="help_menu_new_piano">Click me if you want to play the piano and add it to your song</string>
@@ -70,4 +76,7 @@
   
   <string name="recorder_toast_no_file_recorded">Sorry, no sound to play, have you recorded one?</string>
   <string name="recorder_add_to_sound_mixer_text">Add Sound to SoundMixer</string>
+  <string name="recorder_playback">Playback while Recording</string>
+  <string name="recorder_context_title">Recorder Settings</string>
+  <string name="recorder_menu_entry_playback">Play Playback</string> 
 </resources>
