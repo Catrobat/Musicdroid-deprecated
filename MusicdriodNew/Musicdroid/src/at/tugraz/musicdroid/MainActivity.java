@@ -6,17 +6,11 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem; */
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +25,7 @@ import at.tugraz.musicdroid.soundmixer.SoundMixerMenuCallback;
 import at.tugraz.musicdroid.soundmixer.Statusbar;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
+import at.tugraz.musicdroid.soundtracks.SoundTrackMic;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.soundtracks.SoundTrackViewMenuCallback;
 
@@ -112,6 +107,26 @@ public class MainActivity extends MenuFileActivity {
 		showSecurityQuestionBeforeExit();
     }
 	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		  if (requestCode == 1) {
+
+		     if(resultCode == Activity.RESULT_OK){
+		    	 if(data.hasExtra("mic_filename"))
+		    	 {
+		           String result = data.getStringExtra("mic_filename");
+		           Log.i("MainActivity", "Received String from Activity " + result);
+		           SoundTrackMic stm = new SoundTrackMic(result);
+		           addSoundTrack(new SoundTrackView(this, stm));
+		    	 }
+		     }
+		     if (resultCode == Activity.RESULT_CANCELED) {    
+		         //probably not needed
+		     }
+		  }
+	}
 	
 	private void showSecurityQuestionBeforeExit() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);

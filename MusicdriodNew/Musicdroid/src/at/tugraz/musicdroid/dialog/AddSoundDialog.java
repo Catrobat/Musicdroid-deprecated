@@ -12,7 +12,6 @@ import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.RecorderActivity;
 import at.tugraz.musicdroid.soundtracks.SoundTrackDrums;
-import at.tugraz.musicdroid.soundtracks.SoundTrackMic;
 import at.tugraz.musicdroid.soundtracks.SoundTrackPiano;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
@@ -74,13 +73,14 @@ OnItemLongClickListener {
 				//SoundTrackMic stvm = new SoundTrackMic();
 				//parent.addSoundTrack(new SoundTrackView(parent, stvm));
 				Intent intent = new Intent(parent, RecorderActivity.class);
-			    parent.startActivity(intent);
+			    parent.startActivityForResult(intent, 1);
 				break;		
 			default:
 				break;
 		}
 		dismiss();
 	}
+
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View button,

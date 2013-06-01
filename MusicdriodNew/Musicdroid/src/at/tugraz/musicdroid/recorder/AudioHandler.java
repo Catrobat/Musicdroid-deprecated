@@ -1,13 +1,11 @@
 package at.tugraz.musicdroid.recorder;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.util.Log;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
 
@@ -111,5 +109,16 @@ public class AudioHandler {
 	public String getFilename()
 	{
 		return filename;
+	}
+	
+	public void setContext(Context context)
+	{
+		this.context = context;
+	}
+	
+	public void reset()
+	{
+		init = false;
+		instance = null;
 	}
 }

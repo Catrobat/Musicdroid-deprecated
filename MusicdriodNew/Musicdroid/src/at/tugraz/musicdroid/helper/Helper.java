@@ -2,8 +2,6 @@ package at.tugraz.musicdroid.helper;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.util.Log;
-import android.webkit.WebView.FindListener;
 import at.tugraz.musicdroid.MainActivity;
 
 public class Helper {

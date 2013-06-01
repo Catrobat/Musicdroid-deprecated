@@ -40,7 +40,7 @@ public class AudioVisualizer extends Handler {
 	    int newHeight = microphoneImageView.getHeight()*amplitude/MAX_AMPLITUDE;
 	    Log.i("NewMessage", ""+amplitude + " height " + newHeight);
 	    
-
+ 
 		
 		Log.i("RecorderLayout", "Width = " + microphoneImageView.getWidth() + "  Height = " + microphoneImageView.getHeight());
 	    

@@ -1,12 +1,7 @@
 package at.tugraz.musicdroid.recorder;
 
-import java.io.ObjectInputStream.GetField;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,9 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -40,7 +33,11 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 	private int trackDuration = 0;
 	private int pixelPerSecond = 0;
 	
-	public RecorderLayout(Context context) {
+	public RecorderLayout() {
+	}
+	
+	public void init(Context context)
+	{
 		this.context = context;
 		 
 		filenameTextView = (TextView) ((RecorderActivity)context).findViewById(R.id.microphone_filename);
@@ -52,12 +49,22 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		addToSoundMixerBoxRelativeLayout = (RelativeLayout) (View) ((RecorderActivity)context).findViewById(R.id.microphone_add_to_sound_mixer_box);
 		
 		
+		if(recordDurationTextView == null)
+		{
+			Log.i("RecorderLayout", "Text View is Null");
+		}
+		else
+		{
+		  Log.i("RecorderLayout", "Text View is not Null");
+		}
+		
 		reorderToRecordLayout();
 		
 		filenameTextView.setOnLongClickListener(this);
 		recordImageButton.setColorFilter(Color.RED);
 		recordImageButton.setOnClickListener(this);
 		playImageButton.setOnClickListener(this);
+		addToSoundMixerBoxRelativeLayout.setOnClickListener(this);
 		recordDurationTextView.setText("00:00");
 	}
 	
@@ -71,6 +78,10 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		{
 			Log.i("PLAY BUTTON", "PRESSED");
 			handleOnPlayClick();
+		}
+		if(v.getId() == R.id.microphone_add_to_sound_mixer_box)
+		{
+			handleOnAddToSoundmixerClick();
 		}
 	}
 
@@ -90,6 +101,7 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		if(b.containsKey("duration"))
 		{
 			int key = b.getInt("duration");
+			Log.i("RecorderLayout", "MessageDuration = " + key);
 			recordDurationTextView.setText(Helper.getInstance().durationStringFromInt(key));	
 		}
 		else if(b.containsKey("trackposition"))
@@ -147,12 +159,17 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		}		
 	}
 	
+	private void handleOnAddToSoundmixerClick()
+	{
+		((RecorderActivity)context).returnToMainActivtiy();
+	}
+	
+	
 	
 	public void handlePlaySoundComplete()
 	{
 		isPlaying = false;
 		playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
-		
 	}
 	
 	public void resetLayoutToRecord()
@@ -205,6 +222,13 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		((LayoutParams)recordImageButton.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT,0);
 		((LayoutParams)recordImageButton.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 	}
+	
+
+	public void reset()
+	{
+		recordDurationTextView = null;
+	}
+	
 
 
 }

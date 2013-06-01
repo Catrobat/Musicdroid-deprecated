@@ -44,6 +44,13 @@ public class SoundManager {
             soundPoolMap.put(Index, soundPool.load(context, SoundID, 1));
     }
 
+    public static int addSoundByPath(String path)
+    {
+    	int soundId = soundPool.load(path,1);
+    	int position = soundPoolMap.size()+1;
+    	soundPoolMap.put(position, soundId);
+    	return position;
+    }
     
     public static int loadSound(int raw_id)
     {
@@ -54,8 +61,8 @@ public class SoundManager {
 
     public static void loadSounds()
     {
-            soundPoolMap.put(1, soundPool.load(context, R.raw.test_midi, 1));
-            soundPoolMap.put(2, soundPool.load(context, R.raw.test_wav, 1));
+            soundPoolMap.put(soundPlayMap.size()+1, soundPool.load(context, R.raw.test_midi, 1));
+            soundPoolMap.put(soundPlayMap.size()+1, soundPool.load(context, R.raw.test_wav, 1));
     }
 
     public static void playSoundByRawId(int raw_id, float speed)
@@ -85,11 +92,14 @@ public class SoundManager {
     }
 
     
-    public static void playSound(int index,float speed, float volume)
+    public static void playSound(int index, float speed, float volume)
     {
             float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            Integer stream_id = soundPool.play(soundPoolMap.get(index), volume, volume, 1, 0, speed);
+            
+            Log.i("SoundManager", "SoundPoolID = " + index);
+            int poolId = soundPoolMap.get(index);
+            Integer stream_id = soundPool.play(poolId, volume, volume, 1, 0, speed);
             Log.e("PUT: ", "" + index + " " + stream_id);
             soundPlayMap.put(index, stream_id);
     }
@@ -129,6 +139,23 @@ public class SoundManager {
 		MediaPlayer player = MediaPlayer.create(context, soundfile_id);
 		int duration = player.getDuration();
 		return duration/1000; 	
+    }
+    
+    public static int getSoundfileDurationByPath(String path)
+    {
+		Log.i("Player", "playRecorderFile");
+		MediaPlayer player = new MediaPlayer();
+		
+		try {
+			player.setDataSource(path);
+			player.prepare();
+		} catch (Exception e) {
+			Log.i("Player-Exception", "Exception");
+			e.printStackTrace();
+		}
+
+		return player.getDuration()/1000;
+
     }
 
 }

@@ -1,19 +1,12 @@
 package at.tugraz.musicdroid.recorder;
 
-import java.io.File;
 import java.io.IOException;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.RecorderActivity;
 
 public class Recorder {
 	private Context context = null;
@@ -25,6 +18,7 @@ public class Recorder {
 	
 	public Recorder(Context c, RecorderLayout layout, AudioVisualizer visualizer)
 	{
+		Log.i("Recorder", "Constructor");
 		this.context = c;
 		this.layout = layout;
 		this.visualizer = visualizer;

@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.recorder.AudioHandler;
-import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 
 public class ChangeFilenameDialog extends DialogFragment {
