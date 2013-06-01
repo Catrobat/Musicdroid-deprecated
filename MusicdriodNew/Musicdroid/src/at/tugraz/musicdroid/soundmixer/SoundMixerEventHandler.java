@@ -2,9 +2,12 @@ package at.tugraz.musicdroid.soundmixer;
 
 import java.util.Observable;
 
+import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.timeline.TimelineEventHandler;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;
@@ -39,6 +42,7 @@ public class SoundMixerEventHandler extends Observable {
 		                    Thread.sleep(1000);
 		        			setChanged();
 		        			notifyObservers(time);
+		        			if(shouldContinue) sendTrackPositionMessage(time - setStartTime() +1);
 		        			time = time + 1;
 		                } catch (Exception e) {
 		                    // TODO: handle exception
@@ -111,6 +115,16 @@ public class SoundMixerEventHandler extends Observable {
 			return stopPoint; 
 		else
 			return startPoint;
+	}
+	
+	private void sendTrackPositionMessage(int time)
+	{
+		Log.i("Set position message", "");
+		Message msg = new Message();
+        Bundle b = new Bundle();
+        b.putInt("position", time);
+        msg.setData(b);
+	    TimelineEventHandler.getInstance().sendMessage(msg);
 	}
 	
 }

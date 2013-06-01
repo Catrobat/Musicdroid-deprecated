@@ -1,11 +1,5 @@
 package at.tugraz.musicdroid;
 
-/* Looks like Sherlock-Functionality is provided natively in Android 4.0
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem; */
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

@@ -947,10 +947,10 @@ containing a value of this type.
         public static final int timeline_bottom=0x7f06004e;
         public static final int timeline_context_add_end_point=0x7f060061;
         public static final int timeline_context_add_start_point=0x7f060060;
-        public static final int timeline_currentPosition=0x7f060050;
-        public static final int timeline_end_point=0x7f060052;
-        public static final int timeline_seperator=0x7f06004f;
-        public static final int timeline_start_point=0x7f060051;
+        public static final int timeline_currentPosition=0x7f06004f;
+        public static final int timeline_end_point=0x7f060051;
+        public static final int timeline_seperator=0x7f060052;
+        public static final int timeline_start_point=0x7f060050;
         public static final int timeline_start_time=0x7f06004d;
         public static final int timeline_top=0x7f06004c;
         public static final int useLogo=0x7f060004;

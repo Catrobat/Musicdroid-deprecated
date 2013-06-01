@@ -351,10 +351,10 @@ int id timeline 0x7f06004b
 int id timeline_bottom 0x7f06004e
 int id timeline_context_add_end_point 0x7f060061
 int id timeline_context_add_start_point 0x7f060060
-int id timeline_currentPosition 0x7f060050
-int id timeline_end_point 0x7f060052
-int id timeline_seperator 0x7f06004f
-int id timeline_start_point 0x7f060051
+int id timeline_currentPosition 0x7f06004f
+int id timeline_end_point 0x7f060051
+int id timeline_seperator 0x7f060052
+int id timeline_start_point 0x7f060050
 int id timeline_start_time 0x7f06004d
 int id timeline_top 0x7f06004c
 int id useLogo 0x7f060004
