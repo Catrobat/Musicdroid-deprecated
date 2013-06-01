@@ -834,26 +834,23 @@ containing a value of this type.
         public static final int lock_unlocked=0x7f020064;
         public static final int menu_triangle=0x7f020065;
         public static final int mic_button=0x7f020066;
-        public static final int microphone=0x7f020067;
-        public static final int microphone_background=0x7f020068;
-        public static final int pause_button=0x7f020069;
-        public static final int pause_button_sound_track=0x7f02006a;
-        public static final int piano_button=0x7f02006b;
-        public static final int play_button=0x7f02006c;
-        public static final int play_button_sound_track=0x7f02006d;
-        public static final int record_button=0x7f02006e;
-        public static final int rewind_button=0x7f02006f;
-        public static final int scrollbar_layout=0x7f020070;
-        public static final int settings_button=0x7f020071;
-        public static final int sm_action_bpm=0x7f020072;
-        public static final int sm_action_length=0x7f020073;
-        public static final int timeline_arrow=0x7f020074;
-        public static final int timeline_end_point=0x7f020075;
-        public static final int timeline_icon_end=0x7f020076;
-        public static final int timeline_icon_start=0x7f020077;
-        public static final int timeline_start_point=0x7f020078;
-        public static final int volume_button=0x7f020079;
-        public static final int volume_button_mute=0x7f02007a;
+        public static final int pause_button=0x7f020067;
+        public static final int pause_button_sound_track=0x7f020068;
+        public static final int piano_button=0x7f020069;
+        public static final int play_button=0x7f02006a;
+        public static final int play_button_sound_track=0x7f02006b;
+        public static final int rewind_button=0x7f02006c;
+        public static final int scrollbar_layout=0x7f02006d;
+        public static final int settings_button=0x7f02006e;
+        public static final int sm_action_bpm=0x7f02006f;
+        public static final int sm_action_length=0x7f020070;
+        public static final int timeline_arrow=0x7f020071;
+        public static final int timeline_end_point=0x7f020072;
+        public static final int timeline_icon_end=0x7f020073;
+        public static final int timeline_icon_start=0x7f020074;
+        public static final int timeline_start_point=0x7f020075;
+        public static final int volume_button=0x7f020076;
+        public static final int volume_button_mute=0x7f020077;
     }
     public static final class id {
         public static final int StatusbarLayout=0x7f06003a;
@@ -930,10 +927,10 @@ containing a value of this type.
         public static final int timeline_bottom=0x7f060040;
         public static final int timeline_context_add_end_point=0x7f060053;
         public static final int timeline_context_add_start_point=0x7f060052;
-        public static final int timeline_currentPosition=0x7f060042;
-        public static final int timeline_end_point=0x7f060044;
-        public static final int timeline_seperator=0x7f060041;
-        public static final int timeline_start_point=0x7f060043;
+        public static final int timeline_currentPosition=0x7f060041;
+        public static final int timeline_end_point=0x7f060043;
+        public static final int timeline_seperator=0x7f060044;
+        public static final int timeline_start_point=0x7f060042;
         public static final int timeline_start_time=0x7f06003f;
         public static final int timeline_top=0x7f06003e;
         public static final int useLogo=0x7f060004;
@@ -978,10 +975,9 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int main_menu=0x7f0d0000;
-        public static final int recorder_menu=0x7f0d0001;
-        public static final int sound_mixer_menu=0x7f0d0002;
-        public static final int sound_track_dialog_menu=0x7f0d0003;
-        public static final int timeline_menu=0x7f0d0004;
+        public static final int sound_mixer_menu=0x7f0d0001;
+        public static final int sound_track_dialog_menu=0x7f0d0002;
+        public static final int timeline_menu=0x7f0d0003;
     }
     public static final class raw {
         public static final int test_midi=0x7f050000;

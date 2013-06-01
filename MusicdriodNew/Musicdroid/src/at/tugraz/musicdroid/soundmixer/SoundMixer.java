@@ -12,6 +12,7 @@ import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
+import at.tugraz.musicdroid.soundmixer.timeline.TimelineEventHandler;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import at.tugraz.musicdroid.soundtracks.SoundTrack;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
@@ -46,6 +47,8 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative); 
 		eventHandler = new SoundMixerEventHandler(this);
 		timeline = new Timeline(parent, DEFAULT_LENGTH);
+		
+		TimelineEventHandler.getInstance().init(timeline);
 		
         activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity, timeline));
         

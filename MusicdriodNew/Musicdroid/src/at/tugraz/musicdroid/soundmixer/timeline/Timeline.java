@@ -72,13 +72,13 @@ public class Timeline extends RelativeLayout {
 		startPointImageButton = (ImageButton) findViewById(R.id.timeline_start_point);
 		endPointImageButton = (ImageButton) findViewById(R.id.timeline_end_point);
 		currentPositionView = (View) findViewById(R.id.timeline_currentPosition);
-		
+				
 		startTimeTextView.setText("00:00");
 
 		addPositionMarker(defaultLength);
 	}
 
-	
+
 	public void resizeTimeline(int newLength)
 	{
 		int oldLength = getWidth()/SoundMixer.getInstance().getPixelPerSecond();
@@ -140,6 +140,11 @@ public class Timeline extends RelativeLayout {
 		startPointImageButton.setVisibility(VISIBLE);
 		startPointImageButton.setLayoutParams(layout);
 		startPointImageButton.setOnTouchListener(onTouchListener);
+		
+		RelativeLayout.LayoutParams positionLayout = (LayoutParams) currentPositionView.getLayoutParams();
+		positionLayout.setMargins(leftMargin+pixelPerSecond, 0, 0, 0);
+		positionLayout.width = 0;
+		currentPositionView.setLayoutParams(positionLayout);
 	}
 
 	
@@ -230,6 +235,10 @@ public class Timeline extends RelativeLayout {
 	  int id = startId;
 	  startId = startId + 1;
 	  return id;
+	}
+
+	public View getTrackPositionView() {
+		return currentPositionView;
 	}
 
 	/*

@@ -19,23 +19,13 @@
 	     android:layout_alignParentLeft="true"
 	     android:id="@+id/timeline_start_time"
 	     />        
-    </RelativeLayout>
-    
+    </RelativeLayout>    
     
     <RelativeLayout
          android:id="@+id/timeline_bottom"    
          android:layout_width="wrap_content"
     	 android:layout_height="wrap_content"
     	 android:layout_below="@+id/timeline_top">
-    	
-         <View 
-	     android:layout_width="fill_parent"
-	     android:layout_height="2dp"
-	     android:layout_centerHorizontal="true"
-	     android:layout_alignParentBottom="true"
-	     android:background="@color/custom_background_color"
-	     android:id="@+id/timeline_seperator"
-	     />    
 	     
          <View 
 	     android:layout_width="2dp"
@@ -66,6 +56,16 @@
 	     android:src="@drawable/timeline_end_point"
 	     android:id="@+id/timeline_end_point"
          />
+	     
+    	
+         <View 
+	     android:layout_width="fill_parent"
+	     android:layout_height="2dp"
+	     android:layout_centerHorizontal="true"
+	     android:layout_alignParentBottom="true"
+	     android:background="@color/custom_background_color"
+	     android:id="@+id/timeline_seperator"
+	     />    	     
     </RelativeLayout>
     
     
