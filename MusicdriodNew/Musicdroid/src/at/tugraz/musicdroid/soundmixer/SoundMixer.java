@@ -111,9 +111,17 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		SoundManager.stopAllSounds(); 
 	}
 	
+	public void stopAllSoundInSoundMixerAndRewind()
+	{
+		stopAllSoundsInSoundmixer();
+		eventHandler.rewind();
+		timeline.rewind();
+	}
+	
 	public void rewind()
 	{
 		eventHandler.rewind();
+		timeline.rewind();
 	}
 	
 	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration)
@@ -170,16 +178,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			resizeSoundMixer(newTrackLength);
 			timeline.resizeTimeline(newTrackLength);
 		}
-		
-		/*if(newTrackLength < DEFAULT_LENGTH)
-		{
-			longestSoundTrack = newTrackLength;
-			eventHandler.setLongestTrack(longestSoundTrack);
-			for(int i = 0; i < tracks.size(); i++)
-			{
-				tracks.get(i).resize();
-			}
-		} */
 	}
 	
 	private void resizeSoundMixer(int length)
@@ -264,31 +262,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
-			//timeline.updateTrackEndText(newLength);
-			//TODO ms check if new size is too small for current tracks!
-			
-//		    if(newLength < DEFAULT_LENGTH)
-//		    {
-//		    	for(int i = 0; i < tracks.size(); i++)
-//		    	{
-//		    		tracks.get(i).resize(); 
-//		    	}
-//		    }	
 		}
-		//soundTrackLength = minutes*60 + seconds;
-		//longestSoundTrack = soundTrackLength;
-		//eventHandler.setLongestTrack(soundTrackLength);
-		
-		//if(soundTrackLength > DEFAULT_LENGTH)
-		//	timeline.resizeTimeline(soundTrackLength);
-		
-		//timeline.updateTrackEndText(soundTrackLength);
-		//pixelPerSecond = Helper.getInstance().getScreenWidth()/soundTrackLength;
-		
-		//for(int i = 0; i < tracks.size(); i++)
-		//{
-		//	tracks.get(i).resize(); 
-		//}
 	}
 	
 	public void setStartPoint(int[] location)

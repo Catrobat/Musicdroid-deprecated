@@ -68,6 +68,8 @@ public class AudioHandler {
 	public void stopRecording()
 	{
 		recorder.stopRecording();
+		if(playPlayback)
+			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
 	}
 	
 	public void playRecording()

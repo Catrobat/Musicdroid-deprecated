@@ -214,6 +214,13 @@ public class Timeline extends RelativeLayout {
 		timelineTop.addView(positionText);
 	}
 	
+	public void rewind()  
+	{
+		LayoutParams params = (LayoutParams)currentPositionView.getLayoutParams();
+		params.width = 0;
+		currentPositionView.setLayoutParams(params);
+	}
+	
 	
 	public void startTimelineActionMode()
 	{

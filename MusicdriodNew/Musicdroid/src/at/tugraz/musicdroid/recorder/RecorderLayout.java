@@ -177,6 +177,8 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 	   isRecording = false;
 	   recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 	   recordImageButton.setColorFilter(Color.RED);
+	   if(!recordDurationTextView.getText().equals("00:00"))
+		   reorderToPlayLayout();
 	}
 	
 	public void updateFilename(String filename)
