@@ -29,7 +29,8 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	public boolean moveableLocked = true;
 	public boolean displayPlayButton = true;
 	public boolean isMuted = false;
-	public boolean collapsed = false;
+	public boolean collapse = false;
+	private boolean collapseCompletely = false;
 	
 	protected ImageView soundTypeImageView = null;
 	protected View verticalSeperatorView = null;
@@ -66,7 +67,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	    setRessources(soundTrack.getType().getImageResource(), soundTrack.getName(), soundTrack.getDuration());
 	    setFocusableInTouchMode(true);
 	    
-	    if(collapsed)
+	    if(collapse)
 	    	collapse();
 	}
 	
@@ -76,7 +77,9 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		int width = duration*SoundMixer.getInstance().getPixelPerSecond();
 		if(width < 280)
 		{
-			collapsed = true;
+			collapse = true;
+			if(width < 100)
+				collapseCompletely = true;
 		}
 		return width;
 	}
@@ -186,14 +189,14 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	
 	private void handleOnClickExpandButton()
 	{
-		if(collapsed) {
+		if(collapse) {
 		  expandImageButton.setImageResource(R.drawable.collapse_button);
-		  collapsed = false;
+		  collapse = false;
 		  expand();
 		}
 		else {
 		  expandImageButton.setImageResource(R.drawable.expand_button);
-		  collapsed = true;
+		  collapse = true;
 		  collapse();
 		}
 	}
@@ -244,7 +247,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	{
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams(); 
 		layoutParams.width = computeWidthRelativeToDuration();
-		if(collapsed)
+		if(collapse)
 			collapse();
 		setLayoutParams(layoutParams);
 	}
@@ -258,6 +261,13 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		lockImageButton.setVisibility(GONE);
 		volumeImageButton.setVisibility(GONE);
 		expandImageButton.setVisibility(VISIBLE);
+		
+		if(collapseCompletely)
+		{
+			verticalSeperatorView.setVisibility(GONE);
+			soundTypeImageView.setVisibility(GONE);
+		}
+		
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = computeWidthRelativeToDuration();
 		setLayoutParams(layoutParams);
@@ -272,6 +282,8 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		lockImageButton.setVisibility(VISIBLE);
 		volumeImageButton.setVisibility(VISIBLE); 
 		expandImageButton.setVisibility(VISIBLE);
+		verticalSeperatorView.setVisibility(VISIBLE);
+		soundTypeImageView.setVisibility(VISIBLE);
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = EXPANDED_WIDTH;
 		setLayoutParams(layoutParams);
