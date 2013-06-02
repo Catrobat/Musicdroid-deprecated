@@ -42,7 +42,7 @@ public class SoundMixerEventHandler extends Observable {
 		                    Thread.sleep(1000);
 		        			setChanged();
 		        			notifyObservers(time);
-		        			if(shouldContinue) sendTrackPositionMessage(time - setStartTime() +1);
+		        			if(shouldContinue && time < endPoint) sendTrackPositionMessage(time - setStartTime() +1);
 		        			time = time + 1;
 		                } catch (Exception e) {
 		                    // TODO: handle exception
