@@ -147,7 +147,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	
 	//Timeline Tests
 	
-	public void testTrackLengthSettinsg()
+	public void testTrackLengthSettings()
 	{
 		int numTextViewsTopBegin = ((RelativeLayout)timeline.getChildAt(0)).getChildCount();
 		int numViewsBottomBegin = ((RelativeLayout)timeline.getChildAt(1)).getChildCount();
