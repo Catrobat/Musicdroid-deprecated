@@ -4,7 +4,7 @@
    android:layout_width="fill_parent" 
    android:layout_height="fill_parent"
    android:id="@+id/recorder_activity_layout"
-   android:background="@color/abs__background_holo_light">
+   android:background="@color/background_holo_light">
    
    <RelativeLayout
      android:layout_width="0dp" 
@@ -48,7 +48,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"	
-        android:background="@color/abs__background_holo_light"
+        android:background="@color/background_holo_light"
     	android:layout_weight="1">
        
         <TextView 
@@ -124,13 +124,13 @@
               android:layout_marginLeft="5dp"
               android:layout_marginRight="10dp"
               android:id="@+id/microphone_progress_bar_box"
-              android:background="@color/abs__background_holo_light">
+              android:background="@color/background_holo_light">
               
               <View 
                  android:layout_width="0dp"
                  android:layout_height="fill_parent"
                  android:layout_alignParentLeft="true"
-                 android:background="@color/abs__holo_blue_light"
+                 android:background="@color/holo_blue_light"
                  android:id="@+id/microphone_progress_bar"
               /> 
             </RelativeLayout>
@@ -166,7 +166,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="5dp"
                 android:textSize="14sp"
-                android:textColor="@color/abs__background_holo_light"
+                android:textColor="@color/background_holo_light"
                 android:text="@string/recorder_add_to_sound_mixer_text"
                 />
             
