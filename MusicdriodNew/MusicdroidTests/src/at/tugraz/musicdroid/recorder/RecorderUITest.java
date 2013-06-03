@@ -13,13 +13,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
+import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.types.SoundType;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
+	protected String testFilename = "testfile.mp3";
 
 	public RecorderUITest() {
 		super(MainActivity.class);
@@ -34,6 +37,11 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
   	     if (f.exists())
   	    	 f.delete();
 		 
+  	     
+		 File fTest = new File(AudioHandler.getInstance().getPath() + "/" + testFilename);
+  	     if (fTest.exists())
+  	    	fTest.delete();
+  	     
 		 solo.clickOnView(getActivity().findViewById(R.id.btn_add));
 		 solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
 	     solo.sleep(100);
@@ -183,6 +191,64 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		
 	}
 	
+	public void testChangeFilename()
+	{
+		TextView filenameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.microphone_filename);
+		solo.clickLongOnView(filenameTextView);
+		solo.sleep(1000);
+		String filename = AudioHandler.getInstance().getFilename();
+		filename = Helper.getInstance().removeFileEnding(filename);
+		//solo.clickOnText(filename);
+		solo.sleep(1000);
+				
+		solo.clearEditText(0);
+		solo.sleep(1000);
+		solo.enterText(0, Helper.getInstance().removeFileEnding(testFilename));
+		solo.sleep(1000);
+		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_apply));
+		
+		ImageButton recordButton = (ImageButton) solo.getCurrentActivity().findViewById(R.id.microphone_record_button);
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+		assertFalse(checkForOverwriteDialog());
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+		
+		File f = new File(AudioHandler.getInstance().getPath()+ "/"+ testFilename);
+		assertTrue(f.exists());
+	}
+	
+	
+	
+	public void testFilenameUnchangedAtDialogDiscard()
+	{
+		TextView filenameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.microphone_filename);
+		solo.clickLongOnView(filenameTextView);
+		solo.sleep(1000);
+		String filename = AudioHandler.getInstance().getFilename();
+		filename = Helper.getInstance().removeFileEnding(filename);
+		//solo.clickOnText(filename);
+		solo.sleep(1000);
+				
+		solo.clearEditText(0);
+		solo.sleep(1000);
+		solo.enterText(0, Helper.getInstance().removeFileEnding(testFilename));
+		solo.sleep(1000);
+		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_discard));
+		
+		ImageButton recordButton = (ImageButton) solo.getCurrentActivity().findViewById(R.id.microphone_record_button);
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+		assertFalse(checkForOverwriteDialog());
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+		
+		File f = new File(AudioHandler.getInstance().getPath()+ "/"+ testFilename);
+		assertFalse(f.exists());
+	}
+	
+	
+	
 	private void playSound()
 	{
 		int resID=getActivity().getResources().getIdentifier("test_wav", "raw", getActivity().getPackageName());
@@ -211,6 +277,7 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 	{
 		if(solo.searchText(solo.getCurrentActivity().getString(R.string.dialog_continue)))
 			return true;
+		
 		else
 			return false;	
 	}
