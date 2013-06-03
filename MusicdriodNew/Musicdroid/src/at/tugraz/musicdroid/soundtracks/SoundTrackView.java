@@ -315,12 +315,12 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	public void disableView()
 	{
 		setBackgroundColor(Color.GRAY);
-	    soundTypeImageView.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    playImageButton.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    lockImageButton.setColorFilter(R.color.abs__bright_foreground_disabled_holo_dark);
-	    soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
-	    horizontalSeperatorView.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
-	    verticalSeperatorView.setBackgroundColor(getResources().getColor(R.color.abs__bright_foreground_disabled_holo_light));
+	    soundTypeImageView.setColorFilter(R.color.foreground_disabled_holo_dark);
+	    playImageButton.setColorFilter(R.color.foreground_disabled_holo_dark);
+	    lockImageButton.setColorFilter(R.color.foreground_disabled_holo_dark);
+	    soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
+	    horizontalSeperatorView.setBackgroundColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
+	    verticalSeperatorView.setBackgroundColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
 		playImageButton.setEnabled(false);
 		lockImageButton.setEnabled(false);
 	}

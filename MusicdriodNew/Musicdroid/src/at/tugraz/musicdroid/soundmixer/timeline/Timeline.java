@@ -60,7 +60,7 @@ public class Timeline extends RelativeLayout {
 		height = helper.getScreenHeight()/18;
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(helper.getScreenWidth(), height*2);
 		setLayoutParams(layoutParams);
-		setBackgroundColor(getResources().getColor(R.color.abs__background_holo_light));
+		setBackgroundColor(getResources().getColor(R.color.background_holo_light));
 		
 		timelineTop = (RelativeLayout) findViewById(R.id.timeline_top);
 		timelineBottom = (RelativeLayout) findViewById(R.id.timeline_bottom);
