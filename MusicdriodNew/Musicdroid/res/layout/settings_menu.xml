@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_menu_layout"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/settings_sound_track_length_descriptor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <NumberPicker 
+        android:id="@+id/numberpicker_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignRight="@+id/vertical_seperator"
+		/>
+    
+    <NumberPicker 
+        android:id="@+id/numberpicker_sec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_alignLeft="@+id/vertical_seperator"
+        />
+    
+    <View 
+		android:layout_width="2dp"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:background="@android:color/transparent"
+		android:layout_alignBottom="@+id/settings_sound_track_length_descriptor"
+		android:id="@+id/vertical_seperator"
+		/>
+    
+</RelativeLayout>
