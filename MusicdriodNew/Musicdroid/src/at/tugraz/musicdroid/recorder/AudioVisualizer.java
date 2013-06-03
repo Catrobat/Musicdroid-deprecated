@@ -19,7 +19,6 @@ public class AudioVisualizer extends Handler {
 	private Context context = null;
 	private View equalizerView = null;
 	private ImageView microphoneImageView = null;
-	private int maxHeight = 0;
 	
 	
 	public AudioVisualizer(Context context)
@@ -27,29 +26,16 @@ public class AudioVisualizer extends Handler {
 		this.context = context;
 		equalizerView = (View)((RecorderActivity)context).findViewById(R.id.microphone_equalizer);
 		microphoneImageView = (ImageView)((RecorderActivity)context).findViewById(R.id.microphone);
-		maxHeight = Helper.getInstance().getScreenHeight();
-		Log.i("AudioVisualizer", "MaxHeight = "+maxHeight);
 	}
 	
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle b = msg.getData();
 		int amplitude = b.getInt("amplitude");
-
-
 	    int newHeight = microphoneImageView.getHeight()*amplitude/MAX_AMPLITUDE;
-	    Log.i("NewMessage", ""+amplitude + " height " + newHeight);
-	    
- 
-		
-		Log.i("RecorderLayout", "Width = " + microphoneImageView.getWidth() + "  Height = " + microphoneImageView.getHeight());
-	    
 	    LayoutParams params = (LayoutParams)equalizerView.getLayoutParams();
 	    params.height = newHeight;
 	    params.width = microphoneImageView.getWidth();
 	    equalizerView.setLayoutParams(params);
-//	    ScaleAnimation animation = new ScaleAnimation(fromXscale, toXscale, fromYscale, toYscale, 
-//	    		                                       Animation.RELATIVE_TO_SELF, (float)0.5, 
-//	    		                                       Animation.RELATIVE_TO_SELF, (float)0.5);
 	}
 }

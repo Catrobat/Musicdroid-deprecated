@@ -136,6 +136,11 @@ public class AudioHandler {
 		return playPlayback;
 	}
 	
+	public String getPath()
+	{
+		return path;
+	}
+	
 	public void reset()
 	{
 		init = false;

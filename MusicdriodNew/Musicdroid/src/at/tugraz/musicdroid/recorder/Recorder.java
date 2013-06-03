@@ -18,7 +18,6 @@ public class Recorder {
 	
 	public Recorder(Context c, RecorderLayout layout, AudioVisualizer visualizer)
 	{
-		Log.i("Recorder", "Constructor");
 		this.context = c;
 		this.layout = layout;
 		this.visualizer = visualizer;
@@ -79,6 +78,7 @@ public class Recorder {
 	
 	private void setPreferences()
 	{
+		Log.i("Recorder", "Filename = " + AudioHandler.getInstance().getFilenameFullPath());
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		recorder.setOutputFile(AudioHandler.getInstance().getFilenameFullPath());
@@ -87,7 +87,6 @@ public class Recorder {
 
 	private void sendDurationMessage()
 	{
-		Log.i("Set duration message", "");
 		Message msg = new Message();
         Bundle b = new Bundle();
         b.putInt("duration", (int) ((System.currentTimeMillis()-startTime)/1000));
