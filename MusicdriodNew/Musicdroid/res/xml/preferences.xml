@@ -19,6 +19,20 @@
     </PreferenceCategory>
     
     <PreferenceCategory 
+        android:title="@string/preferences_category_recorder_title">
+        <CheckBoxPreference
+            android:summary="@string/preferences_playback_summary"
+            android:title="@string/preferences_playback"
+            android:defaultValue="true"
+            android:key="preferences_playback"/>
+        <CheckBoxPreference
+            android:summary="@string/preferences_add_at_current_position_summary"
+            android:title="@string/preferences_add_at_current_position"
+            android:defaultValue="false"
+            android:key="preferences_add_at_current_position"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
         android:title="@string/preferences_category_sound_title">
         <Preference
             android:summary="@string/preferences_set_bpm_summary"

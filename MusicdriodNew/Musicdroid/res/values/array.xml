@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="metronom_states_array">
+        <item>Off</item>
+        <item>Light</item>
+        <item>Sound and Light</item>
+    </string-array>
+</resources>

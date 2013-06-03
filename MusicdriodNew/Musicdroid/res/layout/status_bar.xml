@@ -23,6 +23,15 @@
         android:paddingLeft="5dp	"
         android:background="@color/transparent"
         android:src="@drawable/play_button"  />
-  
+ 
+    <ImageView
+        android:id="@+id/metronom_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_play"
+        android:layout_centerVertical="true"
+        android:paddingLeft="5dp	"
+        android:background="@color/transparent"
+        android:src="@drawable/metronom_light_tick"  />
 </RelativeLayout>
 

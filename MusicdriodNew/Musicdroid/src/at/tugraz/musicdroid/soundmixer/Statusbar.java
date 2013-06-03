@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import at.tugraz.musicdroid.MainActivity;
@@ -14,6 +15,7 @@ import at.tugraz.musicdroid.animation.HighlightAnimation;
 public class Statusbar extends Observable implements OnTouchListener {
 	private ImageButton playButton;
 	private ImageButton rewindButton;
+	private ImageView metronomLightImageView;
 	protected Boolean displayPlayButton;
 	protected MainActivity mainActivity;
 
@@ -31,6 +33,9 @@ public class Statusbar extends Observable implements OnTouchListener {
 	   rewindButton.setOnTouchListener(this);
 	   rewindButton.setVisibility(View.INVISIBLE);
 	
+	   
+	   metronomLightImageView = (ImageView) mainActivity.findViewById(R.id.metronom_light);
+	   metronomLightImageView.setColorFilter(R.color.abs__background_holo_dark);
 	   //ADD UNDO AND REDO SUPPORT
     }
     

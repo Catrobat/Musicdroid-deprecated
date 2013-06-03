@@ -5,16 +5,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.dialog.MetronomQuickSettingsDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 
 public class SoundMixerMenuCallback implements ActionMode.Callback {
 		MainActivity parent = null;
 		private SoundLenghtDialog settingsDialog = null;
+		private MetronomQuickSettingsDialog metronomDialog = null;
 	
 		public SoundMixerMenuCallback(MainActivity p)
 		{
 			parent = p;
 			settingsDialog = new SoundLenghtDialog();
+			metronomDialog = new MetronomQuickSettingsDialog();
 		}
 	
         /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
@@ -26,7 +29,6 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         /** Called when user exits action mode */
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            SoundMixer.getInstance().enableUnselectedViews();
         }
 
         /** This is called when the action mode is created. This is called by startActionMode() */
@@ -42,7 +44,8 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch(item.getItemId()){
             case R.id.soundmixer_context_bpm:
-                mode.finish();    // Automatically exists the action mode, when the user selects this action
+            	metronomDialog.show(parent.getFragmentManager(), null);
+                mode.finish();    
                 break;
             case R.id.soundmixer_context_length:
             	settingsDialog.show(parent.getFragmentManager(), null);

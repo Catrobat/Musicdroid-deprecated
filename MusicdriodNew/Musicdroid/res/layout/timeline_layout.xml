@@ -28,11 +28,11 @@
     	 android:layout_below="@+id/timeline_top">
 	     
          <View 
-	     android:layout_width="2dp"
+	     android:layout_width="0dp"
 	     android:layout_height="fill_parent"
 	     android:layout_alignParentBottom="true"
     	 android:layout_alignParentLeft="true"
-	     android:background="@color/abs__holo_blue_light"
+	     android:background="@color/holo_blue_light"
 	     android:id="@+id/timeline_currentPosition"
          />
              

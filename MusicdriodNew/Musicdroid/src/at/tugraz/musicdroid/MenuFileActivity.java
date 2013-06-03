@@ -1,7 +1,10 @@
 package at.tugraz.musicdroid;
 
+import java.io.File;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -48,6 +51,17 @@ public class MenuFileActivity extends FragmentActivity {
 						});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
+	}
+	
+	//TODO ms do this in a seperate class
+	public void prepareFolderStructure()
+	{
+		new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "musicdroid").mkdir();
+		new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "musicdroid/soundtracks").mkdir();
+		new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "musicdroid/soundtracks/mic").mkdir();
+		new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "musicdroid/soundtracks/piano").mkdir();
+		
+		
 	}
     
 	private void createNewSoundMixer()

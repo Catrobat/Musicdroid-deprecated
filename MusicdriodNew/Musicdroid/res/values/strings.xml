@@ -24,6 +24,8 @@
   <string name="menu_preferences">Settings</string>
   <string name="dialog_add_sound_title">Add Sound</string>
   <string name="dialog_sound_track_menu">What do you want to do</string>
+  <string name="dialog_warning_file_overwritten_at_record">A file with this name already exists. It will be lost if you record a new sound. Continue anyways?</string>
+  <string name="dialog_change_filename_title">Enter a new Filename</string>
   
   <string name="timeline_menu_entry_start_point">Set Start</string>
   <string name="timeline_menu_entry_end_point">Set End</string>
@@ -33,18 +35,22 @@
   <string name="closing_security_question">Exit?\n\nYour song will be lost if it is not saved!</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_abort">Abort</string>
   
   <string name ="play_button_text">Play Song</string>
   <string name ="stop_button_text">Stop Song</string>
    
   <string name="settings_current_length_title">Maximal Song Length</string>
   <string name="settings_default_length_title">Default Song Length</string>
+  <string name="settings_metronom_quick_title">Metronom Settings</string>
   <string name="settings_sound_track_length_description">Set maximal duration of your Song</string>
   <string name="settings_button_apply">Apply</string>
   <string name="settings_button_discard">Discard</string>
   <string name="soundmixer_context_title">"Mixer Settings"</string>
   
   <string name="preferences_category_soundmixer_title">Sound Mixer Settings</string>
+  <string name="preferences_category_recorder_title">Recorder Settings</string>
   <string name="preferences_max_soundmixer_length_summary">Click so you can set the default length of the sound mixer </string>
   <string name="preferences_max_soundmixer_length_title">Default Sound Length</string>
   <string name="preferences_bpm_second_summary">Display Beats per Minute (BPM) in Timeline instead of Seconds?</string>
@@ -52,6 +58,11 @@
   <string name="preferences_category_sound_title">Song Settings</string>
   <string name="preferences_set_bpm_summary">Here you can set the default value for Beats Per Minute (bpm) </string>
   <string name="preferences_set_bpm_title">Default BPM</string>
+  <string name="preferences_playback_summary">Do you want to here all Sounds inside the SoundMixer while Recording? (Headphones recommended) </string>
+  <string name="preferences_playback">Play Playback</string>
+  <string name="preferences_add_at_current_position_summary">Do you want to add recorded Sounds at the SoundMixer\'s current position? </string>
+  <string name="preferences_add_at_current_position">Add to current position</string>
+  
   
   <string name="help_menu_new_recording">Click me if you want to record yourself</string>
   <string name="help_menu_new_piano">Click me if you want to play the piano and add it to your song</string>
@@ -64,4 +75,9 @@
   <string name="toast_empty_soundmixer">Sorry, no sounds to play.\nAdd your own sounds by clicking the top-right add-button</string>
   <string name="warning_invalid_marker_position">Sorry, EndPoint can not be put before StartPoint!</string>
   
+  <string name="recorder_toast_no_file_recorded">Sorry, no sound to play, have you recorded one?</string>
+  <string name="recorder_add_to_sound_mixer_text">Add Sound to SoundMixer</string>
+  <string name="recorder_playback">Playback while Recording</string>
+  <string name="recorder_context_title">Recorder Settings</string>
+  <string name="recorder_menu_entry_playback">Play Playback</string> 
 </resources>
