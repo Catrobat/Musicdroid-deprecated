@@ -39,7 +39,6 @@ public class SoundLenghtDialog extends DialogFragment {
                })
                .setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       // User cancelled the dialog
                    }
                });
         

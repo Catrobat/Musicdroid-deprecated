@@ -6,11 +6,17 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.dialog.MetronomQuickSettingsDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 
-public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener{
+public class SettingsFragment extends PreferenceFragment implements OnPreferenceClickListener, OnSharedPreferenceChangeListener{
 	private SoundLenghtDialog settingsDialog = null;
+	private MetronomQuickSettingsDialog metronomSettingsDialog = null;
+	private Preference metronomDialogPreference = null;
+	private Preference dialogPreference = null;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,22 +24,34 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
         addPreferencesFromResource(R.xml.preferences);
         
     	settingsDialog = new SoundLenghtDialog();
+    	metronomSettingsDialog = new MetronomQuickSettingsDialog();
         
-        Preference dialogPreference = (Preference) getPreferenceScreen().findPreference("preferences_max_soundmixer_length");
-        dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                	//TODO ms This is not the right dialog to call here!
-        			settingsDialog.show(getFragmentManager(), null);
-                    return true;
-                }
-            });
+    	dialogPreference = (Preference) getPreferenceScreen().findPreference("preferences_max_soundmixer_length");
+        dialogPreference.setOnPreferenceClickListener(this);
+        
+        metronomDialogPreference = (Preference) getPreferenceScreen().findPreference("preferences_bpm");
+        metronomDialogPreference.setOnPreferenceClickListener(this);
+
     }
     
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if(preference.getKey() == dialogPreference.getKey()) {
+	        settingsDialog.show(getFragmentManager(), null);
+            return true;
+        }
+		else if(preference.getKey() == metronomDialogPreference.getKey()) {
+           	metronomSettingsDialog.show(getFragmentManager(), null);
+            return true;
+        }
+		
+		return false;
+	}   
     
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("preferences_max_soundmixer_length")) {
-            //Show your AlertDialog here!
         }
     }
     
@@ -49,4 +67,5 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     	getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
     }
+
 }

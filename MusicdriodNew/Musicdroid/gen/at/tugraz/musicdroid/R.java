@@ -10,6 +10,7 @@ package at.tugraz.musicdroid;
 public final class R {
     public static final class array {
         public static final int metronom_states_array=0x7f0d0000;
+        public static final int metronom_states_array_values=0x7f0d0001;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1207,12 +1208,12 @@ containing a value of this type.
         public static final int dialog_warning_file_overwritten_at_record=0x7f0b0022;
         public static final int dialog_warning_new_song=0x7f0b0026;
         public static final int hello_world=0x7f0b000f;
-        public static final int help_menu_new_drums=0x7f0b0045;
-        public static final int help_menu_new_piano=0x7f0b0044;
-        public static final int help_menu_new_recording=0x7f0b0043;
-        public static final int help_sound_track_menu_entry_copy=0x7f0b0048;
-        public static final int help_sound_track_menu_entry_delete=0x7f0b0046;
-        public static final int help_sound_track_menu_entry_edit=0x7f0b0047;
+        public static final int help_menu_new_drums=0x7f0b0049;
+        public static final int help_menu_new_piano=0x7f0b0048;
+        public static final int help_menu_new_recording=0x7f0b0047;
+        public static final int help_sound_track_menu_entry_copy=0x7f0b004c;
+        public static final int help_sound_track_menu_entry_delete=0x7f0b004a;
+        public static final int help_sound_track_menu_entry_edit=0x7f0b004b;
         public static final int menu_about=0x7f0b001d;
         public static final int menu_hide_menu=0x7f0b001c;
         public static final int menu_item_add=0x7f0b0013;
@@ -1230,20 +1231,24 @@ containing a value of this type.
         public static final int preferences_add_at_current_position_summary=0x7f0b0041;
         public static final int preferences_bpm_second_summary=0x7f0b003a;
         public static final int preferences_bpm_second_title=0x7f0b003b;
+        public static final int preferences_bpm_summary=0x7f0b0046;
+        public static final int preferences_bpm_title=0x7f0b0045;
         public static final int preferences_category_recorder_title=0x7f0b0037;
         public static final int preferences_category_sound_title=0x7f0b003c;
         public static final int preferences_category_soundmixer_title=0x7f0b0036;
+        public static final int preferences_display_bpm_summary=0x7f0b0044;
+        public static final int preferences_display_bpm_title=0x7f0b0043;
         public static final int preferences_max_soundmixer_length_summary=0x7f0b0038;
         public static final int preferences_max_soundmixer_length_title=0x7f0b0039;
         public static final int preferences_playback=0x7f0b0040;
         public static final int preferences_playback_summary=0x7f0b003f;
         public static final int preferences_set_bpm_summary=0x7f0b003d;
         public static final int preferences_set_bpm_title=0x7f0b003e;
-        public static final int recorder_add_to_sound_mixer_text=0x7f0b004c;
-        public static final int recorder_context_title=0x7f0b004e;
-        public static final int recorder_menu_entry_playback=0x7f0b004f;
-        public static final int recorder_playback=0x7f0b004d;
-        public static final int recorder_toast_no_file_recorded=0x7f0b004b;
+        public static final int recorder_add_to_sound_mixer_text=0x7f0b0050;
+        public static final int recorder_context_title=0x7f0b0052;
+        public static final int recorder_menu_entry_playback=0x7f0b0053;
+        public static final int recorder_playback=0x7f0b0051;
+        public static final int recorder_toast_no_file_recorded=0x7f0b004f;
         public static final int save_suggestion=0x7f0b0027;
         public static final int settings_button_apply=0x7f0b0033;
         public static final int settings_button_discard=0x7f0b0034;
@@ -1260,8 +1265,8 @@ containing a value of this type.
         public static final int stop_button_text=0x7f0b002e;
         public static final int timeline_menu_entry_end_point=0x7f0b0025;
         public static final int timeline_menu_entry_start_point=0x7f0b0024;
-        public static final int toast_empty_soundmixer=0x7f0b0049;
-        public static final int warning_invalid_marker_position=0x7f0b004a;
+        public static final int toast_empty_soundmixer=0x7f0b004d;
+        public static final int warning_invalid_marker_position=0x7f0b004e;
         public static final int yes=0x7f0b0029;
     }
     public static final class style {

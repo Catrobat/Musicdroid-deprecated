@@ -16,6 +16,7 @@ import android.widget.TextView;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class Timeline extends RelativeLayout {
@@ -36,7 +37,7 @@ public class Timeline extends RelativeLayout {
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 	private TimelineOnTouchListener onTouchListener = null;
 
-	public Timeline(Context context, int defaultLength) {
+	public Timeline(Context context) {
 		super(context);
 		this.context = context;
 		helper = Helper.getInstance();
@@ -45,7 +46,7 @@ public class Timeline extends RelativeLayout {
         LayoutInflater inflater = LayoutInflater.from(this.context);
         inflater.inflate(R.layout.timeline_layout, this);
 		
-		initTimeline(defaultLength);
+		initTimeline();
 		onTouchListener = new TimelineOnTouchListener(this);
 		this.setOnTouchListener(onTouchListener);
 	}
@@ -54,8 +55,8 @@ public class Timeline extends RelativeLayout {
 		super(context, attrs);
 		this.context = context;
 	}
-	
-	private void initTimeline(int defaultLength)
+
+	private void initTimeline()
 	{
 		height = helper.getScreenHeight()/18;
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(helper.getScreenWidth(), height*2);
@@ -75,14 +76,14 @@ public class Timeline extends RelativeLayout {
 				
 		startTimeTextView.setText("00:00");
 
-		addPositionMarker(defaultLength);
+		addPositionMarker();
 	}
 
 
 	public void resizeTimeline(int newLength)
 	{
 		int oldLength = getWidth()/SoundMixer.getInstance().getPixelPerSecond();
-		int defaultLength = SoundMixer.getInstance().DEFAULT_LENGTH;
+		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
 		
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
@@ -172,8 +173,9 @@ public class Timeline extends RelativeLayout {
 	}
 
 
-	private void addPositionMarker(int defaultLength)
+	private void addPositionMarker()
 	{	
+		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
 		for(int second = 0; second <= defaultLength; second++)
 		{
 			timelineBottom.addView(newPositionMarker(second));

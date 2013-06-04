@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="metronom_states_array">
-        <item>Off</item>
-        <item>Light</item>
-        <item>Sound and Light</item>
+        <item name = "off">Off</item>
+        <item name = "light">Light</item>
+        <item name = "both">Sound and Light</item>
+    </string-array>
+    
+    <string-array name="metronom_states_array_values">
+	    <item name = "off">0</item>
+	    <item name = "light">1</item>
+	    <item name = "both">2</item>
     </string-array>
 </resources>

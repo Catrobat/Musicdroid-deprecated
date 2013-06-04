@@ -62,6 +62,10 @@
   <string name="preferences_playback">Play Playback</string>
   <string name="preferences_add_at_current_position_summary">Do you want to add recorded Sounds at the SoundMixer\'s current position? </string>
   <string name="preferences_add_at_current_position">Add to current position</string>
+  <string name="preferences_display_bpm_title">Metronom Display Settings</string>
+  <string name="preferences_display_bpm_summary">Switch it on/off, blinking Light, clicking Sound or both</string>
+  <string name="preferences_bpm_title">Metronom Settings</string>
+  <string name="preferences_bpm_summary">Set Beats per Minute. Switch it on/off, blinking Light, clicking Sound or both</string>
   
   
   <string name="help_menu_new_recording">Click me if you want to record yourself</string>

@@ -2,20 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory 
         android:title="@string/preferences_category_soundmixer_title">
-        <CheckBoxPreference
-            android:summary="Do you want your sound tracks to be moveable? (does nothing at the moment )"
-            android:title="Sound Track moveable"
-            android:defaultValue="true"
-            android:key="preferences_moveable"/>
-        <CheckBoxPreference
-            android:summary="@string/preferences_bpm_second_summary"
-            android:title="@string/preferences_bpm_second_title"
-            android:defaultValue="false"
-            android:key="preferences_bpm_second"/>
         <Preference
             android:summary="@string/preferences_max_soundmixer_length_summary"
             android:title="@string/preferences_max_soundmixer_length_title"
             android:key="preferences_max_soundmixer_length" />
+        <Preference
+            android:summary="@string/preferences_bpm_summary"
+            android:title="@string/preferences_bpm_title"
+            android:key="preferences_bpm" />
     </PreferenceCategory>
     
     <PreferenceCategory 

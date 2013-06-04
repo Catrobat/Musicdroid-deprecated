@@ -33,6 +33,8 @@
     <Spinner
         android:id="@+id/states_spinner"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:entries="@array/metronom_states_array"
+        android:entryValues="@array/metronom_states_array_values" />
     
 </RelativeLayout>

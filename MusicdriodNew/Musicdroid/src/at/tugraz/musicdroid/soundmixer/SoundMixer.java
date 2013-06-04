@@ -2,6 +2,7 @@ package at.tugraz.musicdroid.soundmixer;
 
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineEventHandler;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineMenuCallback;
@@ -19,12 +21,12 @@ import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 
 public class SoundMixer implements HorizontalScrollViewListener{
 	public static SoundMixer instance = null;
-	public static final int DEFAULT_LENGTH = 45;
 	protected ObservableHorizontalScrollView horScrollView;
 	protected RelativeLayout parentLayout;
 	protected MainActivity parent;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
 	protected int viewId;
+	private int defaultLength;
 	private int longestSoundTrack;
 	private int soundMixerLength;
 	private int callingId;
@@ -42,18 +44,20 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	 
 	public void initSoundMixer(MainActivity activity, ObservableHorizontalScrollView scrollView)
 	{
+        defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
 		parent = activity;
 		horScrollView = scrollView;
 		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative); 
 		eventHandler = new SoundMixerEventHandler(this);
-		timeline = new Timeline(parent, DEFAULT_LENGTH);
+		timeline = new Timeline(parent);
 		
 		TimelineEventHandler.getInstance().init(timeline);
 		
         activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity, timeline));
         
-		soundMixerLength = longestSoundTrack = DEFAULT_LENGTH;
-		pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
+        Log.i("SoundMixer", "DefaultLength " + defaultLength);
+		soundMixerLength = longestSoundTrack = defaultLength;
+		pixelPerSecond = Helper.getInstance().getScreenWidth()/defaultLength;
 		
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
         timeline.setId(getNewViewID());
@@ -237,7 +241,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 		
 		timeline.resetTimeline();
 		
-		longestSoundTrack = soundMixerLength = DEFAULT_LENGTH;
+		longestSoundTrack = soundMixerLength = defaultLength;
 		tracks.clear();
 	}
 	
@@ -257,7 +261,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			timeline.resizeTimeline(newLength);
 			//timeline.updateTrackEndText(newLength);
 		}
-		else if(newLength < soundMixerLength && newLength >= DEFAULT_LENGTH)
+		else if(newLength < soundMixerLength && newLength >= defaultLength)
 		{
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
@@ -325,7 +329,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public int getPixelPerSecond()
 	{
 		if(pixelPerSecond == 0)
-			pixelPerSecond = Helper.getInstance().getScreenWidth()/DEFAULT_LENGTH;
+			pixelPerSecond = Helper.getInstance().getScreenWidth()/defaultLength;
 		return pixelPerSecond;
 	}
 	

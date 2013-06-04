@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineEventHandler;
 
 public class SoundMixerEventHandler extends Observable {
@@ -23,9 +24,9 @@ public class SoundMixerEventHandler extends Observable {
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
-		setEndPoint(mixer.DEFAULT_LENGTH);
+		setEndPoint(PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY));
 		screenWidth = Helper.getInstance().getScreenWidth();
-		secondInPixel = screenWidth/mixer.DEFAULT_LENGTH;
+		secondInPixel = screenWidth/PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
 	}
 	
 	public void play()
