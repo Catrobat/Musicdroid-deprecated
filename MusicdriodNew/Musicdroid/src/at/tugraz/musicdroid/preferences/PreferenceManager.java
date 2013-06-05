@@ -5,11 +5,13 @@ import java.util.HashMap;
 import android.util.Log;
 
 public class PreferenceManager {
+	public static final int SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE = 45;
+	public static final String SOUNDTRACK_DEFAULT_LENGTH_KEY = "soundtrack_length_default";
 	public static final int SOUNDTRACK_LENGTH_DEFAULT_VALUE = 45;
-	public static final String SOUNDTRACK_LENGTH_DEFAULT_KEY = "soundtrack_length_default";
-	public static final int METRONOM_VISUALIZATION_DEFAULT_VALUE = 0;
+	public static final String SOUNDTRACK_LENGTH_KEY = "soundtrack_length";
+	public static final int METRONOM_VISUALIZATION_DEFAULT_VALUE = 2;
 	public static final String METRONOM_VISUALIZATION_KEY = "metronom_visualization";
-	public static final int METRONOM_BPM_DEFAULT_VALUE = 72;
+	public static final int METRONOM_BPM_DEFAULT_VALUE = 172;
 	public static final String METRONOM_BPM_KEY = "metronom_bpm";
 	public static final int PLAY_PLAYBACK_DEFAULT_VALUE = 1;
 	public static final String PLAY_PLAYBACK_KEY = "play_playback";	
@@ -40,11 +42,12 @@ public class PreferenceManager {
 	
 	private void initializeDefaultPreferences()
 	{
-		preferences.put(SOUNDTRACK_LENGTH_DEFAULT_KEY, 45);
-		preferences.put(METRONOM_VISUALIZATION_KEY, 0);
-		preferences.put(METRONOM_BPM_KEY, 72);
-		preferences.put(PLAY_PLAYBACK_KEY, 1);
-		preferences.put(ADD_AT_CURRENT_POSITION_KEY, 0);
+		preferences.put(SOUNDTRACK_LENGTH_KEY, SOUNDTRACK_LENGTH_DEFAULT_VALUE);
+		preferences.put(SOUNDTRACK_DEFAULT_LENGTH_KEY, SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE);
+		preferences.put(METRONOM_VISUALIZATION_KEY, METRONOM_VISUALIZATION_DEFAULT_VALUE);
+		preferences.put(METRONOM_BPM_KEY, METRONOM_BPM_DEFAULT_VALUE);
+		preferences.put(PLAY_PLAYBACK_KEY, PLAY_PLAYBACK_DEFAULT_VALUE);
+		preferences.put(ADD_AT_CURRENT_POSITION_KEY, ADD_AT_CURRENT_POSITION_DEFAULT_VALUE);
 	}
 	
 	public void setPreference(String key, int value)

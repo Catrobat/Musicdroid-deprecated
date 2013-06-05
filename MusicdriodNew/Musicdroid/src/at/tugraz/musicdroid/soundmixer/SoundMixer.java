@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.metronom.Metronom;
 import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundmixer.timeline.TimelineEventHandler;
@@ -34,6 +36,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
 	private Timeline timeline = null;
+	private Metronom metronom = null;
 	
 	public static SoundMixer getInstance() {
         if (instance == null) {
@@ -44,7 +47,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	 
 	public void initSoundMixer(MainActivity activity, ObservableHorizontalScrollView scrollView)
 	{
-        defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
+        defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		parent = activity;
 		horScrollView = scrollView;
 		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative); 
@@ -63,6 +66,8 @@ public class SoundMixer implements HorizontalScrollViewListener{
         timeline.setId(getNewViewID());
         parentLayout.addView(timeline, lp);
         horScrollView.setScrollViewListener(this); 
+        
+        metronom = new Metronom(activity, (ImageView) activity.findViewById(R.id.metronom_light));
 	}
 	
 	@Override
@@ -99,12 +104,13 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	}
 	
 	public boolean playAllSoundsInSoundmixer()
-	{
+	{		
 		if(tracks.size() == 0)
 		{
 			return false;
 		}
 		
+		metronom.startMetronome();
 		eventHandler.play();
 		return true;
 	}
@@ -112,6 +118,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public void stopAllSoundsInSoundmixer()
 	{
 		eventHandler.stopNotifyThread();
+		metronom.stopMetronome();
 		SoundManager.stopAllSounds(); 
 	}
 	

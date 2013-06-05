@@ -24,9 +24,9 @@ public class SoundMixerEventHandler extends Observable {
 	public SoundMixerEventHandler(SoundMixer m)
 	{
 		mixer = m;
-		setEndPoint(PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY));
+		setEndPoint(PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
 		screenWidth = Helper.getInstance().getScreenWidth();
-		secondInPixel = screenWidth/PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
+		secondInPixel = screenWidth/PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 	}
 	
 	public void play()

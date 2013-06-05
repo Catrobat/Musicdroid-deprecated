@@ -1,6 +1,7 @@
 package at.tugraz.musicdroid.soundmixer;
 
 import android.database.Observable;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -19,6 +20,8 @@ public class Statusbar extends Observable implements OnTouchListener {
 	protected Boolean displayPlayButton;
 	protected MainActivity mainActivity;
 
+	
+	
     public Statusbar(MainActivity mainActivity) {
 	   this.mainActivity = mainActivity;
 	   displayPlayButton = true;
@@ -64,6 +67,7 @@ public class Statusbar extends Observable implements OnTouchListener {
 				playButton.setImageResource(R.drawable.play_button);
 				Toast.makeText(mainActivity.getApplicationContext(), R.string.toast_empty_soundmixer, Toast.LENGTH_LONG).show();
 				HighlightAnimation.getInstance().highlightViewAnimation(mainActivity.findViewById(R.id.btn_add));
+				displayPlayButton = true;
 			}
 		  }
 		  else {
@@ -85,6 +89,11 @@ public class Statusbar extends Observable implements OnTouchListener {
 
 	public Boolean getDisplayPlayButton() {
 		return displayPlayButton;
+	}
+	
+	public void animateMetronomLight(AnimationDrawable animation)
+	{
+		
 	}
 
 }

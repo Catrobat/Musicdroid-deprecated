@@ -83,7 +83,7 @@ public class Timeline extends RelativeLayout {
 	public void resizeTimeline(int newLength)
 	{
 		int oldLength = getWidth()/SoundMixer.getInstance().getPixelPerSecond();
-		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
+		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
@@ -175,7 +175,7 @@ public class Timeline extends RelativeLayout {
 
 	private void addPositionMarker()
 	{	
-		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_LENGTH_DEFAULT_KEY);
+		int defaultLength = PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		for(int second = 0; second <= defaultLength; second++)
 		{
 			timelineBottom.addView(newPositionMarker(second));

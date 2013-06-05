@@ -83,5 +83,6 @@
   <string name="recorder_add_to_sound_mixer_text">Add Sound to SoundMixer</string>
   <string name="recorder_playback">Playback while Recording</string>
   <string name="recorder_context_title">Recorder Settings</string>
-  <string name="recorder_menu_entry_playback">Play Playback</string> 
+  <string name="recorder_menu_entry_playback">Play Playback</string>
+  <string name="recorder_menu_entry_metronom">Play Metronom</string>  
 </resources>

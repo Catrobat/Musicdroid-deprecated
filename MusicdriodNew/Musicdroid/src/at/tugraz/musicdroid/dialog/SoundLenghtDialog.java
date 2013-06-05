@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 
@@ -34,6 +35,7 @@ public class SoundLenghtDialog extends DialogFragment {
                 	   int minutes = pickerMin.getValue();
                 	   int seconds = pickerSec.getValue();
                 	   
+                	   //PreferenceManager.getInstance().setPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY, minutes*60+seconds);
                 	   SoundMixer.getInstance().setSoundTrackLengthAndResizeTracks(minutes, seconds);
                    }
                })

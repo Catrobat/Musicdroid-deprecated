@@ -6,4 +6,11 @@
         android:icon="@drawable/checkbox_unchecked"
         android:showAsAction="ifRoom|withText"  
     />
+    
+    <item
+        android:id="@+id/recorder_context_metronom"
+        android:title="@string/recorder_menu_entry_metronom"
+        android:icon="@drawable/checkbox_unchecked"
+        android:showAsAction="ifRoom|withText"  
+    />
 </menu>

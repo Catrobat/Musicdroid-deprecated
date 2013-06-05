@@ -39,7 +39,6 @@ public class MainActivity extends MenuFileActivity {
         super.onCreate(savedInstanceState);
         super.prepareFolderStructure();
 
-        
         AddSoundDialog.init(this);
     			
     	Helper helper = Helper.getInstance();
@@ -47,10 +46,10 @@ public class MainActivity extends MenuFileActivity {
     	
         setContentView(R.layout.activity_main);
         
-        SoundMixer.getInstance().initSoundMixer(this, (ObservableHorizontalScrollView)findViewById(R.id.sound_mixer_view));
-        
         initTopStatusBar();
         statusbar = new Statusbar(this);
+
+        SoundMixer.getInstance().initSoundMixer(this, (ObservableHorizontalScrollView)findViewById(R.id.sound_mixer_view));
         
         //TESTING 
 	    SoundManager.getInstance();
