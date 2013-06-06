@@ -43,10 +43,9 @@ public class SoundMixerEventHandler extends Observable {
 		                    Thread.sleep(1000);
 		        			setChanged();
 		        			notifyObservers(time);
-		        			if(shouldContinue && time < endPoint) sendTrackPositionMessage(time - setStartTime() +1);
 		        			time = time + 1;
+		        			if(shouldContinue && time < endPoint) sendTrackPositionMessage(time);
 		                } catch (Exception e) {
-		                    // TODO: handle exception
 		                }
 		            }
 		            Log.i("TIME: " + time, "EndPoint: " + endPoint);
@@ -101,6 +100,10 @@ public class SoundMixerEventHandler extends Observable {
 
 	public int getStartPoint() {
 		return startPoint;
+	}
+	
+	public int getStopPoint() {
+		return stopPoint;
 	}
 
 	public boolean setStartPoint(int startPoint) {

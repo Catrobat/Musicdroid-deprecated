@@ -31,11 +31,10 @@ public class TimelineEventHandler extends Handler {
 		{
 			trackPositionView = timeline.getTrackPositionView();
 			int key = b.getInt("position");
-			Log.i("RecorderLayout", "MessageDuration = " + key);
+			Log.i("TimelineEventHandler", "MessageDuration = " + key + "  Width = " +key * SoundMixer.getInstance().getPixelPerSecond());
 			LayoutParams params = (LayoutParams) trackPositionView.getLayoutParams();
 			params.width = key * SoundMixer.getInstance().getPixelPerSecond();
 			trackPositionView.setLayoutParams(params);
 		}
-
 	}
 }

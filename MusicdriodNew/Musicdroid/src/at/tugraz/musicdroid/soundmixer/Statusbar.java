@@ -3,7 +3,6 @@ package at.tugraz.musicdroid.soundmixer;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Observable;
-import android.graphics.drawable.AnimationDrawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
-import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.animation.HighlightAnimation;
 

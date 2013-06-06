@@ -76,7 +76,6 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		}
 		if(v.getId() == R.id.microphone_play_button)
 		{
-			Log.i("PLAY BUTTON", "PRESSED");
 			handleOnPlayClick();
 		}
 		if(v.getId() == R.id.microphone_add_to_sound_mixer_box)
@@ -101,13 +100,11 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		if(b.containsKey("duration"))
 		{
 			int key = b.getInt("duration");
-			Log.i("RecorderLayout", "MessageDuration = " + key);
 			recordDurationTextView.setText(Helper.getInstance().durationStringFromInt(key));	
 		}
 		else if(b.containsKey("trackposition"))
 		{
 			int position = b.getInt("trackposition");
-			Log.i("RecorderLayout", "Message = Trackposition, Position = " + position + " PPS = " + pixelPerSecond);
 			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
 			params.width = pixelPerSecond*position;
 			progressBarView.setLayoutParams(params);

@@ -110,7 +110,8 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			return false;
 		}
 		
-		startMetronom();
+		if(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+			startMetronom();
 		eventHandler.play();
 		return true;
 	}
@@ -118,7 +119,8 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public void stopAllSoundsInSoundmixer()
 	{
 		eventHandler.stopNotifyThread();
-		stopMetronom();
+		if(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+			stopMetronom();
 		SoundManager.stopAllSounds(); 
 	}
 	
@@ -276,7 +278,6 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
-			//timeline.updateTrackEndText(newLength);
 		}
 		else if(newLength < soundMixerLength && newLength >= defaultLength)
 		{
@@ -353,6 +354,11 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public SoundMixerEventHandler getEventHandler()
 	{
 		return eventHandler;
+	}
+	
+	public int getStopPointFromEventHandler()
+	{
+		return eventHandler.getStopPoint();
 	}
 
 }
