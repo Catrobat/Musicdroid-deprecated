@@ -55,10 +55,16 @@ public class Player {
 		
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 		    public void onCompletion(MediaPlayer mp) {
-		        stop = true;
-		        layout.handlePlaySoundComplete();
+		    	stopPlaying();
 		    }
 		});
+	}
+	
+	public void stopPlaying()
+	{
+		stop = true;
+		mediaPlayer.stop();
+		layout.handlePlaySoundComplete();
 	}
 	
 	

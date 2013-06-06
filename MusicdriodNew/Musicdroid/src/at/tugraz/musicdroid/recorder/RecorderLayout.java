@@ -149,12 +149,13 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		if(!isPlaying)
 		{				
 			isPlaying = true;
-			AudioHandler.getInstance().playRecording();
+			AudioHandler.getInstance().playRecordedFile();
 			playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
 		}
 		else if(isPlaying)
 		{
 			isPlaying = false;
+			AudioHandler.getInstance().stopRecordedFile();
 			playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
 		}		
 	}

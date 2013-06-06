@@ -67,7 +67,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
         parentLayout.addView(timeline, lp);
         horScrollView.setScrollViewListener(this); 
         
-        metronom = new Metronom(activity, (ImageView) activity.findViewById(R.id.metronom_light));
+        metronom = new Metronom(activity);
 	}
 	
 	@Override
@@ -110,7 +110,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 			return false;
 		}
 		
-		metronom.startMetronome();
+		startMetronom();
 		eventHandler.play();
 		return true;
 	}
@@ -118,7 +118,7 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public void stopAllSoundsInSoundmixer()
 	{
 		eventHandler.stopNotifyThread();
-		metronom.stopMetronome();
+		stopMetronom();
 		SoundManager.stopAllSounds(); 
 	}
 	
@@ -138,6 +138,16 @@ public class SoundMixer implements HorizontalScrollViewListener{
 	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration)
 	{
 		timeline.updateTimelineOnMove(id, pix_pos, sec_pos, duration);
+	}
+	
+	public void startMetronom()
+	{
+		metronom.startMetronome();
+	}
+	
+	public void stopMetronom()
+	{
+		metronom.stopMetronome();
 	}
 	
 	public void deleteCallingTrack()

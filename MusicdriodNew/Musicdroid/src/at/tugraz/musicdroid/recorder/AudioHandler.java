@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.util.Log;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class AudioHandler {
@@ -21,8 +22,6 @@ public class AudioHandler {
 	private Recorder recorder = null;
 	private Player player = null;
 	private AudioVisualizer visualizer = null;
-	private boolean playPlayback = false; 
-	//private Player = null;
 	
 	private AudioHandler()
 	{
@@ -51,6 +50,7 @@ public class AudioHandler {
 	
 	public boolean startRecording()
 	{
+		Log.i("AudioHandler", "StartRecording");
 		File check = new File(path+'/'+filename);
 		if(check.exists())
 		{
@@ -58,23 +58,30 @@ public class AudioHandler {
 		}
 		else
 		{
-			if(playPlayback)
-				SoundMixer.getInstance().playAllSoundsInSoundmixer();
+			checkAndStartPlaybackAndMetronom();
 			recorder.record();
 		}
 		return true;
 	}
+
 	
 	public void stopRecording()
 	{
 		recorder.stopRecording();
-		if(playPlayback)
+		if(PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
 			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
+		else if(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+			SoundMixer.getInstance().stopMetronom();
 	}
 	
-	public void playRecording()
+	public void playRecordedFile()
 	{
 		player.playRecordedFile();
+	}
+	
+	public void stopRecordedFile()
+	{
+		player.stopPlaying();		
 	}
 	
 	private void showDialog()
@@ -95,13 +102,27 @@ public class AudioHandler {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
+								checkAndStartPlaybackAndMetronom();
 								recorder.record();
-								if(playPlayback)
-									SoundMixer.getInstance().playAllSoundsInSoundmixer();
 							}
 						});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
+	}
+	
+	
+	private void checkAndStartPlaybackAndMetronom()
+	{
+		int metronom = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY); 
+		if(PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		{
+			if(!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
+				SoundMixer.getInstance().startMetronom();
+		}
+		else if(metronom > 0)
+		{
+			SoundMixer.getInstance().startMetronom();
+		}
 	}
 	
 	public void setFilename(String f)
@@ -123,17 +144,6 @@ public class AudioHandler {
 	public void setContext(Context context)
 	{
 		this.context = context;
-	}
-	
-	public void setPlayPlayback(boolean play)
-	{
-		Log.i("AudioHandler", "Playplayback " + play);
-		playPlayback = play;
-	}
-	
-	public boolean getPlayPlayback()
-	{
-		return playPlayback;
 	}
 	
 	public String getPath()

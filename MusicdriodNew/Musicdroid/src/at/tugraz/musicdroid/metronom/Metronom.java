@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import at.tugraz.musicdroid.animation.MetronomAnimation;
 import at.tugraz.musicdroid.preferences.PreferenceManager;
+import at.tugraz.musicdroid.soundmixer.Statusbar;
 
 
 public class Metronom {
@@ -26,14 +27,14 @@ public class Metronom {
 	private final int tickLengthInSamples = 1000; //
 	private AudioGenerator audioGenerator = new AudioGenerator(8000);
 	
-	public Metronom(Context c, ImageView v)
+	public Metronom(Context c)
 	{
 		context = c;
-		metronomView = v;
 	}
 	
 	private void initializeValues()
 	{
+		metronomView = Statusbar.getInstance().getMetronomLight();
 	    beatsPerMinute = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
 	    metronomState = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
 		audioGenerator.createPlayer();
@@ -46,6 +47,7 @@ public class Metronom {
 		
 	
 	public void startMetronome() {
+		Log.i("Metronom", "START");
 		initializeValues();
 		play = true;
 		if(metronomState == METRONOM_OFF)

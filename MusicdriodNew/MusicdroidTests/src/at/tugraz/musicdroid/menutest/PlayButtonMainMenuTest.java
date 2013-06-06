@@ -4,6 +4,7 @@ import com.jayway.android.robotium.solo.Solo;
 
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.soundmixer.Statusbar;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -28,10 +29,10 @@ public class PlayButtonMainMenuTest extends ActivityInstrumentationTestCase2<Mai
 	{
 		solo.clickOnView((ImageButton) getActivity().findViewById(R.id.btn_play));
 		solo.sleep(1000);
-		assertFalse(((MainActivity)getActivity()).getStatusbar().getDisplayPlayButton());
+		assertFalse(Statusbar.getInstance().getDisplayPlayButton());
 		solo.clickOnView((ImageButton) getActivity().findViewById(R.id.btn_play));
 		solo.sleep(1000);
-		assertTrue(((MainActivity)getActivity()).getStatusbar().getDisplayPlayButton());
+		assertTrue(Statusbar.getInstance().getDisplayPlayButton());
 	}
 	
 	

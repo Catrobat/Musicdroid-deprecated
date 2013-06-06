@@ -32,6 +32,6 @@
         android:layout_centerVertical="true"
         android:paddingLeft="5dp	"
         android:background="@color/transparent"
-        android:src="@drawable/metronom_light_tick"  />
+        android:src="@drawable/metronom_light"  />
 </RelativeLayout>
 

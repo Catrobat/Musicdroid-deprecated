@@ -28,12 +28,8 @@ public class MainActivity extends MenuFileActivity {
 	protected SoundMixer mixer;
 	protected SoundLenghtDialog settingsDialog = null;
     private TimelineMenuCallback callbackTimelineMenu;
-	
-    public Statusbar getStatusbar() {
-		return statusbar;
-	}
     
- 
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +43,7 @@ public class MainActivity extends MenuFileActivity {
         setContentView(R.layout.activity_main);
         
         initTopStatusBar();
-        statusbar = new Statusbar(this);
+        Statusbar.getInstance().initStatusbar(this);
 
         SoundMixer.getInstance().initSoundMixer(this, (ObservableHorizontalScrollView)findViewById(R.id.sound_mixer_view));
         
@@ -99,6 +95,12 @@ public class MainActivity extends MenuFileActivity {
     public void onBackPressed() {
 		showSecurityQuestionBeforeExit();
     }
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Statusbar.getInstance().initStatusbar(this);
+	} 
 	
 	
 	@Override

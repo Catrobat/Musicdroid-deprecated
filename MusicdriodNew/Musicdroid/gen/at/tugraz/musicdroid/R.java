@@ -1072,8 +1072,8 @@ containing a value of this type.
         public static final int numberpicker_sec=0x7f06004e;
         public static final int play_button=0x7f060053;
         public static final int recorder_activity_layout=0x7f060034;
-        public static final int recorder_context_metronom=0x7f06006c;
-        public static final int recorder_context_playback=0x7f06006b;
+        public static final int recorder_context_bpm=0x7f06006b;
+        public static final int recorder_context_playback=0x7f06006c;
         public static final int seekbar_bpm=0x7f06004a;
         public static final int settings_menu_layout=0x7f060044;
         public static final int settings_sound_track_length_descriptor=0x7f06004b;

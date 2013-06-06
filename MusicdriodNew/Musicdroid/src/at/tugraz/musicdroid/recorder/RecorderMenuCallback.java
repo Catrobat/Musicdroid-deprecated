@@ -5,16 +5,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.RecorderActivity;
+import at.tugraz.musicdroid.dialog.MetronomQuickSettingsDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
+import at.tugraz.musicdroid.preferences.PreferenceManager;
 
 public class RecorderMenuCallback implements ActionMode.Callback {
 		RecorderActivity parent = null;
-		private SoundLenghtDialog settingsDialog = null;
+		private MetronomQuickSettingsDialog metronomDialog = null;
 	
 		public RecorderMenuCallback(RecorderActivity p)
 		{
 			parent = p;
-			settingsDialog = new SoundLenghtDialog();
+			metronomDialog = new MetronomQuickSettingsDialog();
 		}
 	
         /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
@@ -26,11 +28,11 @@ public class RecorderMenuCallback implements ActionMode.Callback {
         /** Called when user exits action mode */
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-        	MenuItem item = mode.getMenu().getItem(0);
+        	MenuItem item = mode.getMenu().getItem(1);
         	if(item.getIcon().getConstantState() == parent.getResources().getDrawable(R.drawable.checkbox_unchecked).getConstantState())
-        	  AudioHandler.getInstance().setPlayPlayback(false);
+        	  PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 0);
         	else
-        	  AudioHandler.getInstance().setPlayPlayback(true);
+        		PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 1);
         }
 
         /** This is called when the action mode is created. This is called by startActionMode() */
@@ -39,8 +41,8 @@ public class RecorderMenuCallback implements ActionMode.Callback {
             parent.getMenuInflater().inflate(R.menu.recorder_callback_menu, menu);
             mode.setTitle(R.string.recorder_context_title);
 
-            MenuItem item = mode.getMenu().getItem(0);
-        	if(AudioHandler.getInstance().getPlayPlayback())
+            MenuItem item = mode.getMenu().getItem(1);
+        	if(PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
         		item.setIcon(R.drawable.checkbox_checked);
         	else
         		item.setIcon(R.drawable.checkbox_unchecked);
@@ -58,6 +60,9 @@ public class RecorderMenuCallback implements ActionMode.Callback {
             	else
             	  item.setIcon(R.drawable.checkbox_unchecked);
                 break;
+            case R.id.recorder_context_bpm:
+            	metronomDialog.show(parent.getFragmentManager(), null);
+                mode.finish();   
             }
             return false;
         }
