@@ -1147,12 +1147,13 @@ containing a value of this type.
         public static final int timeline_layout=0x7f030021;
     }
     public static final class menu {
-        public static final int main_menu=0x7f0e0000;
-        public static final int recorder_callback_menu=0x7f0e0001;
-        public static final int recorder_menu=0x7f0e0002;
-        public static final int sound_mixer_menu=0x7f0e0003;
-        public static final int sound_track_dialog_menu=0x7f0e0004;
-        public static final int timeline_menu=0x7f0e0005;
+        public static final int drums_menu=0x7f0e0000;
+        public static final int main_menu=0x7f0e0001;
+        public static final int recorder_callback_menu=0x7f0e0002;
+        public static final int recorder_menu=0x7f0e0003;
+        public static final int sound_mixer_menu=0x7f0e0004;
+        public static final int sound_track_dialog_menu=0x7f0e0005;
+        public static final int timeline_menu=0x7f0e0006;
     }
     public static final class raw {
         public static final int test_midi=0x7f050000;
