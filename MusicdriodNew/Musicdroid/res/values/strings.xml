@@ -33,6 +33,7 @@
   <string name="dialog_warning_new_song">Your song will be lost!\nContinue anyways?</string>
   <string name="save_suggestion">If you want to save your song click Menu and Save Song</string>
   <string name="closing_security_question">Exit?\n\nYour song will be lost if it is not saved!</string>
+  <string name="on_recorder_back_pressed_security_question">Return to SoundMixer?\n\nYour recorded song will be lost!</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="dialog_continue">Continue</string>

@@ -30,6 +30,7 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 	private RelativeLayout addToSoundMixerBoxRelativeLayout = null;
 	private boolean isRecording = false;
 	private boolean isPlaying = false;
+	private boolean soundRecorded = false;
 	private int trackDuration = 0;
 	private int pixelPerSecond = 0;
 	
@@ -135,7 +136,7 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 			AudioHandler.getInstance().stopRecording();
 		    recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 		    recordImageButton.setColorFilter(Color.RED);
-
+		    soundRecorded = true;
 		    reorderToPlayLayout();
 		}
 	}
@@ -229,6 +230,10 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		recordDurationTextView = null;
 	}
 	
+	public boolean isSoundRecorded()
+	{
+		return soundRecorded;
+	}
 
 
 }
