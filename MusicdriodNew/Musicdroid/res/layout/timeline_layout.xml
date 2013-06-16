@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<at.tugraz.musicdroid.soundmixer.timeline.Timeline
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/timeline">
+    
+    <RelativeLayout
+        android:id="@+id/timeline_top"    
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentTop="true">
+    	
+	     <TextView 
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"    
+	     android:textColor="@color/custom_background_color"
+	     android:layout_centerVertical="true"
+	     android:layout_alignParentLeft="true"
+	     android:id="@+id/timeline_start_time"
+	     />        
+    </RelativeLayout>    
+    
+    <RelativeLayout
+         android:id="@+id/timeline_bottom"    
+         android:layout_width="wrap_content"
+    	 android:layout_height="wrap_content"
+    	 android:layout_below="@+id/timeline_top">
+	     
+         <View 
+	     android:layout_width="0dp"
+	     android:layout_height="fill_parent"
+	     android:layout_alignParentBottom="true"
+    	 android:layout_alignParentLeft="true"
+	     android:background="@color/holo_blue_light"
+	     android:id="@+id/timeline_currentPosition"
+         />
+             
+	     <ImageButton
+	     android:layout_width="1dp"
+	     android:layout_height="1dp"  
+	     android:layout_alignParentBottom="true"
+	     android:layout_alignParentLeft="true"
+	     android:background="@color/transparent"
+	     android:visibility="gone"
+	     android:src="@drawable/timeline_start_point"
+	     android:id="@+id/timeline_start_point"
+	     />
+	
+	     <ImageButton
+	     android:layout_width="1dp"
+	     android:layout_height="1dp"   
+	     android:layout_alignParentBottom="true"
+	     android:background="@color/transparent"
+	     android:visibility="gone"
+	     android:src="@drawable/timeline_end_point"
+	     android:id="@+id/timeline_end_point"
+         />
+	     
+    	
+         <View 
+	     android:layout_width="fill_parent"
+	     android:layout_height="2dp"
+	     android:layout_centerHorizontal="true"
+	     android:layout_alignParentBottom="true"
+	     android:background="@color/custom_background_color"
+	     android:id="@+id/timeline_seperator"
+	     />    	     
+    </RelativeLayout>
+    
+    
+          
+
+
+     
+</at.tugraz.musicdroid.soundmixer.timeline.Timeline>

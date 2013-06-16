@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_menu_layout"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout 
+        android:id="@+id/bpm_seekbar_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_below="@+id/states_spinner" >
+	 	
+	 	<TextView
+	 	    android:id="@+id/bpm_text"
+	 	    android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="7dp"
+	        android:layout_weight="1"
+	        android:text="BPM"
+	 	    />    
+	 	    	    
+	 	<SeekBar
+	        android:id="@+id/seekbar_bpm"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        android:progress="2" />
+     
+    </LinearLayout>
+ 	
+    <Spinner
+        android:id="@+id/states_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/metronom_states_array"
+        android:entryValues="@array/metronom_states_array_values" />
+    
+</RelativeLayout>

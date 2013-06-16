@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/soundmixer_context_bpm"
+        android:title="@string/sound_mixer_menu_entry_bpm"
+        android:icon="@drawable/sm_action_bpm"
+        android:showAsAction="ifRoom|withText"  
+    />
+ 
+    <item
+        android:id="@+id/soundmixer_context_length"
+        android:title="@string/sound_mixer_menu_entry_length"
+        android:icon="@drawable/sm_action_length"
+        android:showAsAction="ifRoom|withText"         
+    />
+</menu>

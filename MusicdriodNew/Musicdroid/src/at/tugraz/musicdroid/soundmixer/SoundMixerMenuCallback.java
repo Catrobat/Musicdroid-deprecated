@@ -1,0 +1,57 @@
+package at.tugraz.musicdroid.soundmixer;
+
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.dialog.MetronomQuickSettingsDialog;
+import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
+
+public class SoundMixerMenuCallback implements ActionMode.Callback {
+		MainActivity parent = null;
+		private SoundLenghtDialog settingsDialog = null;
+		private MetronomQuickSettingsDialog metronomDialog = null;
+	
+		public SoundMixerMenuCallback(MainActivity p)
+		{
+			parent = p;
+			settingsDialog = new SoundLenghtDialog();
+			metronomDialog = new MetronomQuickSettingsDialog();
+		}
+	
+        /** Invoked whenever the action mode is shown. This is invoked immediately after onCreateActionMode */
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        /** Called when user exits action mode */
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+        }
+
+        /** This is called when the action mode is created. This is called by startActionMode() */
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            parent.getMenuInflater().inflate(R.menu.sound_mixer_menu, menu);
+            mode.setTitle(R.string.soundmixer_context_title);
+            return true;
+        }
+
+        /** This is called when an item in the context menu is selected */
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch(item.getItemId()){
+            case R.id.soundmixer_context_bpm:
+            	metronomDialog.show(parent.getFragmentManager(), null);
+                mode.finish();    
+                break;
+            case R.id.soundmixer_context_length:
+            	settingsDialog.show(parent.getFragmentManager(), null);
+				mode.finish();
+                break;
+            }
+            return false;
+        }
+}
