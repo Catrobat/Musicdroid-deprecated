@@ -15,8 +15,9 @@ public class ProjectTest extends TestCase {
 	public void testRemoveTrack() {
 		Project project = new Project();
 		
-		project.addTrack(new Track());
-		project.removeTrack(new Track());
+		Track track = new Track();
+		project.addTrack(track);
+		project.removeTrack(track);
 		
 		assertEquals(0, project.size());
 	}
