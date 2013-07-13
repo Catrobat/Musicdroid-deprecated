@@ -1,6 +1,10 @@
 package at.tugraz.musicdroid.tone;
 
-public class Time {
+import java.io.Serializable;
+
+public class Time implements Serializable {
+	
+	private static final long serialVersionUID = 888797518903394570L;
 	
 	private int beatsPerTact;
 	private NoteValue noteLength;
@@ -20,5 +24,16 @@ public class Time {
 	
 	public NoteValue getNoteLength() {
 		return noteLength;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Time)) {
+			return false;
+		}
+		
+		Time time = (Time) obj;
+		
+		return (beatsPerTact == time.getBeatsPerTact()) && noteLength.equals(time.getNoteLength());
 	}
 }

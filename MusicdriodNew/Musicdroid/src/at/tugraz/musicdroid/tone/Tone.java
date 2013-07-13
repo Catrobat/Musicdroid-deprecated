@@ -1,7 +1,11 @@
 package at.tugraz.musicdroid.tone;
 
-public class Tone extends Symbol {
+import java.io.Serializable;
 
+public class Tone extends Symbol implements Serializable {
+	
+	private static final long serialVersionUID = 2238272682118731619L;
+	
 	private NoteName name;
 	
 	Tone(NoteName name, NoteValue length) {
@@ -21,5 +25,20 @@ public class Tone extends Symbol {
 	public Tone halfToneDown() {
 		Tone newTone = new Tone(name.previous(), noteLength);
 		return newTone;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Tone)) {
+			return false;
+		}
+		
+		Tone tone = (Tone) obj;
+		
+		if (super.equals(obj)) {
+			return name.equals(tone.getNoteName());
+		}
+		
+		return false;
 	}
 }

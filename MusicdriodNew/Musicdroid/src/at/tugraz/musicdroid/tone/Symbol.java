@@ -11,4 +11,15 @@ public abstract class Symbol {
 	public NoteValue getNoteLength() {
 		return noteLength;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Symbol)) {
+			return false;
+		}
+		
+		Symbol symbol = (Symbol) obj;
+		
+		return noteLength.equals(symbol.getNoteLength());
+	}
 }

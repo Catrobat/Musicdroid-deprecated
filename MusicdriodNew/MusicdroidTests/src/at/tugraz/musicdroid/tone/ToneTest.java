@@ -28,4 +28,37 @@ public class ToneTest extends TestCase {
 		assertEquals(c1.getNoteLength(), c1s.getNoteLength());
 		assertEquals(c1s.getNoteName().previous(), c1.getNoteName());
 	}
+	
+	public void testEquals1() {
+		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone2 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		
+		assertTrue(tone1.equals(tone2));
+	}
+	
+	public void testEquals2() {
+		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone2 = new Tone(NoteName.D1, NoteValue.QUARTER);
+		
+		assertFalse(tone1.equals(tone2));
+	}
+	
+	public void testEquals3() {
+		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone2 = new Tone(NoteName.C1, NoteValue.HALF);
+		
+		assertFalse(tone1.equals(tone2));
+	}
+	
+	public void testEquals4() {
+		Tone tone = new Tone(NoteName.C1, NoteValue.QUARTER);
+		
+		assertFalse(tone.equals(null));
+	}
+	
+	public void testEquals5() {
+		Tone tone = new Tone(NoteName.C1, NoteValue.QUARTER);
+		
+		assertFalse(tone.equals(""));
+	}
 }

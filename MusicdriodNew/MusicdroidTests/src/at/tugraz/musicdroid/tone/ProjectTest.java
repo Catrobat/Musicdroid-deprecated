@@ -21,4 +21,45 @@ public class ProjectTest extends TestCase {
 		
 		assertEquals(0, project.size());
 	}
+	
+	public void testEquals1() {
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteValue.HALF));
+		
+		Track track2 = new Track();
+		track2.addSymbol(new Break(NoteValue.HALF));
+		
+		assertTrue(track1.equals(track2));
+	}
+	
+	public void testEquals2() {
+		Project project1 = new Project();
+		project1.addTrack(new Track());
+		
+		Project project2 = new Project();
+		project2.addTrack(new Track());
+		
+		assertTrue(project1.equals(project2));
+	}
+	
+	public void testEquals3() {
+		Project project1 = new Project();
+		project1.addTrack(new Track());
+		
+		Project project2 = new Project();
+		
+		assertFalse(project1.equals(project2));
+	}
+	
+	public void testEquals4() {
+		Project project = new Project();
+		
+		assertFalse(project.equals(null));
+	}
+	
+	public void testEquals5() {
+		Project project = new Project();
+		
+		assertFalse(project.equals(""));
+	}
 }

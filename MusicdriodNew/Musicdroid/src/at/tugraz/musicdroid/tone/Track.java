@@ -1,10 +1,13 @@
 package at.tugraz.musicdroid.tone;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Track {
+public class Track implements Serializable {
 
+	private static final long serialVersionUID = 7483021689872527955L;
+	
 	// TODO fw Instrument
 	private List<Symbol> symbols;
 	private Key key;
@@ -38,7 +41,32 @@ public class Track {
 		symbols.remove(symbol);
 	}
 	
+	public Symbol getSymbol(int location) {
+		return symbols.get(location);
+	}
+	
 	public int size() {
 		return symbols.size();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Track)) {
+			return false;
+		}
+		
+		Track track = (Track) obj;
+		
+		if ((key.equals(track.getKey())) && (time.equals(track.getTime())) && (size() == track.size())) {
+			for (int i = 0; i < size(); i++) {
+				if (!getSymbol(i).equals(track.getSymbol(i))) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

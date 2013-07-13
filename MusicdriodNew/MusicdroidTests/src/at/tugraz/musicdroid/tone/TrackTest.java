@@ -38,5 +38,45 @@ public class TrackTest extends TestCase {
 		
 		assertEquals(0, track.size());
 	}
-
+	
+	public void testEquals1() {
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteValue.HALF));
+		
+		Track track2 = new Track();
+		track2.addSymbol(new Break(NoteValue.HALF));
+		
+		assertTrue(track1.equals(track2));
+	}
+	
+	public void testEquals2() {
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteValue.HALF));
+		
+		Track track2 = new Track();
+		track2.addSymbol(new Break(NoteValue.WHOLE));
+		
+		assertFalse(track1.equals(track2));
+	}
+	
+	public void testEquals3() {
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteValue.HALF));
+		
+		Track track2 = new Track();
+		
+		assertFalse(track1.equals(track2));
+	}
+	
+	public void testEquals4() {
+		Track track = new Track();
+		
+		assertFalse(track.equals(null));
+	}
+	
+	public void testEquals5() {
+		Track track = new Track();
+		
+		assertFalse(track.equals(""));
+	}
 }
