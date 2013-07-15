@@ -2,13 +2,13 @@ package at.tugraz.musicdroid.tone;
 
 public abstract class Symbol {
 
-	protected NoteValue noteLength;
+	protected NoteLength noteLength;
 	
-	Symbol(NoteValue noteLength) {
+	Symbol(NoteLength noteLength) {
 		this.noteLength = noteLength;
 	}
 	
-	public NoteValue getNoteLength() {
+	public NoteLength getNoteLength() {
 		return noteLength;
 	}
 	

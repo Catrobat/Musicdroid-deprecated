@@ -14,7 +14,7 @@ public class TrackTest extends TestCase {
 	}
 	
 	public void testTrack2() {
-		Time time = new Time(3, NoteValue.QUARTER);
+		Time time = new Time(3, NoteLength.QUARTER);
 		Track track = new Track(Key.BASS, time);
 		
 		assertEquals(time, track.getTime());
@@ -24,7 +24,7 @@ public class TrackTest extends TestCase {
 	public void testAddSymbol() {
 		Track track = new Track();
 		
-		track.addSymbol(new Tone(NoteName.C1, NoteValue.QUARTER));
+		track.addSymbol(new Tone(NoteName.C1, NoteLength.QUARTER));
 		
 		assertEquals(1, track.size());
 	}
@@ -32,7 +32,7 @@ public class TrackTest extends TestCase {
 	public void testRemoveSymbol() {
 		Track track = new Track();
 		
-		Symbol symbol = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Symbol symbol = new Tone(NoteName.C1, NoteLength.QUARTER);
 		track.addSymbol(symbol);
 		track.removeSymbol(symbol);
 		
@@ -41,27 +41,27 @@ public class TrackTest extends TestCase {
 	
 	public void testEquals1() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteValue.HALF));
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteValue.HALF));
+		track2.addSymbol(new Break(NoteLength.HALF));
 		
 		assertTrue(track1.equals(track2));
 	}
 	
 	public void testEquals2() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteValue.HALF));
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteValue.WHOLE));
+		track2.addSymbol(new Break(NoteLength.WHOLE));
 		
 		assertFalse(track1.equals(track2));
 	}
 	
 	public void testEquals3() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteValue.HALF));
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
 		Track track2 = new Track();
 		

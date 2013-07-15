@@ -7,13 +7,13 @@ public class Time implements Serializable {
 	private static final long serialVersionUID = 888797518903394570L;
 	
 	private int beatsPerTact;
-	private NoteValue noteLength;
+	private NoteLength noteLength;
 	
 	public Time() {
-		this(4, NoteValue.QUARTER);
+		this(4, NoteLength.QUARTER);
 	}
 	
-	public Time(int beatsPerTact, NoteValue noteLength) {
+	public Time(int beatsPerTact, NoteLength noteLength) {
 		this.beatsPerTact = beatsPerTact;
 		this.noteLength = noteLength;
 	}
@@ -22,7 +22,7 @@ public class Time implements Serializable {
 		return beatsPerTact;
 	}
 	
-	public NoteValue getNoteLength() {
+	public NoteLength getNoteLength() {
 		return noteLength;
 	}
 	

@@ -8,7 +8,7 @@ public class Tone extends Symbol implements Serializable {
 	
 	private NoteName name;
 	
-	Tone(NoteName name, NoteValue length) {
+	Tone(NoteName name, NoteLength length) {
 		super(length);
 		this.name = name;
 	}

@@ -5,39 +5,39 @@ import junit.framework.TestCase;
 public class BreakTest extends TestCase {
 
 	public void testBreak() {
-		Break br = new Break(NoteValue.WHOLE);
+		Break br = new Break(NoteLength.WHOLE);
 		
-		assertEquals(NoteValue.WHOLE, br.getNoteLength());
+		assertEquals(NoteLength.WHOLE, br.getNoteLength());
 	}
 	
 	public void testEquals1() {
-		Break break1 = new Break(NoteValue.HALF);
-		Break break2 = new Break(NoteValue.HALF);
+		Break break1 = new Break(NoteLength.HALF);
+		Break break2 = new Break(NoteLength.HALF);
 		
 		assertTrue(break1.equals(break2));
 	}
 	
 	public void testEquals2() {
-		Break break1 = new Break(NoteValue.HALF);
-		Break break2 = new Break(NoteValue.WHOLE);
+		Break break1 = new Break(NoteLength.HALF);
+		Break break2 = new Break(NoteLength.WHOLE);
 		
 		assertFalse(break1.equals(break2));
 	}
 	
 	public void testEquals3() {
-		Break br = new Break(NoteValue.HALF);
+		Break br = new Break(NoteLength.HALF);
 		
 		assertFalse(br.equals(null));
 	}
 	
 	public void testEquals4() {
-		Break br = new Break(NoteValue.HALF);
+		Break br = new Break(NoteLength.HALF);
 		
 		assertFalse(br.equals(""));
 	}
 	
 	public void testToString() {
-		NoteValue noteLength = NoteValue.WHOLE;
+		NoteLength noteLength = NoteLength.WHOLE;
 		Break br = new Break(noteLength);
 		
 		assertEquals("[Break] noteLength=" + noteLength, br.toString());

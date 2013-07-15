@@ -14,7 +14,7 @@ public class ProjectSerializationTest extends TestCase {
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
 		Key key = Key.BASS;
-		Time time = new Time(100, NoteValue.WHOLE);
+		Time time = new Time(100, NoteLength.WHOLE);
 		Track track = new Track(key, time);
 		project.addTrack(track);
 		File file = new File("projectSerializedTest");

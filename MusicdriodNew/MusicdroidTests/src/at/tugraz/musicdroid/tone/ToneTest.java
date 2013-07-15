@@ -6,7 +6,7 @@ public class ToneTest extends TestCase {
 
 	public void testTone() {
 		NoteName name = NoteName.C1;
-		NoteValue noteLength = NoteValue.EIGHT;
+		NoteLength noteLength = NoteLength.EIGHT;
 		Tone tone = new Tone(name, noteLength);
 		
 		assertEquals(name, tone.getNoteName());
@@ -14,7 +14,7 @@ public class ToneTest extends TestCase {
 	}
 	
 	public void testHalfToneUp() {
-		Tone c1 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone c1 = new Tone(NoteName.C1, NoteLength.QUARTER);
 		Tone c1s = c1.halfToneUp();
 		
 		assertEquals(c1.getNoteLength(), c1s.getNoteLength());
@@ -22,7 +22,7 @@ public class ToneTest extends TestCase {
 	}
 
 	public void testHalfToneDown() {
-		Tone c1s = new Tone(NoteName.C1S, NoteValue.QUARTER);
+		Tone c1s = new Tone(NoteName.C1S, NoteLength.QUARTER);
 		Tone c1 = c1s.halfToneDown();
 		
 		assertEquals(c1.getNoteLength(), c1s.getNoteLength());
@@ -30,40 +30,40 @@ public class ToneTest extends TestCase {
 	}
 	
 	public void testEquals1() {
-		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
-		Tone tone2 = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone1 = new Tone(NoteName.C1, NoteLength.QUARTER);
+		Tone tone2 = new Tone(NoteName.C1, NoteLength.QUARTER);
 		
 		assertTrue(tone1.equals(tone2));
 	}
 	
 	public void testEquals2() {
-		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
-		Tone tone2 = new Tone(NoteName.D1, NoteValue.QUARTER);
+		Tone tone1 = new Tone(NoteName.C1, NoteLength.QUARTER);
+		Tone tone2 = new Tone(NoteName.D1, NoteLength.QUARTER);
 		
 		assertFalse(tone1.equals(tone2));
 	}
 	
 	public void testEquals3() {
-		Tone tone1 = new Tone(NoteName.C1, NoteValue.QUARTER);
-		Tone tone2 = new Tone(NoteName.C1, NoteValue.HALF);
+		Tone tone1 = new Tone(NoteName.C1, NoteLength.QUARTER);
+		Tone tone2 = new Tone(NoteName.C1, NoteLength.HALF);
 		
 		assertFalse(tone1.equals(tone2));
 	}
 	
 	public void testEquals4() {
-		Tone tone = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone = new Tone(NoteName.C1, NoteLength.QUARTER);
 		
 		assertFalse(tone.equals(null));
 	}
 	
 	public void testEquals5() {
-		Tone tone = new Tone(NoteName.C1, NoteValue.QUARTER);
+		Tone tone = new Tone(NoteName.C1, NoteLength.QUARTER);
 		
 		assertFalse(tone.equals(""));
 	}
 	
 	public void testToString() {
-		NoteValue noteLength = NoteValue.WHOLE;
+		NoteLength noteLength = NoteLength.WHOLE;
 		NoteName name = NoteName.A1;
 		Tone tone = new Tone(name, noteLength);
 		

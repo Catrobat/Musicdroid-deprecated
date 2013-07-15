@@ -24,10 +24,10 @@ public class ProjectTest extends TestCase {
 	
 	public void testEquals1() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteValue.HALF));
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteValue.HALF));
+		track2.addSymbol(new Break(NoteLength.HALF));
 		
 		assertTrue(track1.equals(track2));
 	}
