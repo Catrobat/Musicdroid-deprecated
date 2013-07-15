@@ -41,4 +41,9 @@ public class Tone extends Symbol implements Serializable {
 		
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "[Tone] noteLength=" + noteLength + " name=" + name;
+	}
 }

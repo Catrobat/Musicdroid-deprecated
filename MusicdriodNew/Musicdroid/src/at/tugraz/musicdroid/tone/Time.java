@@ -36,4 +36,9 @@ public class Time implements Serializable {
 		
 		return (beatsPerTact == time.getBeatsPerTact()) && noteLength.equals(time.getNoteLength());
 	}
+	
+	@Override
+	public String toString() {
+		return "[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength;
+	}
 }

@@ -79,4 +79,11 @@ public class TrackTest extends TestCase {
 		
 		assertFalse(track.equals(""));
 	}
+	
+	public void testToString() {
+		Key key = Key.BASS;
+		Track track = new Track(key, new Time());
+		
+		assertEquals("[Track] key=" + key + " symbolCount=" + track.size(), track.toString());
+	}
 }

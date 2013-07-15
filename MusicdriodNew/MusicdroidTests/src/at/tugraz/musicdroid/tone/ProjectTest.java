@@ -62,4 +62,10 @@ public class ProjectTest extends TestCase {
 		
 		assertFalse(project.equals(""));
 	}
+	
+	public void testToString() {
+		Project project = new Project();
+		
+		assertEquals("[Project] trackCount=" + project.size(), project.toString());
+	}
 }

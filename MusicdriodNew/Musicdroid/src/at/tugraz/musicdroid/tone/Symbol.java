@@ -22,4 +22,9 @@ public abstract class Symbol {
 		
 		return noteLength.equals(symbol.getNoteLength());
 	}
+	
+	@Override
+	public String toString() {
+		return "[Symbol] noteLength=" + noteLength;
+	}
 }

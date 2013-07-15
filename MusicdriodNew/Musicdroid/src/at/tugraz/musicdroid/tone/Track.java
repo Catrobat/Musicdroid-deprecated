@@ -9,9 +9,9 @@ public class Track implements Serializable {
 	private static final long serialVersionUID = 7483021689872527955L;
 	
 	// TODO fw Instrument
-	private List<Symbol> symbols;
 	private Key key;
 	private Time time;
+	private List<Symbol> symbols;
 	
 	public Track() {
 		this.symbols = new ArrayList<Symbol>();
@@ -68,5 +68,10 @@ public class Track implements Serializable {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "[Track] key=" + key + " symbolCount=" + size();
 	}
 }

@@ -50,4 +50,12 @@ public class TimeTest extends TestCase {
 		
 		assertFalse(time.equals(""));
 	}
+	
+	public void testToString() {
+		int beatsPerTact = 20;
+		NoteValue noteLength = NoteValue.SIXTEENTH;
+		Time time = new Time(beatsPerTact, noteLength);
+		
+		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
+	}
 }

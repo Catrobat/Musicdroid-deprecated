@@ -9,4 +9,9 @@ public class Break extends Symbol implements Serializable {
 	Break(NoteValue length) {
 		super(length);
 	}
+	
+	@Override
+	public String toString() {
+		return "[Break] noteLength=" + noteLength;
+	}
 }

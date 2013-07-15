@@ -61,4 +61,12 @@ public class ToneTest extends TestCase {
 		
 		assertFalse(tone.equals(""));
 	}
+	
+	public void testToString() {
+		NoteValue noteLength = NoteValue.WHOLE;
+		NoteName name = NoteName.A1;
+		Tone tone = new Tone(name, noteLength);
+		
+		assertEquals("[Tone] noteLength=" + noteLength + " name=" + name, tone.toString());
+	}
 }

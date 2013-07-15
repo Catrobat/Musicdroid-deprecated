@@ -35,4 +35,11 @@ public class BreakTest extends TestCase {
 		
 		assertFalse(br.equals(""));
 	}
+	
+	public void testToString() {
+		NoteValue noteLength = NoteValue.WHOLE;
+		Break br = new Break(noteLength);
+		
+		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+	}
 }
