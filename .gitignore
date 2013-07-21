@@ -13,3 +13,10 @@ MusicdriodNew/Musicdroid/bin/classes.dex
 MusicdriodNew/Musicdroid/bin/resources.ap_
 *.class
 MusicdriodNew/Musicdroid/bin/jarlist.cache
+
+MusicdriodNew/MusicdroidTests/bin/AndroidManifest.xml
+MusicdriodNew/MusicdroidTests/bin/MusicdroidTests.apk
+MusicdriodNew/MusicdroidTests/bin/classes.dex
+MusicdriodNew/MusicdroidTests/bin/dexedLibs/robotium-solo-4.1-a8a71b3d370e82b92467fc98c55dfaa6.jar
+MusicdriodNew/MusicdroidTests/bin/resources.ap_
+
