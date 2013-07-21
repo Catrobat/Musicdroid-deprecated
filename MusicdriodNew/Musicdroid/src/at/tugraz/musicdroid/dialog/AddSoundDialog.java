@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * *  Catroid: An on-device visual programming system for Android devices
+ *  *  Copyright (C) 2010-2013 The Catrobat Team
+ *  *  (<http://developer.catrobat.org/credits>)
+ *  * 
+ *  *  This program is free software: you can redistribute it and/or modify
+ *  *  it under the terms of the GNU Affero General Public License as
+ *  *  published by the Free Software Foundation, either version 3 of the
+ *  *  License, or (at your option) any later version.
+ *  *
+ *  *  An additional term exception under section 7 of the GNU Affero
+ *  *  General Public License, version 3, is available at
+ *  *  http://www.catroid.org/catroid/licenseadditionalterm
+ *  *
+ *  *  This program is distributed in the hope that it will be useful,
+ *  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  *  GNU Affero General Public License for more details.
+ *  *
+ *  *  You should have received a copy of the GNU Affero General Public License
+ *  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package at.tugraz.musicdroid.dialog;
 
 import android.content.Context;
@@ -17,18 +39,16 @@ import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
 
 public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
-OnItemLongClickListener {
-	
+		OnItemLongClickListener {
+
 	private static AddSoundDialog instance;
 	private MainActivity parent;
 	private AddSoundAdapter addSoundButtonAdapter;
-	
-	
+
 	private AddSoundDialog(Context context) {
 		super(context);
 		parent = (MainActivity) context;
-		addSoundButtonAdapter = new AddSoundAdapter(context,
-				false);
+		addSoundButtonAdapter = new AddSoundAdapter(context, false);
 	}
 
 	public static AddSoundDialog getInstance() {
@@ -41,8 +61,7 @@ OnItemLongClickListener {
 	public static void init(MainActivity mainActivity) {
 		instance = new AddSoundDialog(mainActivity);
 	}
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,38 +73,37 @@ OnItemLongClickListener {
 		gridView.setOnItemClickListener(this);
 		gridView.setOnItemLongClickListener(this);
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View button,
 			int position, long id) {
 		SoundType toolType = addSoundButtonAdapter.getSoundType(position);
-		
-		switch(toolType) {
-			case DRUMS:
-				SoundTrackDrums stvd = new SoundTrackDrums();
-				parent.addSoundTrack(new SoundTrackView(parent, stvd));
-				break;
-			case PIANO:
-				SoundTrackPiano stvp = new SoundTrackPiano();
-				parent.addSoundTrack(new SoundTrackView(parent, stvp));
-				break;
-			case MIC:
-				//SoundTrackMic stvm = new SoundTrackMic();
-				//parent.addSoundTrack(new SoundTrackView(parent, stvm));
-				Intent intent = new Intent(parent, RecorderActivity.class);
-			    parent.startActivityForResult(intent, 1);
-				break;		
-			default:
-				break;
+
+		switch (toolType) {
+		case DRUMS:
+			SoundTrackDrums stvd = new SoundTrackDrums();
+			parent.addSoundTrack(new SoundTrackView(parent, stvd));
+			break;
+		case PIANO:
+			SoundTrackPiano stvp = new SoundTrackPiano();
+			parent.addSoundTrack(new SoundTrackView(parent, stvp));
+			break;
+		case MIC:
+			// SoundTrackMic stvm = new SoundTrackMic();
+			// parent.addSoundTrack(new SoundTrackView(parent, stvm));
+			Intent intent = new Intent(parent, RecorderActivity.class);
+			parent.startActivityForResult(intent, 1);
+			break;
+		default:
+			break;
 		}
 		dismiss();
 	}
 
-
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View button,
 			int position, long id) {
-		//Display help message
+		// Display help message
 		return true;
 	}
 }

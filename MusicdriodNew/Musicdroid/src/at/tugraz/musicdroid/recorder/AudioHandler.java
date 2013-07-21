@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * *  Catroid: An on-device visual programming system for Android devices
+ *  *  Copyright (C) 2010-2013 The Catrobat Team
+ *  *  (<http://developer.catrobat.org/credits>)
+ *  * 
+ *  *  This program is free software: you can redistribute it and/or modify
+ *  *  it under the terms of the GNU Affero General Public License as
+ *  *  published by the Free Software Foundation, either version 3 of the
+ *  *  License, or (at your option) any later version.
+ *  *
+ *  *  An additional term exception under section 7 of the GNU Affero
+ *  *  General Public License, version 3, is available at
+ *  *  http://www.catroid.org/catroid/licenseadditionalterm
+ *  *
+ *  *  This program is distributed in the hope that it will be useful,
+ *  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  *  GNU Affero General Public License for more details.
+ *  *
+ *  *  You should have received a copy of the GNU Affero General Public License
+ *  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package at.tugraz.musicdroid.recorder;
 
 import java.io.File;
@@ -22,24 +44,23 @@ public class AudioHandler {
 	private Recorder recorder = null;
 	private Player player = null;
 	private AudioVisualizer visualizer = null;
-	
-	private AudioHandler()
-	{
+
+	private AudioHandler() {
 		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
 		this.filename = "test.mp3";
 	}
-	
+
 	public static AudioHandler getInstance() {
-        if (instance == null) {
-            instance = new AudioHandler();
-        }
-        return instance;
-    }
-	
-	public void init(Context context, RecorderLayout layout)
-	{
-		if(init) return;
-		
+		if (instance == null) {
+			instance = new AudioHandler();
+		}
+		return instance;
+	}
+
+	public void init(Context context, RecorderLayout layout) {
+		if (init)
+			return;
+
 		this.context = context;
 		this.layout = layout;
 		visualizer = new AudioVisualizer(context);
@@ -47,46 +68,40 @@ public class AudioHandler {
 		player = new Player(layout);
 		init = true;
 	}
-	
-	public boolean startRecording()
-	{
+
+	public boolean startRecording() {
 		Log.i("AudioHandler", "StartRecording");
-		File check = new File(path+'/'+filename);
-		if(check.exists())
-		{
+		File check = new File(path + '/' + filename);
+		if (check.exists()) {
 			showDialog();
-		}
-		else
-		{
+		} else {
 			checkAndStartPlaybackAndMetronom();
 			recorder.record();
 		}
 		return true;
 	}
 
-	
-	public void stopRecording()
-	{
+	public void stopRecording() {
 		recorder.stopRecording();
-		if(PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (PreferenceManager.getInstance().getPreference(
+				PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
 			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
-		else if(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		else if (PreferenceManager.getInstance().getPreference(
+				PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
 			SoundMixer.getInstance().stopMetronom();
 	}
-	
-	public void playRecordedFile()
-	{
+
+	public void playRecordedFile() {
 		player.playRecordedFile();
 	}
-	
-	public void stopRecordedFile()
-	{
-		player.stopPlaying();		
+
+	public void stopRecordedFile() {
+		player.stopPlaying();
 	}
-	
-	private void showDialog()
-	{
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+	private void showDialog() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
 		alertDialogBuilder
 				.setMessage(R.string.dialog_warning_file_overwritten_at_record)
 				.setCancelable(true)
@@ -109,50 +124,43 @@ public class AudioHandler {
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
 	}
-	
-	
-	private void checkAndStartPlaybackAndMetronom()
-	{
-		int metronom = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY); 
-		if(PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
-		{
-			if(!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
+
+	private void checkAndStartPlaybackAndMetronom() {
+		int metronom = PreferenceManager.getInstance().getPreference(
+				PreferenceManager.METRONOM_VISUALIZATION_KEY);
+		if (PreferenceManager.getInstance().getPreference(
+				PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
+			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer()
+					&& metronom > 0)
 				SoundMixer.getInstance().startMetronom();
-		}
-		else if(metronom > 0)
-		{
+		} else if (metronom > 0) {
 			SoundMixer.getInstance().startMetronom();
 		}
 	}
-	
-	public void setFilename(String f)
-	{
+
+	public void setFilename(String f) {
 		this.filename = f;
-		layout.updateFilename(Helper.getInstance().removeFileEnding(this.filename));
+		layout.updateFilename(Helper.getInstance().removeFileEnding(
+				this.filename));
 	}
-	
-	public String getFilenameFullPath()
-	{
+
+	public String getFilenameFullPath() {
 		return path + "/" + filename;
 	}
-	
-	public String getFilename()
-	{
+
+	public String getFilename() {
 		return filename;
 	}
-	
-	public void setContext(Context context)
-	{
+
+	public void setContext(Context context) {
 		this.context = context;
 	}
-	
-	public String getPath()
-	{
+
+	public String getPath() {
 		return path;
 	}
-	
-	public void reset()
-	{
+
+	public void reset() {
 		init = false;
 		instance = null;
 	}

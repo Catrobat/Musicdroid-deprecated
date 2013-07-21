@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * *  Catroid: An on-device visual programming system for Android devices
+ *  *  Copyright (C) 2010-2013 The Catrobat Team
+ *  *  (<http://developer.catrobat.org/credits>)
+ *  * 
+ *  *  This program is free software: you can redistribute it and/or modify
+ *  *  it under the terms of the GNU Affero General Public License as
+ *  *  published by the Free Software Foundation, either version 3 of the
+ *  *  License, or (at your option) any later version.
+ *  *
+ *  *  An additional term exception under section 7 of the GNU Affero
+ *  *  General Public License, version 3, is available at
+ *  *  http://www.catroid.org/catroid/licenseadditionalterm
+ *  *
+ *  *  This program is distributed in the hope that it will be useful,
+ *  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  *  GNU Affero General Public License for more details.
+ *  *
+ *  *  You should have received a copy of the GNU Affero General Public License
+ *  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package at.tugraz.musicdroid;
 
 import android.app.Activity;
@@ -23,45 +45,48 @@ import at.tugraz.musicdroid.soundtracks.SoundTrackMic;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.soundtracks.SoundTrackViewMenuCallback;
 
-public class MainActivity extends MenuFileActivity { 
+public class MainActivity extends MenuFileActivity {
 	protected Statusbar statusbar;
 	protected SoundMixer mixer;
 	protected SoundLenghtDialog settingsDialog = null;
-    private TimelineMenuCallback callbackTimelineMenu;
-    
+	private TimelineMenuCallback callbackTimelineMenu;
 
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.prepareFolderStructure();
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		super.prepareFolderStructure();
 
-        AddSoundDialog.init(this);
-    			
-    	Helper helper = Helper.getInstance();
-    	helper.init(this);
-    	
-        setContentView(R.layout.activity_main);
-        
-        initTopStatusBar();
-        Statusbar.getInstance().initStatusbar(this);
+		AddSoundDialog.init(this);
 
-        SoundMixer.getInstance().initSoundMixer(this, (ObservableHorizontalScrollView)findViewById(R.id.sound_mixer_view));
-        
-        //TESTING 
-	    SoundManager.getInstance();
-	    SoundManager.initSounds(this);
-	   // SoundManager.loadSounds(); 
-    }
-    
-    @Override
+		Helper helper = Helper.getInstance();
+		helper.init(this);
+
+		setContentView(R.layout.activity_main);
+
+		initTopStatusBar();
+		Statusbar.getInstance().initStatusbar(this);
+
+		SoundMixer
+				.getInstance()
+				.initSoundMixer(
+						this,
+						(ObservableHorizontalScrollView) findViewById(R.id.sound_mixer_view));
+
+		// TESTING
+		SoundManager.getInstance();
+		SoundManager.initSounds(this);
+		// SoundManager.loadSounds();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 		return true;
 	}
-    
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -70,7 +95,8 @@ public class MainActivity extends MenuFileActivity {
 			showSecurityQuestionBeforeExit();
 			return true;
 		case R.id.menu_item_preferences:
-			Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
+			Intent intent = new Intent(MainActivity.this,
+					PreferenceActivity.class);
 			MainActivity.this.startActivity(intent);
 			return true;
 		case android.R.id.home:
@@ -80,49 +106,48 @@ public class MainActivity extends MenuFileActivity {
 			AddSoundDialog.getInstance().show();
 			return true;
 		case R.id.btn_settings:
-			SoundMixerMenuCallback callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
+			SoundMixerMenuCallback callbackSoundMixerMenu = new SoundMixerMenuCallback(
+					this);
 			startActionMode(callbackSoundMixerMenu);
 			return true;
 		default:
-			//calls MenuFileActivitys onOptionItemSelect for all File-Related entries
+			// calls MenuFileActivitys onOptionItemSelect for all File-Related
+			// entries
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	
-	
+
 	@Override
-    public void onBackPressed() {
+	public void onBackPressed() {
 		showSecurityQuestionBeforeExit();
-    }
-	
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		Statusbar.getInstance().initStatusbar(this);
-	} 
-	
-	
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		  if (requestCode == 1) {
+		if (requestCode == 1) {
 
-		     if(resultCode == Activity.RESULT_OK){
-		    	 if(data.hasExtra("mic_filename"))
-		    	 {
-		           String result = data.getStringExtra("mic_filename");
-		           Log.i("MainActivity", "Received String from Activity " + result);
-		           SoundTrackMic stm = new SoundTrackMic(result);
-		           addSoundTrack(new SoundTrackView(this, stm));
-		    	 }
-		     }
-		     if (resultCode == Activity.RESULT_CANCELED) {    
-		         //probably not needed
-		     }
-		  }
+			if (resultCode == Activity.RESULT_OK) {
+				if (data.hasExtra("mic_filename")) {
+					String result = data.getStringExtra("mic_filename");
+					Log.i("MainActivity", "Received String from Activity "
+							+ result);
+					SoundTrackMic stm = new SoundTrackMic(result);
+					addSoundTrack(new SoundTrackView(this, stm));
+				}
+			}
+			if (resultCode == Activity.RESULT_CANCELED) {
+				// probably not needed
+			}
+		}
 	}
-	
+
 	private void showSecurityQuestionBeforeExit() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.closing_security_question);
@@ -145,40 +170,32 @@ public class MainActivity extends MenuFileActivity {
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
-	
-	
-	public void startActionMode(int id, SoundTrack soundTrack)
-	{
-		SoundMixer.getInstance().setCallingParameters(id, soundTrack); 
-        SoundTrackViewMenuCallback callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
+
+	public void startActionMode(int id, SoundTrack soundTrack) {
+		SoundMixer.getInstance().setCallingParameters(id, soundTrack);
+		SoundTrackViewMenuCallback callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(
+				this);
 		startActionMode(callbackSoundTrackViewMenu);
 	}
-	
-	public void startTimelineActionMode()
-	{
+
+	public void startTimelineActionMode() {
 		startActionMode(callbackTimelineMenu);
 	}
-	
-    public void addSoundTrack(SoundTrackView track)
-    {
-    	SoundMixer.getInstance().addSoundTrackViewToSoundMixer(track);
-    }
-    
-    public void setCallbackTimelineMenu(TimelineMenuCallback callback)
-    {
-    	callbackTimelineMenu = callback;
-    }
 
-    private void initTopStatusBar()
-    {
+	public void addSoundTrack(SoundTrackView track) {
+		SoundMixer.getInstance().addSoundTrackViewToSoundMixer(track);
+	}
+
+	public void setCallbackTimelineMenu(TimelineMenuCallback callback) {
+		callbackTimelineMenu = callback;
+	}
+
+	private void initTopStatusBar() {
 		getActionBar().setCustomView(R.layout.status_bar);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayShowCustomEnabled(true);
-		getActionBar().setIcon(R.drawable.ic_launcher); 		
-    }
-    
-    
-    
+		getActionBar().setIcon(R.drawable.ic_launcher);
+	}
 
 }
