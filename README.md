@@ -7,6 +7,9 @@ FIRST STEPS
 
 The project is an Android Project, we are developing with Eclipse. 
 
+ISSUE TRACKING
+
+Issues will be submitted/edited/created on Jira from now on (https://jira.catrob.at).
 
 CURRENT STEPS
 
