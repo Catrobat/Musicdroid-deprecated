@@ -23,7 +23,6 @@
 package at.tugraz.musicdroid.preferences;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 public class PreferencesManagerTest extends AndroidTestCase {
 	public static final int SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE = 45;

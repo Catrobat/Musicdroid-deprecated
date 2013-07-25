@@ -24,8 +24,6 @@ package at.tugraz.musicdroid.preferences;
 
 import java.util.HashMap;
 
-import android.util.Log;
-
 public class PreferenceManager {
 	public static final int SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE = 45;
 	public static final String SOUNDTRACK_DEFAULT_LENGTH_KEY = "soundtrack_length_default";

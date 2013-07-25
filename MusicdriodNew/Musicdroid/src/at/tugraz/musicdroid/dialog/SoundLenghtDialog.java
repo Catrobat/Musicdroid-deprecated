@@ -31,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.preferences.PreferenceManager;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class SoundLenghtDialog extends DialogFragment {

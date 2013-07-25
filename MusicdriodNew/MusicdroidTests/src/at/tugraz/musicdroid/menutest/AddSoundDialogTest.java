@@ -22,17 +22,12 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
-import java.util.ArrayList;
-
-import com.jayway.android.robotium.solo.Solo;
-
+import android.test.ActivityInstrumentationTestCase2;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.types.SoundType;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.widget.GridView;
+import com.jayway.android.robotium.solo.Solo;
 
 public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
