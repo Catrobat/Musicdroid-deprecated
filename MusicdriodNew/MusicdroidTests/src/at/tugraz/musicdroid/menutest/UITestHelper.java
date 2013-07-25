@@ -23,13 +23,12 @@
 package at.tugraz.musicdroid.menutest;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
-
-import com.jayway.android.robotium.solo.Solo;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.types.SoundType;
+
+import com.jayway.android.robotium.solo.Solo;
 
 public class UITestHelper {
 	private Solo solo;
