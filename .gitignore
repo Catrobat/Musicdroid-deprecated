@@ -1,15 +1,29 @@
-/musicdroid
-MusicdriodNew/Musicdroid/bin/AndroidManifest.xml
-MusicdriodNew/Musicdroid/bin/R.txt
-MusicdriodNew/Musicdroid/bin/jarlist.cache
-MusicdriodNew/Musicdroid/bin/res/**/*
-MusicdriodNew/Musicdroid/bin/Musicdroid
-MusicdriodNew/Musicdroid/gen/at/tugraz/musicdroid/BuildConfig.java
+# built application files
+*.apk
+*.ap_
 
-MusicdriodNew/Musicdroid/bin/Musicdroid.apk
-MusicdriodNew/Musicdroid/bin/dexedLibs/android-support-v4-69800eaf6cb3fc3a1b4a23b1df70948a.jar
-MusicdriodNew/Musicdroid/bin/dexedLibs/com_actionbarsherlock-386fa783b86e84badb3a40d4dae11bf3.jar
-MusicdriodNew/Musicdroid/bin/classes.dex
-MusicdriodNew/Musicdroid/bin/resources.ap_
+# workspace settings
+*.metadata
+
+#IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+out
+
+# files for the dex VM
+*.dex
+
+# Java class files
 *.class
-MusicdriodNew/Musicdroid/bin/jarlist.cache
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+proguard-project.txt
+lint.xml
+!libraryProjects/actionbarsherlock/lint.xml

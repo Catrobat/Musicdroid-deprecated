@@ -22,18 +22,16 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
-import com.jayway.android.robotium.solo.Solo;
-
+import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.ImageButton;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 import at.tugraz.musicdroid.soundmixer.Statusbar;
 import at.tugraz.musicdroid.types.SoundType;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
+import com.jayway.android.robotium.solo.Solo;
 
 public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
