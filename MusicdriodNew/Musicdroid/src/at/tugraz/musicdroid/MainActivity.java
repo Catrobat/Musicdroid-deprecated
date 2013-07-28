@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.dialog.AddSoundDialog;
 import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.helper.Helper;

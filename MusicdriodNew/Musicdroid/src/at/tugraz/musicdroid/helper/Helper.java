@@ -22,6 +22,7 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.helper;
 
+
 import android.content.Context;
 import android.graphics.Point;
 import at.tugraz.musicdroid.MainActivity;

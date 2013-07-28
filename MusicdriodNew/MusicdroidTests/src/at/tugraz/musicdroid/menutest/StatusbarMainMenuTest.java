@@ -22,6 +22,7 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
+
 import com.jayway.android.robotium.solo.Solo;
 
 import at.tugraz.musicdroid.MainActivity;

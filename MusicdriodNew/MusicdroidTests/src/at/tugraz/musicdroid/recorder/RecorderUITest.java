@@ -24,6 +24,7 @@ package at.tugraz.musicdroid.recorder;
 
 import java.io.File;
 
+
 import com.jayway.android.robotium.solo.Solo;
 
 import android.content.res.Configuration;

@@ -25,6 +25,7 @@ package at.tugraz.musicdroid.menutest;
 import java.util.Observable;
 import java.util.Observer;
 
+
 import com.jayway.android.robotium.solo.Solo;
 
 import android.test.ActivityInstrumentationTestCase2;

@@ -24,6 +24,7 @@ package at.tugraz.musicdroid.soundmixer;
 
 import java.util.ArrayList;
 
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;

@@ -31,6 +31,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
+import at.tugraz.musicdroid.R;
 
 public class SoundManager {
 
