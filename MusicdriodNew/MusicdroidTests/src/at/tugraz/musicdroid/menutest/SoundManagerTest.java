@@ -22,10 +22,8 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
-
 import android.test.ActivityInstrumentationTestCase2;
 import at.tugraz.musicdroid.MainActivity;
-import at.tugraz.musicdroid.SoundManager;
 
 
 

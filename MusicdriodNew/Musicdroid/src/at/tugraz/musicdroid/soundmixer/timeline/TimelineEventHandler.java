@@ -31,16 +31,9 @@ import android.widget.RelativeLayout.LayoutParams;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineEventHandler extends Handler {
-	private static TimelineEventHandler instance = null;
 	private View trackPositionView = null;
 	private Timeline timeline = null;
 
-	public static TimelineEventHandler getInstance() {
-		if (instance == null) {
-			instance = new TimelineEventHandler();
-		}
-		return instance;
-	}
 
 	public void init(Timeline t) {
 		this.timeline = t;

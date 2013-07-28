@@ -25,8 +25,6 @@ package at.tugraz.musicdroid.recorder;
 import java.io.File;
 
 
-import com.jayway.android.robotium.solo.Solo;
-
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.test.ActivityInstrumentationTestCase2;
@@ -39,9 +37,10 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.SoundManager;
 import at.tugraz.musicdroid.helper.Helper;
 import at.tugraz.musicdroid.types.SoundType;
+
+import com.jayway.android.robotium.solo.Solo;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;

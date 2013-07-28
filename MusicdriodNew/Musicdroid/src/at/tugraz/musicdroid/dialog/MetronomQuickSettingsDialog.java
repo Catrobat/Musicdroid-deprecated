@@ -31,14 +31,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.NumberPicker;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.preferences.PreferenceManager;
-import at.tugraz.musicdroid.soundmixer.SoundMixer;
 
 public class MetronomQuickSettingsDialog extends DialogFragment implements
 		OnSeekBarChangeListener {

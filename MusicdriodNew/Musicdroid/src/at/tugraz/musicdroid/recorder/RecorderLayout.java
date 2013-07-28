@@ -120,8 +120,7 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		Bundle b = msg.getData();
 		if (b.containsKey("duration")) {
 			int key = b.getInt("duration");
-			recordDurationTextView.setText(Helper.getInstance()
-					.durationStringFromInt(key));
+			recordDurationTextView.setText(Helper.durationStringFromInt(key));
 		} else if (b.containsKey("trackposition")) {
 			int position = b.getInt("trackposition");
 			LayoutParams params = (LayoutParams) progressBarView

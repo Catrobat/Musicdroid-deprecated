@@ -22,26 +22,26 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
+<<<<<<< HEAD
 
 import com.jayway.android.robotium.solo.Solo;
 
-import at.tugraz.musicdroid.MainActivity;
-import at.tugraz.musicdroid.R;
-import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.soundmixer.ObservableHorizontalScrollView;
-import at.tugraz.musicdroid.soundmixer.SoundMixer;
-import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
-import at.tugraz.musicdroid.soundtracks.SoundTrack;
-import at.tugraz.musicdroid.soundtracks.SoundTrackView;
-import at.tugraz.musicdroid.types.SoundType;
-
+=======
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView.FindListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+>>>>>>> 79fb4bde2c7b2624386de430e704334b63f19675
+import at.tugraz.musicdroid.MainActivity;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.helper.Helper;
+import at.tugraz.musicdroid.soundmixer.SoundMixer;
+import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
+import at.tugraz.musicdroid.types.SoundType;
+
+import com.jayway.android.robotium.solo.Solo;
 
 public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;

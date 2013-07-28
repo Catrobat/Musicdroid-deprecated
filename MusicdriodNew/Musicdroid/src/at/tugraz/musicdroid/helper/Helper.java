@@ -28,24 +28,9 @@ import android.graphics.Point;
 import at.tugraz.musicdroid.MainActivity;
 
 public class Helper {
-	private static Helper instance = null;
-	private Context context = null;
 
-	public static Helper getInstance() {
-		if (instance == null) {
-			instance = new Helper();
-		}
-		return instance;
-	}
-
-	public void init(Context c) {
-		context = c;
-	}
-
-	public Point getScreenSize() {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-
+	private Helper() {}
+	public static Point getScreenSize(Context context) {
 		if (android.os.Build.VERSION.SDK_INT >= 13) {
 			Point size = new Point();
 			((MainActivity) context).getWindowManager().getDefaultDisplay()
@@ -60,19 +45,15 @@ public class Helper {
 		}
 	}
 
-	public int getScreenHeight() {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().y;
+	public static int getScreenHeight(Context context) {
+		return getScreenSize(context).y;
 	}
 
-	public int getScreenWidth() {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().x;
+	public static int getScreenWidth(Context context) {
+		return getScreenSize(context).x;
 	}
 
-	public String durationStringFromInt(int duration) {
+	public static String durationStringFromInt(int duration) {
 		int minutes = duration / 60;
 		int seconds = duration % 60;
 		String min = "" + minutes;
@@ -86,7 +67,7 @@ public class Helper {
 		return min + ":" + sec;
 	}
 
-	public String getFilenameFromPath(String path) {
+	public static String getFilenameFromPath(String path) {
 		String filename = path;
 		int pos = path.lastIndexOf('/');
 		if (pos != -1) {
@@ -99,7 +80,7 @@ public class Helper {
 
 	}
 
-	public String removeFileEnding(String file) {
+	public static String removeFileEnding(String file) {
 		int pos = file.lastIndexOf('.');
 
 		if (pos != -1) {

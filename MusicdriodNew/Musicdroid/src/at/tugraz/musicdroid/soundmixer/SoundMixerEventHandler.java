@@ -43,12 +43,15 @@ public class SoundMixerEventHandler extends Observable {
 	private int screenWidth;
 	private int secondInPixel;
 	private boolean shouldContinue;
+	private TimelineEventHandler timelineEventHandler;
 
-	public SoundMixerEventHandler(SoundMixer m) {
+	public SoundMixerEventHandler(SoundMixer m, TimelineEventHandler timelineEventHandler) {
 		mixer = m;
+		this.timelineEventHandler = timelineEventHandler;
+		
 		setEndPoint(PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
-		screenWidth = Helper.getInstance().getScreenWidth();
+		screenWidth = Helper.getScreenWidth(mixer.parent);
 		secondInPixel = screenWidth
 				/ PreferenceManager.getInstance().getPreference(
 						PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
@@ -146,7 +149,7 @@ public class SoundMixerEventHandler extends Observable {
 		Bundle b = new Bundle();
 		b.putInt("position", time);
 		msg.setData(b);
-		TimelineEventHandler.getInstance().sendMessage(msg);
+		timelineEventHandler.sendMessage(msg);
 	}
 
 }

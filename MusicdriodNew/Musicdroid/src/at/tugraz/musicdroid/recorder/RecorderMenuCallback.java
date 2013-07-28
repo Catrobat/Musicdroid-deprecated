@@ -29,7 +29,6 @@ import android.view.MenuItem;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.RecorderActivity;
 import at.tugraz.musicdroid.dialog.MetronomQuickSettingsDialog;
-import at.tugraz.musicdroid.dialog.SoundLenghtDialog;
 import at.tugraz.musicdroid.preferences.PreferenceManager;
 
 public class RecorderMenuCallback implements ActionMode.Callback {

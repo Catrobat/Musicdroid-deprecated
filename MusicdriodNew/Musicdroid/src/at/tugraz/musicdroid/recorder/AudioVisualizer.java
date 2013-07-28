@@ -27,13 +27,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.RecorderActivity;
-import at.tugraz.musicdroid.helper.Helper;
 
 public class AudioVisualizer extends Handler {
 	private static final int MAX_AMPLITUDE = 32800;

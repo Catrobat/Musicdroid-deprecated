@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /musicdroid
 MusicdriodNew/Musicdroid/bin/AndroidManifest.xml
 MusicdriodNew/Musicdroid/bin/R.txt
@@ -23,3 +24,34 @@ MusicdriodNew/MusicdroidTests/bin/classes.dex
 MusicdriodNew/MusicdroidTests/bin/dexedLibs/robotium-solo-4.1-a8a71b3d370e82b92467fc98c55dfaa6.jar
 MusicdriodNew/MusicdroidTests/bin/resources.ap_
 
+=======
+# built application files
+*.apk
+*.ap_
+
+# workspace settings
+*.metadata
+
+#IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+out
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+proguard-project.txt
+lint.xml
+!libraryProjects/actionbarsherlock/lint.xml
+>>>>>>> 79fb4bde2c7b2624386de430e704334b63f19675

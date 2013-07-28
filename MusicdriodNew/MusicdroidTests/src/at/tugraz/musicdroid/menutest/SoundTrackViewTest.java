@@ -22,22 +22,17 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.menutest;
 
-
-import com.jayway.android.robotium.solo.Solo;
-
+import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.RelativeLayout;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.helper.Helper;
-import at.tugraz.musicdroid.recorder.RecorderUITest;
 import at.tugraz.musicdroid.soundmixer.SoundMixer;
-import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.soundtracks.SoundTrackView;
 import at.tugraz.musicdroid.types.SoundType;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
+import com.jayway.android.robotium.solo.Solo;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;

@@ -66,7 +66,7 @@ public class ChangeFilenameDialog extends DialogFragment {
 		String filename = AudioHandler.getInstance().getFilename();
 		Log.i("ChangeFilenameDialog", "Filename: " + filename);
 		editText = (EditText) view.findViewById(R.id.dialog_edittext);
-		editText.setText(Helper.getInstance().removeFileEnding(filename));
+		editText.setText(Helper.removeFileEnding(filename));
 
 		return dialog;
 	}

@@ -26,8 +26,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-import com.jayway.android.robotium.solo.Solo;
-
 import android.test.ActivityInstrumentationTestCase2;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
@@ -35,6 +33,8 @@ import at.tugraz.musicdroid.soundmixer.SoundMixer;
 import at.tugraz.musicdroid.soundmixer.SoundMixerEventHandler;
 import at.tugraz.musicdroid.soundmixer.timeline.Timeline;
 import at.tugraz.musicdroid.types.SoundType;
+
+import com.jayway.android.robotium.solo.Solo;
 
 public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2<MainActivity> implements Observer {
 	protected SoundMixerEventHandler eventHandler = null;

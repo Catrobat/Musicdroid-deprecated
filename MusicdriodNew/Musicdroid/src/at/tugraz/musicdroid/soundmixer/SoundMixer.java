@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
@@ -58,6 +57,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 	private int pixelPerSecond;
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
+	private TimelineEventHandler timelineEventHandler = null;
 	private Timeline timeline = null;
 	private Metronom metronom = null;
 
@@ -70,23 +70,27 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public void initSoundMixer(MainActivity activity,
 			ObservableHorizontalScrollView scrollView) {
+		
 		defaultLength = PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		parent = activity;
 		horScrollView = scrollView;
 		parentLayout = (RelativeLayout) horScrollView
 				.findViewById(R.id.sound_mixer_relative);
-		eventHandler = new SoundMixerEventHandler(this);
 		timeline = new Timeline(parent);
 
-		TimelineEventHandler.getInstance().init(timeline);
+		timelineEventHandler = new TimelineEventHandler();
+		timelineEventHandler.init(timeline);
+		
+
+		eventHandler = new SoundMixerEventHandler(this, timelineEventHandler);
 
 		activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity,
 				timeline));
 
 		Log.i("SoundMixer", "DefaultLength " + defaultLength);
 		soundMixerLength = longestSoundTrack = defaultLength;
-		pixelPerSecond = Helper.getInstance().getScreenWidth() / defaultLength;
+		pixelPerSecond = Helper.getScreenWidth(activity) / defaultLength;
 
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
 		timeline.setId(getNewViewID());
@@ -337,7 +341,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = Helper.getInstance().getScreenWidth()
+			pixelPerSecond = Helper.getScreenWidth(parent)
 					/ defaultLength;
 		return pixelPerSecond;
 	}
