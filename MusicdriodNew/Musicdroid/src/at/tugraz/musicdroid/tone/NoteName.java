@@ -34,6 +34,8 @@ public enum NoteName {
 			93), A5S(94), B5(95);
 
 	private int midi;
+	private final int NUMBER_HALF_TONES = 12;
+	private final int[] HALF_TONE_MIDI_MODULOS = { 1, 3, 6, 8, 10 };
 
 	private NoteName(int midi) {
 		this.midi = midi;
@@ -59,5 +61,15 @@ public enum NoteName {
 			index++;
 
 		return values()[index];
+	}
+
+	public boolean isSigned() {
+		int modValue = midi % NUMBER_HALF_TONES;
+		for (int signedModValue : HALF_TONE_MIDI_MODULOS) {
+			if (modValue == signedModValue) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
