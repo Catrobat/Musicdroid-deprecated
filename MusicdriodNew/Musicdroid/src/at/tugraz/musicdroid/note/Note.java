@@ -20,17 +20,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
 import java.io.Serializable;
 
-public class Tone extends Symbol implements Serializable {
+public class Note extends Symbol implements Serializable {
 
 	private static final long serialVersionUID = 2238272682118731619L;
 
 	private NoteName name;
 
-	Tone(NoteName name, NoteLength length) {
+	public Note(NoteName name, NoteLength length) {
 		super(length);
 		this.name = name;
 	}
@@ -39,23 +39,23 @@ public class Tone extends Symbol implements Serializable {
 		return name;
 	}
 
-	public Tone halfToneUp() {
-		Tone newTone = new Tone(name.next(), noteLength);
-		return newTone;
+	public Note halfToneUp() {
+		Note newNote = new Note(name.next(), noteLength);
+		return newNote;
 	}
 
-	public Tone halfToneDown() {
-		Tone newTone = new Tone(name.previous(), noteLength);
-		return newTone;
+	public Note halfToneDown() {
+		Note newNote = new Note(name.previous(), noteLength);
+		return newNote;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Tone)) {
+		if ((obj == null) || !(obj instanceof Note)) {
 			return false;
 		}
 
-		Tone tone = (Tone) obj;
+		Note tone = (Note) obj;
 
 		if (super.equals(obj)) {
 			return name.equals(tone.getNoteName());
@@ -66,6 +66,6 @@ public class Tone extends Symbol implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Tone] noteLength=" + noteLength + " name=" + name;
+		return "[Note] noteLength=" + noteLength + " name=" + name;
 	}
 }

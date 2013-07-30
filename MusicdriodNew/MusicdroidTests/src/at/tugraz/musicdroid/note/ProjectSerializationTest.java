@@ -20,33 +20,44 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import at.tugraz.musicdroid.note.Key;
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.Project;
+import at.tugraz.musicdroid.note.Tact;
+import at.tugraz.musicdroid.note.Track;
 
 import junit.framework.TestCase;
 
-public class NoteNameTest extends TestCase {
+public class ProjectSerializationTest extends TestCase {
 
-	public void testMidi() {
-		assertEquals(36, NoteName.C1.getMidi());
-		assertEquals(48, NoteName.C2.getMidi());
-		assertEquals(60, NoteName.C3.getMidi());
-		assertEquals(72, NoteName.C4.getMidi());
-		assertEquals(84, NoteName.C5.getMidi());
-	}
-	
-	public void testNext() {
-		NoteName a5s = NoteName.A5S;
-		NoteName b5 = NoteName.B5;
+	public void testSerialize() throws IOException, ClassNotFoundException {
+		Project project = new Project();
+		Key key = Key.BASS;
+		Tact tact = new Tact(100, NoteLength.WHOLE);
+		int beatsPerMinute = 90;
+		Track track = new Track(key, tact, beatsPerMinute);
+		project.addTrack(track);
+		File file = new File("projectSerializedTest");
 		
-		assertEquals(b5, a5s.next());
-		assertEquals(b5, b5.next());
-	}
-	
-	public void testPrevious() {
-		NoteName c1 = NoteName.C1;
-		NoteName c1s = NoteName.C1S;
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+		out.writeObject(project);
+		out.close();
 		
-		assertEquals(c1, c1.previous());
-		assertEquals(c1, c1s.previous());
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+		Project readProject = (Project) in.readObject();
+		in.close();
+		
+		file.delete();
+		
+		assertEquals(project, readProject);
 	}
 }

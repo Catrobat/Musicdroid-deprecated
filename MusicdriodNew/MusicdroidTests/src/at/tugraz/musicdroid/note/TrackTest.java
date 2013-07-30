@@ -20,33 +20,44 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
+import at.tugraz.musicdroid.note.Break;
+import at.tugraz.musicdroid.note.Key;
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.NoteName;
+import at.tugraz.musicdroid.note.Symbol;
+import at.tugraz.musicdroid.note.Tact;
+import at.tugraz.musicdroid.note.Note;
+import at.tugraz.musicdroid.note.Track;
 import junit.framework.TestCase;
 
 public class TrackTest extends TestCase {
 
 	public void testTrack1() {
-		Time time = new Time();
+		Tact tact = new Tact();
 		Track track = new Track();
 		
-		assertEquals(time.getBeatsPerTact(), track.getTime().getBeatsPerTact());
-		assertEquals(time.getNoteLength(), track.getTime().getNoteLength());
+		assertEquals(tact.getBeatsPerTact(), track.getTact().getBeatsPerTact());
+		assertEquals(tact.getNoteLength(), track.getTact().getNoteLength());
 		assertEquals(Key.VIOLIN, track.getKey());
+		assertEquals(60, track.getBeatsPerMinute());
 	}
 	
 	public void testTrack2() {
-		Time time = new Time(3, NoteLength.QUARTER);
-		Track track = new Track(Key.BASS, time);
+		Tact tact = new Tact(3, NoteLength.QUARTER);
+		int beatsPerMinute = 120;
+		Track track = new Track(Key.BASS, tact, beatsPerMinute);
 		
-		assertEquals(time, track.getTime());
+		assertEquals(tact, track.getTact());
 		assertEquals(Key.BASS, track.getKey());
+		assertEquals(beatsPerMinute, track.getBeatsPerMinute());
 	}
 
 	public void testAddSymbol() {
 		Track track = new Track();
 		
-		track.addSymbol(new Tone(NoteName.C1, NoteLength.QUARTER));
+		track.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
 		
 		assertEquals(1, track.size());
 	}
@@ -54,7 +65,7 @@ public class TrackTest extends TestCase {
 	public void testRemoveSymbol() {
 		Track track = new Track();
 		
-		Symbol symbol = new Tone(NoteName.C1, NoteLength.QUARTER);
+		Symbol symbol = new Note(NoteName.C1, NoteLength.QUARTER);
 		track.addSymbol(symbol);
 		track.removeSymbol(symbol);
 		
@@ -104,8 +115,9 @@ public class TrackTest extends TestCase {
 	
 	public void testToString() {
 		Key key = Key.BASS;
-		Track track = new Track(key, new Time());
+		int beatsPerMinute = 100;
+		Track track = new Track(key, new Tact(), beatsPerMinute);
 		
-		assertEquals("[Track] key=" + key + " symbolCount=" + track.size(), track.toString());
+		assertEquals("[Note] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + beatsPerMinute, track.toString());
 	}
 }

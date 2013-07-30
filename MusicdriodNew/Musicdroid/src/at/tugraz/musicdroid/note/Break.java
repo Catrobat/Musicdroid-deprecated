@@ -20,8 +20,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-public enum Key {
-	BASS, VIOLIN;
+import java.io.Serializable;
+
+public class Break extends Symbol implements Serializable {
+
+	private static final long serialVersionUID = 4617673494732123149L;
+
+	public Break(NoteLength length) {
+		super(length);
+	}
+
+	@Override
+	public String toString() {
+		return "[Break] noteLength=" + noteLength;
+	}
 }

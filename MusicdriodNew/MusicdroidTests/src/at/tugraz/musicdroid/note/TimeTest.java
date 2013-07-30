@@ -20,48 +20,66 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.Tact;
 import junit.framework.TestCase;
 
-public class BreakTest extends TestCase {
+public class TimeTest extends TestCase {
 
-	public void testBreak() {
-		Break br = new Break(NoteLength.WHOLE);
+	public void testTime1() {
+		Tact tact = new Tact();
 		
-		assertEquals(NoteLength.WHOLE, br.getNoteLength());
+		assertEquals(4, tact.getBeatsPerTact());
+		assertEquals(NoteLength.QUARTER, tact.getNoteLength());
+	}
+	
+	public void testTime2() {
+		Tact tact = new Tact(19, NoteLength.EIGHT);
+		
+		assertEquals(19, tact.getBeatsPerTact());
+		assertEquals(NoteLength.EIGHT, tact.getNoteLength());
 	}
 	
 	public void testEquals1() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.HALF);
+		Tact tact1 = new Tact(19, NoteLength.EIGHT);
+		Tact tact2 = new Tact(19, NoteLength.EIGHT);
 		
-		assertTrue(break1.equals(break2));
+		assertTrue(tact1.equals(tact2));
 	}
 	
 	public void testEquals2() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.WHOLE);
+		Tact tact1 = new Tact(19, NoteLength.EIGHT);
+		Tact tact2 = new Tact(20, NoteLength.EIGHT);
 		
-		assertFalse(break1.equals(break2));
+		assertFalse(tact1.equals(tact2));
 	}
 	
 	public void testEquals3() {
-		Break br = new Break(NoteLength.HALF);
+		Tact tact1 = new Tact(19, NoteLength.EIGHT);
+		Tact tact2 = new Tact(20, NoteLength.SIXTEENTH);
 		
-		assertFalse(br.equals(null));
+		assertFalse(tact1.equals(tact2));
 	}
 	
 	public void testEquals4() {
-		Break br = new Break(NoteLength.HALF);
+		Tact tact = new Tact();
 		
-		assertFalse(br.equals(""));
+		assertFalse(tact.equals(null));
+	}
+	
+	public void testEquals5() {
+		Tact tact = new Tact();
+		
+		assertFalse(tact.equals(""));
 	}
 	
 	public void testToString() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		Break br = new Break(noteLength);
+		int beatsPerTact = 20;
+		NoteLength noteLength = NoteLength.SIXTEENTH;
+		Tact tact = new Tact(beatsPerTact, noteLength);
 		
-		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+		assertEquals("[Tact] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, tact.toString());
 	}
 }

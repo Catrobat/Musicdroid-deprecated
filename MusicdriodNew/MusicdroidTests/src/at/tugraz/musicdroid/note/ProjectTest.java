@@ -20,64 +20,78 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
+import at.tugraz.musicdroid.note.Break;
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.Project;
+import at.tugraz.musicdroid.note.Track;
 import junit.framework.TestCase;
 
-public class TimeTest extends TestCase {
+public class ProjectTest extends TestCase {
 
-	public void testTime1() {
-		Time time = new Time();
+	public void testAddTrack() {
+		Project project = new Project();
 		
-		assertEquals(4, time.getBeatsPerTact());
-		assertEquals(NoteLength.QUARTER, time.getNoteLength());
+		project.addTrack(new Track());
+		
+		assertEquals(1, project.size());
 	}
-	
-	public void testTime2() {
-		Time time = new Time(19, NoteLength.EIGHT);
+
+	public void testRemoveTrack() {
+		Project project = new Project();
 		
-		assertEquals(19, time.getBeatsPerTact());
-		assertEquals(NoteLength.EIGHT, time.getNoteLength());
+		Track track = new Track();
+		project.addTrack(track);
+		project.removeTrack(track);
+		
+		assertEquals(0, project.size());
 	}
 	
 	public void testEquals1() {
-		Time time1 = new Time(19, NoteLength.EIGHT);
-		Time time2 = new Time(19, NoteLength.EIGHT);
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
-		assertTrue(time1.equals(time2));
+		Track track2 = new Track();
+		track2.addSymbol(new Break(NoteLength.HALF));
+		
+		assertTrue(track1.equals(track2));
 	}
 	
 	public void testEquals2() {
-		Time time1 = new Time(19, NoteLength.EIGHT);
-		Time time2 = new Time(20, NoteLength.EIGHT);
+		Project project1 = new Project();
+		project1.addTrack(new Track());
 		
-		assertFalse(time1.equals(time2));
+		Project project2 = new Project();
+		project2.addTrack(new Track());
+		
+		assertTrue(project1.equals(project2));
 	}
 	
 	public void testEquals3() {
-		Time time1 = new Time(19, NoteLength.EIGHT);
-		Time time2 = new Time(20, NoteLength.SIXTEENTH);
+		Project project1 = new Project();
+		project1.addTrack(new Track());
 		
-		assertFalse(time1.equals(time2));
+		Project project2 = new Project();
+		
+		assertFalse(project1.equals(project2));
 	}
 	
 	public void testEquals4() {
-		Time time = new Time();
+		Project project = new Project();
 		
-		assertFalse(time.equals(null));
+		assertFalse(project.equals(null));
 	}
 	
 	public void testEquals5() {
-		Time time = new Time();
+		Project project = new Project();
 		
-		assertFalse(time.equals(""));
+		assertFalse(project.equals(""));
 	}
 	
 	public void testToString() {
-		int beatsPerTact = 20;
-		NoteLength noteLength = NoteLength.SIXTEENTH;
-		Time time = new Time(beatsPerTact, noteLength);
+		Project project = new Project();
 		
-		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
+		assertEquals("[Project] trackCount=" + project.size(), project.toString());
 	}
 }

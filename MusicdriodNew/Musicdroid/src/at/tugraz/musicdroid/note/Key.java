@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-public enum NoteLength {
-	WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH;
+public enum Key {
+	BASS, VIOLIN;
 }

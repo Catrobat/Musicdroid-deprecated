@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,27 +32,34 @@ public class Track implements Serializable {
 
 	// TODO fw Instrument
 	private Key key;
-	private Time time;
+	private Tact tact;
+	private int beatsPerMinute;
 	private List<Symbol> symbols;
 
 	public Track() {
 		this.symbols = new ArrayList<Symbol>();
 		this.key = Key.VIOLIN;
-		this.time = new Time();
+		this.tact = new Tact();
+		this.beatsPerMinute = 60;
 	}
 
-	public Track(Key key, Time time) {
+	public Track(Key key, Tact tact, int beatsPerMinute) {
 		this.symbols = new ArrayList<Symbol>();
 		this.key = key;
-		this.time = time;
+		this.tact = tact;
+		this.beatsPerMinute = beatsPerMinute;
 	}
 
 	public Key getKey() {
 		return key;
 	}
 
-	public Time getTime() {
-		return time;
+	public Tact getTact() {
+		return tact;
+	}
+	
+	public int getBeatsPerMinute() {
+		return beatsPerMinute;
 	}
 
 	public void addSymbol(Symbol symbol) {
@@ -79,7 +86,7 @@ public class Track implements Serializable {
 
 		Track track = (Track) obj;
 
-		if ((key.equals(track.getKey())) && (time.equals(track.getTime()))
+		if ((key.equals(track.getKey())) && (tact.equals(track.getTact()) && (beatsPerMinute == track.getBeatsPerMinute()))
 				&& (size() == track.size())) {
 			for (int i = 0; i < size(); i++) {
 				if (!getSymbol(i).equals(track.getSymbol(i))) {
@@ -95,6 +102,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] key=" + key + " symbolCount=" + size();
+		return "[Track] key=" + key + " symbolCount=" + size() + " beatsPerMinute=" + beatsPerMinute;
 	}
 }

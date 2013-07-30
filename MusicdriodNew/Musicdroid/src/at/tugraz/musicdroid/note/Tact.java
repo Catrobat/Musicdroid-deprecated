@@ -20,37 +20,49 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-import junit.framework.TestCase;
+public class Tact implements Serializable {
 
-public class ProjectSerializationTest extends TestCase {
+	private static final long serialVersionUID = 888797518903394570L;
 
-	public void testSerialize() throws IOException, ClassNotFoundException {
-		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time(100, NoteLength.WHOLE);
-		Track track = new Track(key, time);
-		project.addTrack(track);
-		File file = new File("projectSerializedTest");
-		
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		out.writeObject(project);
-		out.close();
-		
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-		Project readProject = (Project) in.readObject();
-		in.close();
-		
-		file.delete();
-		
-		assertEquals(project, readProject);
+	private int beatsPerTact;
+	private NoteLength noteLength;
+
+	public Tact() {
+		this(4, NoteLength.QUARTER);
+	}
+
+	public Tact(int beatsPerTact, NoteLength noteLength) {
+		this.beatsPerTact = beatsPerTact;
+		this.noteLength = noteLength;
+	}
+
+	public int getBeatsPerTact() {
+		return beatsPerTact;
+	}
+
+	public NoteLength getNoteLength() {
+		return noteLength;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Tact)) {
+			return false;
+		}
+
+		Tact tact = (Tact) obj;
+
+		return (beatsPerTact == tact.getBeatsPerTact())
+				&& noteLength.equals(tact.getNoteLength());
+	}
+
+	@Override
+	public String toString() {
+		return "[Tact] beatsPerTact=" + beatsPerTact + " noteLength="
+				+ noteLength;
 	}
 }
