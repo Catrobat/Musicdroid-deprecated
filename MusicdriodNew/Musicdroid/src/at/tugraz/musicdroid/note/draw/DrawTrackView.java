@@ -33,7 +33,7 @@ import at.tugraz.musicdroid.note.Track;
  * @author florian.winkelbauer, bteufl
  * 
  */
-public class DrawTrack extends View {
+public class DrawTrackView extends View {
 
 	private static final int LINE_DISTANCE = 42;
 	private static final int NOTE_DISTANCE = 42;
@@ -45,28 +45,36 @@ public class DrawTrack extends View {
 	private int xStartPositionOfLine;
 	private int xEndPositionOfLine;
 	private int yCenter;
-	private int width;
-	private int height;
+	private int screenWidth;
+	private int screenHeight;
 
 	private Canvas canvas;
 
-	public DrawTrack(Context context, Track track, int width, int height) {
+	public DrawTrackView(Context context, int screenWidth, int screenHeight) {
 		super(context);
-		this.track = track;
-		this.width = width;
-		this.height = height;
-		yCenter = height / 2;
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
+		yCenter = screenHeight / 2;
 		xStartPositionOfLine = PADDING_NOTE_LINE;
-		xEndPositionOfLine = width - PADDING_NOTE_LINE;
+		xEndPositionOfLine = this.screenWidth - PADDING_NOTE_LINE;
 
 		paint = new Paint();
 		canvas = new Canvas();
 
 		drawLines();
 		drawKey();
+		drawLineEndBars();
 		drawTact();
 		drawBeats();
 		drawNotes();
+
+	}
+
+	/**
+	 * 
+	 */
+	private void drawLineEndBars() {
+		// TODO Auto-generated method stub
 
 	}
 
