@@ -31,6 +31,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 import at.tugraz.musicdroid.note.Track;
@@ -147,13 +148,19 @@ public class DrawTrackView extends View {
 	}
 
 	private void drawKey() {
-		//refactor: save lio, reu as integer
 		Resources res = context.getResources();
 		Bitmap bm = BitmapFactory.decodeResource(res, idOfKeyImage);
 		int keyHeight = distanceBetweenLines * HEIGHT_OF_KEY_IN_LINE_SPACES;
-		Rect rect = new Rect(xStartPositionOfLine + PADDING_BETWEEN_SYMBOLS,
-				yCenter - keyHeight / 2, xStartPositionOfLine
-						+ distanceBetweenLines * 3, yCenter + keyHeight / 2);
+
+		Point leftUpperOfRect = new Point(xStartPositionOfLine
+				+ PADDING_BETWEEN_SYMBOLS, yCenter - keyHeight / 2);
+
+		Point rightBottomOfRect = new Point(xStartPositionOfLine
+				+ distanceBetweenLines * 3, yCenter + keyHeight / 2);
+
+		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
+				rightBottomOfRect.x, rightBottomOfRect.y);
+
 		canvas.drawBitmap(bm, null, rect, null);
 	}
 
