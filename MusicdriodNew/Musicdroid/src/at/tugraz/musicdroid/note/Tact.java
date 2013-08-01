@@ -20,8 +20,49 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-public enum NoteLength {
-	WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH;
+import java.io.Serializable;
+
+public class Tact implements Serializable {
+
+	private static final long serialVersionUID = 888797518903394570L;
+
+	private int beatsPerTact;
+	private NoteLength noteLength;
+
+	public Tact() {
+		this(4, NoteLength.QUARTER);
+	}
+
+	public Tact(int beatsPerTact, NoteLength noteLength) {
+		this.beatsPerTact = beatsPerTact;
+		this.noteLength = noteLength;
+	}
+
+	public int getBeatsPerTact() {
+		return beatsPerTact;
+	}
+
+	public NoteLength getNoteLength() {
+		return noteLength;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Tact)) {
+			return false;
+		}
+
+		Tact tact = (Tact) obj;
+
+		return (beatsPerTact == tact.getBeatsPerTact())
+				&& noteLength.equals(tact.getNoteLength());
+	}
+
+	@Override
+	public String toString() {
+		return "[Tact] beatsPerTact=" + beatsPerTact + " noteLength="
+				+ noteLength;
+	}
 }

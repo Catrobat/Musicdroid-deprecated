@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
 public enum NoteName {
 	// C3 = c'(http://img.docstoccdn.com/thumb/orig/28179105.png)
@@ -34,8 +34,10 @@ public enum NoteName {
 			93), A5S(94), B5(95);
 
 	private int midi;
+	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
+	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
 
-	private NoteName(int midi) {
+	private NoteName(int midi) { 
 		this.midi = midi;
 	}
 
@@ -59,5 +61,19 @@ public enum NoteName {
 			index++;
 
 		return values()[index];
+	}
+
+	public boolean isSigned() {
+		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		for (int signedModValue : SIGNED_HALF_TONE_MODULOS) {
+			if (modValue == signedModValue) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static int calculateDistance(NoteName name1, NoteName name2) {
+		return name1.midi - name2.midi;
 	}
 }

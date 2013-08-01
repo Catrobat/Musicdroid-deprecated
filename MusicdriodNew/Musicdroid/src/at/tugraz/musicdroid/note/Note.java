@@ -20,33 +20,52 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-public abstract class Symbol {
+import java.io.Serializable;
 
-	protected NoteLength noteLength;
+public class Note extends Symbol implements Serializable {
 
-	Symbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
+	private static final long serialVersionUID = 2238272682118731619L;
+
+	private NoteName name;
+
+	public Note(NoteName name, NoteLength length) {
+		super(length);
+		this.name = name;
 	}
 
-	public NoteLength getNoteLength() {
-		return noteLength;
+	public NoteName getNoteName() {
+		return name;
+	}
+
+	public Note halfToneUp() {
+		Note newNote = new Note(name.next(), noteLength);
+		return newNote;
+	}
+
+	public Note halfToneDown() {
+		Note newNote = new Note(name.previous(), noteLength);
+		return newNote;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Symbol)) {
+		if ((obj == null) || !(obj instanceof Note)) {
 			return false;
 		}
 
-		Symbol symbol = (Symbol) obj;
+		Note tone = (Note) obj;
 
-		return noteLength.equals(symbol.getNoteLength());
+		if (super.equals(obj)) {
+			return name.equals(tone.getNoteName());
+		}
+
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "[Symbol] noteLength=" + noteLength;
+		return "[Note] noteLength=" + noteLength + " name=" + name;
 	}
 }
