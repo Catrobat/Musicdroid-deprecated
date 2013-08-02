@@ -22,6 +22,7 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.tone;
 
+import at.tugraz.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
 public class NoteNameTest extends TestCase {

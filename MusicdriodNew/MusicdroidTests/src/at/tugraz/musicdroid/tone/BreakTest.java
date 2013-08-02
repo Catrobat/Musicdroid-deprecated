@@ -22,6 +22,8 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.tone;
 
+import at.tugraz.musicdroid.note.Break;
+import at.tugraz.musicdroid.note.NoteLength;
 import junit.framework.TestCase;
 
 public class BreakTest extends TestCase {

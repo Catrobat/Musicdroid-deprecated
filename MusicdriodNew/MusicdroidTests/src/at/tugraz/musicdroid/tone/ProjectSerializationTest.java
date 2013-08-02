@@ -29,6 +29,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import android.text.format.Time;
+import at.tugraz.musicdroid.note.Key;
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.Project;
+import at.tugraz.musicdroid.note.Track;
+
 import junit.framework.TestCase;
 
 public class ProjectSerializationTest extends TestCase {
@@ -36,8 +42,8 @@ public class ProjectSerializationTest extends TestCase {
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
 		Key key = Key.BASS;
-		Time time = new Time(100, NoteLength.WHOLE);
-		Track track = new Track(key, time);
+		Time time = new Time();
+		Track track = new Track();
 		project.addTrack(track);
 		File file = new File("projectSerializedTest");
 		
