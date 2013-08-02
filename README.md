@@ -1,6 +1,10 @@
 MUSICDROID
 
-The musicdroid project has the aim to make catroid users be able to create music.
+The musicdroid project has the aim to make catroid users be able to create music. 
+
+TEAMPAGE
+
+http://www.ist.tugraz.at/catrobat/bin/view/Main/MusicDroid
 
 
 FIRST STEPS
