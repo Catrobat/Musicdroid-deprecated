@@ -22,6 +22,10 @@
  ******************************************************************************/
 package at.tugraz.musicdroid.tone;
 
+import at.tugraz.musicdroid.note.Break;
+import at.tugraz.musicdroid.note.NoteLength;
+import at.tugraz.musicdroid.note.Project;
+import at.tugraz.musicdroid.note.Track;
 import junit.framework.TestCase;
 
 public class ProjectTest extends TestCase {

@@ -20,43 +20,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+public abstract class Symbol {
 
-import android.text.format.Time;
-import at.tugraz.musicdroid.note.Key;
-import at.tugraz.musicdroid.note.NoteLength;
-import at.tugraz.musicdroid.note.Project;
-import at.tugraz.musicdroid.note.Track;
+	protected NoteLength noteLength;
 
-import junit.framework.TestCase;
+	Symbol(NoteLength noteLength) {
+		this.noteLength = noteLength;
+	}
 
-public class ProjectSerializationTest extends TestCase {
+	public NoteLength getNoteLength() {
+		return noteLength;
+	}
 
-	public void testSerialize() throws IOException, ClassNotFoundException {
-		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
-		Track track = new Track();
-		project.addTrack(track);
-		File file = new File("projectSerializedTest");
-		
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		out.writeObject(project);
-		out.close();
-		
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-		Project readProject = (Project) in.readObject();
-		in.close();
-		
-		file.delete();
-		
-		assertEquals(project, readProject);
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof Symbol)) {
+			return false;
+		}
+
+		Symbol symbol = (Symbol) obj;
+
+		return noteLength.equals(symbol.getNoteLength());
+	}
+
+	@Override
+	public String toString() {
+		return "[Symbol] noteLength=" + noteLength;
 	}
 }

@@ -20,49 +20,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid;
 
-import java.io.Serializable;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import at.tugraz.musicdroid.R;
+import at.tugraz.musicdroid.note.draw.DrawTrackView;
+import at.tugraz.musicdroid.recorder.RecorderLayout;
 
-public class Time implements Serializable {
-
-	private static final long serialVersionUID = 888797518903394570L;
-
-	private int beatsPerTact;
-	private NoteLength noteLength;
-
-	public Time() {
-		this(4, NoteLength.QUARTER);
-	}
-
-	public Time(int beatsPerTact, NoteLength noteLength) {
-		this.beatsPerTact = beatsPerTact;
-		this.noteLength = noteLength;
-	}
-
-	public int getBeatsPerTact() {
-		return beatsPerTact;
-	}
-
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
+public class DrawTrackActivity extends Activity {
+	private RecorderLayout layout = null;
 
 	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Time)) {
-			return false;
-		}
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_recorder);
 
-		Time time = (Time) obj;
+		DrawTrackView trackView = new DrawTrackView(this, R.drawable.violine);
 
-		return (beatsPerTact == time.getBeatsPerTact())
-				&& noteLength.equals(time.getNoteLength());
-	}
+		setContentView(trackView);
 
-	@Override
-	public String toString() {
-		return "[Time] beatsPerTact=" + beatsPerTact + " noteLength="
-				+ noteLength;
 	}
 }
