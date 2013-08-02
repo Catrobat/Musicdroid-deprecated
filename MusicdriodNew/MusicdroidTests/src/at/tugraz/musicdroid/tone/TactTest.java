@@ -26,13 +26,13 @@ import at.tugraz.musicdroid.note.NoteLength;
 import at.tugraz.musicdroid.note.Tact;
 import junit.framework.TestCase;
 
-public class TimeTest extends TestCase {
+public class TactTest extends TestCase {
 
 	public void testTime1() {
-		Tact time = new Tact();
+		Tact tact = new Tact();
 		
-		assertEquals(4, time.getBeatsPerTact());
-		assertEquals(NoteLength.QUARTER, time.getNoteLength());
+		assertEquals(4, tact.getBeatsPerTact());
+		assertEquals(NoteLength.QUARTER, tact.getNoteLength());
 	}
 	
 	public void testTime2() {
@@ -50,36 +50,36 @@ public class TimeTest extends TestCase {
 	}
 	
 	public void testEquals2() {
-		Tact time1 = new Tact(19, NoteLength.EIGHT);
-		Tact time2 = new Tact(20, NoteLength.EIGHT);
+		Tact tact1 = new Tact(19, NoteLength.EIGHT);
+		Tact tact2 = new Tact(20, NoteLength.EIGHT);
 		
-		assertFalse(time1.equals(time2));
+		assertFalse(tact1.equals(tact2));
 	}
 	
 	public void testEquals3() {
-		Tact time1 = new Tact(19, NoteLength.EIGHT);
-		Tact time2 = new Tact(20, NoteLength.SIXTEENTH);
+		Tact tact1 = new Tact(19, NoteLength.EIGHT);
+		Tact tact2 = new Tact(20, NoteLength.SIXTEENTH);
 		
-		assertFalse(time1.equals(time2));
+		assertFalse(tact1.equals(tact2));
 	}
 	
 	public void testEquals4() {
-		Tact time = new Tact();
+		Tact tact = new Tact();
 		
-		assertFalse(time.equals(null));
+		assertFalse(tact.equals(null));
 	}
 	
 	public void testEquals5() {
-		Tact time = new Tact();
+		Tact tact = new Tact();
 		
-		assertFalse(time.equals(""));
+		assertFalse(tact.equals(""));
 	}
 	
 	public void testToString() {
 		int beatsPerTact = 20;
 		NoteLength noteLength = NoteLength.SIXTEENTH;
-		Tact time = new Tact(beatsPerTact, noteLength);
+		Tact tact = new Tact(beatsPerTact, noteLength);
 		
-		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
+		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, tact.toString());
 	}
 }

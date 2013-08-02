@@ -53,7 +53,6 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	
 	public void testResetSoundMixerAtNewSongYes()
 	{
-		helper.addTrack(SoundType.PIANO);
 		helper.addTrack(SoundType.DRUMS);
 		helper.addTrack(SoundType.DRUMS);
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 3);
@@ -70,7 +69,6 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	
 	public void testSoundMixerUnchangedAtNewSongNo()
 	{
-		helper.addTrack(SoundType.PIANO);
 		helper.addTrack(SoundType.DRUMS);
 		helper.addTrack(SoundType.DRUMS);
 		int oldCount = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount(); 
@@ -89,13 +87,12 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testAddTrackAtClickingAddSoundButton()
 	{
 		testAddSpecificTrack(SoundType.DRUMS);
-		testAddSpecificTrack(SoundType.PIANO);
 		testAddSpecificTrack(SoundType.DRUMS);
 	}
 	
 	public void testDeleteTrack()
 	{
-		helper.addTrack(SoundType.PIANO);
+		helper.addTrack(SoundType.DRUMS);
 		int number_of_childs_old = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
 		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
 		
@@ -114,7 +111,7 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	
 	public void testCopyTrack()
 	{
-		helper.addTrack(SoundType.PIANO);
+		helper.addTrack(SoundType.DRUMS);
 		int number_of_childs_old = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
 		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
 		
@@ -140,7 +137,6 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testAddMultipleTracksAndDelete()
 	{
 		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.PIANO);
 		helper.addTrack(SoundType.DRUMS);
 		
 		testDeleteTrack();

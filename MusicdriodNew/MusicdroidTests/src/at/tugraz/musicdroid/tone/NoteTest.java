@@ -27,9 +27,9 @@ import at.tugraz.musicdroid.note.NoteLength;
 import at.tugraz.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
-public class ToneTest extends TestCase {
+public class NoteTest extends TestCase {
 
-	public void testTone() {
+	public void testNote() {
 		NoteName name = NoteName.C1;
 		NoteLength noteLength = NoteLength.EIGHT;
 		Note note = new Note(name, noteLength);
