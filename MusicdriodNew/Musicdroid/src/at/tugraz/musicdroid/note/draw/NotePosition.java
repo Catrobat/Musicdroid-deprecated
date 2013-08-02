@@ -20,43 +20,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package at.tugraz.musicdroid.tone;
+package at.tugraz.musicdroid.note.draw;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import android.text.format.Time;
 import at.tugraz.musicdroid.note.Key;
-import at.tugraz.musicdroid.note.NoteLength;
-import at.tugraz.musicdroid.note.Project;
-import at.tugraz.musicdroid.note.Track;
+import at.tugraz.musicdroid.note.NoteName;
+import at.tugraz.musicdroid.note.Note;
 
-import junit.framework.TestCase;
+/**
+ * @author Bianca
+ * 
+ */
+public class NotePosition {
+	
+	private NotePosition() {
+	}
 
-public class ProjectSerializationTest extends TestCase {
+	public static double getLinePosition(Key key, Note tone) {
+		if (key == Key.VIOLIN)
+			return getToneDistanceFromToneToMiddleLineInHalfTones(key, tone);
+			
+		throw new UnsupportedOperationException();
+	}
 
-	public void testSerialize() throws IOException, ClassNotFoundException {
-		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
-		Track track = new Track();
-		project.addTrack(track);
-		File file = new File("projectSerializedTest");
+	private static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key, Note tone) {
+		NoteName currentNote = tone.getNoteName();
+		NoteName middleNote = NoteName.B3;
 		
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		out.writeObject(project);
-		out.close();
-		
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-		Project readProject = (Project) in.readObject();
-		in.close();
-		
-		file.delete();
-		
-		assertEquals(project, readProject);
+		return NoteName.calculateDistance(currentNote, middleNote);
 	}
 }

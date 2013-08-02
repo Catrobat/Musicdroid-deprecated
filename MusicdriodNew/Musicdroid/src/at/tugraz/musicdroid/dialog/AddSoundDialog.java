@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
+import at.tugraz.musicdroid.DrawTrackActivity;
 import at.tugraz.musicdroid.MainActivity;
 import at.tugraz.musicdroid.R;
 import at.tugraz.musicdroid.RecorderActivity;
@@ -85,8 +86,9 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 			parent.addSoundTrack(new SoundTrackView(parent, stvd));
 			break;
 		case PIANO:
-			SoundTrackPiano stvp = new SoundTrackPiano();
-			parent.addSoundTrack(new SoundTrackView(parent, stvp));
+			parent.startActivity(new Intent(parent, DrawTrackActivity.class));
+			// SoundTrackPiano stvp = new SoundTrackPiano();
+			// parent.addSoundTrack(new SoundTrackView(parent, stvp));
 			break;
 		case MIC:
 			// SoundTrackMic stvm = new SoundTrackMic();
