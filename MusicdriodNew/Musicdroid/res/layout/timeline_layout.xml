@@ -21,7 +21,7 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<at.tugraz.musicdroid.soundmixer.timeline.Timeline
+<org.catrobat.musicdroid.soundmixer.timeline.Timeline
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -95,4 +95,4 @@
 
 
      
-</at.tugraz.musicdroid.soundmixer.timeline.Timeline>
+</org.catrobat.musicdroid.soundmixer.timeline.Timeline>
