@@ -57,9 +57,10 @@ public class LicenseTest extends TestCase {
 	}
 
 	public void setUp() throws Exception {
+		assertTrue((new File("license").exists()));
 	    Scanner scanner = null;
 		try {
-			scanner = new Scanner(new FileInputStream("../MusicdroidTests/src/org/catrobat/musicdroid/projecttest/license"));
+			scanner = new Scanner(new FileInputStream("license"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
