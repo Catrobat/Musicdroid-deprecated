@@ -57,10 +57,7 @@ public class MainActivity extends MenuFileActivity {
 		super.prepareFolderStructure();
 
 		AddSoundDialog.init(this);
-
-		Helper helper = Helper.getInstance();
-		helper.init(this);
-
+		
 		setContentView(R.layout.activity_main);
 
 		initTopStatusBar();

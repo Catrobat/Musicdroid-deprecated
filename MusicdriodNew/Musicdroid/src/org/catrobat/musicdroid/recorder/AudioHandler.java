@@ -140,7 +140,7 @@ public class AudioHandler {
 
 	public void setFilename(String f) {
 		this.filename = f;
-		layout.updateFilename(Helper.getInstance().removeFileEnding(
+		layout.updateFilename(Helper.removeFileEnding(
 				this.filename));
 	}
 
