@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.soundmixer;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.util.Log;
 import android.view.View;
@@ -42,22 +43,21 @@ import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 
-public class SoundMixer implements HorizontalScrollViewListener {
+public class SoundMixer {
 	public static SoundMixer instance = null;
-	protected ObservableHorizontalScrollView horScrollView;
-	protected RelativeLayout parentLayout;
-	protected MainActivity parent;
+	private SoundMixerLayout layout;
+	protected MainActivity parentActivity;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
-	protected int viewId;
-	private int defaultLength;
+	private int defaultTrackLength;
 	private int longestSoundTrack;
 	private int soundMixerLength;
-	private int callingId;
 	private int pixelPerSecond;
+	private int callingId;
 	private SoundTrack callingTrack = null;
 	private SoundMixerEventHandler eventHandler = null;
-	private Timeline timeline = null;
 	private Metronom metronom = null;
+	private Timeline timeline;
+	private UniqueSoundMixerIDCreator idCreator;
 
 	public static SoundMixer getInstance() {
 		if (instance == null) {
@@ -66,61 +66,43 @@ public class SoundMixer implements HorizontalScrollViewListener {
 		return instance;
 	}
 
-	public void initSoundMixer(MainActivity activity,
-			ObservableHorizontalScrollView scrollView) {
-		defaultLength = PreferenceManager.getInstance().getPreference(
+	public void initSoundMixer(MainActivity activity) {
+		defaultTrackLength = PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
-		parent = activity;
-		horScrollView = scrollView;
-		parentLayout = (RelativeLayout) horScrollView
-				.findViewById(R.id.sound_mixer_relative);
+		parentActivity = activity;
+		layout = new SoundMixerLayout(activity, this);
 		eventHandler = new SoundMixerEventHandler(this);
-		timeline = new Timeline(parent);
-
+		timeline = new Timeline(activity);
+		metronom = new Metronom(activity);
+		idCreator = new UniqueSoundMixerIDCreator();
+		
+		timeline.setId(idCreator.getNewId());
+		layout.addTimelineToLayout(timeline);
+		
 		TimelineEventHandler.getInstance().init(timeline);
 
 		activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity,
 				timeline));
-
-		Log.i("SoundMixer", "DefaultLength " + defaultLength);
-		soundMixerLength = longestSoundTrack = defaultLength;
+		
+		soundMixerLength = longestSoundTrack = defaultTrackLength;
+		pixelPerSecond = Helper.getScreenWidth(parentActivity) / defaultTrackLength;
 		pixelPerSecond = DeviceInfo.getScreenWidth(parent) / defaultLength;
-
-		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
-		timeline.setId(getNewViewID());
-		parentLayout.addView(timeline, lp);
-		horScrollView.setScrollViewListener(this);
-
-		metronom = new Metronom(activity);
-	}
-
-	@Override
-	public void onScrollChanged(ObservableHorizontalScrollView scrollView,
-			int x, int y, int oldx, int oldy) {
-		// if(Math.abs(oldx-x)>2)
-		// {
-		// Log.i("X " + x, "OldX " + oldx);
-		// timeline.updateArrowOnScroll(x-oldx);
-		// }
-
 	}
 
 	public SoundMixer() {
-		viewId = 1234;
 	}
 
 	public void handleCopy() {
 		SoundTrack copy = new SoundTrack(callingTrack);
-		addSoundTrackViewToSoundMixer(new SoundTrackView(parent, copy));
+		addSoundTrackViewToSoundMixer(new SoundTrackView(parentActivity, copy));
 	}
 
 	public void addSoundTrackViewToSoundMixer(SoundTrackView track) {
-		track.setId(getNewViewID());
+		track.setId(idCreator.getNewId());
 		checkLongestTrack(track.getSoundTrack().getDuration());
-		RelativeLayout.LayoutParams params = positionTrack(track);
-		tracks.add(track);
-		parentLayout.addView(track, params);
 		eventHandler.addObserver(track.getSoundTrack());
+		layout.addTrackToLayout(track);
+		tracks.add(track);
 		timeline.addNewTrackPosition(track.getId(), track.getSoundTrack()
 				.getType().getColorResource());
 	}
@@ -147,8 +129,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public void stopAllSoundInSoundMixerAndRewind() {
 		stopAllSoundsInSoundmixer();
-		eventHandler.rewind();
-		timeline.rewind();
+		rewind();
 	}
 
 	public void rewind() {
@@ -178,27 +159,18 @@ public class SoundMixer implements HorizontalScrollViewListener {
 	public void deleteTrackById(int tId) {
 		for (int i = 0; i < tracks.size(); i++) {
 			if (tracks.get(i).getId() == tId) {
-				parentLayout.removeView(tracks.get(i));
-				reorderLayout(i);
+				layout.removeTrackFromLayout(tracks.get(i), i);
 				tracks.remove(i);
 			}
 		}
 	}
 
 	public void disableUnselectedViews() {
-		for (int child = 0; child < parentLayout.getChildCount(); child++) {
-			View view = parentLayout.getChildAt(child);
-			if (view.getId() != timeline.getId() && view.getId() != callingId)
-				((SoundTrackView) view).disableView();
-		}
+		layout.disableUnselectedViews(callingId);
 	}
 
 	public void enableUnselectedViews() {
-		for (int child = 0; child < parentLayout.getChildCount(); child++) {
-			View view = parentLayout.getChildAt(child);
-			if (view.getId() != timeline.getId() && view.getId() != callingId)
-				((SoundTrackView) view).enableView();
-		}
+		layout.enableUnselectedViews(callingId);
 	}
 
 	private void checkLongestTrack(int newTrackLength) {
@@ -210,57 +182,20 @@ public class SoundMixer implements HorizontalScrollViewListener {
 	}
 
 	private void resizeSoundMixer(int length) {
-		ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) parentLayout
-				.getLayoutParams();
-		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond()
-				* length;
-		parentLayout.setLayoutParams(layoutParams);
-	}
-
-	private void reorderLayout(int position) {
-		if (position != 0 && position != tracks.size() - 1) {
-			SoundTrackView predecessor = tracks.get(position - 1);
-			SoundTrackView successor = tracks.get(position + 1);
-
-			RelativeLayout.LayoutParams params = (LayoutParams) successor
-					.getLayoutParams();
-			params.addRule(RelativeLayout.BELOW, predecessor.getId());
-			successor.setLayoutParams(params);
-		}
-		if (position == 0 && tracks.size() > 1) {
-			SoundTrackView successor = tracks.get(position + 1);
-			RelativeLayout.LayoutParams params = (LayoutParams) successor
-					.getLayoutParams();
-			params.addRule(RelativeLayout.BELOW, timeline.getId());
-			successor.setLayoutParams(params);
-		}
-	}
-
-	private RelativeLayout.LayoutParams positionTrack(SoundTrackView track) {
-		if (tracks.size() > 0) {
-			SoundTrackView lowermost_track = tracks.get(tracks.size() - 1);
-			RelativeLayout.LayoutParams layoutParams = (LayoutParams) track
-					.getLayoutParams();
-			layoutParams.addRule(RelativeLayout.BELOW, lowermost_track.getId());
-			return layoutParams;
-		} else {
-			RelativeLayout.LayoutParams layoutParams = (LayoutParams) track
-					.getLayoutParams();
-			layoutParams.addRule(RelativeLayout.BELOW, timeline.getId());
-			return layoutParams;
-		}
+		layout.resizeLayoutWidth(getPixelPerSecond()*length);
 	}
 
 	public void resetSoundMixer() {
+		Log.i("SoundMixer", "RESET");
 		for (int i = 0; i < tracks.size(); i++) {
 			tracks.get(i).removeAllViews();
-			parentLayout.removeView(tracks.get(i));
+			layout.removeView(tracks.get(i));
 		}
 		longestSoundTrack = 0;
 
 		timeline.resetTimeline();
 
-		longestSoundTrack = soundMixerLength = defaultLength;
+		longestSoundTrack = soundMixerLength = defaultTrackLength;
 		tracks.clear();
 	}
 
@@ -275,7 +210,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
-		} else if (newLength < soundMixerLength && newLength >= defaultLength) {
+		} else if (newLength < soundMixerLength && newLength >= defaultTrackLength) {
 			soundMixerLength = newLength;
 			resizeSoundMixer(newLength);
 			timeline.resizeTimeline(newLength);
@@ -286,7 +221,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 		if (eventHandler.setStartPoint(location[0] / pixelPerSecond))
 			timeline.setStartPoint(location[0]);
 		else
-			Toast.makeText(parent, R.string.warning_invalid_marker_position,
+			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position,
 					Toast.LENGTH_SHORT).show();
 
 	}
@@ -295,7 +230,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 		if (eventHandler.setEndPoint(location[0] / pixelPerSecond))
 			timeline.setEndPoint(location[0]);
 		else
-			Toast.makeText(parent, R.string.warning_invalid_marker_position,
+			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position,
 					Toast.LENGTH_SHORT).show();
 	}
 
@@ -306,11 +241,6 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public int getStartPointByPixel(int pixel) {
 		return eventHandler.computeStartPointInSecondsByPixel(pixel);
-	}
-
-	public int getNewViewID() {
-		viewId = viewId + 1;
-		return viewId;
 	}
 
 	public ArrayList<SoundTrackView> getTracks() {
@@ -336,7 +266,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
 			pixelPerSecond = DeviceInfo.getScreenWidth(parent)
-					/ defaultLength;
+					/ defaultTrackLength;
 		return pixelPerSecond;
 	}
 
@@ -346,6 +276,11 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public int getStopPointFromEventHandler() {
 		return eventHandler.getStopPoint();
+	}
+
+
+	public SoundTrackView getTrackAtPosition(int position) {
+		return tracks.get(position);
 	}
 
 }
