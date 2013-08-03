@@ -33,6 +33,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Scanner;
 
+import android.app.Application;
+
 import junit.framework.TestCase;
 
 public class LicenseTest extends TestCase {
@@ -57,7 +59,7 @@ public class LicenseTest extends TestCase {
 	public void setUp() throws Exception {
 	    Scanner scanner = null;
 		try {
-			scanner = new Scanner(new FileInputStream("license"));
+			scanner = new Scanner(new FileInputStream("../MusicdroidTests/src/org/catrobat/musicdroid/projecttest/license"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
