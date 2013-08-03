@@ -15,6 +15,19 @@ ISSUE TRACKING
 
 Issues will be submitted/edited/created on Jira from now on (https://jira.catrob.at).
 
+CODING CONVENTIONS
+
+Branch Names: JIRATASKNUMBER_YourBranchName (f.e. MUS-1_ThisIsTheBranchName)
+Constants: I_AM_A_CONSTANT
+Variables: thisIsAMember
+Methods: thisIsAMethod
+Getter/Setter: getMe/setMe 
+Classnames: ThisIsAClass
+
+*good, pertinent names of variables, methods, objects
+*only use the english language
+*use as much as possible no comments (why? cannot easily be kept up-to-date) 
+
 CURRENT STEPS
 
 *RE-Designing the menu
@@ -22,3 +35,4 @@ CURRENT STEPS
 *import MIDI-FIles
 *Draw notes
 *Create rhythms
+
