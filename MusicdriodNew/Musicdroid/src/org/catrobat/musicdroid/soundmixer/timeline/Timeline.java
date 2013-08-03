@@ -259,24 +259,4 @@ public class Timeline extends RelativeLayout {
 	public View getTrackPositionView() {
 		return currentPositionView;
 	}
-
-	/*
-	 * public void updateArrowOnScroll(int scrollX) { if(arrowView == null)
-	 * return;
-	 * 
-	 * RelativeLayout.LayoutParams layout = (LayoutParams)
-	 * arrowView.getLayoutParams(); int oldMargin = layout.leftMargin;
-	 * layout.setMargins(oldMargin+scrollX, 0, 0, 0);
-	 * arrowView.setLayoutParams(layout); }
-	 * 
-	 * private void addArrow() { arrowView = new ImageView(context);
-	 * arrowView.setImageDrawable
-	 * (getResources().getDrawable(R.drawable.timeline_arrow));
-	 * RelativeLayout.LayoutParams layout = new
-	 * RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, getHeight());
-	 * layout.addRule(ALIGN_PARENT_LEFT); layout.addRule(ALIGN_PARENT_TOP);
-	 * layout.setMargins(Helper.getInstance().getScreenWidth()-50, 0, 0, 0);
-	 * arrowView.setLayoutParams(layout); arrowView.setColorFilter(Color.BLACK);
-	 * addView(arrowView); }
-	 */
 }

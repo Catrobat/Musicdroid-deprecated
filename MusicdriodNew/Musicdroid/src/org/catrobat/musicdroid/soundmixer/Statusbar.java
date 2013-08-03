@@ -76,7 +76,6 @@ public class Statusbar extends Observable implements OnTouchListener {
 				.findViewById(R.id.metronom_light);
 		metronomLightImageView
 				.setColorFilter(R.color.abs__background_holo_dark);
-		// ADD UNDO AND REDO SUPPORT
 	}
 
 	public void modifyStatusbarForRecorderActivity() {

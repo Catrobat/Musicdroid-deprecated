@@ -51,6 +51,12 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		 timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 	}
 	
+	@Override
+	   public void tearDown() throws Exception {
+	        solo.finishOpenedActivities();
+	        
+	  }
+	
 	public void testResetSoundMixerAtNewSongYes()
 	{
 		helper.addTrack(SoundType.DRUMS);
@@ -126,12 +132,6 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		
 		assertTrue("Child not deleted", number_of_childs_new == number_of_childs_old+1);
 		assertTrue("Track not deleted", number_of_tracks_new == number_of_tracks_old+1);
-	}
-	
-	public void testCopyAndDeleteTrack()
-	{
-		testCopyTrack();
-		testDeleteTrack();
 	}
 
 	public void testAddMultipleTracksAndDelete()

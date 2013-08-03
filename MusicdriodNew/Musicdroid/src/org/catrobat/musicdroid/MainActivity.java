@@ -33,17 +33,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import org.catrobat.musicdroid.dialog.AddSoundDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceActivity;
-import org.catrobat.musicdroid.soundmixer.ObservableHorizontalScrollView;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.soundmixer.SoundMixerMenuCallback;
-import org.catrobat.musicdroid.soundmixer.Statusbar;
+import org.catrobat.musicdroid.soundmixer.*;
 import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
-import org.catrobat.musicdroid.soundtracks.SoundTrack;
-import org.catrobat.musicdroid.soundtracks.SoundTrackMic;
-import org.catrobat.musicdroid.soundtracks.SoundTrackView;
-import org.catrobat.musicdroid.soundtracks.SoundTrackViewMenuCallback;
+import org.catrobat.musicdroid.soundtracks.*;
 
 public class MainActivity extends MenuFileActivity {
 	protected Statusbar statusbar;
@@ -63,11 +56,7 @@ public class MainActivity extends MenuFileActivity {
 		initTopStatusBar();
 		Statusbar.getInstance().initStatusbar(this);
 
-		SoundMixer
-				.getInstance()
-				.initSoundMixer(
-						this,
-						(ObservableHorizontalScrollView) findViewById(R.id.sound_mixer_view));
+		SoundMixer.getInstance().initSoundMixer(this);
 
 		// TESTING
 		SoundManager.getInstance();
@@ -108,8 +97,7 @@ public class MainActivity extends MenuFileActivity {
 			startActionMode(callbackSoundMixerMenu);
 			return true;
 		default:
-			// calls MenuFileActivitys onOptionItemSelect for all File-Related
-			// entries
+			// calls MenuFileActivitys onOptionItemSelect for all File-Related entries
 			return super.onOptionsItemSelected(item);
 		}
 	}
@@ -125,6 +113,13 @@ public class MainActivity extends MenuFileActivity {
 		Statusbar.getInstance().initStatusbar(this);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		SoundMixer.getInstance().resetSoundMixer();
+		
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
