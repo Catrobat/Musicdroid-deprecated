@@ -22,7 +22,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.tugraz.musicdroid"
+    package="org.catrobat.musicdroid"
     android:versionCode="1"
     android:versionName="1.0" >
 	
@@ -40,7 +40,7 @@
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.MusicdroidSplitActionBar" >
         <activity
-            android:name="at.tugraz.musicdroid.MainActivity"
+            android:name="org.catrobat.musicdroid.MainActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
             <intent-filter>
@@ -50,17 +50,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="at.tugraz.musicdroid.RecorderActivity"
+            android:name="org.catrobat.musicdroid.RecorderActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="at.tugraz.musicdroid.preferences.PreferenceActivity"
+            android:name="org.catrobat.musicdroid.preferences.PreferenceActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="at.tugraz.musicdroid.DrawTrackActivity"
+            android:name="org.catrobat.musicdroid.DrawTrackActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
