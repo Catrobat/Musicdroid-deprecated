@@ -119,7 +119,8 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		Bundle b = msg.getData();
 		if (b.containsKey("duration")) {
 			int key = b.getInt("duration");
-			recordDurationTextView.setText(Helper.getInstance()
+			if(recordDurationTextView != null)
+			  recordDurationTextView.setText(Helper.getInstance()
 					.durationStringFromInt(key));
 		} else if (b.containsKey("trackposition")) {
 			int position = b.getInt("trackposition");
