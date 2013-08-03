@@ -33,6 +33,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Scanner;
 
+import android.app.Application;
+
 import junit.framework.TestCase;
 
 public class LicenseTest extends TestCase {
@@ -55,6 +57,7 @@ public class LicenseTest extends TestCase {
 	}
 
 	public void setUp() throws Exception {
+		assertTrue((new File("license").exists()));
 	    Scanner scanner = null;
 		try {
 			scanner = new Scanner(new FileInputStream("license"));
