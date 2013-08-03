@@ -57,7 +57,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	public void testSoundTrackViewInactive()
 	{
 		ui_helper.addTrack(SoundType.DRUMS);
-		ui_helper.addTrack(SoundType.PIANO);
+		ui_helper.addTrack(SoundType.DRUMS);
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 2);
 		
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
@@ -65,19 +65,15 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		assertTrue(check.findViewById(R.id.play_button).isEnabled());
 		assertTrue(check.findViewById(R.id.lock_button).isEnabled());
 		
-		//Open Context Menu of first view
 		solo.clickLongOnView(v.findViewById(R.id.img_sound_track_type));
 		solo.waitForText(v.getSoundTrack().getName(), 1, 10000, true);
-		
-		//Buttons of second view should be disabled
+				
 		assertFalse(check.findViewById(R.id.play_button).isEnabled());
 		assertFalse(check.findViewById(R.id.lock_button).isEnabled());
 		
-		//Close context menu by clicking on an entry
 		solo.clickOnText(solo.getString(R.string.sound_track_menu_entry_copy));
 		solo.sleep(1000);
 		
-		//Buttons of second view should be enabled again
 		assertTrue(check.findViewById(R.id.play_button).isEnabled());
 		assertTrue(check.findViewById(R.id.lock_button).isEnabled());
 	}
@@ -116,7 +112,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		int[] location = new int[2];
 		int[] new_location = new int[2];
 
-		ui_helper.addTrack(SoundType.PIANO);
+		ui_helper.addTrack(SoundType.DRUMS);
 		
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
 		
