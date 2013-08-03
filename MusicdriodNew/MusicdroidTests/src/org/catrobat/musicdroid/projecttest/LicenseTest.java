@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.projecttest;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ import java.io.Writer;
 import java.util.Scanner;
 
 import android.app.Application;
+import android.util.Log;
 
 import junit.framework.TestCase;
 
@@ -60,7 +62,7 @@ public class LicenseTest extends TestCase {
 		assertTrue((new File("license").exists()));
 	    Scanner scanner = null;
 		try {
-			scanner = new Scanner(new FileInputStream("license"));
+			scanner = new Scanner(new FileInputStream("license2"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -114,9 +116,10 @@ public class LicenseTest extends TestCase {
 		    	if(!license[indexFromLicenseString].trim().contentEquals(lineFromSourceFile.trim()))
 		    	{
 		    		missing_license_text_files.append(file.getAbsolutePath() + NEWLINE);
+		    		System.out.println(""+indexFromLicenseString);
 		    		break;
 		    	}
-//		    	assertEquals(license[indexFromLicenseString].trim(), lineFromSourceFile.trim());
+		    	assertEquals(license[indexFromLicenseString].trim(), lineFromSourceFile.trim());
 		    	indexFromLicenseString++;
 		    }
 		    dataInputStream.close();
