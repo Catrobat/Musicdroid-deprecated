@@ -22,6 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.database.Observable;
