@@ -113,7 +113,7 @@ public class Statusbar extends Observable implements OnTouchListener {
 							((Activity) context).getApplicationContext(),
 							R.string.toast_empty_soundmixer, Toast.LENGTH_LONG)
 							.show();
-					HighlightAnimation.getInstance().highlightViewAnimation(
+					HighlightAnimation.highlightViewAnimation(
 							((Activity) context).findViewById(R.id.btn_add));
 					displayPlayButton = true;
 				}
