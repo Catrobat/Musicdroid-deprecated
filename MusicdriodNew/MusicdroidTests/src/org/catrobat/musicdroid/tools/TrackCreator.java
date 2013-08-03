@@ -39,7 +39,6 @@ import com.jayway.android.robotium.solo.Solo;
  *
  */
 public class TrackCreator {
-	private static String testFilename = "testfile.wav";
 	
 	public static void createMicTrack(Solo solo, int durationSeconds)
 	{
@@ -47,7 +46,7 @@ public class TrackCreator {
 		solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
 		solo.sleep(100);
 		solo.clickOnText(solo.getString(SoundType.MIC.getNameResource()));
-		solo.sleep(2000);
+		solo.sleep(2000); 
  	    
 		ImageButton recordButton = (ImageButton) solo.getCurrentActivity().findViewById(R.id.microphone_record_button);
 		solo.clickOnView(recordButton);
