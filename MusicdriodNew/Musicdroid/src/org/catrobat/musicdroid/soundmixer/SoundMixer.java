@@ -84,7 +84,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 		Log.i("SoundMixer", "DefaultLength " + defaultLength);
 		soundMixerLength = longestSoundTrack = defaultLength;
-		pixelPerSecond = Helper.getInstance().getScreenWidth() / defaultLength;
+		pixelPerSecond = Helper.getScreenWidth(parent) / defaultLength;
 
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
 		timeline.setId(getNewViewID());
@@ -335,7 +335,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = Helper.getInstance().getScreenWidth()
+			pixelPerSecond = Helper.getScreenWidth(parent)
 					/ defaultLength;
 		return pixelPerSecond;
 	}

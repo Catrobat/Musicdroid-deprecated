@@ -222,13 +222,13 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
 		String filename = AudioHandler.getInstance().getFilename();
-		filename = Helper.getInstance().removeFileEnding(filename);
+		filename = Helper.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
 				
 		solo.clearEditText(0);
 		solo.sleep(1000);
-		solo.enterText(0, Helper.getInstance().removeFileEnding(testFilename));
+		solo.enterText(0, Helper.removeFileEnding(testFilename));
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_apply));
 		
@@ -251,13 +251,13 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
 		String filename = AudioHandler.getInstance().getFilename();
-		filename = Helper.getInstance().removeFileEnding(filename);
+		filename = Helper.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
 				
 		solo.clearEditText(0);
 		solo.sleep(1000);
-		solo.enterText(0, Helper.getInstance().removeFileEnding(testFilename));
+		solo.enterText(0, Helper.removeFileEnding(testFilename));
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_discard));
 		
