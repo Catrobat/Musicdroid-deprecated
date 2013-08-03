@@ -38,7 +38,6 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected UITestHelper ui_helper;
-	private Helper helper;
 	
 	public SoundTrackViewTest() {
 		super(MainActivity.class);
@@ -49,8 +48,6 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		 solo = new Solo(getInstrumentation(), getActivity());
 		 mixer = SoundMixer.getInstance();
 		 ui_helper = new UITestHelper(solo, getActivity());
-		 helper = Helper.getInstance();
-		 helper.init(getActivity());
 		 
 	}
 	

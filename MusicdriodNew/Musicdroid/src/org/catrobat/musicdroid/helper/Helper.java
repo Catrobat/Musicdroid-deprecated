@@ -27,21 +27,7 @@ import android.graphics.Point;
 import org.catrobat.musicdroid.MainActivity;
 
 public class Helper {
-	private static Helper instance = null;
-	private Context context = null;
-
-	public static Helper getInstance() {
-		if (instance == null) {
-			instance = new Helper();
-		}
-		return instance;
-	}
-
-	public void init(Context c) {
-		context = c;
-	}
-
-	public Point getScreenSize() {
+	public static Point getScreenSize(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
 
@@ -59,19 +45,19 @@ public class Helper {
 		}
 	}
 
-	public int getScreenHeight() {
+	public static int getScreenHeight(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().y;
+		return getScreenSize(context).y;
 	}
 
-	public int getScreenWidth() {
+	public static int getScreenWidth(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().x;
+		return getScreenSize(context).x;
 	}
 
-	public String durationStringFromInt(int duration) {
+	public static String durationStringFromInt(int duration) {
 		int minutes = duration / 60;
 		int seconds = duration % 60;
 		String min = "" + minutes;
@@ -85,7 +71,7 @@ public class Helper {
 		return min + ":" + sec;
 	}
 
-	public String getFilenameFromPath(String path) {
+	public static String getFilenameFromPath(String path) {
 		String filename = path;
 		int pos = path.lastIndexOf('/');
 		if (pos != -1) {
@@ -98,7 +84,7 @@ public class Helper {
 
 	}
 
-	public String removeFileEnding(String file) {
+	public static String removeFileEnding(String file) {
 		int pos = file.lastIndexOf('.');
 
 		if (pos != -1) {

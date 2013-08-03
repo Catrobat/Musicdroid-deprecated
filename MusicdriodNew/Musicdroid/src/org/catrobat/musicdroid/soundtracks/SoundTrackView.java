@@ -46,6 +46,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	public final static int MINIMAL_WIDTH = 280;
 	public final static int EXPANDED_WIDTH = 400;
 
+	private Context context = null;
 	private Helper helper = null;
 	private SoundTrack soundTrack = null;
 	private int xDelta;
@@ -67,8 +68,8 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 	public SoundTrackView(Context context, SoundTrack st) {
 		super(context);
+		this.context = context;
 		soundTrack = st;
-		helper = Helper.getInstance();
 
 		LayoutInflater inflater = LayoutInflater.from(context);
 		inflater.inflate(R.layout.sound_track_layout, this);
@@ -82,7 +83,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 	public void initSoundTrackView() {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				computeWidthRelativeToDuration(), helper.getScreenHeight() / 6);
+				computeWidthRelativeToDuration(), Helper.getScreenHeight(context) / 6);
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(
 				soundTrack.getType().getColorResource()));
@@ -125,7 +126,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 		soundTypeImageView.setImageResource(id);
 
 		soundtrackDescriptionTextView.setText(name + " | "
-				+ Helper.getInstance().durationStringFromInt(duration));
+				+ Helper.durationStringFromInt(duration));
 
 		volumeImageButton.setOnClickListener(soundTrackViewOnClickListener);
 		playImageButton.setOnClickListener(soundTrackViewOnClickListener);
@@ -313,7 +314,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	public void resize() {
 		RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
 		lParams.width = computeWidthRelativeToDuration();
-		lParams.height = helper.getScreenHeight() / 6;
+		lParams.height = Helper.getScreenHeight(context) / 6;
 		setLayoutParams(lParams);
 
 		if (lParams.width < MINIMAL_WIDTH)

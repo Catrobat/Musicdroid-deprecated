@@ -68,8 +68,10 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		solo.waitForText(getActivity().getString(R.string.soundmixer_context_title));
 		solo.clickOnView(getActivity().findViewById(R.id.soundmixer_context_length));
 		solo.sleep(1000);
-		solo.drag(Helper.getInstance().getScreenWidth()/2-50, Helper.getInstance().getScreenHeight()/2, 
-				  Helper.getInstance().getScreenWidth()/2-50, Helper.getInstance().getScreenHeight()/3, 1);
+		solo.drag(Helper.getScreenWidth(solo.getCurrentActivity())/2-50, 
+				  Helper.getScreenHeight(solo.getCurrentActivity())/2, 
+				  Helper.getScreenWidth(solo.getCurrentActivity())/2-50, 
+				  Helper.getScreenHeight(solo.getCurrentActivity())/3, 1);
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getString(R.string.settings_button_apply));
 		solo.sleep(1000);

@@ -41,7 +41,7 @@ public class SoundTrackMic extends SoundTrack {
 
 	public SoundTrackMic(String path) {
 		type = SoundType.MIC;
-		name = Helper.getInstance().getFilenameFromPath(path);
+		name = Helper.getFilenameFromPath(path);
 		soundpoolId = SoundManager.addSoundByPath(path);
 		duration = SoundManager.getSoundfileDurationByPath(path);
 	}
