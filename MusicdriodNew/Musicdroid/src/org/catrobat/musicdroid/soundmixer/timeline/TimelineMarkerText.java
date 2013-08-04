@@ -22,42 +22,39 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
+import org.catrobat.musicdroid.helper.Helper;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 import android.content.Context;
+import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
-import org.catrobat.musicdroid.R;
 
-public class TimelineTrackPosition extends View {
-	private Context context;
-	private int colorId;
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class TimelineMarkerText extends TextView {
 
-	public TimelineTrackPosition(Context c, int colId) {
-		super(c);
-		context = c;
-		colorId = colId;
-		addTrackPosition();
+	public TimelineMarkerText(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
 	}
 
-	public void updateTrackPosition(int pixPos, int secPos) {
-		setVisibility(View.VISIBLE);
 
-		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
-		layoutParams.leftMargin = pixPos;
-		setLayoutParams(layoutParams);
+	public TimelineMarkerText(Context context, int second) {
+		super(context);
+		
+		setText(Helper.durationStringFromInt(second));
+		LayoutParams textParams = new RelativeLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		textParams.leftMargin = SoundMixer.getInstance().getPixelPerSecond()*second - 25;
+		setLayoutParams(textParams);
 	}
 
-	private void addTrackPosition() {
-		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2,
-				LayoutParams.WRAP_CONTENT);
-		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		setLayoutParams(seperatorParams);
-		setBackgroundColor(context.getResources().getColor(colorId));
-		setVisibility(View.INVISIBLE);
-	}
 
-	public View getTrackPosition() {
-		return this;
-	}
 
 }

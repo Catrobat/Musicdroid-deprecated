@@ -29,12 +29,13 @@ import java.util.Map.Entry;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
@@ -46,8 +47,6 @@ public class Timeline extends RelativeLayout {
 	private Context context = null;
 	private RelativeLayout timelineTop = null;
 	private RelativeLayout timelineBottom = null;
-	private TextView startTimeTextView = null;
-	private ImageView arrowView = null;
 	private ImageButton startPointImageButton = null;
 	private ImageButton endPointImageButton = null;
 	private View currentPositionView = null;
@@ -57,7 +56,7 @@ public class Timeline extends RelativeLayout {
 	private int lastSetTime = 0;
 	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
-	private TimelineOnTouchListener onTouchListener = null;
+	private TimelineOnTouchListener onTimelineTouchListener = null;
 
 	public Timeline(Context context) {
 		super(context);
@@ -68,8 +67,9 @@ public class Timeline extends RelativeLayout {
 		inflater.inflate(R.layout.timeline_layout, this);
 
 		initTimeline();
-		onTouchListener = new TimelineOnTouchListener(this);
-		this.setOnTouchListener(onTouchListener);
+		TimelineEventHandler.getInstance().init(this);
+		onTimelineTouchListener = new TimelineOnTouchListener(this);
+		this.setOnTouchListener(onTimelineTouchListener);
 	}
 
 	public Timeline(Context context, AttributeSet attrs) {
@@ -82,8 +82,7 @@ public class Timeline extends RelativeLayout {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 				DeviceInfo.getScreenWidth(context), height * 2);
 		setLayoutParams(layoutParams);
-		setBackgroundColor(getResources().getColor(
-				R.color.background_holo_light));
+		setBackgroundColor(getResources().getColor(R.color.background_holo_light));
 
 		timelineTop = (RelativeLayout) findViewById(R.id.timeline_top);
 		timelineBottom = (RelativeLayout) findViewById(R.id.timeline_bottom);
@@ -91,40 +90,47 @@ public class Timeline extends RelativeLayout {
 		((RelativeLayout.LayoutParams) timelineTop.getLayoutParams()).height = height;
 		((RelativeLayout.LayoutParams) timelineBottom.getLayoutParams()).height = height;
 
-		startTimeTextView = (TextView) findViewById(R.id.timeline_start_time);
+		((TextView) findViewById(R.id.timeline_start_time)).setText("00:00");
 		startPointImageButton = (ImageButton) findViewById(R.id.timeline_start_point);
 		endPointImageButton = (ImageButton) findViewById(R.id.timeline_end_point);
 		currentPositionView = (View) findViewById(R.id.timeline_currentPosition);
 
-		startTimeTextView.setText("00:00");
-
-		addPositionMarker();
+		initMarkerBar();
 	}
 
-	public void resizeTimeline(int newLength) {
-		int oldLength = getWidth()
-				/ SoundMixer.getInstance().getPixelPerSecond();
+	private void initMarkerBar() {
 		int defaultLength = PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
+		for (int second = 0; second <= defaultLength; second++) {
+			addMarker(second);
+		}
+	}
+	
+	public void resizeTimeline(int newLength) {
+		int oldLength = getWidth() / SoundMixer.getInstance().getPixelPerSecond();
 
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
-		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond()
-				* newLength;
+		layoutParams.width = SoundMixer.getInstance().getPixelPerSecond() * newLength;
 
 		if (newLength > oldLength) {
 			for (int second = oldLength - 5; second < newLength; second++) {
-				timelineBottom.addView(newPositionMarker(second));
+				addMarker(second);
 			}
-		}
-
-		if (newLength > defaultLength && arrowView == null) {
-			// addArrow(); //TODO ms
 		}
 	}
 
 	public void addNewTrackPosition(int id, int colorRes) {
-		trackPositions.put(id, new TimelineTrackPosition(this, context,
-				colorRes));
+		Log.i("Timeline", "AddTrackPos ID = " + id);
+		TimelineTrackPosition trackPosition = new TimelineTrackPosition(context,colorRes);
+		timelineBottom.addView(trackPosition);
+		trackPositions.put(id, trackPosition);
+	}
+	
+	public void removeTrackPosition(int id) {
+		Log.i("Timeline", "RemoveTrackPosition ID = " + id);
+		TimelineTrackPosition tp = trackPositions.get(id);
+		timelineBottom.removeView(tp.getTrackPosition());
+		trackPositions.remove(id);
 	}
 
 	public void updateTimelineOnMove(int id, int pixPos, int secPos,
@@ -135,13 +141,6 @@ public class Timeline extends RelativeLayout {
 			SoundMixer.getInstance().setSoundMixerLength(secPos + duration);
 			resizeTimeline(secPos + duration);
 		}
-	}
-
-	public void removeTrackPosition(int id) {
-		TimelineTrackPosition tp = trackPositions.get(id);
-		this.removeView(tp.getTrackPosition());
-		// this.removeView(tp.getTrackPositionText());
-		trackPositions.remove(id);
 	}
 
 	public void setStartPoint(int x) {
@@ -156,7 +155,7 @@ public class Timeline extends RelativeLayout {
 		startPointImageButton.setColorFilter(Color.BLACK);
 		startPointImageButton.setVisibility(VISIBLE);
 		startPointImageButton.setLayoutParams(layout);
-		startPointImageButton.setOnTouchListener(onTouchListener);
+		startPointImageButton.setOnTouchListener(onTimelineTouchListener);
 
 		RelativeLayout.LayoutParams positionLayout = (LayoutParams) currentPositionView
 				.getLayoutParams();
@@ -175,7 +174,7 @@ public class Timeline extends RelativeLayout {
 		endPointImageButton.setColorFilter(Color.BLACK);
 		endPointImageButton.setVisibility(VISIBLE);
 		endPointImageButton.setLayoutParams(layout);
-		endPointImageButton.setOnTouchListener(onTouchListener);
+		endPointImageButton.setOnTouchListener(onTimelineTouchListener);
 	}
 
 	public void resetTimeline() {
@@ -188,47 +187,16 @@ public class Timeline extends RelativeLayout {
 			removeView(pairs.getValue().getTrackPosition());
 		}
 	}
-
-	private void addPositionMarker() {
-		int defaultLength = PreferenceManager.getInstance().getPreference(
-				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
-		for (int second = 0; second <= defaultLength; second++) {
-			timelineBottom.addView(newPositionMarker(second));
+	
+	private void addMarker(int second)
+	{
+		timelineBottom.addView(new TimelineMarker(context, second, height));//createNewTimeMarker(second));			
+		if (second > 0 && second % 5 == 0 && second > lastSetTime)
+		{
+			lastSetTime = second;
+		    timelineTop.addView(new TimelineMarkerText(context, second));
 		}
-	}
-
-	private View newPositionMarker(int second) {
-		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-
-		View positionMarker = new View(context);
-		LayoutParams markerParams = new RelativeLayout.LayoutParams(2,
-				height * 2 / 5);
-
-		if (second % 5 == 0) {
-			markerParams = new RelativeLayout.LayoutParams(2, height * 4 / 8);
-			if (second > 0 && second > lastSetTime)
-				newPositionText(second, second * pixelPerSecond);
-		}
-
-		markerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		markerParams.addRule(RelativeLayout.ALIGN_LEFT);
-		markerParams.leftMargin = pixelPerSecond * second;
-		positionMarker.setLayoutParams(markerParams);
-		positionMarker.setBackgroundColor(Color.BLACK);
-		positionMarker.setId(getNewId());
-		return positionMarker;
-	}
-
-	private void newPositionText(int second, int position) {
-		lastSetTime = second;
-		TextView positionText = new TextView(context);
-		positionText
 				.setText(StringFormatter.durationStringFromInt(second));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		textParams.leftMargin = position - 25;
-		positionText.setLayoutParams(textParams);
-		timelineTop.addView(positionText);
 	}
 
 	public void rewind() {
