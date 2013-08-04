@@ -65,7 +65,7 @@ public class UITestHelper {
 		int start_x = location[0];
 		int start_y = location[1];
 		solo.sleep(100);
-		int width = Helper.getInstance().getScreenWidth();
+		int width = Helper.getScreenWidth(solo.getCurrentActivity());
 		solo.drag(start_x+width/2, 0, start_y, start_y, 1);
 		
 		int[] newLocation = {0,0};
