@@ -42,6 +42,7 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class SoundTrackView extends RelativeLayout implements OnClickListener,
 		View.OnTouchListener {
@@ -128,7 +129,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 		soundTypeImageView.setImageResource(id);
 
 		soundtrackDescriptionTextView.setText(name + " | "
-				+ Helper.durationStringFromInt(duration));
+				+ StringFormatter.durationStringFromInt(duration));
 
 		volumeImageButton.setOnClickListener(soundTrackViewOnClickListener);
 		playImageButton.setOnClickListener(soundTrackViewOnClickListener);

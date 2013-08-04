@@ -57,20 +57,6 @@ public class Helper {
 		return getScreenSize(context).x;
 	}
 
-	public static String durationStringFromInt(int duration) {
-		int minutes = duration / 60;
-		int seconds = duration % 60;
-		String min = "" + minutes;
-		String sec = "" + seconds;
-
-		if (minutes < 10)
-			min = "0" + min;
-		if (seconds < 10)
-			sec = "0" + sec;
-
-		return min + ":" + sec;
-	}
-
 	public static String getFilenameFromPath(String path) {
 		String filename = path;
 		int pos = path.lastIndexOf('/');

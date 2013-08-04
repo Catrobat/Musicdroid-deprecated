@@ -26,7 +26,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
-import org.catrobat.musicdroid.R;
 
 public class TimelineTrackPosition extends View {
 	private Context context;
