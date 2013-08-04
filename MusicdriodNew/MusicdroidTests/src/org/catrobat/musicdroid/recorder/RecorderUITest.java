@@ -37,6 +37,7 @@ import android.widget.TextView;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.helper.Helper;
+import org.catrobat.musicdroid.tools.FileExtensionMethods;
 import org.catrobat.musicdroid.types.SoundType;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -222,13 +223,13 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
 		String filename = AudioHandler.getInstance().getFilename();
-		filename = Helper.removeFileEnding(filename);
+		filename = FileExtensionMethods.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
 				
 		solo.clearEditText(0);
 		solo.sleep(1000);
-		solo.enterText(0, Helper.removeFileEnding(testFilename));
+		solo.enterText(0, FileExtensionMethods.removeFileEnding(testFilename));
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_apply));
 		
@@ -251,13 +252,13 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
 		String filename = AudioHandler.getInstance().getFilename();
-		filename = Helper.removeFileEnding(filename);
+		filename = FileExtensionMethods.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
 				
 		solo.clearEditText(0);
 		solo.sleep(1000);
-		solo.enterText(0, Helper.removeFileEnding(testFilename));
+		solo.enterText(0, FileExtensionMethods.removeFileEnding(testFilename));
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getResources().getString(R.string.settings_button_discard));
 		

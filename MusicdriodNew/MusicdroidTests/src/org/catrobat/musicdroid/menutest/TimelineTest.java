@@ -33,6 +33,7 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
+import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -68,10 +69,10 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		solo.waitForText(getActivity().getString(R.string.soundmixer_context_title));
 		solo.clickOnView(getActivity().findViewById(R.id.soundmixer_context_length));
 		solo.sleep(1000);
-		solo.drag(Helper.getScreenWidth(solo.getCurrentActivity())/2-50, 
-				  Helper.getScreenHeight(solo.getCurrentActivity())/2, 
-				  Helper.getScreenWidth(solo.getCurrentActivity())/2-50, 
-				  Helper.getScreenHeight(solo.getCurrentActivity())/3, 1);
+		solo.drag(DeviceInfo.getScreenWidth(solo.getCurrentActivity())/2-50, 
+				  DeviceInfo.getScreenHeight(solo.getCurrentActivity())/2, 
+				  DeviceInfo.getScreenWidth(solo.getCurrentActivity())/2-50, 
+				  DeviceInfo.getScreenHeight(solo.getCurrentActivity())/3, 1);
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getString(R.string.settings_button_apply));
 		solo.sleep(1000);
