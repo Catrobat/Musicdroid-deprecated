@@ -150,22 +150,30 @@ public class NoteSheetView extends View {
 			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
 
 		}
-
+		
 		int keyPictureHeight = distanceBetweenLines
 				* HEIGHT_OF_KEY_IN_LINE_SPACES;
-
-		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter - keyPictureHeight / 2);
-
-		Point rightBottomOfRect = new Point(xStartPositionOfLine
-				+ distanceBetweenLines * 3, yCenter + keyPictureHeight / 2);
-
-		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
-				rightBottomOfRect.x, rightBottomOfRect.y);
+		
+		Rect rect = calculateProportionalPictureContourRect(keyPicture, keyPictureHeight); 
 
 		noteSheetCanvas.getCanvas().drawBitmap(keyPicture, null, rect, null);
-		this.xPositionOfNextSheetElement = rightBottomOfRect.x;
+		this.xPositionOfNextSheetElement = rect.right;
 	}
 
+	private Rect calculateProportionalPictureContourRect(Bitmap originalPicture, int height) {
+		
+		double proportionHeigth =  originalPicture.getHeight()/ height; 
+		
+		int keyPictureWidth = (int)(originalPicture.getWidth() / proportionHeigth); 
+
+		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter - height / 2);
+
+		Point rightBottomOfRect = new Point(this.xPositionOfNextSheetElement + keyPictureWidth, yCenter + height / 2);
+
+		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
+				rightBottomOfRect.x, rightBottomOfRect.y);
+	}
+	
 	private void drawTactUnit() {
 		Resources res = context.getResources();
 		Bitmap tactPicture;
