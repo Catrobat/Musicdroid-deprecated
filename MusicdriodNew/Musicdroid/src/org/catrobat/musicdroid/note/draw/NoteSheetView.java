@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note.draw;
 
-import android.R;
+import org.catrobat.musicdroid.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -34,20 +34,24 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
+
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+
+import com.actionbarsherlock.R.string;
 
 /**
  * @author florian.winkelbauer, bteufl
  * 
  */
-public class DrawTrackView extends View {
+public class NoteSheetView extends View {
 
-	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
 	private static final int BOLD_BAR_WIDTH = 5;
 	private static final int THIN_BAR_WIDTH = 2;
 	private static final int NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS = 2;
 	private static final int HEIGHT_OF_KEY_IN_LINE_SPACES = 6;
-	private static final int PADDING_BETWEEN_SYMBOLS = 20;
+	private static final int NOTE_SHEET_PADDING = 20;
 
 	private Paint paint;
 
@@ -55,44 +59,29 @@ public class DrawTrackView extends View {
 	private int xStartPositionOfLine;
 	private int xEndPositionOfLine;
 	private int yCenter;
-	private int screenWidth;
-	private int screenHeight;
 	private int distanceBetweenLines;
 	private int halfBarHeight;
-	private Canvas canvas;
+	private NoteSheetCanvas noteSheetCanvas;
 	private Context context;
-	private int idOfKeyImage;
 
-	public DrawTrackView(Context context, int idOfKeyImage) {
+	public NoteSheetView(Context context) {
 		super(context);
 		this.context = context;
-		this.idOfKeyImage = idOfKeyImage;
-
 		paint = new Paint();
-		canvas = new Canvas();
-
-		this.setBackgroundColor(R.drawable.screen_background_dark);
-
-		drawLines();
-		drawKey();
-		drawLineEndBars();
-		drawTact();
-		drawBeats();
-		drawNotes();
+		track = new Track();
 
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		this.canvas = canvas;
-		this.screenHeight = canvas.getHeight();
-		this.screenWidth = canvas.getWidth();
-		xEndPositionOfLine = this.screenWidth - PADDING_BETWEEN_SYMBOLS;
-		this.yCenter = screenHeight / 2;
-		this.xStartPositionOfLine = PADDING_BETWEEN_SYMBOLS;
-		this.distanceBetweenLines = screenHeight
-				/ POSSIBLE_LINE_SPACES_ON_SCREEN;
+		this.noteSheetCanvas = new NoteSheetCanvas(canvas);
+		xEndPositionOfLine = noteSheetCanvas.getCanvas().getWidth()
+				- NOTE_SHEET_PADDING;
+		this.yCenter = noteSheetCanvas.getYPositionOfCenterLine();
+		this.xStartPositionOfLine = NOTE_SHEET_PADDING;
+		this.distanceBetweenLines = noteSheetCanvas
+				.getDistanceBetweenNoteLines();
 		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS
 				* distanceBetweenLines;
 		paint.setColor(Color.BLACK);
@@ -100,11 +89,9 @@ public class DrawTrackView extends View {
 		drawLines();
 		drawLineEndBars();
 		drawKey();
-		drawTact();
+		drawTactUnit();
 		drawBeats();
-		drawNotes();
 
-		invalidate();
 	};
 
 	private void drawLines() {
@@ -112,8 +99,9 @@ public class DrawTrackView extends View {
 		for (int lineDistanceFromCenterLine = -NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine <= NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine++) {
 			int actualLinePosition = yCenter + lineDistanceFromCenterLine
 					* distanceBetweenLines;
-			canvas.drawLine(xStartPositionOfLine, actualLinePosition,
-					xEndPositionOfLine, actualLinePosition, paint);
+			noteSheetCanvas.getCanvas().drawLine(xStartPositionOfLine,
+					actualLinePosition, xEndPositionOfLine, actualLinePosition,
+					paint);
 		}
 
 	}
@@ -137,23 +125,29 @@ public class DrawTrackView extends View {
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
 				xBarStartPosition + THIN_BAR_WIDTH, yCenter + halfBarHeight);
 
-		canvas.drawRect(boldBar, paint);
+		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
 	}
 
 	private void drawBoldBar(int xBarStartPosition) {
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
 				xBarStartPosition + BOLD_BAR_WIDTH, yCenter + halfBarHeight);
 
-		canvas.drawRect(boldBar, paint);
+		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
 	}
 
 	private void drawKey() {
 		Resources res = context.getResources();
-		Bitmap bm = BitmapFactory.decodeResource(res, idOfKeyImage);
+		Bitmap keyPicture;
+		if (track.getKey() == Key.VIOLIN) {
+			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
+		} else {
+			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
+
+		}
 		int keyHeight = distanceBetweenLines * HEIGHT_OF_KEY_IN_LINE_SPACES;
 
 		Point leftUpperOfRect = new Point(xStartPositionOfLine
-				+ PADDING_BETWEEN_SYMBOLS, yCenter - keyHeight / 2);
+				+ NOTE_SHEET_PADDING, yCenter - keyHeight / 2);
 
 		Point rightBottomOfRect = new Point(xStartPositionOfLine
 				+ distanceBetweenLines * 3, yCenter + keyHeight / 2);
@@ -161,15 +155,14 @@ public class DrawTrackView extends View {
 		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
 				rightBottomOfRect.x, rightBottomOfRect.y);
 
-		canvas.drawBitmap(bm, null, rect, null);
+		noteSheetCanvas.getCanvas().drawBitmap(keyPicture, null, rect, null);
 	}
 
-	private void drawTact() {
+	private void drawTactUnit() {
+
 	}
 
 	private void drawBeats() {
 	}
 
-	private void drawNotes() {
-	}
 }

@@ -20,33 +20,26 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.note.draw;
+package org.catrobat.musicdroid;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteName;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.Track;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.recorder.RecorderLayout;
 
-/**
- * @author Bianca
- * 
- */
-public class NotePosition {
+public class NoteSheetActivity extends Activity {
+	private RecorderLayout layout = null;
 
-	public NotePosition() {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-	}
+		NoteSheetView noteSheetView = new NoteSheetView(this);
 
-	public static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key,
-			Note tone) {
-		NoteName currentNote = tone.getNoteName();
-		NoteName middleNote;
-		if (key == Key.VIOLIN) {
-			middleNote = NoteName.B3;
-		} else {
-			throw new UnsupportedOperationException();
-		}
+		setContentView(noteSheetView);
 
-		return NoteName.calculateDistance(currentNote, middleNote);
 	}
 }

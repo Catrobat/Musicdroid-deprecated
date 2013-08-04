@@ -20,27 +20,34 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid;
+package org.catrobat.musicdroid.tool.draw;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
+import android.graphics.Canvas;
 
-public class DrawTrackActivity extends Activity {
-	private RecorderLayout layout = null;
+/**
+ * @author Bianca TEUFL
+ * 
+ */
+public class NoteSheetCanvas {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_recorder);
+	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
 
-		DrawTrackView trackView = new DrawTrackView(this, R.drawable.violine);
+	private Canvas canvas;
 
-		setContentView(trackView);
-
+	public NoteSheetCanvas(Canvas canvas) {
+		this.canvas = canvas;
 	}
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public int getDistanceBetweenNoteLines() {
+		return canvas.getHeight() / POSSIBLE_LINE_SPACES_ON_SCREEN;
+	}
+
+	public int getYPositionOfCenterLine() {
+		return canvas.getHeight() / 2;
+	}
+
 }

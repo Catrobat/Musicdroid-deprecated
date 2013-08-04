@@ -77,6 +77,10 @@ public class Track implements Serializable {
 	public int size() {
 		return symbols.size();
 	}
+	
+	public List<Symbol> getSymbolList(){
+		return this.symbols;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

@@ -22,31 +22,28 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note.draw;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteName;
-import org.catrobat.musicdroid.note.Note;
+import org.catrobat.musicdroid.note.Symbol;
 import org.catrobat.musicdroid.note.Track;
 
+import android.graphics.Canvas;
+
 /**
- * @author Bianca
- * 
+ * @author Bianca TEUFL
+ *
  */
-public class NotePosition {
+public class TrackDrawer {
 
-	public NotePosition() {
-
+	private Canvas canvas;
+	private Track track;
+	
+	public TrackDrawer(Canvas canvas, Track track){
+		this.canvas=canvas;
+		this.track=track;
 	}
-
-	public static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key,
-			Note tone) {
-		NoteName currentNote = tone.getNoteName();
-		NoteName middleNote;
-		if (key == Key.VIOLIN) {
-			middleNote = NoteName.B3;
-		} else {
-			throw new UnsupportedOperationException();
+	
+	public void drawTrack(){
+		for(Symbol currentSymbol:track.getSymbolList()){
+//			currentSymbol.draw(this.canvas);
 		}
-
-		return NoteName.calculateDistance(currentNote, middleNote);
 	}
 }
