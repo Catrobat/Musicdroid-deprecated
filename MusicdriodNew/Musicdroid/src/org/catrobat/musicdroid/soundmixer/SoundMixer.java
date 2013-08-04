@@ -23,13 +23,7 @@
 package org.catrobat.musicdroid.soundmixer;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
@@ -37,9 +31,7 @@ import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.metronom.Metronom;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
-import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
-import org.catrobat.musicdroid.soundmixer.timeline.TimelineEventHandler;
-import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
+import org.catrobat.musicdroid.soundmixer.timeline.*;
 import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 
@@ -49,7 +41,6 @@ public class SoundMixer {
 	protected MainActivity parentActivity;
 	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
 	private int defaultTrackLength;
-	private int longestSoundTrack;
 	private int soundMixerLength;
 	private int pixelPerSecond;
 	private int callingId;
@@ -78,13 +69,11 @@ public class SoundMixer {
 		
 		timeline.setId(idCreator.getNewId());
 		layout.addTimelineToLayout(timeline);
-		
-		TimelineEventHandler.getInstance().init(timeline);
 
 		activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity,
 				timeline));
 		
-		soundMixerLength = longestSoundTrack = defaultTrackLength;
+		soundMixerLength = defaultTrackLength;
 		pixelPerSecond = Helper.getScreenWidth(parentActivity) / defaultTrackLength;
 	}
 
@@ -155,11 +144,11 @@ public class SoundMixer {
 		timeline.removeTrackPosition(callingId);
 	}
 
-	public void deleteTrackById(int tId) {
-		for (int i = 0; i < tracks.size(); i++) {
-			if (tracks.get(i).getId() == tId) {
-				layout.removeTrackFromLayout(tracks.get(i), i);
-				tracks.remove(i);
+	public void deleteTrackById(int deletedTrackID) {
+		for (int trackID = 0; trackID < tracks.size(); trackID++) {
+			if (tracks.get(trackID).getId() == deletedTrackID) {
+				layout.removeTrackFromLayout(tracks.get(trackID), trackID);
+				tracks.remove(trackID);
 			}
 		}
 	}
@@ -175,26 +164,19 @@ public class SoundMixer {
 	private void checkLongestTrack(int newTrackLength) {
 		if (newTrackLength > soundMixerLength) {
 			soundMixerLength = newTrackLength;
-			resizeSoundMixer(newTrackLength);
+			layout.resizeLayoutWidth(getPixelPerSecond()*newTrackLength);
 			timeline.resizeTimeline(newTrackLength);
 		}
 	}
 
-	private void resizeSoundMixer(int length) {
-		layout.resizeLayoutWidth(getPixelPerSecond()*length);
-	}
-
 	public void resetSoundMixer() {
-		Log.i("SoundMixer", "RESET");
-		for (int i = 0; i < tracks.size(); i++) {
-			tracks.get(i).removeAllViews();
-			layout.removeView(tracks.get(i));
+		for(SoundTrackView track : tracks)
+		{
+			track.removeAllViews();
+			layout.removeView(track);
 		}
-		longestSoundTrack = 0;
-
 		timeline.resetTimeline();
-
-		longestSoundTrack = soundMixerLength = defaultTrackLength;
+		soundMixerLength = defaultTrackLength;
 		tracks.clear();
 	}
 
@@ -205,15 +187,9 @@ public class SoundMixer {
 
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds) {
 		int newLength = minutes * 60 + seconds;
-		if (newLength > soundMixerLength) {
-			soundMixerLength = newLength;
-			resizeSoundMixer(newLength);
-			timeline.resizeTimeline(newLength);
-		} else if (newLength < soundMixerLength && newLength >= defaultTrackLength) {
-			soundMixerLength = newLength;
-			resizeSoundMixer(newLength);
-			timeline.resizeTimeline(newLength);
-		}
+		soundMixerLength = newLength;
+		layout.resizeLayoutWidth(getPixelPerSecond()*newLength);
+		timeline.resizeTimeline(newLength);
 	}
 
 	public void setStartPoint(int[] location) {
@@ -222,7 +198,6 @@ public class SoundMixer {
 		else
 			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position,
 					Toast.LENGTH_SHORT).show();
-
 	}
 
 	public void setEndPoint(int[] location) {
@@ -242,20 +217,12 @@ public class SoundMixer {
 		return eventHandler.computeStartPointInSecondsByPixel(pixel);
 	}
 
-	public ArrayList<SoundTrackView> getTracks() {
-		return tracks;
-	}
-
 	public int getNumberOfTracks() {
 		return tracks.size();
 	}
 
 	public SoundTrack getCallingTrack() {
 		return callingTrack;
-	}
-
-	public int getDurationLongestTrack() {
-		return longestSoundTrack;
 	}
 
 	public int getSoundMixerLength() {
@@ -277,9 +244,7 @@ public class SoundMixer {
 		return eventHandler.getStopPoint();
 	}
 
-
 	public SoundTrackView getTrackAtPosition(int position) {
 		return tracks.get(position);
 	}
-
 }
