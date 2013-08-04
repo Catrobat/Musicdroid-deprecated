@@ -39,7 +39,6 @@ import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-import com.actionbarsherlock.R.string;
 
 /**
  * @author florian.winkelbauer, bteufl
@@ -63,13 +62,14 @@ public class NoteSheetView extends View {
 	private int halfBarHeight;
 	private NoteSheetCanvas noteSheetCanvas;
 	private Context context;
+	private int xPositionOfNextSheetElement;
 
 	public NoteSheetView(Context context) {
 		super(context);
 		this.context = context;
 		paint = new Paint();
 		track = new Track();
-
+		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING; 
 	}
 
 	@Override
@@ -85,14 +85,18 @@ public class NoteSheetView extends View {
 		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS
 				* distanceBetweenLines;
 		paint.setColor(Color.BLACK);
+		drawSheetElements();
+		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING; 
+	};
+
+	private void drawSheetElements() {
 
 		drawLines();
 		drawLineEndBars();
 		drawKey();
 		drawTactUnit();
 		drawBeats();
-
-	};
+	}
 
 	private void drawLines() {
 
@@ -108,8 +112,8 @@ public class NoteSheetView extends View {
 
 	private void drawLineEndBars() {
 		paint.setStyle(Style.FILL);
-		drawFrontBars();
 		drawEndBar();
+		drawFrontBars();
 	}
 
 	private void drawFrontBars() {
@@ -122,10 +126,12 @@ public class NoteSheetView extends View {
 	}
 
 	private void drawThinBar(int xBarStartPosition) {
+		int xEndThinBar = xBarStartPosition + THIN_BAR_WIDTH; 
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
-				xBarStartPosition + THIN_BAR_WIDTH, yCenter + halfBarHeight);
+				xEndThinBar, yCenter + halfBarHeight);
 
 		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
+		this.xPositionOfNextSheetElement = xEndThinBar;
 	}
 
 	private void drawBoldBar(int xBarStartPosition) {
@@ -144,22 +150,38 @@ public class NoteSheetView extends View {
 			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
 
 		}
-		int keyHeight = distanceBetweenLines * HEIGHT_OF_KEY_IN_LINE_SPACES;
 
-		Point leftUpperOfRect = new Point(xStartPositionOfLine
-				+ NOTE_SHEET_PADDING, yCenter - keyHeight / 2);
+		int keyPictureHeight = distanceBetweenLines
+				* HEIGHT_OF_KEY_IN_LINE_SPACES;
+
+		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter - keyPictureHeight / 2);
 
 		Point rightBottomOfRect = new Point(xStartPositionOfLine
-				+ distanceBetweenLines * 3, yCenter + keyHeight / 2);
+				+ distanceBetweenLines * 3, yCenter + keyPictureHeight / 2);
 
 		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
 				rightBottomOfRect.x, rightBottomOfRect.y);
 
 		noteSheetCanvas.getCanvas().drawBitmap(keyPicture, null, rect, null);
+		this.xPositionOfNextSheetElement = rightBottomOfRect.x;
 	}
 
 	private void drawTactUnit() {
+		Resources res = context.getResources();
+		Bitmap tactPicture;
 
+		// TODO: Tact has to be checked here
+		tactPicture = BitmapFactory.decodeResource(res, R.drawable.tact_3_4);
+
+		int tactPictureHeight = distanceBetweenLines * 4;
+		
+		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter -2*distanceBetweenLines);
+		Point rightBottomOfRect = new Point(this.xPositionOfNextSheetElement + 100, yCenter + 2 * distanceBetweenLines); 
+		
+		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y, rightBottomOfRect.x, rightBottomOfRect.y); 
+		
+		noteSheetCanvas.getCanvas().drawBitmap(tactPicture, null, rect,null); 
+		noteSheetCanvas.setStartXPositionNotes(rightBottomOfRect.x); 
 	}
 
 	private void drawBeats() {

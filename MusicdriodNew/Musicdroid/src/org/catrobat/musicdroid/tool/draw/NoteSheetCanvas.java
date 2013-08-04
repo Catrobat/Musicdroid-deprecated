@@ -31,9 +31,12 @@ import android.graphics.Canvas;
 public class NoteSheetCanvas {
 
 	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
+	
+	private int startXPositionNotes; 
+
 
 	private Canvas canvas;
-
+	
 	public NoteSheetCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
@@ -48,6 +51,14 @@ public class NoteSheetCanvas {
 
 	public int getYPositionOfCenterLine() {
 		return canvas.getHeight() / 2;
+	}
+
+	public int getStartXPositionNotes() {
+		return startXPositionNotes;
+	}
+
+	public void setStartXPositionNotes(int startXPositionNotes) {
+		this.startXPositionNotes = startXPositionNotes;
 	}
 
 }
