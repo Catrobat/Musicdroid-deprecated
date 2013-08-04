@@ -22,13 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.AttributeSet;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
@@ -48,7 +45,7 @@ public class TimelineMarkerText extends TextView {
 	public TimelineMarkerText(Context context, int second) {
 		super(context);
 		
-		setText(Helper.durationStringFromInt(second));
+		setText(StringFormatter.durationStringFromInt(second));
 		LayoutParams textParams = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		textParams.leftMargin = SoundMixer.getInstance().getPixelPerSecond()*second - 25;
