@@ -20,6 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+
 package org.catrobat.musicdroid.projecttest;
 
 import java.io.BufferedReader;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -39,7 +41,7 @@ public class LicenseTest extends TestCase {
 	
 	private static final boolean REPLACE_LICENSE_TEXT = false;
 	private String NEWLINE = System.getProperty("line.separator");
-	private StringBuilder missing_license_text_files = new StringBuilder();
+	private StringBuilder missingLicenseTextFiles = new StringBuilder();
 
 	final String[] path_to_projects = {
 											"../Musicdroid/src",
@@ -48,13 +50,14 @@ public class LicenseTest extends TestCase {
 										};
 	private  String[] license = {};
 	
-	private String license_string = "";
+	private String licensString = "";
 	
 	public LicenseTest() {
 
 	}
 
 	public void setUp() throws Exception {
+		assertTrue(new File("license").exists());
 	    Scanner scanner = null;
 		try {
 			scanner = new Scanner(new FileInputStream("license"));
@@ -64,14 +67,14 @@ public class LicenseTest extends TestCase {
 		}
 	    try {	    	
 	      while (scanner.hasNextLine()){
-	    	  license_string += scanner.nextLine() + NEWLINE;
+	    	  licensString += scanner.nextLine() + NEWLINE;
 	      }
 	    }
 	    finally{
 	    	if(scanner!= null)
 	    		scanner.close();
 	    }
-		license = license_string.split(NEWLINE);
+		license = licensString.split(NEWLINE);
 	}
 	
 	public void testIfGplLicenseIsInAllFiles() throws Exception{
@@ -79,7 +82,7 @@ public class LicenseTest extends TestCase {
 			File directory = new File(path_to_project);
 			walkThroughDirectories(directory);
 		}
-		assertEquals(missing_license_text_files.toString(), 0, missing_license_text_files.length());
+		assertEquals(missingLicenseTextFiles.toString(), 0, missingLicenseTextFiles.length());
 	}
 
 	protected void walkThroughDirectories(File file_or_directory) {
@@ -91,14 +94,14 @@ public class LicenseTest extends TestCase {
 	    } else {
 	    	if(REPLACE_LICENSE_TEXT == true) {
 	    		replaceWithNewLicenseText(file_or_directory);
-	    	} 
-	        checkFileForLicense(file_or_directory);
+	    	}
+	    	if(!file_or_directory.getName().equals("license"))
+	          checkFileForLicense(file_or_directory);
 	    }
 	}
 	
 	protected void checkFileForLicense(File file)
 	{
-		System.out.println(file.getAbsolutePath());
 		try
 		{
 			FileInputStream fileInputStream = new FileInputStream(file);
@@ -110,7 +113,8 @@ public class LicenseTest extends TestCase {
 		    while ((lineFromSourceFile = bufferedReader.readLine()) != null && indexFromLicenseString < license.length)   {
 		    	if(!license[indexFromLicenseString].trim().contentEquals(lineFromSourceFile.trim()))
 		    	{
-		    		missing_license_text_files.append(file.getAbsolutePath() + NEWLINE);
+		    		System.out.println(file.getAbsolutePath());
+		    		missingLicenseTextFiles.append(file.getAbsolutePath() + NEWLINE);
 		    		break;
 		    	}
 //		    	assertEquals(license[indexFromLicenseString].trim(), lineFromSourceFile.trim());
@@ -118,9 +122,14 @@ public class LicenseTest extends TestCase {
 		    }
 		    dataInputStream.close();
 		}
-		catch (Exception e) {
+		catch (FileNotFoundException e) {
+			System.out.println(file.getAbsolutePath());
 			assertTrue(false);
 		}
+		catch (IOException e) {
+			assertTrue(false);
+		}
+		
 	}
 	
 	
@@ -147,14 +156,14 @@ public class LicenseTest extends TestCase {
 	    sourceText.trimToSize();
 		try
 		{
-			if(sourceText.indexOf(license_string) == -1) {
+			if(sourceText.indexOf(licensString) == -1) {
 				int startOfOldSourceText = sourceText.indexOf("/**");
 				int endOfOldSourceText = sourceText.indexOf(" */");
 				
 				if(startOfOldSourceText == 0 && endOfOldSourceText > 0) {
-					sourceText.replace(0, endOfOldSourceText + 3, license_string);
+					sourceText.replace(0, endOfOldSourceText + 3, licensString);
 				} else {
-					sourceText.insert(0, license_string);
+					sourceText.insert(0, licensString);
 				}
 				Writer out = new OutputStreamWriter(new FileOutputStream(file));
 			    try {
