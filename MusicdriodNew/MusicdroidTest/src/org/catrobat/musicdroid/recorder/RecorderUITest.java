@@ -71,6 +71,11 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 	     solo.sleep(2000);
 	}
 	
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}
+	
 	public void testOrientation()
 	{
 		assertEquals("Not in Landscape mode!", Configuration.ORIENTATION_LANDSCAPE, 
