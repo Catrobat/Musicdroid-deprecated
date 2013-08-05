@@ -20,43 +20,34 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import android.text.format.Time;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
-
+import org.catrobat.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
-public class ProjectSerializationTest extends TestCase {
+public class NoteNameTest extends TestCase {
 
-	public void testSerialize() throws IOException, ClassNotFoundException {
-		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
-		Track track = new Track();
-		project.addTrack(track);
-		File file = new File("projectSerializedTest");
+	public void testMidi() {
+		assertEquals(36, NoteName.C1.getMidi());
+		assertEquals(48, NoteName.C2.getMidi());
+		assertEquals(60, NoteName.C3.getMidi());
+		assertEquals(72, NoteName.C4.getMidi());
+		assertEquals(84, NoteName.C5.getMidi());
+	}
+	
+	public void testNext() {
+		NoteName a5s = NoteName.A5S;
+		NoteName b5 = NoteName.B5;
 		
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		out.writeObject(project);
-		out.close();
+		assertEquals(b5, a5s.next());
+		assertEquals(b5, b5.next());
+	}
+	
+	public void testPrevious() {
+		NoteName c1 = NoteName.C1;
+		NoteName c1s = NoteName.C1S;
 		
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-		Project readProject = (Project) in.readObject();
-		in.close();
-		
-		file.delete();
-		
-		assertEquals(project, readProject);
+		assertEquals(c1, c1.previous());
+		assertEquals(c1, c1s.previous());
 	}
 }

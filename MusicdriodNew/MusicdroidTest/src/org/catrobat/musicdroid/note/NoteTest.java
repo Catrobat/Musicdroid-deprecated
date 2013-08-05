@@ -20,16 +20,16 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
 import org.catrobat.musicdroid.note.Note;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
-public class ToneTest extends TestCase {
+public class NoteTest extends TestCase {
 
-	public void testTone() {
+	public void testNote() {
 		NoteName name = NoteName.C1;
 		NoteLength noteLength = NoteLength.EIGHT;
 		Note note = new Note(name, noteLength);
@@ -55,43 +55,43 @@ public class ToneTest extends TestCase {
 	}
 	
 	public void testEquals1() {
-		Note tone1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note tone2 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note2 = new Note(NoteName.C1, NoteLength.QUARTER);
 		
-		assertTrue(tone1.equals(tone2));
+		assertTrue(note1.equals(note2));
 	}
 	
 	public void testEquals2() {
-		Note tone1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note tone2 = new Note(NoteName.D1, NoteLength.QUARTER);
+		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note2 = new Note(NoteName.D1, NoteLength.QUARTER);
 		
-		assertFalse(tone1.equals(tone2));
+		assertFalse(note1.equals(note2));
 	}
 	
 	public void testEquals3() {
-		Note tone1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note tone2 = new Note(NoteName.C1, NoteLength.HALF);
+		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note2 = new Note(NoteName.C1, NoteLength.HALF);
 		
-		assertFalse(tone1.equals(tone2));
+		assertFalse(note1.equals(note2));
 	}
 	
 	public void testEquals4() {
-		Note tone = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note = new Note(NoteName.C1, NoteLength.QUARTER);
 		
-		assertFalse(tone.equals(null));
+		assertFalse(note.equals(null));
 	}
 	
 	public void testEquals5() {
-		Note tone = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note = new Note(NoteName.C1, NoteLength.QUARTER);
 		
-		assertFalse(tone.equals(""));
+		assertFalse(note.equals(""));
 	}
 	
 	public void testToString() {
 		NoteLength noteLength = NoteLength.WHOLE;
 		NoteName name = NoteName.A1;
-		Note tone = new Note(name, noteLength);
+		Note note = new Note(name, noteLength);
 		
-		assertEquals("[Tone] noteLength=" + noteLength + " name=" + name, tone.toString());
+		assertEquals("[Note] noteLength=" + noteLength + " name=" + name, note.toString());
 	}
 }

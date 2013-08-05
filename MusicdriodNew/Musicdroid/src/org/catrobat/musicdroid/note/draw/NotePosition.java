@@ -35,15 +35,15 @@ public class NotePosition {
 	private NotePosition() {
 	}
 
-	public static double getLinePosition(Key key, Note tone) {
+	public static double getLinePosition(Key key, Note note) {
 		if (key == Key.VIOLIN)
-			return getToneDistanceFromToneToMiddleLineInHalfTones(key, tone);
+			return getToneDistanceFromToneToMiddleLineInHalfTones(key, note);
 			
 		throw new UnsupportedOperationException();
 	}
 
-	private static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key, Note tone) {
-		NoteName currentNote = tone.getNoteName();
+	private static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key, Note note) {
+		NoteName currentNote = note.getNoteName();
 		NoteName middleNote = NoteName.B3;
 		
 		return NoteName.calculateDistance(currentNote, middleNote);
