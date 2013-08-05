@@ -20,34 +20,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.tools;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class FileExtensionMethods {
+	public static String getFilenameFromPath(String path) {
+		String filename = path;
+		int pos = path.lastIndexOf('/');
+		if (pos != -1) {
+			filename = path.substring(pos + 1);
+		}
 
-public class SoundTrackMic extends SoundTrack {
+		filename = removeFileEnding(filename);
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+		return filename;
+
 	}
 
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
-	}
+	public static String removeFileEnding(String file) {
+		int pos = file.lastIndexOf('.');
 
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
+		if (pos != -1) {
+			file = file.substring(0, pos);
+		}
+		return file;
 	}
-
 }

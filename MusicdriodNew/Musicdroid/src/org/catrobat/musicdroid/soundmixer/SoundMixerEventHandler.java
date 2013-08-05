@@ -28,9 +28,9 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.timeline.TimelineEventHandler;
+import org.catrobat.musicdroid.tools.DeviceInfo;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;
@@ -47,7 +47,7 @@ public class SoundMixerEventHandler extends Observable {
 		mixer = m;
 		setEndPoint(PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
-		screenWidth = Helper.getScreenWidth(mixer.parent);
+		screenWidth = DeviceInfo.getScreenWidth(mixer.parent);
 		secondInPixel = screenWidth
 				/ PreferenceManager.getInstance().getPreference(
 						PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
