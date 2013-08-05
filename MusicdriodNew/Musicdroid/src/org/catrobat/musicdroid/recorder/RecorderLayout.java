@@ -38,7 +38,7 @@ import android.widget.TextView;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
-import org.catrobat.musicdroid.helper.Helper;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class RecorderLayout extends Handler implements OnClickListener,
 		OnLongClickListener {
@@ -120,8 +120,7 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		if (b.containsKey("duration")) {
 			int key = b.getInt("duration");
 			if(recordDurationTextView != null)
-			  recordDurationTextView.setText(Helper.getInstance()
-					.durationStringFromInt(key));
+			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(key));
 		} else if (b.containsKey("trackposition")) {
 			int position = b.getInt("trackposition");
 			LayoutParams params = (LayoutParams) progressBarView

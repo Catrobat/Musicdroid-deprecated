@@ -37,12 +37,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.DeviceInfo;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class Timeline extends RelativeLayout {
-	private Helper helper = null;
 	private Context context = null;
 	private RelativeLayout timelineTop = null;
 	private RelativeLayout timelineBottom = null;
@@ -62,7 +62,6 @@ public class Timeline extends RelativeLayout {
 	public Timeline(Context context) {
 		super(context);
 		this.context = context;
-		helper = Helper.getInstance();
 		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
 
 		LayoutInflater inflater = LayoutInflater.from(this.context);
@@ -79,9 +78,9 @@ public class Timeline extends RelativeLayout {
 	}
 
 	private void initTimeline() {
-		height = helper.getScreenHeight() / 18;
+		height = DeviceInfo.getScreenHeight(context) / 18;
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				helper.getScreenWidth(), height * 2);
+				DeviceInfo.getScreenWidth(context), height * 2);
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(
 				R.color.background_holo_light));
@@ -224,7 +223,7 @@ public class Timeline extends RelativeLayout {
 		lastSetTime = second;
 		TextView positionText = new TextView(context);
 		positionText
-				.setText(Helper.getInstance().durationStringFromInt(second));
+				.setText(StringFormatter.durationStringFromInt(second));
 		LayoutParams textParams = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		textParams.leftMargin = position - 25;

@@ -57,7 +57,10 @@ public class LicenseTest extends TestCase {
 	}
 
 	public void setUp() throws Exception {
+<<<<<<< HEAD
 		assertTrue(new File("license").exists());
+=======
+>>>>>>> e2cd918f59cb62e2888bc5746a0dfac0a0212201
 	    Scanner scanner = null;
 		try {
 			scanner = new Scanner(new FileInputStream("license"));

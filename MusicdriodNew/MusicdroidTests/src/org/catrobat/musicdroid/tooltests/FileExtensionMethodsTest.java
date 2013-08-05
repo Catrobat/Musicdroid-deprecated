@@ -20,34 +20,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.tooltests;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
+import junit.framework.TestCase;
+
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
 
-public class SoundTrackMic extends SoundTrack {
+/**
+ * @author matthias
+ *
+ */
+public class FileExtensionMethodsTest extends TestCase {
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+	public void testGetFilenameFromPath()
+	{
+		String path = "/dummy/test/check.xml";
+		assertTrue((FileExtensionMethods.getFilenameFromPath(path)).equals("check"));
+		
+		path = "/dummy/test/check";
+		assertTrue((FileExtensionMethods.getFilenameFromPath(path)).equals("check"));
 	}
-
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
+	
+	public void testRemoveExtension()
+	{
+		String filename = "check.xml";
+		assertTrue((FileExtensionMethods.removeFileEnding(filename)).equals("check"));
+		
+		filename = "check";
+		assertTrue((FileExtensionMethods.removeFileEnding(filename)).equals("check"));
 	}
-
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
-	}
-
 }

@@ -20,34 +20,35 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.tools;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class StringFormatter {
+	private static String SEPERATOR = ":";
+	
+	public static String durationStringFromInt(int duration) {
+	    int hours = (int) duration / 3600;
+	    int remainder = (int) duration - hours * 3600;
+	    int minutes = remainder / 60;
+	    remainder = remainder - minutes * 60;
+	    int seconds = remainder;
+		
+		String durationString = "";
+		
+		if(hours > 0)
+			durationString = "" + hours + SEPERATOR;
+		
+		String min = "" + minutes;
+		String sec = "" + seconds;
 
-public class SoundTrackMic extends SoundTrack {
+		if (minutes < 10)
+			min = "0" + min;
+		if (seconds < 10)
+			sec = "0" + sec;
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+		return durationString + min + SEPERATOR + sec;
 	}
-
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
-	}
-
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
-	}
-
 }

@@ -33,7 +33,6 @@ import android.widget.Toast;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.metronom.Metronom;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
@@ -41,6 +40,7 @@ import org.catrobat.musicdroid.soundmixer.timeline.TimelineEventHandler;
 import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
+import org.catrobat.musicdroid.tools.DeviceInfo;
 
 public class SoundMixer implements HorizontalScrollViewListener {
 	public static SoundMixer instance = null;
@@ -84,7 +84,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 		Log.i("SoundMixer", "DefaultLength " + defaultLength);
 		soundMixerLength = longestSoundTrack = defaultLength;
-		pixelPerSecond = Helper.getInstance().getScreenWidth() / defaultLength;
+		pixelPerSecond = DeviceInfo.getScreenWidth(parent) / defaultLength;
 
 		LayoutParams lp = (LayoutParams) timeline.getLayoutParams();
 		timeline.setId(getNewViewID());
@@ -335,7 +335,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = Helper.getInstance().getScreenWidth()
+			pixelPerSecond = DeviceInfo.getScreenWidth(parent)
 					/ defaultLength;
 		return pixelPerSecond;
 	}

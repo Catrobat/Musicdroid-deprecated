@@ -20,28 +20,19 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.helper;
+package org.catrobat.musicdroid.tools;
+
+import org.catrobat.musicdroid.MainActivity;
 
 import android.content.Context;
 import android.graphics.Point;
-import org.catrobat.musicdroid.MainActivity;
 
-public class Helper {
-	private static Helper instance = null;
-	private Context context = null;
-
-	public static Helper getInstance() {
-		if (instance == null) {
-			instance = new Helper();
-		}
-		return instance;
-	}
-
-	public void init(Context c) {
-		context = c;
-	}
-
-	public Point getScreenSize() {
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class DeviceInfo {
+	public static Point getScreenSize(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
 
@@ -59,51 +50,15 @@ public class Helper {
 		}
 	}
 
-	public int getScreenHeight() {
+	public static int getScreenHeight(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().y;
+		return getScreenSize(context).y;
 	}
 
-	public int getScreenWidth() {
+	public static int getScreenWidth(Context context) {
 		if (context == null)
 			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize().x;
-	}
-
-	public String durationStringFromInt(int duration) {
-		int minutes = duration / 60;
-		int seconds = duration % 60;
-		String min = "" + minutes;
-		String sec = "" + seconds;
-
-		if (minutes < 10)
-			min = "0" + min;
-		if (seconds < 10)
-			sec = "0" + sec;
-
-		return min + ":" + sec;
-	}
-
-	public String getFilenameFromPath(String path) {
-		String filename = path;
-		int pos = path.lastIndexOf('/');
-		if (pos != -1) {
-			filename = path.substring(pos + 1);
-		}
-
-		filename = removeFileEnding(filename);
-
-		return filename;
-
-	}
-
-	public String removeFileEnding(String file) {
-		int pos = file.lastIndexOf('.');
-
-		if (pos != -1) {
-			file = file.substring(0, pos);
-		}
-		return file;
+		return getScreenSize(context).x;
 	}
 }

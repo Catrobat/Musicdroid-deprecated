@@ -33,7 +33,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import org.catrobat.musicdroid.dialog.AddSoundDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceActivity;
 import org.catrobat.musicdroid.soundmixer.ObservableHorizontalScrollView;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
@@ -57,10 +56,7 @@ public class MainActivity extends MenuFileActivity {
 		super.prepareFolderStructure();
 
 		AddSoundDialog.init(this);
-
-		Helper helper = Helper.getInstance();
-		helper.init(this);
-
+		
 		setContentView(R.layout.activity_main);
 
 		initTopStatusBar();
