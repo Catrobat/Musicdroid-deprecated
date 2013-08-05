@@ -80,6 +80,6 @@ public class TimeTest extends TestCase {
 		NoteLength noteLength = NoteLength.SIXTEENTH;
 		Tact time = new Tact(beatsPerTact, noteLength);
 		
-		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
+		assertEquals("[Tact] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
 	}
 }
