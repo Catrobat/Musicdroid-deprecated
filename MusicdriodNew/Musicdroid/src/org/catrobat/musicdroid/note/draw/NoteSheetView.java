@@ -39,7 +39,6 @@ import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-
 /**
  * @author florian.winkelbauer, bteufl
  * 
@@ -69,7 +68,7 @@ public class NoteSheetView extends View {
 		this.context = context;
 		paint = new Paint();
 		track = new Track();
-		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING; 
+		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
 
 	@Override
@@ -85,8 +84,10 @@ public class NoteSheetView extends View {
 		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS
 				* distanceBetweenLines;
 		paint.setColor(Color.BLACK);
+		
 		drawSheetElements();
-		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING; 
+		
+		this.setXPositionOfNextSheetElement(NOTE_SHEET_PADDING);
 	};
 
 	private void drawSheetElements() {
@@ -126,12 +127,12 @@ public class NoteSheetView extends View {
 	}
 
 	private void drawThinBar(int xBarStartPosition) {
-		int xEndThinBar = xBarStartPosition + THIN_BAR_WIDTH; 
+		int xEndThinBar = xBarStartPosition + THIN_BAR_WIDTH;
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
 				xEndThinBar, yCenter + halfBarHeight);
 
 		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
-		this.xPositionOfNextSheetElement = xEndThinBar;
+		this.setXPositionOfNextSheetElement(xEndThinBar);
 	}
 
 	private void drawBoldBar(int xBarStartPosition) {
@@ -148,32 +149,20 @@ public class NoteSheetView extends View {
 			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
 		} else {
 			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
-
 		}
-		
+
 		int keyPictureHeight = distanceBetweenLines
 				* HEIGHT_OF_KEY_IN_LINE_SPACES;
-		
-		Rect rect = calculateProportionalPictureContourRect(keyPicture, keyPictureHeight); 
+
+		Rect rect = calculateProportionalPictureContourRect(keyPicture,
+				keyPictureHeight);
 
 		noteSheetCanvas.getCanvas().drawBitmap(keyPicture, null, rect, null);
-		this.xPositionOfNextSheetElement = rect.right;
+		this.setXPositionOfNextSheetElement(rect.right);
 	}
 
-	private Rect calculateProportionalPictureContourRect(Bitmap originalPicture, int height) {
-		
-		double proportionHeigth =  originalPicture.getHeight()/ height; 
-		
-		int keyPictureWidth = (int)(originalPicture.getWidth() / proportionHeigth); 
-
-		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter - height / 2);
-
-		Point rightBottomOfRect = new Point(this.xPositionOfNextSheetElement + keyPictureWidth, yCenter + height / 2);
-
-		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
-				rightBottomOfRect.x, rightBottomOfRect.y);
-	}
 	
+
 	private void drawTactUnit() {
 		Resources res = context.getResources();
 		Bitmap tactPicture;
@@ -182,17 +171,44 @@ public class NoteSheetView extends View {
 		tactPicture = BitmapFactory.decodeResource(res, R.drawable.tact_3_4);
 
 		int tactPictureHeight = distanceBetweenLines * 4;
+
+//		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement,
+//				yCenter - 2 * distanceBetweenLines);
+//		Point rightBottomOfRect = new Point(
+//				this.xPositionOfNextSheetElement + 100, yCenter + 2
+//						* distanceBetweenLines);
+//
+//		Rect rect1 = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
+//				rightBottomOfRect.x, rightBottomOfRect.y);
+
+		Rect rect = this.calculateProportionalPictureContourRect(tactPicture, tactPictureHeight);
 		
-		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement, yCenter -2*distanceBetweenLines);
-		Point rightBottomOfRect = new Point(this.xPositionOfNextSheetElement + 100, yCenter + 2 * distanceBetweenLines); 
-		
-		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y, rightBottomOfRect.x, rightBottomOfRect.y); 
-		
-		noteSheetCanvas.getCanvas().drawBitmap(tactPicture, null, rect,null); 
-		noteSheetCanvas.setStartXPositionNotes(rightBottomOfRect.x); 
+		noteSheetCanvas.getCanvas().drawBitmap(tactPicture, null, rect, null);
+		noteSheetCanvas.setStartXPositionNotes(rect.right);
 	}
 
 	private void drawBeats() {
+	}
+	
+	private Rect calculateProportionalPictureContourRect(
+			Bitmap originalPicture, int height) {
+
+		double proportionHeigth = originalPicture.getHeight() / height;
+
+		int keyPictureWidth = (int) (originalPicture.getWidth() / proportionHeigth);
+
+		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement,
+				yCenter - height / 2);
+
+		Point rightBottomOfRect = new Point(this.xPositionOfNextSheetElement
+				+ keyPictureWidth, yCenter + height / 2);
+
+		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
+				rightBottomOfRect.x, rightBottomOfRect.y);
+	}
+	
+	private void setXPositionOfNextSheetElement(int newPosition) {
+		this.xPositionOfNextSheetElement = newPosition;
 	}
 
 }
