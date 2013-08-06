@@ -20,50 +20,78 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
 import org.catrobat.musicdroid.note.Break;
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Track;
 import junit.framework.TestCase;
 
-public class BreakTest extends TestCase {
+public class ProjectTest extends TestCase {
 
-	public void testBreak() {
-		Break br = new Break(NoteLength.WHOLE);
+	public void testAddTrack() {
+		Project project = new Project();
 		
-		assertEquals(NoteLength.WHOLE, br.getNoteLength());
+		project.addTrack(new Track());
+		
+		assertEquals(1, project.size());
+	}
+
+	public void testRemoveTrack() {
+		Project project = new Project();
+		
+		Track track = new Track();
+		project.addTrack(track);
+		project.removeTrack(track);
+		
+		assertEquals(0, project.size());
 	}
 	
 	public void testEquals1() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.HALF);
+		Track track1 = new Track();
+		track1.addSymbol(new Break(NoteLength.HALF));
 		
-		assertTrue(break1.equals(break2));
+		Track track2 = new Track();
+		track2.addSymbol(new Break(NoteLength.HALF));
+		
+		assertTrue(track1.equals(track2));
 	}
 	
 	public void testEquals2() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.WHOLE);
+		Project project1 = new Project();
+		project1.addTrack(new Track());
 		
-		assertFalse(break1.equals(break2));
+		Project project2 = new Project();
+		project2.addTrack(new Track());
+		
+		assertTrue(project1.equals(project2));
 	}
 	
 	public void testEquals3() {
-		Break br = new Break(NoteLength.HALF);
+		Project project1 = new Project();
+		project1.addTrack(new Track());
 		
-		assertFalse(br.equals(null));
+		Project project2 = new Project();
+		
+		assertFalse(project1.equals(project2));
 	}
 	
 	public void testEquals4() {
-		Break br = new Break(NoteLength.HALF);
+		Project project = new Project();
 		
-		assertFalse(br.equals(""));
+		assertFalse(project.equals(null));
+	}
+	
+	public void testEquals5() {
+		Project project = new Project();
+		
+		assertFalse(project.equals(""));
 	}
 	
 	public void testToString() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		Break br = new Break(noteLength);
+		Project project = new Project();
 		
-		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+		assertEquals("[Project] trackCount=" + project.size(), project.toString());
 	}
 }

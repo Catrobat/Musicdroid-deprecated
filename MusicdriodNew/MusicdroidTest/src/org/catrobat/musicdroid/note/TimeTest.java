@@ -20,78 +20,66 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
 import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.Tact;
 import junit.framework.TestCase;
 
-public class ProjectTest extends TestCase {
+public class TimeTest extends TestCase {
 
-	public void testAddTrack() {
-		Project project = new Project();
+	public void testTime1() {
+		Tact time = new Tact();
 		
-		project.addTrack(new Track());
-		
-		assertEquals(1, project.size());
+		assertEquals(4, time.getBeatsPerTact());
+		assertEquals(NoteLength.QUARTER, time.getNoteLength());
 	}
-
-	public void testRemoveTrack() {
-		Project project = new Project();
+	
+	public void testTime2() {
+		Tact tact = new Tact(19, NoteLength.EIGHT);
 		
-		Track track = new Track();
-		project.addTrack(track);
-		project.removeTrack(track);
-		
-		assertEquals(0, project.size());
+		assertEquals(19, tact.getBeatsPerTact());
+		assertEquals(NoteLength.EIGHT, tact.getNoteLength());
 	}
 	
 	public void testEquals1() {
-		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		Tact time1 = new Tact(19, NoteLength.EIGHT);
+		Tact time2 = new Tact(19, NoteLength.EIGHT);
 		
-		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.HALF));
-		
-		assertTrue(track1.equals(track2));
+		assertTrue(time1.equals(time2));
 	}
 	
 	public void testEquals2() {
-		Project project1 = new Project();
-		project1.addTrack(new Track());
+		Tact time1 = new Tact(19, NoteLength.EIGHT);
+		Tact time2 = new Tact(20, NoteLength.EIGHT);
 		
-		Project project2 = new Project();
-		project2.addTrack(new Track());
-		
-		assertTrue(project1.equals(project2));
+		assertFalse(time1.equals(time2));
 	}
 	
 	public void testEquals3() {
-		Project project1 = new Project();
-		project1.addTrack(new Track());
+		Tact time1 = new Tact(19, NoteLength.EIGHT);
+		Tact time2 = new Tact(20, NoteLength.SIXTEENTH);
 		
-		Project project2 = new Project();
-		
-		assertFalse(project1.equals(project2));
+		assertFalse(time1.equals(time2));
 	}
 	
 	public void testEquals4() {
-		Project project = new Project();
+		Tact time = new Tact();
 		
-		assertFalse(project.equals(null));
+		assertFalse(time.equals(null));
 	}
 	
 	public void testEquals5() {
-		Project project = new Project();
+		Tact time = new Tact();
 		
-		assertFalse(project.equals(""));
+		assertFalse(time.equals(""));
 	}
 	
 	public void testToString() {
-		Project project = new Project();
+		int beatsPerTact = 20;
+		NoteLength noteLength = NoteLength.SIXTEENTH;
+		Tact time = new Tact(beatsPerTact, noteLength);
 		
-		assertEquals("[Project] trackCount=" + project.size(), project.toString());
+		assertEquals("[Tact] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
 	}
 }
