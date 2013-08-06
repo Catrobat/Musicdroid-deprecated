@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import android.os.Environment;
 import android.text.format.Time;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteLength;
@@ -45,18 +46,20 @@ public class ProjectSerializationTest extends TestCase {
 		Time time = new Time();
 		Track track = new Track();
 		project.addTrack(track);
-		File file = new File("projectSerializedTest");
-		
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+		File file = new File(Environment.getExternalStorageDirectory(),
+				"projectSerializedTest");
+
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+				file));
 		out.writeObject(project);
 		out.close();
-		
+
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 		Project readProject = (Project) in.readObject();
 		in.close();
-		
+
 		file.delete();
-		
+
 		assertEquals(project, readProject);
 	}
 }
