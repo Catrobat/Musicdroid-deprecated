@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.Tact;
@@ -80,6 +80,6 @@ public class TimeTest extends TestCase {
 		NoteLength noteLength = NoteLength.SIXTEENTH;
 		Tact time = new Tact(beatsPerTact, noteLength);
 		
-		assertEquals("[Time] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
+		assertEquals("[Tact] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength, time.toString());
 	}
 }

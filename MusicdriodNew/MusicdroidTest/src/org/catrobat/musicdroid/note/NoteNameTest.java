@@ -20,50 +20,34 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
-public class BreakTest extends TestCase {
+public class NoteNameTest extends TestCase {
 
-	public void testBreak() {
-		Break br = new Break(NoteLength.WHOLE);
-		
-		assertEquals(NoteLength.WHOLE, br.getNoteLength());
+	public void testMidi() {
+		assertEquals(36, NoteName.C1.getMidi());
+		assertEquals(48, NoteName.C2.getMidi());
+		assertEquals(60, NoteName.C3.getMidi());
+		assertEquals(72, NoteName.C4.getMidi());
+		assertEquals(84, NoteName.C5.getMidi());
 	}
 	
-	public void testEquals1() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.HALF);
+	public void testNext() {
+		NoteName a5s = NoteName.A5S;
+		NoteName b5 = NoteName.B5;
 		
-		assertTrue(break1.equals(break2));
+		assertEquals(b5, a5s.next());
+		assertEquals(b5, b5.next());
 	}
 	
-	public void testEquals2() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.WHOLE);
+	public void testPrevious() {
+		NoteName c1 = NoteName.C1;
+		NoteName c1s = NoteName.C1S;
 		
-		assertFalse(break1.equals(break2));
-	}
-	
-	public void testEquals3() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(null));
-	}
-	
-	public void testEquals4() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(""));
-	}
-	
-	public void testToString() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		Break br = new Break(noteLength);
-		
-		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+		assertEquals(c1, c1.previous());
+		assertEquals(c1, c1s.previous());
 	}
 }
