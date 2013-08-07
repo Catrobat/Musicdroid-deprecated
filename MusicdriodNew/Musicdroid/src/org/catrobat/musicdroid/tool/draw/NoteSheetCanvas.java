@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.tool.draw;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 /**
  * @author Bianca TEUFL
@@ -31,12 +32,19 @@ import android.graphics.Canvas;
 public class NoteSheetCanvas {
 
 	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
-	
-	private int startXPositionNotes; 
 
+	private int startXPositionNotes;
+
+	private int endXPositionNotes;
+
+	private int startXPointForNextSymbolSpace;
+
+	private int widthForOneSymbol;
+
+	private int numberOfSymbolsOnScreen;
 
 	private Canvas canvas;
-	
+
 	public NoteSheetCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
@@ -59,6 +67,34 @@ public class NoteSheetCanvas {
 
 	public void setStartXPositionNotes(int startXPositionNotes) {
 		this.startXPositionNotes = startXPositionNotes;
+		this.startXPointForNextSymbolSpace = this.startXPositionNotes;
+		calculateWidthForOneSymbolAndSetNumberOfSymbolsOnScreen();
 	}
 
+	public void setEndXPositionNotes(int endXPositionNotes) {
+		this.endXPositionNotes = endXPositionNotes;
+	}
+
+	private void calculateWidthForOneSymbolAndSetNumberOfSymbolsOnScreen() {
+
+		int possibleWidthForAllSymbol = endXPositionNotes - startXPositionNotes;
+		widthForOneSymbol = 3 * getDistanceBetweenNoteLines();
+		numberOfSymbolsOnScreen = (int) Math.floor(possibleWidthForAllSymbol
+				/ widthForOneSymbol);
+
+	}
+
+	public Point getCenterPointForNextSymbol() {
+		Point centerPoint = new Point();
+		int x = getStartXPointForNextSymbolSpace() + widthForOneSymbol / 2;
+		int y = getYPositionOfCenterLine();
+		centerPoint.set(x, y);
+		return centerPoint;
+	}
+
+	public int getStartXPointForNextSymbolSpace() {
+		int startXPointForNextSymbolSpace = this.startXPointForNextSymbolSpace;
+		this.startXPointForNextSymbolSpace += widthForOneSymbol;
+		return startXPointForNextSymbolSpace;
+	}
 }

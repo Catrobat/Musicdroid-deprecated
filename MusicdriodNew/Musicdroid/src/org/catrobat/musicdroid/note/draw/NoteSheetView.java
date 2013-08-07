@@ -36,6 +36,9 @@ import android.graphics.Rect;
 import android.view.View;
 
 import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.Note;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
@@ -68,6 +71,8 @@ public class NoteSheetView extends View {
 		this.context = context;
 		paint = new Paint();
 		track = new Track();
+		track.addSymbol(new Note(NoteName.A3S, NoteLength.WHOLE));
+		track.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
 		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
 
@@ -84,9 +89,9 @@ public class NoteSheetView extends View {
 		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS
 				* distanceBetweenLines;
 		paint.setColor(Color.BLACK);
-		
+
 		drawSheetElements();
-		
+
 		this.setXPositionOfNextSheetElement(NOTE_SHEET_PADDING);
 	};
 
@@ -97,6 +102,7 @@ public class NoteSheetView extends View {
 		drawKey();
 		drawTactUnit();
 		drawBeats();
+		TrackDrawer.drawTrack(noteSheetCanvas, track);
 	}
 
 	private void drawLines() {
@@ -123,7 +129,9 @@ public class NoteSheetView extends View {
 	}
 
 	private void drawEndBar() {
-		drawBoldBar(xEndPositionOfLine - BOLD_BAR_WIDTH);
+		int leftPositionOfEndBar = xEndPositionOfLine - BOLD_BAR_WIDTH;
+		drawBoldBar(leftPositionOfEndBar);
+		noteSheetCanvas.setEndXPositionNotes(leftPositionOfEndBar);
 	}
 
 	private void drawThinBar(int xBarStartPosition) {
@@ -161,8 +169,6 @@ public class NoteSheetView extends View {
 		this.setXPositionOfNextSheetElement(rect.right);
 	}
 
-	
-
 	private void drawTactUnit() {
 		Resources res = context.getResources();
 		Bitmap tactPicture;
@@ -172,24 +178,25 @@ public class NoteSheetView extends View {
 
 		int tactPictureHeight = distanceBetweenLines * 4;
 
-//		Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement,
-//				yCenter - 2 * distanceBetweenLines);
-//		Point rightBottomOfRect = new Point(
-//				this.xPositionOfNextSheetElement + 100, yCenter + 2
-//						* distanceBetweenLines);
-//
-//		Rect rect1 = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
-//				rightBottomOfRect.x, rightBottomOfRect.y);
+		// Point leftUpperOfRect = new Point(this.xPositionOfNextSheetElement,
+		// yCenter - 2 * distanceBetweenLines);
+		// Point rightBottomOfRect = new Point(
+		// this.xPositionOfNextSheetElement + 100, yCenter + 2
+		// * distanceBetweenLines);
+		//
+		// Rect rect1 = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
+		// rightBottomOfRect.x, rightBottomOfRect.y);
 
-		Rect rect = this.calculateProportionalPictureContourRect(tactPicture, tactPictureHeight);
-		
+		Rect rect = this.calculateProportionalPictureContourRect(tactPicture,
+				tactPictureHeight);
+
 		noteSheetCanvas.getCanvas().drawBitmap(tactPicture, null, rect, null);
 		noteSheetCanvas.setStartXPositionNotes(rect.right);
 	}
 
 	private void drawBeats() {
 	}
-	
+
 	private Rect calculateProportionalPictureContourRect(
 			Bitmap originalPicture, int height) {
 
@@ -206,7 +213,7 @@ public class NoteSheetView extends View {
 		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
 				rightBottomOfRect.x, rightBottomOfRect.y);
 	}
-	
+
 	private void setXPositionOfNextSheetElement(int newPosition) {
 		this.xPositionOfNextSheetElement = newPosition;
 	}

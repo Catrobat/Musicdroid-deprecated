@@ -74,6 +74,6 @@ public enum NoteName {
 	}
 	
 	public static int calculateDistance(NoteName name1, NoteName name2) {
-		return name1.midi - name2.midi;
+		return name2.midi - name1.midi;
 	}
 }

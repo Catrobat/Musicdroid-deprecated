@@ -22,23 +22,50 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note.draw;
 
-import org.catrobat.musicdroid.note.Symbol;
-import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 import android.graphics.Canvas;
-import android.media.ToneGenerator;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.drawable.shapes.OvalShape;
 
 /**
- * @author Bianca TEUFL
+ * @author Bianca TEUFL, Elisabeth Heschl, Daniel Neuhold
  * 
  */
-public class TrackDrawer {
+public class NoteBodyDrawer {
 
-	public static void drawTrack(NoteSheetCanvas noteSheetCanvas, Track track) {
+	public static RectF drawBody(NoteSheetCanvas noteSheetCanvas,
+			int toneDistanceFromToneToMiddleLineInHalfTones, boolean isFilled) {
 
-		for (Symbol currentSymbol : track.getSymbolList()) {
-			currentSymbol.draw(noteSheetCanvas, track.getKey());
+		int lineHeigth = noteSheetCanvas.getDistanceBetweenNoteLines();
+		int noteHeigth = lineHeigth / 2;
+		int noteWidth = noteHeigth * 130 / 100;
+
+		Point centerPointOfSpaceForNote = noteSheetCanvas
+				.getCenterPointForNextSymbol();
+		Point centerPointOfNote = centerPointOfSpaceForNote;
+		centerPointOfNote.y += toneDistanceFromToneToMiddleLineInHalfTones
+				* noteHeigth;
+
+		int left = centerPointOfNote.x - noteWidth;
+		int top = centerPointOfNote.y - noteHeigth;
+		int right = centerPointOfNote.x + noteWidth;
+		int bottom = centerPointOfNote.y + noteHeigth;
+
+		RectF noteSurroundingRect = new RectF(left, top, right, bottom);
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		if (!isFilled) {
+			paint.setStyle(Style.STROKE);
+			paint.setStrokeWidth(4);
 		}
+
+		noteSheetCanvas.getCanvas().drawOval(noteSurroundingRect, paint);
+		return noteSurroundingRect;
 	}
 }

@@ -20,33 +20,46 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.draw;
 
-import java.io.Serializable;
-
+import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public class Break extends Symbol implements Serializable {
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 
-	private static final long serialVersionUID = 4617673494732123149L;
+/**
+ * @author Bianca TEUFL
+ * 
+ */
+public class NoteStemDrawer {
 
-	public Break(NoteLength length) {
-		super(length);
+	private static final double LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES = 3.5;
+
+	public static void drawStem(NoteSheetCanvas noteSheetCanvas,
+			NoteLength noteLength, Point startPointOfNoteStem,
+			boolean isUpDirectedStem) {
+
+		Point endPointOfNoteStem = new Point();
+		int stemLength = (int) (Math
+				.round(LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES
+						* noteSheetCanvas.getDistanceBetweenNoteLines()));
+
+		endPointOfNoteStem.x = startPointOfNoteStem.x;
+
+		if (isUpDirectedStem) {
+			endPointOfNoteStem.y = startPointOfNoteStem.y - stemLength;
+		} else {
+			endPointOfNoteStem.y = startPointOfNoteStem.y + stemLength;
+		}
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStrokeWidth(4);
+
+		noteSheetCanvas.getCanvas().drawLine(startPointOfNoteStem.x,
+				startPointOfNoteStem.y, endPointOfNoteStem.x,
+				endPointOfNoteStem.y, paint);
 	}
-
-	@Override
-	public String toString() {
-		return "[Break] noteLength=" + noteLength;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.catrobat.musicdroid.note.Symbol#draw(org.catrobat.musicdroid.tool.draw.NoteSheetCanvas)
-	 */
-	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 }
