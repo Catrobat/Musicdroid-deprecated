@@ -63,10 +63,10 @@ public class Note extends Symbol implements Serializable {
 			return false;
 		}
 
-		Note tone = (Note) obj;
+		Note note = (Note) obj;
 
 		if (super.equals(obj)) {
-			return name.equals(tone.getNoteName());
+			return name.equals(note.getNoteName());
 		}
 
 		return false;

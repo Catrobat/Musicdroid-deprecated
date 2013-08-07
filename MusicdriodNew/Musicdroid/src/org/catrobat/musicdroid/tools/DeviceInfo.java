@@ -20,34 +20,45 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.tools;
 
-import org.catrobat.musicdroid.note.NoteName;
-import junit.framework.TestCase;
+import org.catrobat.musicdroid.MainActivity;
 
-public class NoteNameTest extends TestCase {
+import android.content.Context;
+import android.graphics.Point;
 
-	public void testMidi() {
-		assertEquals(36, NoteName.C1.getMidi());
-		assertEquals(48, NoteName.C2.getMidi());
-		assertEquals(60, NoteName.C3.getMidi());
-		assertEquals(72, NoteName.C4.getMidi());
-		assertEquals(84, NoteName.C5.getMidi());
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class DeviceInfo {
+	public static Point getScreenSize(Context context) {
+		if (context == null)
+			throw new IllegalStateException("Helper not initialized");
+
+		if (android.os.Build.VERSION.SDK_INT >= 13) {
+			Point size = new Point();
+			((MainActivity) context).getWindowManager().getDefaultDisplay()
+					.getSize(size);
+			return size;
+		} else {
+			int width = ((MainActivity) context).getWindowManager()
+					.getDefaultDisplay().getWidth();
+			int height = ((MainActivity) context).getWindowManager()
+					.getDefaultDisplay().getHeight();
+			return new Point(width, height);
+		}
 	}
-	
-	public void testNext() {
-		NoteName a5s = NoteName.A5S;
-		NoteName b5 = NoteName.B5;
-		
-		assertEquals(b5, a5s.next());
-		assertEquals(b5, b5.next());
+
+	public static int getScreenHeight(Context context) {
+		if (context == null)
+			throw new IllegalStateException("Helper not initialized");
+		return getScreenSize(context).y;
 	}
-	
-	public void testPrevious() {
-		NoteName c1 = NoteName.C1;
-		NoteName c1s = NoteName.C1S;
-		
-		assertEquals(c1, c1.previous());
-		assertEquals(c1, c1s.previous());
+
+	public static int getScreenWidth(Context context) {
+		if (context == null)
+			throw new IllegalStateException("Helper not initialized");
+		return getScreenSize(context).x;
 	}
 }

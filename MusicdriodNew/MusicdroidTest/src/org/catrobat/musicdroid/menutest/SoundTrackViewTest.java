@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.tools.TrackCreator;

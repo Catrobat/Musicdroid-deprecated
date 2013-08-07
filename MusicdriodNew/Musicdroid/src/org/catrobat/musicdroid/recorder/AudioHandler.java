@@ -30,9 +30,9 @@ import android.content.DialogInterface;
 import android.os.Environment;
 import android.util.Log;
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 public class AudioHandler {
 	public static AudioHandler instance = null;
@@ -140,7 +140,7 @@ public class AudioHandler {
 
 	public void setFilename(String f) {
 		this.filename = f;
-		layout.updateFilename(Helper.removeFileEnding(
+		layout.updateFilename(FileExtensionMethods.removeFileEnding(
 				this.filename));
 	}
 

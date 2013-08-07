@@ -20,34 +20,46 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.note;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-public class SoundTrackMic extends SoundTrack {
+import android.os.Environment;
+import android.text.format.Time;
+import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Track;
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+import junit.framework.TestCase;
+
+public class ProjectSerializationTest extends TestCase {
+
+	public void testSerialize() throws IOException, ClassNotFoundException {
+		Project project = new Project();
+		Key key = Key.BASS;
+		Time time = new Time();
+		Track track = new Track();
+		project.addTrack(track);
+		File file = new File(Environment.getExternalStorageDirectory(),
+				"projectSerializedTest");
+
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+				file));
+		out.writeObject(project);
+		out.close();
+
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+		Project readProject = (Project) in.readObject();
+		in.close();
+
+		file.delete();
+
+		assertEquals(project, readProject);
 	}
-
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
-	}
-
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
-	}
-
 }

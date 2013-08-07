@@ -20,50 +20,35 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.tools;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.NoteLength;
-import junit.framework.TestCase;
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class StringFormatter {
+	private static String SEPERATOR = ":";
+	
+	public static String durationStringFromInt(int duration) {
+	    int hours = (int) duration / 3600;
+	    int remainder = (int) duration - hours * 3600;
+	    int minutes = remainder / 60;
+	    remainder = remainder - minutes * 60;
+	    int seconds = remainder;
+		
+		String durationString = "";
+		
+		if(hours > 0)
+			durationString = "" + hours + SEPERATOR;
+		
+		String min = "" + minutes;
+		String sec = "" + seconds;
 
-public class BreakTest extends TestCase {
+		if (minutes < 10)
+			min = "0" + min;
+		if (seconds < 10)
+			sec = "0" + sec;
 
-	public void testBreak() {
-		Break br = new Break(NoteLength.WHOLE);
-		
-		assertEquals(NoteLength.WHOLE, br.getNoteLength());
-	}
-	
-	public void testEquals1() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.HALF);
-		
-		assertTrue(break1.equals(break2));
-	}
-	
-	public void testEquals2() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.WHOLE);
-		
-		assertFalse(break1.equals(break2));
-	}
-	
-	public void testEquals3() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(null));
-	}
-	
-	public void testEquals4() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(""));
-	}
-	
-	public void testToString() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		Break br = new Break(noteLength);
-		
-		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+		return durationString + min + SEPERATOR + sec;
 	}
 }

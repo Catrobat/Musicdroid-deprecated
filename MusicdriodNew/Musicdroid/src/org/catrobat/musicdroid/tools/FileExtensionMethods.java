@@ -20,57 +20,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.helper;
+package org.catrobat.musicdroid.tools;
 
-import android.content.Context;
-import android.graphics.Point;
-import org.catrobat.musicdroid.MainActivity;
-
-public class Helper {
-	public static Point getScreenSize(Context context) {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-
-		if (android.os.Build.VERSION.SDK_INT >= 13) {
-			Point size = new Point();
-			((MainActivity) context).getWindowManager().getDefaultDisplay()
-					.getSize(size);
-			return size;
-		} else {
-			int width = ((MainActivity) context).getWindowManager()
-					.getDefaultDisplay().getWidth();
-			int height = ((MainActivity) context).getWindowManager()
-					.getDefaultDisplay().getHeight();
-			return new Point(width, height);
-		}
-	}
-
-	public static int getScreenHeight(Context context) {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize(context).y;
-	}
-
-	public static int getScreenWidth(Context context) {
-		if (context == null)
-			throw new IllegalStateException("Helper not initialized");
-		return getScreenSize(context).x;
-	}
-
-	public static String durationStringFromInt(int duration) {
-		int minutes = duration / 60;
-		int seconds = duration % 60;
-		String min = "" + minutes;
-		String sec = "" + seconds;
-
-		if (minutes < 10)
-			min = "0" + min;
-		if (seconds < 10)
-			sec = "0" + sec;
-
-		return min + ":" + sec;
-	}
-
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class FileExtensionMethods {
 	public static String getFilenameFromPath(String path) {
 		String filename = path;
 		int pos = path.lastIndexOf('/');

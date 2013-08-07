@@ -20,34 +20,50 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.note;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.note.Break;
+import org.catrobat.musicdroid.note.NoteLength;
+import junit.framework.TestCase;
 
-public class SoundTrackMic extends SoundTrack {
+public class BreakTest extends TestCase {
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+	public void testBreak() {
+		Break br = new Break(NoteLength.WHOLE);
+		
+		assertEquals(NoteLength.WHOLE, br.getNoteLength());
 	}
-
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
+	
+	public void testEquals1() {
+		Break break1 = new Break(NoteLength.HALF);
+		Break break2 = new Break(NoteLength.HALF);
+		
+		assertTrue(break1.equals(break2));
 	}
-
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
+	
+	public void testEquals2() {
+		Break break1 = new Break(NoteLength.HALF);
+		Break break2 = new Break(NoteLength.WHOLE);
+		
+		assertFalse(break1.equals(break2));
 	}
-
+	
+	public void testEquals3() {
+		Break br = new Break(NoteLength.HALF);
+		
+		assertFalse(br.equals(null));
+	}
+	
+	public void testEquals4() {
+		Break br = new Break(NoteLength.HALF);
+		
+		assertFalse(br.equals(""));
+	}
+	
+	public void testToString() {
+		NoteLength noteLength = NoteLength.WHOLE;
+		Break br = new Break(noteLength);
+		
+		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+	}
 }
