@@ -28,12 +28,12 @@ import android.widget.Toast;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.metronom.Metronom;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.timeline.*;
 import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
+import org.catrobat.musicdroid.tools.DeviceInfo;
 
 public class SoundMixer {
 	public static SoundMixer instance = null;
@@ -74,7 +74,7 @@ public class SoundMixer {
 				timeline));
 		
 		soundMixerLength = defaultTrackLength;
-		pixelPerSecond = Helper.getScreenWidth(parentActivity) / defaultTrackLength;
+		pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
 	}
 
 	public SoundMixer() {
@@ -231,7 +231,7 @@ public class SoundMixer {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = Helper.getScreenWidth(parentActivity)
+			pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity)
 					/ defaultTrackLength;
 		return pixelPerSecond;
 	}
@@ -246,5 +246,10 @@ public class SoundMixer {
 
 	public SoundTrackView getTrackAtPosition(int position) {
 		return tracks.get(position);
+	}
+	
+	public Timeline getTimeline()
+	{
+		return timeline;
 	}
 }

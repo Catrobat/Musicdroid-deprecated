@@ -40,8 +40,8 @@ import android.widget.RelativeLayout.LayoutParams;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class SoundTrackView extends RelativeLayout implements OnClickListener,
@@ -50,7 +50,6 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	public final static int EXPANDED_WIDTH = 400;
 
 	private Context context = null;
-	private Helper helper = null;
 	private SoundTrack soundTrack = null;
 	private int xDelta;
 	public boolean moveableLocked = true;
@@ -86,7 +85,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 	public void initSoundTrackView() {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				computeWidthRelativeToDuration(), Helper.getScreenHeight(context) / 6);
+				computeWidthRelativeToDuration(), DeviceInfo.getScreenHeight(context) / 6);
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(
 				soundTrack.getType().getColorResource()));
@@ -317,7 +316,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	public void resize() {
 		RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
 		lParams.width = computeWidthRelativeToDuration();
-		lParams.height = Helper.getScreenHeight(context) / 6;
+		lParams.height = DeviceInfo.getScreenHeight(context) / 6;
 		setLayoutParams(lParams);
 
 		if (lParams.width < MINIMAL_WIDTH)

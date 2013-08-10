@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
 import org.catrobat.musicdroid.note.Break;
 import org.catrobat.musicdroid.note.Key;
@@ -114,7 +114,7 @@ public class TrackTest extends TestCase {
 		Key key = Key.BASS;
 		Track track = new Track(key, new Tact(), 60);
 
-		assertEquals("[Track] key=" + key + " symbolCount=" + track.size(),
+		assertEquals("[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
 				track.toString());
 	}
 }

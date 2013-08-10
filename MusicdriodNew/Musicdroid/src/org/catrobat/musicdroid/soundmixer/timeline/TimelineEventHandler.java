@@ -31,34 +31,19 @@ import android.widget.RelativeLayout.LayoutParams;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineEventHandler extends Handler {
-	private static TimelineEventHandler instance = null;
-	private View trackPositionView = null;
 	private Timeline timeline = null;
-
-	public static TimelineEventHandler getInstance() {
-		if (instance == null) {
-			instance = new TimelineEventHandler();
-		}
-		return instance;
-	}
-
-	public void init(Timeline t) {
-		this.timeline = t;
+	
+	public TimelineEventHandler(Timeline timeline)
+	{
+		this.timeline = timeline;
 	}
 
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle b = msg.getData();
 		if (b.containsKey("position")) {
-			trackPositionView = timeline.getTrackPositionView();
-			int key = b.getInt("position");
-			Log.i("TimelineEventHandler", "MessageDuration = " + key
-					+ "  Width = " + key
-					* SoundMixer.getInstance().getPixelPerSecond());
-			LayoutParams params = (LayoutParams) trackPositionView
-					.getLayoutParams();
-			params.width = key * SoundMixer.getInstance().getPixelPerSecond();
-			trackPositionView.setLayoutParams(params);
+			int positionInSeconds = b.getInt("position");
+			timeline.getTimelineProgressBar().setProgres(positionInSeconds);
 		}
 	}
 }

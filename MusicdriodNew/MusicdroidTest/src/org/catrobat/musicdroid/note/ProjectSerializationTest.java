@@ -20,50 +20,46 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tone;
+package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import android.os.Environment;
+import android.text.format.Time;
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Track;
+
 import junit.framework.TestCase;
 
-public class BreakTest extends TestCase {
+public class ProjectSerializationTest extends TestCase {
 
-	public void testBreak() {
-		Break br = new Break(NoteLength.WHOLE);
-		
-		assertEquals(NoteLength.WHOLE, br.getNoteLength());
-	}
-	
-	public void testEquals1() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.HALF);
-		
-		assertTrue(break1.equals(break2));
-	}
-	
-	public void testEquals2() {
-		Break break1 = new Break(NoteLength.HALF);
-		Break break2 = new Break(NoteLength.WHOLE);
-		
-		assertFalse(break1.equals(break2));
-	}
-	
-	public void testEquals3() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(null));
-	}
-	
-	public void testEquals4() {
-		Break br = new Break(NoteLength.HALF);
-		
-		assertFalse(br.equals(""));
-	}
-	
-	public void testToString() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		Break br = new Break(noteLength);
-		
-		assertEquals("[Break] noteLength=" + noteLength, br.toString());
+	public void testSerialize() throws IOException, ClassNotFoundException {
+		Project project = new Project();
+		Key key = Key.BASS;
+		Time time = new Time();
+		Track track = new Track();
+		project.addTrack(track);
+		File file = new File(Environment.getExternalStorageDirectory(),
+				"projectSerializedTest");
+
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+				file));
+		out.writeObject(project);
+		out.close();
+
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+		Project readProject = (Project) in.readObject();
+		in.close();
+
+		file.delete();
+
+		assertEquals(project, readProject);
 	}
 }

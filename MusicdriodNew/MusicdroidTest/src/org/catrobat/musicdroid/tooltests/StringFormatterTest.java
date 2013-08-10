@@ -20,34 +20,30 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundtracks;
+package org.catrobat.musicdroid.tooltests;
 
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
-public class SoundTrackMic extends SoundTrack {
+import junit.framework.TestCase;
 
-	public SoundTrackMic() {
-		type = SoundType.MIC;
-		name = "SoundfileMic";
-		soundfileRawId = R.raw.test_wav;
-		duration = SoundManager.getSoundfileDuration(soundfileRawId);
-		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+/**
+ * @author matthias
+ *
+ */
+public class StringFormatterTest extends TestCase {
+
+	public void testStringFormatter()
+	{
+		int duration = 5;
+		assertTrue(StringFormatter.durationStringFromInt(duration).equals("00:05"));
+		
+		duration = 60;
+		assertTrue(StringFormatter.durationStringFromInt(duration).equals("01:00"));
+		
+		duration = 990;
+		assertTrue(StringFormatter.durationStringFromInt(duration).equals("16:30"));
+		
+		duration = 3600;
+		assertTrue(StringFormatter.durationStringFromInt(duration).equals("1:00:00"));
 	}
-
-	public SoundTrackMic(String path) {
-		type = SoundType.MIC;
-		name = FileExtensionMethods.getFilenameFromPath(path);
-		soundpoolId = SoundManager.addSoundByPath(path);
-		duration = SoundManager.getSoundfileDurationByPath(path);
-	}
-
-	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
-	}
-
 }

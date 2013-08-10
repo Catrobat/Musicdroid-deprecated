@@ -38,9 +38,10 @@ import android.widget.TextView;
 
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.helper.Helper;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.DeviceInfo;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class Timeline extends RelativeLayout {
 	private Context context = null;
@@ -48,14 +49,13 @@ public class Timeline extends RelativeLayout {
 	private RelativeLayout timelineBottom = null;
 	private ImageButton startPointImageButton = null;
 	private ImageButton endPointImageButton = null;
-	private View currentPositionView = null;
-
-	private int startId = 9876;
+	private TimelineProgressBar timelineProgressBar = null;
 	private int height = 0;
 	private int lastSetTime = 0;
 	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 	private TimelineOnTouchListener onTimelineTouchListener = null;
+	private TimelineEventHandler timelineEventHandler;
 
 	public Timeline(Context context) {
 		super(context);
@@ -66,7 +66,7 @@ public class Timeline extends RelativeLayout {
 		inflater.inflate(R.layout.timeline_layout, this);
 
 		initTimeline();
-		TimelineEventHandler.getInstance().init(this);
+		timelineEventHandler = new TimelineEventHandler(this);
 		onTimelineTouchListener = new TimelineOnTouchListener(this);
 		this.setOnTouchListener(onTimelineTouchListener);
 	}
@@ -77,9 +77,9 @@ public class Timeline extends RelativeLayout {
 	}
 
 	private void initTimeline() {
-		height = Helper.getScreenHeight(context) / 18;
+		height = DeviceInfo.getScreenHeight(context) / 18;
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				Helper.getScreenWidth(context), height * 2);
+				DeviceInfo.getScreenWidth(context), height * 2);
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(R.color.background_holo_light));
 
@@ -92,7 +92,7 @@ public class Timeline extends RelativeLayout {
 		((TextView) findViewById(R.id.timeline_start_time)).setText("00:00");
 		startPointImageButton = (ImageButton) findViewById(R.id.timeline_start_point);
 		endPointImageButton = (ImageButton) findViewById(R.id.timeline_end_point);
-		currentPositionView = (View) findViewById(R.id.timeline_currentPosition);
+		timelineProgressBar = (TimelineProgressBar) findViewById(R.id.timeline_progressBar);
 
 		initMarkerBar();
 	}
@@ -120,7 +120,7 @@ public class Timeline extends RelativeLayout {
 	
 	private void addMarker(int second)
 	{
-		timelineBottom.addView(new TimelineMarker(context, second, height));//createNewTimeMarker(second));			
+		timelineBottom.addView(new TimelineMarker(context, second, height));			
 		if (second > 0 && second % 5 == 0 && second > lastSetTime)
 		{
 			lastSetTime = second;
@@ -166,11 +166,7 @@ public class Timeline extends RelativeLayout {
 		startPointImageButton.setLayoutParams(layout);
 		startPointImageButton.setOnTouchListener(onTimelineTouchListener);
 
-		RelativeLayout.LayoutParams positionLayout = (LayoutParams) currentPositionView
-				.getLayoutParams();
-		positionLayout.setMargins(leftMargin + pixelPerSecond, 0, 0, 0);
-		positionLayout.width = 0;
-		currentPositionView.setLayoutParams(positionLayout);
+		timelineProgressBar.setStartPosition(leftMargin + pixelPerSecond);
 	}
 
 	public void setEndPoint(int x) {
@@ -197,11 +193,9 @@ public class Timeline extends RelativeLayout {
 		}
 	}
 
+	
 	public void rewind() {
-		LayoutParams params = (LayoutParams) currentPositionView
-				.getLayoutParams();
-		params.width = 0;
-		currentPositionView.setLayoutParams(params);
+		timelineProgressBar.rewind();
 	}
 
 	public void startTimelineActionMode() {
@@ -216,7 +210,12 @@ public class Timeline extends RelativeLayout {
 		return clickLocation;
 	}
 
-	public View getTrackPositionView() {
-		return currentPositionView;
+	public TimelineProgressBar getTimelineProgressBar() {
+		return timelineProgressBar;
+	}
+	
+	public TimelineEventHandler getTimelineEventHandler()
+	{
+		return timelineEventHandler;
 	}
 }

@@ -20,35 +20,48 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.tools;
+package org.catrobat.musicdroid.soundmixer.timeline;
+
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 /**
  * @author matthias schlesinger
  *
  */
-public class StringFormatter {
-	private static String SEPERATOR = ":";
+public class TimelineProgressBar extends View {
+	public TimelineProgressBar(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 	
-	public static String durationStringFromInt(int duration) {
-	    int hours = (int) duration / 3600;
-	    int remainder = (int) duration - hours * 3600;
-	    int minutes = remainder / 60;
-	    remainder = remainder - minutes * 60;
-	    int seconds = remainder;
-		
-		String durationString = "";
-		
-		if(hours > 0)
-			durationString = "" + hours + SEPERATOR;
-		
-		String min = "" + minutes;
-		String sec = "" + seconds;
+	public void rewind()
+	{
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.width = 0;
+		setLayoutParams(params);
+	}
 
-		if (minutes < 10)
-			min = "0" + min;
-		if (seconds < 10)
-			sec = "0" + sec;
-
-		return durationString + min + SEPERATOR + sec;
+	public void setProgres(int positionInSeconds)
+	{
+		Log.i("TimelineProgressBar", "MessageDuration = " + positionInSeconds
+				+ "  Width = " + positionInSeconds
+				* SoundMixer.getInstance().getPixelPerSecond());
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.width = positionInSeconds * SoundMixer.getInstance().getPixelPerSecond();
+		setLayoutParams(params);
+	}
+	
+	public void setStartPosition(int position)
+	{
+		RelativeLayout.LayoutParams positionLayout = (LayoutParams) getLayoutParams();
+		positionLayout.setMargins(position, 0, 0, 0);
+		positionLayout.width = 0;
+		setLayoutParams(positionLayout);
 	}
 }
