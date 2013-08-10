@@ -49,7 +49,7 @@ public class Timeline extends RelativeLayout {
 	private RelativeLayout timelineBottom = null;
 	private ImageButton startPointImageButton = null;
 	private ImageButton endPointImageButton = null;
-	private View currentPositionView = null;
+	private TimelineProgressBar timelineProgressBar = null;
 	private int height = 0;
 	private int lastSetTime = 0;
 	private int[] clickLocation;
@@ -92,7 +92,7 @@ public class Timeline extends RelativeLayout {
 		((TextView) findViewById(R.id.timeline_start_time)).setText("00:00");
 		startPointImageButton = (ImageButton) findViewById(R.id.timeline_start_point);
 		endPointImageButton = (ImageButton) findViewById(R.id.timeline_end_point);
-		currentPositionView = (View) findViewById(R.id.timeline_currentPosition);
+		timelineProgressBar = (TimelineProgressBar) findViewById(R.id.timeline_progressBar);
 
 		initMarkerBar();
 	}
@@ -120,7 +120,7 @@ public class Timeline extends RelativeLayout {
 	
 	private void addMarker(int second)
 	{
-		timelineBottom.addView(new TimelineMarker(context, second, height));//createNewTimeMarker(second));			
+		timelineBottom.addView(new TimelineMarker(context, second, height));			
 		if (second > 0 && second % 5 == 0 && second > lastSetTime)
 		{
 			lastSetTime = second;
@@ -166,11 +166,7 @@ public class Timeline extends RelativeLayout {
 		startPointImageButton.setLayoutParams(layout);
 		startPointImageButton.setOnTouchListener(onTimelineTouchListener);
 
-		RelativeLayout.LayoutParams positionLayout = (LayoutParams) currentPositionView
-				.getLayoutParams();
-		positionLayout.setMargins(leftMargin + pixelPerSecond, 0, 0, 0);
-		positionLayout.width = 0;
-		currentPositionView.setLayoutParams(positionLayout);
+		timelineProgressBar.setStartPosition(leftMargin + pixelPerSecond);
 	}
 
 	public void setEndPoint(int x) {
@@ -199,10 +195,7 @@ public class Timeline extends RelativeLayout {
 
 	
 	public void rewind() {
-		LayoutParams params = (LayoutParams) currentPositionView
-				.getLayoutParams();
-		params.width = 0;
-		currentPositionView.setLayoutParams(params);
+		timelineProgressBar.rewind();
 	}
 
 	public void startTimelineActionMode() {
@@ -217,8 +210,8 @@ public class Timeline extends RelativeLayout {
 		return clickLocation;
 	}
 
-	public View getTrackPositionView() {
-		return currentPositionView;
+	public TimelineProgressBar getTimelineProgressBar() {
+		return timelineProgressBar;
 	}
 	
 	public TimelineEventHandler getTimelineEventHandler()

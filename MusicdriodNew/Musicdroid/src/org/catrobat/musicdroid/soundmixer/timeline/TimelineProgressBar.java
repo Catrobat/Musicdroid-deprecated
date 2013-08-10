@@ -22,28 +22,46 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout.LayoutParams;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
-public class TimelineEventHandler extends Handler {
-	private Timeline timeline = null;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class TimelineProgressBar extends View {
+	public TimelineProgressBar(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 	
-	public TimelineEventHandler(Timeline timeline)
+	public void rewind()
 	{
-		this.timeline = timeline;
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.width = 0;
+		setLayoutParams(params);
 	}
 
-	@Override
-	public void handleMessage(Message msg) {
-		Bundle b = msg.getData();
-		if (b.containsKey("position")) {
-			int positionInSeconds = b.getInt("position");
-			timeline.getTimelineProgressBar().setProgres(positionInSeconds);
-		}
+	public void setProgres(int positionInSeconds)
+	{
+		Log.i("TimelineProgressBar", "MessageDuration = " + positionInSeconds
+				+ "  Width = " + positionInSeconds
+				* SoundMixer.getInstance().getPixelPerSecond());
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.width = positionInSeconds * SoundMixer.getInstance().getPixelPerSecond();
+		setLayoutParams(params);
+	}
+	
+	public void setStartPosition(int position)
+	{
+		RelativeLayout.LayoutParams positionLayout = (LayoutParams) getLayoutParams();
+		positionLayout.setMargins(position, 0, 0, 0);
+		positionLayout.width = 0;
+		setLayoutParams(positionLayout);
 	}
 }
