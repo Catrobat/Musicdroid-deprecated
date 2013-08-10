@@ -74,8 +74,7 @@ public class SoundMixer {
 				timeline));
 		
 		soundMixerLength = defaultTrackLength;
-		pixelPerSecond = Helper.getScreenWidth(parentActivity) / defaultTrackLength;
-		pixelPerSecond = DeviceInfo.getScreenWidth(parent) / defaultLength;
+		pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
 	}
 
 	public SoundMixer() {
@@ -232,7 +231,7 @@ public class SoundMixer {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = DeviceInfo.getScreenWidth(parent)
+			pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity)
 					/ defaultTrackLength;
 		return pixelPerSecond;
 	}
@@ -247,5 +246,10 @@ public class SoundMixer {
 
 	public SoundTrackView getTrackAtPosition(int position) {
 		return tracks.get(position);
+	}
+	
+	public Timeline getTimeline()
+	{
+		return timeline;
 	}
 }

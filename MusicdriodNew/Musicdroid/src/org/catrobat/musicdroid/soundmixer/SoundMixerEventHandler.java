@@ -47,7 +47,7 @@ public class SoundMixerEventHandler extends Observable {
 		mixer = m;
 		setEndPoint(PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
-		screenWidth = DeviceInfo.getScreenWidth(mixer.parent);
+		screenWidth = DeviceInfo.getScreenWidth(mixer.parentActivity);
 		secondInPixel = screenWidth
 				/ PreferenceManager.getInstance().getPreference(
 						PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
@@ -79,6 +79,15 @@ public class SoundMixerEventHandler extends Observable {
 		}
 	}
 
+	private void sendTrackPositionMessage(int time) {
+		Log.i("Set position message", "");
+		Message msg = new Message();
+		Bundle b = new Bundle();
+		b.putInt("position", time);
+		msg.setData(b);
+		mixer.getTimeline().getTimelineEventHandler().sendMessage(msg);
+	}
+
 	public void stopNotifyThread() {
 		stopPoint = time;
 		shouldContinue = false;
@@ -106,16 +115,6 @@ public class SoundMixerEventHandler extends Observable {
 		return endPoint;
 	}
 
-	public boolean setEndPoint(int endPoint) {
-		Log.i("Set EndPoint", "EndPoint = " + endPoint);
-
-		if (endPoint < startPoint)
-			return false;
-
-		this.endPoint = endPoint;
-		return true;
-	}
-
 	public int getStartPoint() {
 		return startPoint;
 	}
@@ -138,14 +137,14 @@ public class SoundMixerEventHandler extends Observable {
 		else
 			return startPoint;
 	}
+	public boolean setEndPoint(int endPoint) {
+		Log.i("Set EndPoint", "EndPoint = " + endPoint);
 
-	private void sendTrackPositionMessage(int time) {
-		Log.i("Set position message", "");
-		Message msg = new Message();
-		Bundle b = new Bundle();
-		b.putInt("position", time);
-		msg.setData(b);
-		TimelineEventHandler.getInstance().sendMessage(msg);
+		if (endPoint < startPoint)
+			return false;
+
+		this.endPoint = endPoint;
+		return true;
 	}
 
 }

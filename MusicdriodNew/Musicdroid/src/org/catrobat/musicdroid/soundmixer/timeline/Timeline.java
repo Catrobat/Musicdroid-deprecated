@@ -50,13 +50,12 @@ public class Timeline extends RelativeLayout {
 	private ImageButton startPointImageButton = null;
 	private ImageButton endPointImageButton = null;
 	private View currentPositionView = null;
-
-	private int startId = 9876;
 	private int height = 0;
 	private int lastSetTime = 0;
 	private int[] clickLocation;
 	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
 	private TimelineOnTouchListener onTimelineTouchListener = null;
+	private TimelineEventHandler timelineEventHandler;
 
 	public Timeline(Context context) {
 		super(context);
@@ -67,7 +66,7 @@ public class Timeline extends RelativeLayout {
 		inflater.inflate(R.layout.timeline_layout, this);
 
 		initTimeline();
-		TimelineEventHandler.getInstance().init(this);
+		timelineEventHandler = new TimelineEventHandler(this);
 		onTimelineTouchListener = new TimelineOnTouchListener(this);
 		this.setOnTouchListener(onTimelineTouchListener);
 	}
@@ -198,7 +197,7 @@ public class Timeline extends RelativeLayout {
 		}
 	}
 
-				.setText(StringFormatter.durationStringFromInt(second));
+	
 	public void rewind() {
 		LayoutParams params = (LayoutParams) currentPositionView
 				.getLayoutParams();
@@ -220,5 +219,10 @@ public class Timeline extends RelativeLayout {
 
 	public View getTrackPositionView() {
 		return currentPositionView;
+	}
+	
+	public TimelineEventHandler getTimelineEventHandler()
+	{
+		return timelineEventHandler;
 	}
 }
