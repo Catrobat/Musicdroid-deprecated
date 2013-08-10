@@ -26,7 +26,6 @@ import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;

@@ -25,10 +25,6 @@ package org.catrobat.musicdroid.soundmixer.timeline;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout.LayoutParams;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineEventHandler extends Handler {
 	private Timeline timeline = null;

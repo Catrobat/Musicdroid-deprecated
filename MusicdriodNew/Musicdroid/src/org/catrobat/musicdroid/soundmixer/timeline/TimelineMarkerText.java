@@ -27,8 +27,8 @@ import org.catrobat.musicdroid.tools.StringFormatter;
 
 import android.content.Context;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 /**
  * @author matthias schlesinger

@@ -22,13 +22,14 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
+
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class SoundMixerMenuCallback implements ActionMode.Callback {
 	MainActivity parent = null;

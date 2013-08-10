@@ -23,17 +23,19 @@
 package org.catrobat.musicdroid.soundmixer;
 
 import java.util.ArrayList;
-import android.util.Log;
-import android.widget.Toast;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.metronom.Metronom;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
-import org.catrobat.musicdroid.soundmixer.timeline.*;
+import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
+import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.tools.DeviceInfo;
+
+import android.widget.Toast;
 
 public class SoundMixer {
 	public static SoundMixer instance = null;

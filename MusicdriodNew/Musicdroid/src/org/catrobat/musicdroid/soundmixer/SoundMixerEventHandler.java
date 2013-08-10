@@ -24,13 +24,13 @@ package org.catrobat.musicdroid.soundmixer;
 
 import java.util.Observable;
 
+import org.catrobat.musicdroid.SoundManager;
+import org.catrobat.musicdroid.preferences.PreferenceManager;
+import org.catrobat.musicdroid.tools.DeviceInfo;
+
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.preferences.PreferenceManager;
-import org.catrobat.musicdroid.soundmixer.timeline.TimelineEventHandler;
-import org.catrobat.musicdroid.tools.DeviceInfo;
 
 public class SoundMixerEventHandler extends Observable {
 	private SoundMixer mixer;
