@@ -152,32 +152,30 @@ public class Timeline extends RelativeLayout {
 
 	public void setStartPoint(int startPointX) {
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		RelativeLayout.LayoutParams layout = (LayoutParams) startPointImageButton
-				.getLayoutParams();
-		layout.height = getHeight();
-		layout.width = pixelPerSecond;
 		int leftMargin = startPointX - (startPointX % pixelPerSecond) - pixelPerSecond + 1;
-
-		layout.setMargins(leftMargin, 0, 0, 0);
-		startPointImageButton.setColorFilter(Color.BLACK);
-		startPointImageButton.setVisibility(VISIBLE);
-		startPointImageButton.setLayoutParams(layout);
-		startPointImageButton.setOnTouchListener(onTimelineTouchListener);
+		setBoundaryPointParameters(startPointImageButton, leftMargin);
 
 		timelineProgressBar.setStartPosition(leftMargin + pixelPerSecond);
 	}
 
-	public void setEndPoint(int x) {
+	public void setEndPoint(int startPointX) {
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		RelativeLayout.LayoutParams layout = (LayoutParams) endPointImageButton
+		int leftMargin = startPointX - (startPointX % pixelPerSecond);
+		setBoundaryPointParameters(endPointImageButton, leftMargin);
+	}
+	
+	private void setBoundaryPointParameters(ImageButton boundaryPoint, int leftMargin)
+	{
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		RelativeLayout.LayoutParams layout = (LayoutParams) boundaryPoint
 				.getLayoutParams();
 		layout.height = getHeight();
 		layout.width = pixelPerSecond;
-		layout.setMargins(x - (x % pixelPerSecond), 0, 0, 0);
-		endPointImageButton.setColorFilter(Color.BLACK);
-		endPointImageButton.setVisibility(VISIBLE);
-		endPointImageButton.setLayoutParams(layout);
-		endPointImageButton.setOnTouchListener(onTimelineTouchListener);
+		layout.setMargins(leftMargin, 0, 0, 0);
+		boundaryPoint.setColorFilter(Color.BLACK);
+		boundaryPoint.setVisibility(VISIBLE);
+		boundaryPoint.setLayoutParams(layout);
+		boundaryPoint.setOnTouchListener(onTimelineTouchListener);
 	}
 
 	public void resetTimeline() {
@@ -190,7 +188,6 @@ public class Timeline extends RelativeLayout {
 			removeView(pairs.getValue().getTrackPosition());
 		}
 	}
-
 	
 	public void rewind() {
 		timelineProgressBar.rewind();
