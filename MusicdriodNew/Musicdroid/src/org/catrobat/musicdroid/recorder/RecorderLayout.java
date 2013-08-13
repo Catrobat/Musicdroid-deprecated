@@ -38,23 +38,23 @@ import android.widget.TextView;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
+import org.catrobat.musicdroid.dialog.ChangeFilenameDialog.ChangeFilenameDialogListener;
 import org.catrobat.musicdroid.tools.StringFormatter;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class RecorderLayout extends Handler implements OnClickListener,
-		OnLongClickListener {
+		OnLongClickListener{
 	private Context context = null;
 	private TextView filenameTextView = null;
 	private ImageButton recordImageButton = null;
 	private ImageButton playImageButton = null;
 	private View progressBarView = null;
 	private TextView recordDurationTextView = null;
-	private RelativeLayout progressBarBoxRelativeLayout = null;
-	private RelativeLayout addToSoundMixerBoxRelativeLayout = null;
+	private RelativeLayout progressBarBox = null;
+	private RelativeLayout addToSoundMixerBox = null;
 	private boolean isRecording = false;
 	private boolean isPlaying = false;
 	private boolean soundRecorded = false;
-	private int trackDuration = 0;
 	private int pixelPerSecond = 0;
 
 	public RecorderLayout() {
@@ -73,16 +73,10 @@ public class RecorderLayout extends Handler implements OnClickListener,
 				.findViewById(R.id.microphone_play_button);
 		progressBarView = (View) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_progress_bar);
-		progressBarBoxRelativeLayout = (RelativeLayout) (View) ((RecorderActivity) context)
+		progressBarBox = (RelativeLayout) (View) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_progress_bar_box);
-		addToSoundMixerBoxRelativeLayout = (RelativeLayout) (View) ((RecorderActivity) context)
+		addToSoundMixerBox = (RelativeLayout) (View) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_add_to_sound_mixer_box);
-
-		if (recordDurationTextView == null) {
-			Log.i("RecorderLayout", "Text View is Null");
-		} else {
-			Log.i("RecorderLayout", "Text View is not Null");
-		}
 
 		reorderToRecordLayout();
 
@@ -90,7 +84,7 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		recordImageButton.setColorFilter(Color.RED);
 		recordImageButton.setOnClickListener(this);
 		playImageButton.setOnClickListener(this);
-		addToSoundMixerBoxRelativeLayout.setOnClickListener(this);
+		addToSoundMixerBox.setOnClickListener(this);
 		recordDurationTextView.setText("00:00");
 	}
 
@@ -118,14 +112,16 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle b = msg.getData();
-		if (b.containsKey("duration")) {
-			int key = b.getInt("duration");
+		if (b.containsKey("duration")) 
+		{
+			int duration = b.getInt("duration");
 			if(recordDurationTextView != null)
-			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(key));
-		} else if (b.containsKey("trackposition")) {
+			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(duration));
+		} 
+		else if (b.containsKey("trackposition")) 
+		{
 			int position = b.getInt("trackposition");
-			LayoutParams params = (LayoutParams) progressBarView
-					.getLayoutParams();
+			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
 			params.width = pixelPerSecond * position;
 			progressBarView.setLayoutParams(params);
 		}
@@ -137,7 +133,8 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	}
 
 	private void handleOnRecordClick() {
-		if (!isRecording) {
+		if (!isRecording) 
+		{
 			isRecording = true;
 			if (playImageButton.getVisibility() == View.VISIBLE)
 				reorderToRecordLayout();
@@ -146,7 +143,9 @@ public class RecorderLayout extends Handler implements OnClickListener,
 			recordImageButton.setImageDrawable(context.getResources()
 					.getDrawable(R.drawable.pause_button));
 			recordImageButton.setColorFilter(Color.WHITE);
-		} else if (isRecording) {
+		} 
+		else if (isRecording) 
+		{
 			isRecording = false;
 			AudioHandler.getInstance().stopRecording();
 			recordImageButton.setImageDrawable(context.getResources()
@@ -158,12 +157,15 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	}
 
 	private void handleOnPlayClick() {
-		if (!isPlaying) {
+		if (!isPlaying) 
+		{
 			isPlaying = true;
 			AudioHandler.getInstance().playRecordedFile();
 			playImageButton.setImageDrawable(context.getResources()
 					.getDrawable(R.drawable.pause_button));
-		} else if (isPlaying) {
+		} 
+		else if (isPlaying) 
+		{
 			isPlaying = false;
 			AudioHandler.getInstance().stopRecordedFile();
 			playImageButton.setImageDrawable(context.getResources()
@@ -201,17 +203,16 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	}
 
 	public void setTrackDuration(int duration) {
-		trackDuration = duration;
-		int width = progressBarBoxRelativeLayout.getWidth();// ((LayoutParams)progressBarBoxRelativeLayout.getLayoutParams()).width;
+		int width = progressBarBox.getWidth();
 		pixelPerSecond = width / duration;
 		Log.i("RecorderLayout", "setTrackDuration: width = " + width
 				+ " duration = " + duration);
 	}
 
 	private void reorderToRecordLayout() {
-		addToSoundMixerBoxRelativeLayout.setVisibility(View.INVISIBLE);
+		addToSoundMixerBox.setVisibility(View.INVISIBLE);
 		progressBarView.setVisibility(View.GONE);
-		progressBarBoxRelativeLayout.setVisibility(View.GONE);
+		progressBarBox.setVisibility(View.GONE);
 		playImageButton.setVisibility(View.GONE);
 
 		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
@@ -221,9 +222,9 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	}
 
 	private void reorderToPlayLayout() {
-		addToSoundMixerBoxRelativeLayout.setVisibility(View.VISIBLE);
+		addToSoundMixerBox.setVisibility(View.VISIBLE);
 		progressBarView.setVisibility(View.VISIBLE);
-		progressBarBoxRelativeLayout.setVisibility(View.VISIBLE);
+		progressBarBox.setVisibility(View.VISIBLE);
 		playImageButton.setVisibility(View.VISIBLE);
 
 		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
@@ -239,5 +240,4 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	public boolean isSoundRecorded() {
 		return soundRecorded;
 	}
-
 }

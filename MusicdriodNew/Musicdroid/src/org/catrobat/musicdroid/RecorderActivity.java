@@ -32,13 +32,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+
+import org.catrobat.musicdroid.dialog.ChangeFilenameDialog.ChangeFilenameDialogListener;
 import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.recorder.RecorderLayout;
 import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
+import org.catrobat.musicdroid.recorder.RecordingSession;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
 
-public class RecorderActivity extends FragmentActivity {
+public class RecorderActivity extends FragmentActivity implements ChangeFilenameDialogListener {
 	private RecorderLayout layout = null;
+	private RecordingSession currentSession = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +69,11 @@ public class RecorderActivity extends FragmentActivity {
 			showSecurityQuestionBeforeExit();
 		else
 			finish();
-
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i("RecorderActivity", "ON RESUME");
-
 		setContentView(R.layout.activity_recorder);
 
 		layout = new RecorderLayout();
@@ -106,7 +107,7 @@ public class RecorderActivity extends FragmentActivity {
 		}
 		return false;
 	}
-
+	
 	private void initTopStatusBar() {
 		getActionBar().setCustomView(R.layout.status_bar);
 		getActionBar().setDisplayShowHomeEnabled(true);
@@ -143,5 +144,17 @@ public class RecorderActivity extends FragmentActivity {
 				});
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	@Override
+	public void onChangeFilename(String filename) {
+		getCurrentRecordingSession().setFilename(filename);
+	}
+	
+	public RecordingSession getCurrentRecordingSession()
+	{
+		if(currentSession == null)
+			currentSession = new RecordingSession();
+		return currentSession;
 	}
 }

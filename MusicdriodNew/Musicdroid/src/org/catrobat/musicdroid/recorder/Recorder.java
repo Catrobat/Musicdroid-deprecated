@@ -31,17 +31,15 @@ import android.os.Message;
 import android.util.Log;
 
 public class Recorder {
-	private Context context = null;
 	private RecorderLayout layout = null;
 	private static MediaRecorder recorder = null;
 	private AudioVisualizer visualizer = null;
 	private long startTime = 0;
 	private boolean stop = false;
 
-	public Recorder(Context c, RecorderLayout layout, AudioVisualizer visualizer) {
-		this.context = c;
+	public Recorder(Context context, RecorderLayout layout) {
 		this.layout = layout;
-		this.visualizer = visualizer;
+		this.visualizer = new AudioVisualizer(context);
 	}
 
 	public boolean record() {
@@ -56,7 +54,6 @@ public class Recorder {
 		}
 
 		recorder.start();
-		startTime = System.currentTimeMillis();
 		startCommunicationThread();
 		return true;
 
@@ -69,19 +66,15 @@ public class Recorder {
 	}
 
 	private void startCommunicationThread() {
-		Thread background = new Thread(new Runnable() {
+		startTime = System.currentTimeMillis();
+		Thread communicationThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				int sleepCounter = 1;
 				while (!stop) {
 					try {
 						Thread.sleep(125);
-
-						if (sleepCounter % 8 == 0)
-							sendDurationMessage();
-
-						sendAmplitudeMessage();
-
+					    sendCommunicationMessages(sleepCounter);
 						sleepCounter = sleepCounter + 1;
 					} catch (Exception e) {
 						Log.v("Error", e.toString());
@@ -89,12 +82,19 @@ public class Recorder {
 				}
 			}
 		});
-		background.start();
+		communicationThread.start();
+	}
+	
+	private void sendCommunicationMessages(int sleepCounter)
+	{
+		if (sleepCounter % 8 == 0)
+			sendDurationMessage();
+
+		sendAmplitudeMessage();
 	}
 
 	private void setPreferences() {
-		Log.i("Recorder", "Filename = "
-				+ AudioHandler.getInstance().getFilenameFullPath());
+		Log.i("Recorder", "Filename = " + AudioHandler.getInstance().getFilenameFullPath());
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		recorder.setOutputFile(AudioHandler.getInstance().getFilenameFullPath());
@@ -104,8 +104,7 @@ public class Recorder {
 	private void sendDurationMessage() {
 		Message msg = new Message();
 		Bundle b = new Bundle();
-		b.putInt("duration",
-				(int) ((System.currentTimeMillis() - startTime) / 1000));
+		b.putInt("duration", (int) ((System.currentTimeMillis() - startTime) / 1000));
 		msg.setData(b);
 		layout.sendMessage(msg);
 	}

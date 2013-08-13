@@ -43,7 +43,6 @@ public class AudioHandler {
 	private boolean init = false;
 	private Recorder recorder = null;
 	private Player player = null;
-	private AudioVisualizer visualizer = null;
 
 	private AudioHandler() {
 		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -63,8 +62,7 @@ public class AudioHandler {
 
 		this.context = context;
 		this.layout = layout;
-		visualizer = new AudioVisualizer(context);
-		recorder = new Recorder(context, layout, visualizer);
+		recorder = new Recorder(context, layout);
 		player = new Player(layout);
 		init = true;
 	}
@@ -100,8 +98,7 @@ public class AudioHandler {
 	}
 
 	private void showDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				context);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder
 				.setMessage(R.string.dialog_warning_file_overwritten_at_record)
 				.setCancelable(true)
@@ -126,14 +123,15 @@ public class AudioHandler {
 	}
 
 	private void checkAndStartPlaybackAndMetronom() {
-		int metronom = PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY);
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
-			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer()
-					&& metronom > 0)
+		int metronom = PreferenceManager.getInstance().
+							getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) 
+		{
+			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
 				SoundMixer.getInstance().startMetronom();
-		} else if (metronom > 0) {
+		} 
+		else if (metronom > 0) 
+		{
 			SoundMixer.getInstance().startMetronom();
 		}
 	}

@@ -38,6 +38,10 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
 public class ChangeFilenameDialog extends DialogFragment {
 	private EditText editText = null;
 
+	public interface ChangeFilenameDialogListener {
+        void onChangeFilename(String inputText);
+    }
+	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -53,6 +57,10 @@ public class ChangeFilenameDialog extends DialogFragment {
 							public void onClick(DialogInterface dialog, int id) {
 								AudioHandler.getInstance().setFilename(
 										editText.getText().toString() + ".mp3");
+								
+								ChangeFilenameDialogListener listener = 
+										(ChangeFilenameDialogListener) getActivity();
+								listener.onChangeFilename(editText.getText().toString() + ".mp3");
 							}
 						})
 				.setPositiveButton(R.string.settings_button_discard,
