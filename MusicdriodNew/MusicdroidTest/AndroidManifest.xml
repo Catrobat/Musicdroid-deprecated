@@ -34,7 +34,7 @@
     
     <!-- this instrumentation is needed to run the tests from Jenkins -->
 	<instrumentation
-		android:targetPackage="org.catrobat.paintroid"
+		android:targetPackage="org.catrobat.musicdroid"
 		android:name="pl.polidea.instrumentation.PolideaInstrumentationTestRunner" />
 	   
     <application
