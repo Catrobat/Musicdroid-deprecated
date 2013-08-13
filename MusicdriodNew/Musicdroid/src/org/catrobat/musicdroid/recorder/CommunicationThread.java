@@ -22,36 +22,50 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import android.os.Environment;
+import android.util.Log;
 
 /**
  * @author matthias schlesinger
  *
  */
-public class RecordingSession {
-	private String path = null;
-	private String filename = null;
+public class CommunicationThread extends Thread {
+	private RecorderMessageDispatcher messageDispatcher = null;
+	private Recorder recorder = null;
+	private long startTime;
+	private boolean stop = false;
 	
-	public RecordingSession()
+	public CommunicationThread(RecorderMessageDispatcher dispatcher, Recorder recorder)
 	{
-		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
-		this.filename = "test.mp3";
+		this.messageDispatcher = dispatcher;
+		this.recorder = recorder;
 	}
 	
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
-	public String getPathToFile() {
-		return path + "/" + filename;
+	@Override
+	public void run() {
+		stop = false;
+		startTime = System.currentTimeMillis();
+		int sleepCounter = 1;
+		while (!stop) {
+			try {
+				Thread.sleep(125);
+			    sendCommunicationMessages(sleepCounter);
+				sleepCounter = sleepCounter + 1;
+			} catch (Exception e) {
+				Log.v("Error", e.toString());
+			}
+		}
 	}
 	
-	public String getFilename(){
-		return filename;
+	public void stopThread()
+	{
+		stop = true;
 	}
+	
+	private void sendCommunicationMessages(int sleepCounter)
+	{
+		if (sleepCounter % 8 == 0)
+			messageDispatcher.sendDurationMessage(startTime);
 
-	public String getPath() {
-		return path;
+		messageDispatcher.sendAmplitudeMessage(recorder.getMaxAmplitude());
 	}
-
 }

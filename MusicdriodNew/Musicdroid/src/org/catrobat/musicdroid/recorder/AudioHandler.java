@@ -24,52 +24,33 @@ package org.catrobat.musicdroid.recorder;
 
 import java.io.File;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Environment;
-import android.util.Log;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 
 public class AudioHandler {
 	public static AudioHandler instance = null;
 	private RecorderLayout layout = null;
 	private Context context = null;
-	private String path = null;
-	private String filename = null;
-	private boolean init = false;
 	private Recorder recorder = null;
 	private Player player = null;
-
-	private AudioHandler() {
-		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
-		this.filename = "test.mp3";
-	}
-
-	public static AudioHandler getInstance() {
-		if (instance == null) {
-			instance = new AudioHandler();
-		}
-		return instance;
-	}
-
-	public void init(Context context, RecorderLayout layout) {
-		if (init)
-			return;
-
+	
+	public AudioHandler(Context context, RecorderLayout layout)
+	{
 		this.context = context;
 		this.layout = layout;
-		recorder = new Recorder(context, layout);
+		RecorderMessageDispatcher messageDispatcher = new RecorderMessageDispatcher(layout, 
+			  	  												new AudioVisualizer(context)); 
+		recorder = new Recorder(context, messageDispatcher);
 		player = new Player(layout);
-		init = true;
 	}
-
-	public boolean startRecording() {
-		Log.i("AudioHandler", "StartRecording");
-		File check = new File(path + '/' + filename);
+	
+	public boolean startRecording(RecordingSession currentSession) {
+		File check = new File(currentSession.getPathToFile());
 		if (check.exists()) {
 			showDialog();
 		} else {
@@ -81,16 +62,26 @@ public class AudioHandler {
 
 	public void stopRecording() {
 		recorder.stopRecording();
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (playPlayback())
 			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
-		else if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		else if (playMetronom())
 			SoundMixer.getInstance().stopMetronom();
 	}
+	
+	private boolean playPlayback()
+	{
+		return PreferenceManager.getInstance().getPreference(
+					PreferenceManager.PLAY_PLAYBACK_KEY) == 1;
+	}
+	
+	private boolean playMetronom()
+	{
+		return PreferenceManager.getInstance().getPreference(
+					PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0;
+	}
 
-	public void playRecordedFile() {
-		player.playRecordedFile();
+	public void playRecordedFile(RecordingSession currentSession) {
+		player.playRecordedFile(currentSession.getPathToFile());
 	}
 
 	public void stopRecordedFile() {
@@ -123,43 +114,14 @@ public class AudioHandler {
 	}
 
 	private void checkAndStartPlaybackAndMetronom() {
-		int metronom = PreferenceManager.getInstance().
-							getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
-		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) 
+		if (playPlayback()) 
 		{
-			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
+			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && playMetronom())
 				SoundMixer.getInstance().startMetronom();
 		} 
-		else if (metronom > 0) 
+		else if (playMetronom()) 
 		{
 			SoundMixer.getInstance().startMetronom();
 		}
-	}
-
-	public void setFilename(String f) {
-		this.filename = f;
-		layout.updateFilename(FileExtensionMethods.removeFileEnding(
-				this.filename));
-	}
-
-	public String getFilenameFullPath() {
-		return path + "/" + filename;
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setContext(Context context) {
-		this.context = context;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void reset() {
-		init = false;
-		instance = null;
 	}
 }

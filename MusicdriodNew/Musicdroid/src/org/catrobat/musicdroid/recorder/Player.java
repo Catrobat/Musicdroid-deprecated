@@ -39,13 +39,12 @@ public class Player {
 		this.layout = layout;
 	}
 
-	public void playRecordedFile() {
+	public void playRecordedFile(String pathToFile) {
 		Log.i("Player", "playRecorderFile");
 		mediaPlayer = new MediaPlayer();
 
 		try {
-			mediaPlayer.setDataSource(AudioHandler.getInstance()
-					.getFilenameFullPath());
+			mediaPlayer.setDataSource(pathToFile);
 			mediaPlayer.prepare();
 		} catch (IllegalArgumentException e) {
 			Log.i("Player-Exception", "IllegalArgumentException");

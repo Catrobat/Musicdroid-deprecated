@@ -26,6 +26,7 @@ import java.io.File;
 
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 import org.catrobat.musicdroid.types.SoundType;
 
@@ -53,14 +55,16 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 	@Override
 	protected void setUp() {
 		 solo = new Solo(getInstrumentation(), getActivity());
+		 String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+		 String filename = "test.mp3";
 		 
 		 //delete file if exists, stop overwrite warning from showing
-		 File f = new File(AudioHandler.getInstance().getFilenameFullPath());
+		 File f = new File(path + "/" + filename);
   	     if (f.exists())
   	    	 f.delete();
 		 
   	     
-		 File fTest = new File(AudioHandler.getInstance().getPath() + "/" + testFilename);
+		 File fTest = new File(path + "/" + testFilename);
   	     if (fTest.exists())
   	    	fTest.delete();
   	     
@@ -154,7 +158,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickOnView(recordButton);  //stop recording
 		solo.sleep(1000);
 		
-		File f = new File(AudioHandler.getInstance().getFilenameFullPath());
+		File f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPathToFile());
 		long modified = 0;
 		if(f.exists())
 		  modified = f.lastModified();
@@ -162,7 +167,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickOnView(recordButton);
 		checkForOverwriteDialogAndAbort();
 		
-		f = new File(AudioHandler.getInstance().getFilenameFullPath());
+		f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPathToFile());
   	    if (f.exists())
   	    {
   	    	assertEquals(modified, f.lastModified());
@@ -178,7 +184,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickOnView(recordButton);  //stop recording
 		solo.sleep(1000);
 		
-		File f = new File(AudioHandler.getInstance().getFilenameFullPath());
+		File f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPathToFile());
 		long modified = 0;
 		if(f.exists())
 		  modified = f.lastModified();
@@ -187,7 +194,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		checkForOverwriteDialogAndContinue();
 		solo.sleep(2000);
 		
-		f = new File(AudioHandler.getInstance().getFilenameFullPath());
+		f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPathToFile());
   	    if (f.exists())
   	    {
   	    	Log.i("AASD", "Modified" + modified);
@@ -226,7 +234,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		TextView filenameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.microphone_filename);
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
-		String filename = AudioHandler.getInstance().getFilename();
+		String filename = ((RecorderActivity)solo.getCurrentActivity()).
+							getCurrentRecordingSession().getFilename();
 		filename = FileExtensionMethods.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
@@ -244,7 +253,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickOnView(recordButton);
 		solo.sleep(1000);
 		
-		File f = new File(AudioHandler.getInstance().getPath()+ "/"+ testFilename);
+		File f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPath() + "/" + testFilename);
 		assertTrue(f.exists());
 	}
 	
@@ -255,7 +265,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		TextView filenameTextView = (TextView) solo.getCurrentActivity().findViewById(R.id.microphone_filename);
 		solo.clickLongOnView(filenameTextView);
 		solo.sleep(1000);
-		String filename = AudioHandler.getInstance().getFilename();
+		String filename = ((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getFilename();
 		filename = FileExtensionMethods.removeFileEnding(filename);
 		//solo.clickOnText(filename);
 		solo.sleep(1000);
@@ -273,7 +284,8 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.clickOnView(recordButton);
 		solo.sleep(1000);
 		
-		File f = new File(AudioHandler.getInstance().getPath()+ "/"+ testFilename);
+		File f = new File(((RecorderActivity)solo.getCurrentActivity()).
+				getCurrentRecordingSession().getPath() + "/"+ testFilename);
 		assertFalse(f.exists());
 	}
 	

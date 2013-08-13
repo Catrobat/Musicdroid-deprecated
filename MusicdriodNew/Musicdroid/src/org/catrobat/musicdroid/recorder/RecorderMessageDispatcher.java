@@ -22,36 +22,35 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import android.os.Environment;
+import android.os.Bundle;
+import android.os.Message;
 
 /**
- * @author matthias schlesinger
+ * @author matthias
  *
  */
-public class RecordingSession {
-	private String path = null;
-	private String filename = null;
+public class RecorderMessageDispatcher {
+	private RecorderLayout recorderLayout; 
+	private AudioVisualizer audioVisualizer;
 	
-	public RecordingSession()
-	{
-		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
-		this.filename = "test.mp3";
-	}
-	
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public RecorderMessageDispatcher(RecorderLayout layout, AudioVisualizer visualizer) {
+		recorderLayout = layout;
+		audioVisualizer = visualizer;
 	}
 
-	public String getPathToFile() {
-		return path + "/" + filename;
-	}
-	
-	public String getFilename(){
-		return filename;
-	}
-
-	public String getPath() {
-		return path;
+	public void sendDurationMessage(long startTime) {
+		Message msg = new Message();
+		Bundle b = new Bundle();
+		b.putInt("duration", (int) ((System.currentTimeMillis() - startTime) / 1000));
+		msg.setData(b);
+		recorderLayout.sendMessage(msg);
 	}
 
+	public void sendAmplitudeMessage(int maxAmplitude) {
+		Message msg = new Message();
+		Bundle b = new Bundle();
+		b.putInt("amplitude", maxAmplitude);
+		msg.setData(b);
+		audioVisualizer.sendMessage(msg);
+	}
 }

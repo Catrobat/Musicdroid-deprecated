@@ -22,6 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.tools.StringFormatter;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,21 +33,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
-import org.catrobat.musicdroid.dialog.ChangeFilenameDialog.ChangeFilenameDialogListener;
-import org.catrobat.musicdroid.tools.StringFormatter;
-import org.catrobat.musicdroid.tools.StringFormatter;
 
-public class RecorderLayout extends Handler implements OnClickListener,
-		OnLongClickListener{
+public class RecorderLayout extends Handler {
 	private Context context = null;
 	private TextView filenameTextView = null;
 	private ImageButton recordImageButton = null;
@@ -52,15 +47,17 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	private TextView recordDurationTextView = null;
 	private RelativeLayout progressBarBox = null;
 	private RelativeLayout addToSoundMixerBox = null;
-	private boolean isRecording = false;
-	private boolean isPlaying = false;
 	private boolean soundRecorded = false;
+	private boolean inStateRecording = false;
+	private boolean inStatePlaying = false;
 	private int pixelPerSecond = 0;
+	
 
-	public RecorderLayout() {
+	public RecorderLayout(Context context) {
+		init(context);
 	}
 
-	public void init(Context context) {
+	private void init(Context context) {
 		this.context = context;
 
 		filenameTextView = (TextView) ((RecorderActivity) context)
@@ -80,122 +77,83 @@ public class RecorderLayout extends Handler implements OnClickListener,
 
 		reorderToRecordLayout();
 
-		filenameTextView.setOnLongClickListener(this);
+		RecorderOnClickListener onClickListener = new RecorderOnClickListener(
+															(RecorderActivity)context, 
+															this);
+		filenameTextView.setOnLongClickListener(onClickListener);
 		recordImageButton.setColorFilter(Color.RED);
-		recordImageButton.setOnClickListener(this);
-		playImageButton.setOnClickListener(this);
-		addToSoundMixerBox.setOnClickListener(this);
+		recordImageButton.setOnClickListener(onClickListener);
+		playImageButton.setOnClickListener(onClickListener);
+		addToSoundMixerBox.setOnClickListener(onClickListener);
 		recordDurationTextView.setText("00:00");
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (v.getId() == R.id.microphone_record_button) {
-			handleOnRecordClick();
-		}
-		if (v.getId() == R.id.microphone_play_button) {
-			handleOnPlayClick();
-		}
-		if (v.getId() == R.id.microphone_add_to_sound_mixer_box) {
-			handleOnAddToSoundmixerClick();
-		}
-	}
-
-	@Override
-	public boolean onLongClick(View v) {
-		if (v.getId() == R.id.microphone_filename) {
-			handleOnFilenameLongClick();
-		}
-		return false;
-	}
-
-	@Override
 	public void handleMessage(Message msg) {
-		Bundle b = msg.getData();
-		if (b.containsKey("duration")) 
+		Bundle data = msg.getData();
+		if (data.containsKey("duration")) 
 		{
-			int duration = b.getInt("duration");
+			int duration = data.getInt("duration");
 			if(recordDurationTextView != null)
 			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(duration));
 		} 
-		else if (b.containsKey("trackposition")) 
+		else if (data.containsKey("trackposition")) 
 		{
-			int position = b.getInt("trackposition");
+			int position = data.getInt("trackposition");
 			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
 			params.width = pixelPerSecond * position;
 			progressBarView.setLayoutParams(params);
 		}
 	}
 
-	private void handleOnFilenameLongClick() {
-		ChangeFilenameDialog dialog = new ChangeFilenameDialog();
-		dialog.show(((RecorderActivity) context).getFragmentManager(), null);
+	public void updateLayoutOnRecordStart()
+	{
+		inStateRecording = true;
+		if (playImageButton.getVisibility() == View.VISIBLE)
+			reorderToRecordLayout();
+
+		recordImageButton.setImageDrawable(context.getResources()
+				.getDrawable(R.drawable.pause_button));
+		recordImageButton.setColorFilter(Color.WHITE);
 	}
-
-	private void handleOnRecordClick() {
-		if (!isRecording) 
-		{
-			isRecording = true;
-			if (playImageButton.getVisibility() == View.VISIBLE)
-				reorderToRecordLayout();
-
-			AudioHandler.getInstance().startRecording();
-			recordImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.pause_button));
-			recordImageButton.setColorFilter(Color.WHITE);
-		} 
-		else if (isRecording) 
-		{
-			isRecording = false;
-			AudioHandler.getInstance().stopRecording();
-			recordImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.record_button));
-			recordImageButton.setColorFilter(Color.RED);
-			soundRecorded = true;
-			reorderToPlayLayout();
-		}
+	
+	public void updateLayoutOnRecordStop()
+	{
+		inStateRecording = false;
+		recordImageButton.setImageDrawable(context.getResources()
+				.getDrawable(R.drawable.record_button));
+		recordImageButton.setColorFilter(Color.RED);
+		soundRecorded = true;
+		reorderToPlayLayout();
 	}
-
-	private void handleOnPlayClick() {
-		if (!isPlaying) 
-		{
-			isPlaying = true;
-			AudioHandler.getInstance().playRecordedFile();
-			playImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.pause_button));
-		} 
-		else if (isPlaying) 
-		{
-			isPlaying = false;
-			AudioHandler.getInstance().stopRecordedFile();
-			playImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.play_button));
-		}
+	
+	public void updateLayoutOnPlay()
+	{
+		inStatePlaying = true;
+		playImageButton.setImageDrawable(context.getResources()
+				.getDrawable(R.drawable.pause_button));
 	}
-
-	private void handleOnAddToSoundmixerClick() {
-		((RecorderActivity) context).returnToMainActivtiy();
+	
+	public void updateLayoutOnPause()
+	{
+		inStatePlaying = false;
+		playImageButton.setImageDrawable(context.getResources()
+				.getDrawable(R.drawable.play_button));
 	}
 
 	public void handlePlaySoundComplete() {
-		isPlaying = false;
+		inStatePlaying = false;
 		playImageButton.setImageDrawable(context.getResources().getDrawable(
 				R.drawable.play_button));
 	}
 
 	public void resetLayoutToRecord() {
-		isRecording = false;
+		inStateRecording = false;
 		recordImageButton.setImageDrawable(context.getResources().getDrawable(
 				R.drawable.record_button));
 		recordImageButton.setColorFilter(Color.RED);
 		if (!recordDurationTextView.getText().equals("00:00"))
 			reorderToPlayLayout();
-	}
-
-	public void updateFilename(String filename) {
-		if (filenameTextView == null)
-			return;
-		filenameTextView.setText(filename);
 	}
 
 	public void setDurationText(int duration) {
@@ -233,11 +191,25 @@ public class RecorderLayout extends Handler implements OnClickListener,
 				.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 	}
 
+	public void setFilename(String filename){
+		if (filenameTextView == null)
+			return;
+		filenameTextView.setText(filename);
+	}
+	
 	public void reset() {
 		recordDurationTextView = null;
 	}
 
 	public boolean isSoundRecorded() {
 		return soundRecorded;
+	}
+	
+	public boolean inStatePlaying() {
+		return inStatePlaying;
+	}
+	
+	public boolean inStateRecording() {
+		return inStateRecording;
 	}
 }

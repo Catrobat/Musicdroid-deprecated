@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
@@ -55,8 +56,8 @@ public class ChangeFilenameDialog extends DialogFragment {
 				.setNegativeButton(R.string.settings_button_apply,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								AudioHandler.getInstance().setFilename(
-										editText.getText().toString() + ".mp3");
+//								AudioHandler.getInstance().setFilename(
+//										editText.getText().toString() + ".mp3");
 								
 								ChangeFilenameDialogListener listener = 
 										(ChangeFilenameDialogListener) getActivity();
@@ -71,7 +72,8 @@ public class ChangeFilenameDialog extends DialogFragment {
 
 		AlertDialog dialog = builder.create();
 
-		String filename = AudioHandler.getInstance().getFilename();
+		String filename = ((RecorderActivity) getActivity()).
+								getCurrentRecordingSession().getFilename();
 		Log.i("ChangeFilenameDialog", "Filename: " + filename);
 		editText = (EditText) view.findViewById(R.id.dialog_edittext);
 		editText.setText(FileExtensionMethods.removeFileEnding(filename));

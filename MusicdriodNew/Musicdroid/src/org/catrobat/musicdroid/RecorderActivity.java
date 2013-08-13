@@ -34,11 +34,11 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import org.catrobat.musicdroid.dialog.ChangeFilenameDialog.ChangeFilenameDialogListener;
-import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.recorder.RecorderLayout;
 import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
 import org.catrobat.musicdroid.recorder.RecordingSession;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
+import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 public class RecorderActivity extends FragmentActivity implements ChangeFilenameDialogListener {
 	private RecorderLayout layout = null;
@@ -47,7 +47,6 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("RecorderActivitiy", "ONCREATE");
 
 		setContentView(R.layout.activity_recorder);
 		initTopStatusBar();
@@ -76,21 +75,15 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 		super.onResume();
 		setContentView(R.layout.activity_recorder);
 
-		layout = new RecorderLayout();
-		layout.init(this);
-
-		AudioHandler.getInstance().init(this, layout);
-		AudioHandler.getInstance().setContext(this);
+		layout = new RecorderLayout(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		layout.reset();
-		AudioHandler.getInstance().reset();
 		Log.i("RecorderActivity",
-				"OnPause: "
-						+ ((LinearLayout) findViewById(R.id.recorder_activity_layout))
+				"OnPause: " + ((LinearLayout) findViewById(R.id.recorder_activity_layout))
 								.getChildCount());
 	}
 
@@ -100,8 +93,7 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 		Log.i("RecorderActivity", "onOptionsItemSelected");
 		switch (item.getItemId()) {
 		case R.id.btn_settings:
-			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(
-					this);
+			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(this);
 			startActionMode(callbackSoundMixerMenu);
 			return true;
 		}
@@ -118,8 +110,7 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 
 	public void returnToMainActivtiy() {
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra("mic_filename", AudioHandler.getInstance()
-				.getFilenameFullPath());
+		returnIntent.putExtra("mic_filename", currentSession.getPathToFile());
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
@@ -149,6 +140,7 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 	@Override
 	public void onChangeFilename(String filename) {
 		getCurrentRecordingSession().setFilename(filename);
+		layout.setFilename(FileExtensionMethods.removeFileEnding(filename));
 	}
 	
 	public RecordingSession getCurrentRecordingSession()
