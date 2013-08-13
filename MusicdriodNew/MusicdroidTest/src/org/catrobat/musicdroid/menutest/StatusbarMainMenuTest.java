@@ -51,11 +51,11 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 		rewindImageButton = (ImageButton) getActivity().findViewById(R.id.btn_rewind);
 	}
 	
-//	@Override
-//	protected void tearDown()
-//	{
-//		solo.finishOpenedActivities();
-//	}
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}
 	
 	public void testButtonChangesOnClick()
 	{
