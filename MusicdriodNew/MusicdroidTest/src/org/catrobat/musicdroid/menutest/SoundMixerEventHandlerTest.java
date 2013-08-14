@@ -55,6 +55,12 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 		eventHandler = SoundMixer.getInstance().getEventHandler();
 		eventHandler.addObserver(this);
 	}
+	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
 
 	public void testObserver()
 	{

@@ -123,6 +123,14 @@ public class MainActivity extends MenuFileActivity {
 		super.onResume();
 		Statusbar.getInstance().initStatusbar(this);
 	}
+	
+	@Override
+	public void onDestroy() {
+		Log.i("MainActivity", "ON DESTROY");
+		super.onDestroy();
+		if(mixer != null)
+			mixer.resetSoundMixer();
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -51,6 +51,10 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		 timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 	}
 	
+	protected void tearDown() {
+		solo.finishOpenedActivities();
+	}
+	
 	public void testResetSoundMixerAtNewSongYes()
 	{
 		helper.addTrack(SoundType.DRUMS);
