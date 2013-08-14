@@ -59,6 +59,11 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		 currentPositionView = (View) timeline.findViewById(R.id.timeline_currentPosition);
 	}
 	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
 	
 	public void testTrackLengthSettings()
 	{
