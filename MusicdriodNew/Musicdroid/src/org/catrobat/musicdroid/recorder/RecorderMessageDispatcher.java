@@ -26,7 +26,7 @@ import android.os.Bundle;
 import android.os.Message;
 
 /**
- * @author matthias
+ * @author matthias schlesinger
  *
  */
 public class RecorderMessageDispatcher {

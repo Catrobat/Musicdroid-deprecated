@@ -28,6 +28,7 @@ import android.util.Log;
 import org.catrobat.musicdroid.R;
 
 public class MetronomAnimation extends AnimationDrawable {
+	private Context context;
 	private int intervalTick;
 	private int intervalTock;
 	private int sign; // 1 or -1
@@ -35,61 +36,46 @@ public class MetronomAnimation extends AnimationDrawable {
 
 	public MetronomAnimation(Context context, double beatsPerMinute) {
 		new AnimationDrawable();
-
+		this.context = context;
+		
 		computeValues(beatsPerMinute);
 
-		addFrame(
-				context.getResources().getDrawable(
-						R.drawable.metronom_light_tick), intervalTick);
-		addFrame(context.getResources().getDrawable(R.drawable.metronom_light),
-				getIntervalLength(0));
-
-		for (int i = 1; i <= 3; i++) {
-			addFrame(
-					context.getResources().getDrawable(
-							R.drawable.metronom_light_tock), intervalTick);
-			addFrame(
-					context.getResources().getDrawable(
-							R.drawable.metronom_light), getIntervalLength(i));
-		}
-
-		addFrame(
-				context.getResources().getDrawable(
-						R.drawable.metronom_light_tick), intervalTick);
-		addFrame(context.getResources().getDrawable(R.drawable.metronom_light),
-				getIntervalLength(4));
-
-		for (int i = 5; i <= 7; i++) {
-			addFrame(
-					context.getResources().getDrawable(
-							R.drawable.metronom_light_tock), intervalTick);
-			addFrame(
-					context.getResources().getDrawable(
-							R.drawable.metronom_light), getIntervalLength(i));
-		}
+		createBeatFrames(0);
+		createBeatFrames(4);
 
 		setOneShot(false);
 	}
+	
+	private void createBeatFrames(int startBeat)
+	{
+		addBlinkingFrames(R.drawable.metronom_light_tick, getIntervalLength(startBeat));
+		for (int i = startBeat + 1; i <= startBeat + 3; i++) {
+			addBlinkingFrames(R.drawable.metronom_light_tock, getIntervalLength(i));
+		}
+	}
+	
+	private void addBlinkingFrames(int drawableRessource, int intervalLength)
+	{
+		addFrame(context.getResources().getDrawable(drawableRessource), intervalTick);
+		addFrame(context.getResources().getDrawable(R.drawable.metronom_light), getIntervalLength(0));
+	}
 
 	private int getIntervalLength(int i) {
-		return numIterationsToOneMs == i ? intervalTock + (-1 * sign)
-				: intervalTock;
+		return numIterationsToOneMs == i ? intervalTock + (-1 * sign) : intervalTock;
 	}
 
 	private void computeValues(double beatsPerMinute) {
 		double secondsPerBeat = 60.0 / beatsPerMinute * 1000; // in milliseconds
 
 		intervalTick = (int) Math.round(secondsPerBeat / 3);
-		intervalTock = (int) Math.round(secondsPerBeat
-				- (int) Math.round(secondsPerBeat / 3));
+		intervalTock = (int) Math.round(secondsPerBeat - (int) Math.round(secondsPerBeat / 3));
 
 		double roundError = secondsPerBeat - (intervalTick + intervalTock);
 		sign = roundError < 0 ? -1 : 1;
 		numIterationsToOneMs = Math.abs((int) Math.round(1 / roundError));
 
 		Log.i("MetronomAnimation", "SPB = " + secondsPerBeat
-				+ " intervalTick = " + intervalTick + " intervalTock = "
-				+ intervalTock);
+				+ " intervalTick = " + intervalTick + " intervalTock = "+ intervalTock);
 		Log.i("MetronomAnimation", "RoundError = " + roundError
 				+ " NumIterMs = " + numIterationsToOneMs);
 	}

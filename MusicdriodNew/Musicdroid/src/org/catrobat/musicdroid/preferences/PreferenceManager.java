@@ -29,7 +29,7 @@ public class PreferenceManager {
 	public static final String SOUNDTRACK_DEFAULT_LENGTH_KEY = "soundtrack_length_default";
 	public static final int SOUNDTRACK_LENGTH_DEFAULT_VALUE = 45;
 	public static final String SOUNDTRACK_LENGTH_KEY = "soundtrack_length";
-	public static final int METRONOM_VISUALIZATION_DEFAULT_VALUE = 0;
+	public static final int METRONOM_VISUALIZATION_DEFAULT_VALUE = 1;
 	public static final String METRONOM_VISUALIZATION_KEY = "metronom_visualization";
 	public static final int METRONOM_BPM_DEFAULT_VALUE = 72;
 	public static final String METRONOM_BPM_KEY = "metronom_bpm";

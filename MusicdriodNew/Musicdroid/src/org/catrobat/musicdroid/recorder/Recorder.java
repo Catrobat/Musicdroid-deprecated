@@ -69,7 +69,6 @@ public class Recorder {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private void setPreferences() {
