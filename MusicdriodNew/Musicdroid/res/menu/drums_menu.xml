@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    	<item
+        android:id="@+id/btn_settings"
+        android:icon="@drawable/settings_button"
+        android:showAsAction="always" 
+        android:title="@string/menu_item_add"  />
+    	            
+	    <item
+	    android:id="@+id/drums_context_save_preset"
+	    android:icon="@drawable/save_drum_preset"
+	    android:showAsAction="always" 
+	    android:title="@string/drums_menu_entry_save_preset"  />
+           
+   		<item
+        android:id="@+id/drums_context_load_preset"
+        android:icon="@drawable/load_drum_preset"
+        android:showAsAction="always" 
+        android:title="@string/drums_menu_entry_load_preset"  />
+
+   		<item
+        android:id="@+id/drums_context_clear_preset"
+        android:icon="@drawable/delete_button"
+        android:showAsAction="always" 
+        android:title="@string/drums_menu_entry_clear_preset"  />
+</menu>

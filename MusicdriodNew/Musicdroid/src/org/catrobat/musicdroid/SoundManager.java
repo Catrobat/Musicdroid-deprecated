@@ -95,6 +95,16 @@ public class SoundManager {
 			}
 		}
 	}
+	
+    public void playSingleSound(int index, float speed, float volume)
+    {
+        float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        
+        Log.i("SoundManager", "SoundPoolID = " + index);
+        int poolId = soundPoolMap.get(index);
+        Integer stream_id = soundPool.play(poolId, volume, volume, 1, 0, speed);
+    }
 
 	public static void stopSoundByRawId(int raw_id) {
 		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet()

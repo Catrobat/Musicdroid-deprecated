@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_menu_layout"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+ 	<TextView
+	   android:id="@+id/drum_sound_export_duration_text"
+	   android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="7dp"
+	   android:layout_marginLeft="10dp"
+       android:text="@string/drum_sound_export_duration_text"
+	   />     
+	
+ 	 <LinearLayout 
+        android:id="@+id/num_loops_seekbar_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_below="@+id/drum_sound_export_duration_text" >
+	    	  	    
+	 	<SeekBar
+	       android:id="@+id/seekbar_num_loops"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:progress="2" />	  
+	 </LinearLayout>
+
+</RelativeLayout>

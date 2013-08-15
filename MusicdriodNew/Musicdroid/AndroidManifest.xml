@@ -55,6 +55,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="org.catrobat.musicdroid.DrumsActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="org.catrobat.musicdroid.preferences.PreferenceActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >

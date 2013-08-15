@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+   	       
+	    <item
+	    android:id="@+id/drums_context_bpm"
+	    android:title="@string/drums_menu_entry_bpm"
+	    android:icon="@drawable/sm_action_bpm"
+	    android:showAsAction="always"  
+	   />
+</menu>

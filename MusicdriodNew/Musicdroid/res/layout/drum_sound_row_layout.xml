@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.catrobat.musicdroid.drums.DrumSoundRowLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/org.catrobat.musicdroid"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp">
+<!--     android:minHeight="25dp"> -->
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content">
+    
+	    <RelativeLayout
+	     android:layout_width="wrap_content" 
+	     android:layout_height="fill_parent" 	
+	     android:background="@color/recorder_dark_background_color"
+	     android:minWidth="150dp"
+	     android:id="@+id/drum_row_descriptor_box"
+	     android:scrollbarAlwaysDrawHorizontalTrack="true"
+	     >   	
+	     
+	        <Spinner
+		    android:id="@+id/drum_sound_spinner"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="5dp"
+		    android:background="@color/transparent"/>
+	  	</RelativeLayout>
+	        
+	       <RelativeLayout
+	         android:layout_width="wrap_content"
+	         android:layout_height="fill_parent"
+	         android:background="@color/transparent"
+	       >		
+		    
+			<org.catrobat.musicdroid.drums.DrumButton 
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_alignParentLeft="true"
+		     android:layout_marginLeft="3dp"
+		     custom:position="1"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_1_1"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_1_1"
+		     android:layout_marginLeft="3dp"
+		     custom:position="2"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_1_2"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_1_2"
+		     android:layout_marginLeft="3dp"
+		     custom:position="3"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_1_3"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_1_3"
+		     android:layout_marginLeft="3dp"
+		     custom:position="4"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_1_4"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_1_4"
+		     android:layout_marginLeft="3dp"
+		     custom:position="5"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_2_1"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_2_1"
+		     android:layout_marginLeft="3dp"
+		     custom:position="6"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_2_2"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_2_2"
+		     android:layout_marginLeft="3dp"
+		     custom:position="7"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_2_3"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_2_3"
+		     android:layout_marginLeft="3dp"
+		     custom:position="8"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_2_4"
+	         /> 
+	        
+			
+			 <org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_2_4"
+		     android:layout_marginLeft="3dp"
+		     custom:position="9"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_3_1"
+	         />  
+			
+			 <org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_3_1"
+		     android:layout_marginLeft="3dp"
+		     custom:position="10"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_3_2"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_3_2"
+		     android:layout_marginLeft="3dp"
+		     custom:position="11"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_3_3"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_3_3"
+		     android:layout_marginLeft="3dp"
+		     custom:position="12"
+		     android:src="@drawable/drum_button_unclicked_dark"
+		     android:id="@+id/drum_button_3_4"
+	         /> 
+	        
+			 <org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_3_4"
+		     android:layout_marginLeft="3dp"
+		     custom:position="13"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_4_1"
+	         />  
+			
+			 <org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_4_1"
+		     android:layout_marginLeft="3dp"
+		     custom:position="14"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_4_2"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_4_2"
+		     android:layout_marginLeft="3dp"
+		     custom:position="15"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_4_3"
+	         />  
+	         
+			<org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_4_3"
+		     android:layout_marginLeft="3dp"
+		     custom:position="16"
+		     android:src="@drawable/drum_button_unclicked_bright"
+		     android:id="@+id/drum_button_4_4"
+	         /> 
+	         
+			 <org.catrobat.musicdroid.drums.DrumButton
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+		     android:background="@color/transparent"
+		     android:layout_centerVertical="true"
+		     android:layout_toRightOf="@+id/drum_button_4_4"
+		     android:layout_marginLeft="3dp"
+		     android:clickable="false"
+		     android:visibility="invisible"
+		     custom:position="17"
+		     android:id="@+id/drum_button_buffer"
+	         /> 	         
+	   </RelativeLayout>
+   </LinearLayout> 
+</org.catrobat.musicdroid.drums.DrumSoundRowLayout>

@@ -48,6 +48,7 @@
   <string name="dialog_sound_track_menu">What do you want to do</string>
   <string name="dialog_warning_file_overwritten_at_record">A file with this name already exists. It will be lost if you record a new sound. Continue anyways?</string>
   <string name="dialog_change_filename_title">Enter a new Filename</string>
+  <string name="dialog_save_preset_title">Save Preset</string>
   
   <string name="timeline_menu_entry_start_point">Set Start</string>
   <string name="timeline_menu_entry_end_point">Set End</string>
@@ -55,11 +56,16 @@
   <string name="dialog_warning_new_song">Your song will be lost!\nContinue anyways?</string>
   <string name="save_suggestion">If you want to save your song click Menu and Save Song</string>
   <string name="closing_security_question">Exit?\n\nYour song will be lost if it is not saved!</string>
+  <string name="on_drums_back_pressed_security_question">Return to SoundMixer? The current drum loop will be lost</string>
   <string name="on_recorder_back_pressed_security_question">Return to SoundMixer?\n\nYour recorded song will be lost!</string>
+  
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="dialog_continue">Continue</string>
   <string name="dialog_abort">Abort</string>
+  <string name="dialog_save">Save</string>
+  <string name="dialog_export">Export</string>
+  <string name="dialog_record">Record Anyways</string>
   
   <string name ="play_button_text">Play Song</string>
   <string name ="stop_button_text">Stop Song</string>
@@ -108,4 +114,30 @@
   <string name="recorder_context_title">Recorder Settings</string>
   <string name="recorder_menu_entry_playback">Play Playback</string>
   <string name="recorder_menu_entry_metronom">Play Metronom</string>  
+   
+  <string name="drums_context_title">Drum Looper Settings</string>
+  
+  <string name="base_drum">Base Drum</string>
+  <string name="snare_drum">Snare Drum</string>
+  <string name="snare_drum_hard">Snare Drum Hard</string>
+  <string name="high_hat_closed">High Hat Closed</string>
+  <string name="high_hat_open">High Hat Open</string>
+  <string name="high_tom">High Tom</string>
+  <string name="low_tom">Low Tom</string>
+  <string name="crash_one">Crash One</string>
+  <string name="crash_two">Crash Two</string>
+  <string name="tambourine">Tambourine</string>
+  <string name="drums_add_to_sound_mixer_text">Add Drum-Loop to SoundMixer</string>
+  <string name="drums_load_preset_text">Load Preset</string>
+  
+  <string name="drums_menu_entry_bpm">Beats per Minute</string>
+  <string name="drums_menu_entry_clear_preset">Clear Preset</string>
+  <string name="drums_menu_entry_load_preset">Load Preset</string>
+  <string name="drums_menu_entry_save_preset">Save Preset</string>
+  <string name="drum_sound_export_duration_text">Duration (Sec)</string>
+  <string name="drum_sound_export_dialog_title">Export Drum Sound</string>
+  <string name="drum_sound_export_num_loops_description_text">Number of Loops</string>
+  
+  
+  <string name="invalid_filename">This filename appears to be invalid</string>
 </resources>
