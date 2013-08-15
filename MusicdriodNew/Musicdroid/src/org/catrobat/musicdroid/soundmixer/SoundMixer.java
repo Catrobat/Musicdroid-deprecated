@@ -41,7 +41,7 @@ public class SoundMixer {
 	public static SoundMixer instance = null;
 	private SoundMixerLayout layout;
 	protected MainActivity parentActivity;
-	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
+	protected ArrayList<SoundTrackView> tracks;
 	private int defaultTrackLength;
 	private int soundMixerLength;
 	private int pixelPerSecond;
@@ -61,6 +61,8 @@ public class SoundMixer {
 
 	public void initSoundMixer(MainActivity activity) {
 		defaultTrackLength = PreferenceManager.getInstance().getPreference(
+		Log.i("SoundMixer", "INIT");
+		tracks = new ArrayList<SoundTrackView>();
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		parentActivity = activity;
 		layout = new SoundMixerLayout(activity, this);
@@ -171,6 +173,8 @@ public class SoundMixer {
 		}
 	}
 
+			Log.i("SoundMixer", "Track Size = " + tracks.size());
+			Log.i("SoundMixer", "Tracks Size = " + tracks.size());
 	public void resetSoundMixer() {
 		for(SoundTrackView track : tracks)
 		{
@@ -180,6 +184,7 @@ public class SoundMixer {
 		timeline.resetTimeline();
 		soundMixerLength = defaultTrackLength;
 		tracks.clear();
+		Log.i("SoundMixer", "Reset SoundMixer. Tracks-Size " + tracks.size());
 	}
 
 	public void setSoundMixerLength(int length) {

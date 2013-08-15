@@ -60,6 +60,11 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		 timelineProgressBar = (TimelineProgressBar) timeline.findViewById(R.id.timeline_progressBar);
 	}
 	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
 	
 	public void testTrackLengthSettings()
 	{
