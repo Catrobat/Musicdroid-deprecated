@@ -47,7 +47,7 @@ public class SoundMixer implements HorizontalScrollViewListener {
 	protected ObservableHorizontalScrollView horScrollView;
 	protected RelativeLayout parentLayout;
 	protected MainActivity parent;
-	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
+	protected ArrayList<SoundTrackView> tracks;
 	protected int viewId;
 	private int defaultLength;
 	private int longestSoundTrack;
@@ -68,6 +68,8 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	public void initSoundMixer(MainActivity activity,
 			ObservableHorizontalScrollView scrollView) {
+		Log.i("SoundMixer", "INIT");
+		tracks = new ArrayList<SoundTrackView>();
 		defaultLength = PreferenceManager.getInstance().getPreference(
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		parent = activity;
@@ -238,12 +240,14 @@ public class SoundMixer implements HorizontalScrollViewListener {
 
 	private RelativeLayout.LayoutParams positionTrack(SoundTrackView track) {
 		if (tracks.size() > 0) {
+			Log.i("SoundMixer", "Track Size = " + tracks.size());
 			SoundTrackView lowermost_track = tracks.get(tracks.size() - 1);
 			RelativeLayout.LayoutParams layoutParams = (LayoutParams) track
 					.getLayoutParams();
 			layoutParams.addRule(RelativeLayout.BELOW, lowermost_track.getId());
 			return layoutParams;
 		} else {
+			Log.i("SoundMixer", "Tracks Size = " + tracks.size());
 			RelativeLayout.LayoutParams layoutParams = (LayoutParams) track
 					.getLayoutParams();
 			layoutParams.addRule(RelativeLayout.BELOW, timeline.getId());
@@ -259,9 +263,10 @@ public class SoundMixer implements HorizontalScrollViewListener {
 		longestSoundTrack = 0;
 
 		timeline.resetTimeline();
-
+		parentLayout.removeView(timeline);
 		longestSoundTrack = soundMixerLength = defaultLength;
 		tracks.clear();
+		Log.i("SoundMixer", "Reset SoundMixer. Tracks-Size " + tracks.size());
 	}
 
 	public void setSoundMixerLength(int length) {
