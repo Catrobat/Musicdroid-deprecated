@@ -117,7 +117,6 @@ public class MainActivity extends MenuFileActivity {
 	public void onDestroy() {
 		super.onDestroy();
 		SoundMixer.getInstance().resetSoundMixer();
-		
 	}
 	
 	@Override

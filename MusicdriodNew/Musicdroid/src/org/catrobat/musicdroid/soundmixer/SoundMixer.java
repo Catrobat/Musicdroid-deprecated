@@ -41,7 +41,7 @@ public class SoundMixer {
 	public static SoundMixer instance = null;
 	private SoundMixerLayout layout;
 	protected MainActivity parentActivity;
-	protected ArrayList<SoundTrackView> tracks = new ArrayList<SoundTrackView>();
+	protected ArrayList<SoundTrackView> tracks;
 	private int defaultTrackLength;
 	private int soundMixerLength;
 	private int pixelPerSecond;
