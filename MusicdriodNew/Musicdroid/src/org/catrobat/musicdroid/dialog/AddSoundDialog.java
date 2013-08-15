@@ -30,12 +30,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
-import org.catrobat.musicdroid.NoteSheetActivity;
 import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.NoteSheetActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
-import org.catrobat.musicdroid.soundtracks.SoundTrackPiano;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
 
