@@ -80,6 +80,7 @@ public class SoundMixer {
 	}
 
 	public SoundMixer() {
+		tracks = new ArrayList<SoundTrackView>();
 	}
 
 	public void handleCopy() {
@@ -172,10 +173,10 @@ public class SoundMixer {
 	}
 
 	public void resetSoundMixer() {
-		for(SoundTrackView track : tracks)
+		for(int i = 0; i < tracks.size(); i++)
 		{
-			track.removeAllViews();
-			layout.removeView(track);
+			tracks.get(i).removeAllViews();
+			layout.removeView(tracks.get(i));
 		}
 		timeline.resetTimeline();
 		soundMixerLength = defaultTrackLength;
