@@ -47,6 +47,12 @@ public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainAct
 		 helper = new UITestHelper(solo, getActivity());
 	}
 	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
+	
 	public void testAddSoundButton()
 	{
 		 /*Test if dialog disappears when clicking on screen*/
