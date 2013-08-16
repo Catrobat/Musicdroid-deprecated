@@ -123,7 +123,7 @@ public class DrumSoundRowTest  extends ActivityInstrumentationTestCase2<MainActi
 		solo.sleep(1000);
 		solo.scrollToTop();
 		solo.clickOnText(getActivity().getResources().getString(DrumType.TAMBOURINE.getNameResource()));
-		solo.sleep(1000);
+		solo.sleep(5000);
 		
 		assertTrue(row.getSoundPoolId() != oldSoundpoolId);
 	}

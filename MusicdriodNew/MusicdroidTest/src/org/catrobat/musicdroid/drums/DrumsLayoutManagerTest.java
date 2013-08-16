@@ -24,6 +24,7 @@ public class DrumsLayoutManagerTest  extends ActivityInstrumentationTestCase2<Ma
 	@Override
 	protected void setUp() {
 		 solo = new Solo(getInstrumentation(), getActivity());
+		 solo.sleep(1000);
 		 solo.clickOnView(getActivity().findViewById(R.id.btn_add));
 		 solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
 	     solo.sleep(100);

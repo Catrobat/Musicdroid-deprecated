@@ -11,6 +11,12 @@ public class DrumTypeTest extends ActivityInstrumentationTestCase2<MainActivity>
 		super(MainActivity.class);
 	}	
 	
+	@Override
+	protected void tearDown()
+	{
+		getActivity().finish();
+	}
+	
 	public void testGetTypeArray()
 	{
 		ArrayList<String> list = DrumType.getTypeArray(getActivity());
