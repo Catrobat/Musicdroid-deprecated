@@ -8,7 +8,6 @@ import org.simpleframework.xml.ElementArray;
 import org.simpleframework.xml.Root;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 import org.catrobat.musicdroid.SoundManager;
@@ -29,11 +28,9 @@ public class DrumSoundRow implements Observer {
 	@Element
 	private String soundRowName = null;
 	
-	//need this one for marshaling
 	public DrumSoundRow() {}
 	
-	public DrumSoundRow(Context context, DrumsLayout manager, DrumType drumType) { //int rowStringId, int soundRawId) {
-		//super(context);
+	public DrumSoundRow(Context context, DrumsLayout manager, DrumType drumType) {
 		this.context = context;
 		this.layoutManager = manager;
 		this.rawId = drumType.getSoundResource();
@@ -41,21 +38,10 @@ public class DrumSoundRow implements Observer {
 		
 		layout = new DrumSoundRowLayout(this.context, this, this.soundRowName);
 		
-        soundPoolId = SoundManager.getInstance().loadSound(rawId);
+        soundPoolId = SoundManager.loadSound(rawId);
 		//MIT-FIX
 		//soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		//soundPoolId = soundpool.load(context, rawId, 1);
-	}
-
-	public void togglePosition(int position)
-	{
-	  beatArray[position] = beatArray[position] == 0 ? 1 : 0;
-	  layoutManager.setUnsavedChanges(true);
-	}
-	
-	public int getBeatArrayValueAtPosition(int position)
-	{
-		return beatArray[position];
 	}
 	
 	@Override
@@ -64,15 +50,25 @@ public class DrumSoundRow implements Observer {
 		Log.i("DrumSoundRowa", "Incoming Object: " + currentBeat);
 		if(beatArray[currentBeat] == 1)
 		{
-			SoundManager.getInstance().playSingleSound(soundPoolId, 1, 1);
-			//soundpool.play(soundPoolId, 1, 1, 1, 0, 1f);
+			SoundManager.playSingleSound(soundPoolId, 1, 1);
 		}
+	}
+
+	public void togglePosition(int position)
+	{
+		beatArray[position] = beatArray[position] == 0 ? 1 : 0;
+		layoutManager.setUnsavedChanges(true);
+	}
+	
+	public int getBeatArrayValueAtPosition(int position)
+	{
+		return beatArray[position];
 	}
 	
 	public void setSoundPoolIdByDrumString(String drumString)
 	{
 		DrumType type = layoutManager.getDrumTypeByString(drumString);
-		soundPoolId = SoundManager.getInstance().loadSound(type.getSoundResource());
+		soundPoolId = SoundManager.loadSound(type.getSoundResource());
 		soundRowName = context.getResources().getString(type.getNameResource());
 		layoutManager.setUnsavedChanges(true); 
 	}

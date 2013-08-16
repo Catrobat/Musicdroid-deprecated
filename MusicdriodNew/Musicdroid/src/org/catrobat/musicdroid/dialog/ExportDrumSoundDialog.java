@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.SeekBar;
@@ -14,7 +13,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.dialog.listener.ExportDrumSoundDialogListener;
-import org.catrobat.musicdroid.preferences.PreferenceManager;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 
 @SuppressLint("ValidFragment")
@@ -62,7 +61,9 @@ public class ExportDrumSoundDialog extends DialogFragment implements OnSeekBarCh
         num_loops.setOnSeekBarChangeListener(this);
 
         duration_in_seconds = (TextView) view.findViewById(R.id.drum_sound_export_duration_text);
-        duration_in_seconds.setText(buildDurationString(NUMBER_OF_LOOPS_DEFAULT));
+        duration_in_seconds.setText(
+        		StringFormatter.buildDrumExportDurationString(NUMBER_OF_LOOPS_DEFAULT, 
+        													  NUMBER_OF_BEATS_PER_LOOP));
         
         return dialog;
     }
@@ -71,7 +72,6 @@ public class ExportDrumSoundDialog extends DialogFragment implements OnSeekBarCh
     public void onResume()
     {
     	super.onResume();
-    	Log.i("ExportDrumSound", "RESUME");
     }
 
 	@Override
@@ -80,7 +80,8 @@ public class ExportDrumSoundDialog extends DialogFragment implements OnSeekBarCh
 		if(progress == 0)
 			progress = 1;
 		number_of_loops = progress;
-		duration_in_seconds.setText(buildDurationString(progress));
+		duration_in_seconds.setText(
+				StringFormatter.buildDrumExportDurationString(progress, NUMBER_OF_BEATS_PER_LOOP));
 	}
 
 	@Override
@@ -94,15 +95,5 @@ public class ExportDrumSoundDialog extends DialogFragment implements OnSeekBarCh
 		// TODO Auto-generated method stub
 		
 	}
-	
-	private int secondsByBPM(int progress)
-	{
-		return NUMBER_OF_BEATS_PER_LOOP*progress*60/
-					PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
-	}
-	
-	private String buildDurationString(int progress)
-	{
-		return "Number of Loops: " + progress + " / Duration: " + secondsByBPM(progress) + " Sec";
-	}
+
 }

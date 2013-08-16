@@ -103,61 +103,24 @@ public class DrumsLayout implements OnClickListener {
 		((DrumsActivity)context).addObserverToEventHandler(position);
 		soundRowBox.addView(positionLayout);
 		
-		DrumSoundRow baseDrum = new DrumSoundRow(context, this, DrumType.BASE_DRUM);
-		DrumSoundRowLayout baseDrumLayout = baseDrum.getLayout();
-		baseDrumLayout.setId(getNewId());
-		LayoutParams layoutParamsBase = (LayoutParams) baseDrumLayout.getLayoutParams();
-		layoutParamsBase.addRule(RelativeLayout.BELOW, positionLayout.getId());
-		soundRowBox.addView(baseDrumLayout, layoutParamsBase);
-		drumSoundRowsArray.add(baseDrum);
-		((DrumsActivity)context).addObserverToEventHandler(baseDrum);
-		
-		DrumSoundRow snareDrum = new DrumSoundRow(context, this, DrumType.SNARE_DRUM);//R.string.snare_drum, R.raw.snare_drum);
-		DrumSoundRowLayout snareDrumLayout = snareDrum.getLayout();
-		snareDrumLayout.setId(getNewId());
-		LayoutParams layoutParamsSnare = (LayoutParams) snareDrumLayout.getLayoutParams();
-		layoutParamsSnare.addRule(RelativeLayout.BELOW, baseDrumLayout.getId());
-		soundRowBox.addView(snareDrumLayout, layoutParamsSnare);
-		drumSoundRowsArray.add(snareDrum);
-		((DrumsActivity)context).addObserverToEventHandler(snareDrum);
-		
-		DrumSoundRow highHatClosed = new DrumSoundRow(context, this, DrumType.HIGH_HAT_CLOSED);//R.string.high_hat_closed, R.raw.high_hat_closed);
-		DrumSoundRowLayout highHatClosedLayout = highHatClosed.getLayout();
-		highHatClosedLayout.setId(getNewId());
-		LayoutParams layoutParamsHighHatClosed = (LayoutParams) highHatClosedLayout.getLayoutParams();
-		layoutParamsHighHatClosed.addRule(RelativeLayout.BELOW, snareDrumLayout.getId());
-		soundRowBox.addView(highHatClosedLayout, layoutParamsHighHatClosed);
-		drumSoundRowsArray.add(highHatClosed);
-		((DrumsActivity)context).addObserverToEventHandler(highHatClosed);
-		
-		DrumSoundRow highHatOpen = new DrumSoundRow(context, this, DrumType.HIGH_HAT_OPEN);//R.string.high_hat_open, R.raw.high_hat_open);
-		DrumSoundRowLayout highHatOpenLayout = highHatOpen.getLayout();
-		highHatOpenLayout.setId(getNewId());
-		LayoutParams layoutParamsHighHatOpen = (LayoutParams) highHatOpenLayout.getLayoutParams();
-		layoutParamsHighHatOpen.addRule(RelativeLayout.BELOW, highHatClosedLayout.getId());
-		soundRowBox.addView(highHatOpenLayout, layoutParamsHighHatOpen);
-		drumSoundRowsArray.add(highHatOpen);
-		((DrumsActivity)context).addObserverToEventHandler(highHatOpen);
-		
-		DrumSoundRow highTom = new DrumSoundRow(context, this, DrumType.TOM_HIGH);//R.string.high_tom, R.raw.tom_high);
-		DrumSoundRowLayout highTomLayout = highTom.getLayout();
-		highTomLayout.setId(getNewId());
-		LayoutParams layoutParamsHighTom = (LayoutParams) highTomLayout.getLayoutParams();
-		layoutParamsHighTom.addRule(RelativeLayout.BELOW, highHatOpenLayout.getId());
-		soundRowBox.addView(highTomLayout, layoutParamsHighTom);
-		drumSoundRowsArray.add(highTom);
-		((DrumsActivity)context).addObserverToEventHandler(highTom);
-		
-		DrumSoundRow lowTom = new DrumSoundRow(context, this, DrumType.TOM_LOW);// R.string.low_tom, R.raw.tom_low);
-		DrumSoundRowLayout lowTomLayout = lowTom.getLayout();
-		lowTomLayout.setId(getNewId());
-		LayoutParams layoutParamsLowTom = (LayoutParams) lowTomLayout.getLayoutParams();
-		layoutParamsLowTom.addRule(RelativeLayout.BELOW, highTomLayout.getId());
-		layoutParamsLowTom.bottomMargin = 0;
-		lowTomLayout.setLayoutParams(layoutParamsLowTom);
-		soundRowBox.addView(lowTomLayout, layoutParamsLowTom);
-		drumSoundRowsArray.add(lowTom);
-		((DrumsActivity)context).addObserverToEventHandler(lowTom);
+		int idBaseDrum = addNewDrumSoundRow(DrumType.BASE_DRUM, positionLayout.getId());
+		int idSnareDrum = addNewDrumSoundRow(DrumType.SNARE_DRUM, idBaseDrum);
+		int idHighHatClosed = addNewDrumSoundRow(DrumType.HIGH_HAT_CLOSED, idSnareDrum);
+		int idHightHatOpen = addNewDrumSoundRow(DrumType.HIGH_HAT_OPEN, idHighHatClosed);
+		int idHighTom = addNewDrumSoundRow(DrumType.TOM_HIGH, idHightHatOpen);
+		int idLowTom = addNewDrumSoundRow(DrumType.TOM_LOW, idHighTom);
+	}
+	
+	private int addNewDrumSoundRow(DrumType type, int alignBelowId)
+	{
+		DrumSoundRow soundRow = new DrumSoundRow(context, this, type);
+		DrumSoundRowLayout soundRowLayout = soundRow.getLayout();
+		soundRowLayout.setId(getNewId());
+		soundRowLayout.align(RelativeLayout.BELOW,  alignBelowId);
+		soundRowBox.addView(soundRowLayout);
+		drumSoundRowsArray.add(soundRow);
+		((DrumsActivity)context).addObserverToEventHandler(soundRow);
+		return soundRowLayout.getId();
 	}
 	
 	private int getNewId()

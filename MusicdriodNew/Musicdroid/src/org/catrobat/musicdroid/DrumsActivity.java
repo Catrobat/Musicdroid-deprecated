@@ -1,5 +1,7 @@
 package org.catrobat.musicdroid;
 
+import java.util.Observer;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,12 +19,9 @@ import org.catrobat.musicdroid.dialog.listener.LoadFileDialogListener;
 import org.catrobat.musicdroid.drums.DrumLoopEventHandler;
 import org.catrobat.musicdroid.drums.DrumPreset;
 import org.catrobat.musicdroid.drums.DrumPresetHandler;
-import org.catrobat.musicdroid.drums.DrumSoundPositionRow;
-import org.catrobat.musicdroid.drums.DrumSoundRow;
 import org.catrobat.musicdroid.drums.DrumsLayout;
 import org.catrobat.musicdroid.drums.DrumsMenuCallback;
 import org.catrobat.musicdroid.drums.StatusbarDrums;
-import org.catrobat.musicdroid.recorder.AudioHandler;
 
 public class DrumsActivity extends FragmentActivity {
 	private DrumsLayout drumsLayout = null;
@@ -45,24 +44,27 @@ public class DrumsActivity extends FragmentActivity {
         initTopStatusBar();
         StatusbarDrums.getInstance().initStatusbar(this);
         
-        Intent intent = getIntent();
-        if(intent.hasExtra("edit_mode") && intent.getBooleanExtra("edit_mode", false))
+        loadPresetIfInEditMode();
+        	
+        savePresetDialog = new SavePresetDialog();
+		openFileDialog = new OpenFileDialog(this, new LoadFileDialogListener(this), DrumPresetHandler.path, ".xml");
+	}
+	
+	private void loadPresetIfInEditMode()
+	{
+		boolean defaultValue = false;
+		Intent intent = getIntent();
+        if(intent.getBooleanExtra("edit_mode", defaultValue) == true)
         {
         	String path = intent.hasExtra("path") ? intent.getStringExtra("path") : null;
         	if(path != null)
         	{
         		Log.i("DrumsActivity", "edit mode = true");
         		editMode = true;
-        		this.loadPresetByName(path);
+        		loadPresetByName(path);
         	}
         }
-        	
-        savePresetDialog = new SavePresetDialog();
-		openFileDialog = new OpenFileDialog(this, new LoadFileDialogListener(this), DrumPresetHandler.path, ".xml");
-
-
 	}
-
 	
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,7 +150,6 @@ public class DrumsActivity extends FragmentActivity {
 		return false;
 	}	
 	
-	
 	public void saveCurrentPreset(String name)
 	{
 		if(drumPresetHandler.writeDrumLoopToPreset(name, drumsLayout.getDrumSoundRowsArray()))
@@ -182,16 +183,10 @@ public class DrumsActivity extends FragmentActivity {
     	 finish();
     }
 
-    public void addObserverToEventHandler(DrumSoundRow dsr)
+    public void addObserverToEventHandler(Observer observer)
     {
-    	drumLoopEventHandler.addObserver(dsr);
-    }    
-    
-    public void addObserverToEventHandler(DrumSoundPositionRow dsr)
-    {
-    	drumLoopEventHandler.addObserver(dsr);
-    }
-    
+    	drumLoopEventHandler.addObserver(observer);
+    }      
     
     public void startPlayLoop()
     {
@@ -212,6 +207,4 @@ public class DrumsActivity extends FragmentActivity {
     {
     	return drumsLayout;
     }
-
-    
 }

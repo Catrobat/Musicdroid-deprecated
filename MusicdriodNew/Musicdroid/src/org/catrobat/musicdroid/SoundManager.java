@@ -33,8 +33,6 @@ import android.media.SoundPool;
 import android.util.Log;
 
 public class SoundManager {
-
-	static private SoundManager _instance;
 	private static SoundPool soundPool;
 	private static HashMap<Integer, Integer> soundPoolMap;
 	private static HashMap<Integer, Integer> soundPlayMap;
@@ -42,12 +40,6 @@ public class SoundManager {
 	private static Context context;
 
 	private SoundManager() {
-	}
-
-	static synchronized public SoundManager getInstance() {
-		if (_instance == null)
-			_instance = new SoundManager();
-		return _instance;
 	}
 
 	public static void initSounds(Context theContext) {
@@ -96,7 +88,7 @@ public class SoundManager {
 		}
 	}
 	
-    public void playSingleSound(int index, float speed, float volume)
+    public static void playSingleSound(int index, float speed, float volume)
     {
         float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -154,7 +146,6 @@ public class SoundManager {
 		soundPool = null;
 		soundPoolMap.clear();
 		audioManager.unloadSoundEffects();
-		_instance = null;
 	}
 
 	public static int getSoundfileDuration(int soundfile_id) {

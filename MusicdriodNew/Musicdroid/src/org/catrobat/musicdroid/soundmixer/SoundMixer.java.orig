@@ -61,6 +61,11 @@ public class SoundMixer {
 
 	public void initSoundMixer(MainActivity activity) {
 		defaultTrackLength = PreferenceManager.getInstance().getPreference(
+<<<<<<< HEAD
+		Log.i("SoundMixer", "INIT");
+		tracks = new ArrayList<SoundTrackView>();
+=======
+>>>>>>> MUS-34_RefactorSoundMixer
 				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 		parentActivity = activity;
 		layout = new SoundMixerLayout(activity, this);
@@ -172,6 +177,11 @@ public class SoundMixer {
 		}
 	}
 
+<<<<<<< HEAD
+			Log.i("SoundMixer", "Track Size = " + tracks.size());
+			Log.i("SoundMixer", "Tracks Size = " + tracks.size());
+=======
+>>>>>>> MUS-34_RefactorSoundMixer
 	public void resetSoundMixer() {
 		for(int i = 0; i < tracks.size(); i++)
 		{

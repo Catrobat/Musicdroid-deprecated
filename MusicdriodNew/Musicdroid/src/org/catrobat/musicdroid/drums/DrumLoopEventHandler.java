@@ -8,10 +8,7 @@ import org.catrobat.musicdroid.preferences.PreferenceManager;
 public class DrumLoopEventHandler extends Observable {
 	private boolean shouldContinue;
 	private int num_loops = 2000;
-	
-	public DrumLoopEventHandler()
-	{
-	}
+	private static final int ONE_MINUTE_IN_MILISECONDS = 60000;
 	
 	public void play()
 	{
@@ -26,12 +23,6 @@ public class DrumLoopEventHandler extends Observable {
 		        	int sleepDuration = computeSleep();
 		        	Log.i("DrumLoopEventHandler", "Sleep = " + sleepDuration);
 		        	
-//		        	long now = System.currentTimeMillis();
-//		        	long expectedElapsedTime = now + sleepDuration;
-//		        	while(now < expectedElapsedTime){
-//		        	    now = System.currentTimeMillis();
-//		        	} 
-		        	
 		            while (shouldContinue && (num_loops > 0 && loops < num_loops)) {
 		                try {
 		        			setChanged();
@@ -41,12 +32,7 @@ public class DrumLoopEventHandler extends Observable {
 		        				beat = 0;
 		        				loops = loops + 1;
 		        			}
-		                    //Thread.sleep(sleepDuration);
-		        			long now = System.currentTimeMillis();
-				        	long expectedElapsedTime = now + sleepDuration;
-				        	while(now < expectedElapsedTime){
-				        	    now = System.currentTimeMillis();
-				        	}
+		                    Thread.sleep(sleepDuration);
 		                } catch (Exception e) {
 		                }
 		            }
@@ -59,7 +45,7 @@ public class DrumLoopEventHandler extends Observable {
 	private int computeSleep()
 	{
 		int bpm = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
-		return 60000/(bpm*4); //return millisec
+		return ONE_MINUTE_IN_MILISECONDS/(bpm*4);
 	}
 	
 	public void stop()

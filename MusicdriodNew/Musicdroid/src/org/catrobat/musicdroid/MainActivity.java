@@ -59,7 +59,6 @@ public class MainActivity extends MenuFileActivity {
 		SoundMixer.getInstance().initSoundMixer(this);
 
 		// TESTING
-		SoundManager.getInstance();
 		SoundManager.initSounds(this);
 		// SoundManager.loadSounds();
 	}
@@ -112,20 +111,11 @@ public class MainActivity extends MenuFileActivity {
 		super.onResume();
 		Statusbar.getInstance().initStatusbar(this);
 	}
-	
-	@Override
-	public void onDestroy() {
-		Log.i("MainActivity", "ON DESTROY");
-		super.onDestroy();
-		if(mixer != null)
-			mixer.resetSoundMixer();
-	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		SoundMixer.getInstance().resetSoundMixer();
-		
 	}
 	
 	@Override

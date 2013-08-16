@@ -22,12 +22,15 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tooltests;
 
+import java.util.Random;
+
+import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
 import junit.framework.TestCase;
 
 /**
- * @author matthias
+ * @author matthias schlesinger
  *
  */
 public class StringFormatterTest extends TestCase {
@@ -45,5 +48,54 @@ public class StringFormatterTest extends TestCase {
 		
 		duration = 3600;
 		assertTrue(StringFormatter.durationStringFromInt(duration).equals("1:00:00"));
+	}
+	
+	public void testBuildDrumExportDurationString()
+	{
+		int progress = 20;
+		int beatsPerLoop = 4;
+		
+		int seconds = beatsPerLoop * progress * 60 /
+				PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
+		
+		String referenceString = "Number of Loops: " + progress + " / Duration: " + seconds + " Sec";
+		
+		String formattedString = StringFormatter.buildDrumExportDurationString(progress, beatsPerLoop);
+		
+		assertEquals(referenceString, formattedString);
+	}
+	
+	public void testBeatArrayToString()
+	{
+		int[] beatArray = new int[16];
+		
+		Random randomGenerator = new Random();
+	    for (int idx = 0; idx <= 15; ++idx){
+	      beatArray[idx] = randomGenerator.nextInt(2);
+	    }
+	    
+		String referenceString =  "BeatArray = "  + beatArray[0] + " " 
+												  + beatArray[1] + " " 
+												  + beatArray[2] + " "
+												  + beatArray[3] + " " 
+												  + beatArray[4] + " "
+												  + beatArray[5] + " " 
+												  + beatArray[6] + " "
+												  + beatArray[7] + " " 
+												  + beatArray[8] + " "
+												  + beatArray[9] + " " 
+												  + beatArray[10] + " "
+												  + beatArray[11] + " "
+												  + beatArray[12] + " "
+												  + beatArray[13] + " "
+												  + beatArray[14] + " "
+												  + beatArray[15] + " ";
+		
+		String generatedString = StringFormatter.beatArrayToString(beatArray);
+
+		System.out.println("Reference " + referenceString);
+		System.out.println("Generated " + generatedString);
+		
+		assertEquals(referenceString, generatedString); 
 	}
 }

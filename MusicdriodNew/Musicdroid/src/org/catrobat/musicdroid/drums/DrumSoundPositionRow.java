@@ -1,6 +1,5 @@
 package org.catrobat.musicdroid.drums;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,12 +12,9 @@ import android.os.Message;
 public class DrumSoundPositionRow extends Handler implements Observer{
 	private Context context = null;
 	private DrumSoundPositionRowLayout layout = null;
-	private ArrayList<DrumButton> positionArray = null;
-	private int currentBeat = 0;
 
 	public DrumSoundPositionRow(Context context) {
 		this.context = context;
-		this.positionArray = new ArrayList<DrumButton>();
 		
         layout = new DrumSoundPositionRowLayout(this.context);
 	}

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res/org.catrobat.musicdroid"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp">
-<!--     android:minHeight="25dp"> -->
     
     <LinearLayout 
         android:layout_width="wrap_content"
@@ -26,7 +24,7 @@
 	         android:background="@color/transparent"
 	       >		
 		    
-			<org.catrobat.musicdroid.drums.DrumButton 
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/abs__background_holo_dark"
@@ -34,12 +32,11 @@
 		     android:layout_alignParentLeft="true"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="1"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_1"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -47,12 +44,11 @@
 		     android:layout_toRightOf="@+id/drum_position_1"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="2"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_2"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -60,12 +56,11 @@
 		     android:layout_toRightOf="@+id/drum_position_2"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="3"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_3"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -73,12 +68,11 @@
 		     android:layout_toRightOf="@+id/drum_position_3"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="4"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_4"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -86,12 +80,11 @@
 		     android:layout_toRightOf="@+id/drum_position_4"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="5"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_5"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -99,12 +92,11 @@
 		     android:layout_toRightOf="@+id/drum_position_5"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="6"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_6"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -112,12 +104,11 @@
 		     android:layout_toRightOf="@+id/drum_position_6"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="7"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_7"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -125,13 +116,12 @@
 		     android:layout_toRightOf="@+id/drum_position_7"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="8"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_8"
 	         /> 
 	        
 			
-			 <org.catrobat.musicdroid.drums.DrumButton
+			 <ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -139,12 +129,11 @@
 		     android:layout_toRightOf="@+id/drum_position_8"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="9"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_9"
 	         />  
 			
-			 <org.catrobat.musicdroid.drums.DrumButton
+			 <ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -152,12 +141,11 @@
 		     android:layout_toRightOf="@+id/drum_position_9"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="10"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_10"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -165,12 +153,11 @@
 		     android:layout_toRightOf="@+id/drum_position_10"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="11"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_11"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -178,12 +165,11 @@
 		     android:layout_toRightOf="@+id/drum_position_11"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="12"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_12"
 	         /> 
 	        
-			 <org.catrobat.musicdroid.drums.DrumButton
+			 <ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -191,12 +177,11 @@
 		     android:layout_toRightOf="@+id/drum_position_12"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="13"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_13"
 	         />  
 			
-			 <org.catrobat.musicdroid.drums.DrumButton
+			 <ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -204,12 +189,11 @@
 		     android:layout_toRightOf="@+id/drum_position_13"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="14"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_14"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -217,12 +201,11 @@
 		     android:layout_toRightOf="@+id/drum_position_14"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="15"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_15"
 	         />  
 	         
-			<org.catrobat.musicdroid.drums.DrumButton
+			<ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -230,12 +213,11 @@
 		     android:layout_toRightOf="@+id/drum_position_15"
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
-		     custom:position="16"
 		     android:src="@drawable/drum_row_position"
 		     android:id="@+id/drum_position_16"
 	         /> 
 	         
-			 <org.catrobat.musicdroid.drums.DrumButton
+			 <ImageView
 			 android:layout_width="wrap_content"
 			 android:layout_height="wrap_content"
 		     android:background="@color/transparent"
@@ -244,7 +226,6 @@
 		     android:layout_marginLeft="3dp"
 		     android:visibility="invisible"
 		     android:clickable="false"
-		     custom:position="17"
 		     android:id="@+id/drum_position_buffer"
 	         /> 	         
 	   </RelativeLayout>

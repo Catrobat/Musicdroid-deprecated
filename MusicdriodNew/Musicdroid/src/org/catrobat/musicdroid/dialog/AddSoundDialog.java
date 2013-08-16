@@ -89,7 +89,7 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 			intentDrums.putExtra("edit_mode", false); 
 			parent.startActivityForResult(intentDrums, 1);
 			break;
-		case PIANO:
+		case PIANO: 
 			parent.startActivity(new Intent(parent, DrawTrackActivity.class));
 			// SoundTrackPiano stvp = new SoundTrackPiano();
 			// parent.addSoundTrack(new SoundTrackView(parent, stvp));
