@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
@@ -356,6 +357,13 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 	public SoundTrack getSoundTrack() {
 		return soundTrack;
+	}
+
+
+	public void alignTrack(int alignment, int alignTo) {
+		RelativeLayout.LayoutParams params = (LayoutParams) this.getLayoutParams();
+		params.addRule(alignment, alignTo);
+		this.setLayoutParams(params);
 	}
 
 }

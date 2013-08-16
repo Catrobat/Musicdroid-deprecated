@@ -23,6 +23,9 @@
 package org.catrobat.musicdroid.soundmixer;
 
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.animation.HighlightAnimation;
+
 import android.app.Activity;
 import android.content.Context;
 import android.database.Observable;
@@ -34,8 +37,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.animation.HighlightAnimation;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	public static Statusbar instance = null;
@@ -76,7 +77,6 @@ public class Statusbar extends Observable implements OnTouchListener {
 				.findViewById(R.id.metronom_light);
 		metronomLightImageView
 				.setColorFilter(R.color.abs__background_holo_dark);
-		// ADD UNDO AND REDO SUPPORT
 	}
 
 	public void modifyStatusbarForRecorderActivity() {

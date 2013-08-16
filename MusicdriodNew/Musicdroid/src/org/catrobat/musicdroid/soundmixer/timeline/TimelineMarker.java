@@ -22,41 +22,42 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class TimelineTrackPosition extends View {
-	private Context context;
-	private int colorId;
+/**
+ * @author matthias schlesinger
+ *
+ */
+public class TimelineMarker extends View {
 
-	public TimelineTrackPosition(Context c, int colId) {
-		super(c);
-		context = c;
-		colorId = colId;
-		addTrackPosition();
+	public TimelineMarker(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
 	}
 
-	public void updateTrackPosition(int pixPos, int secPos) {
-		setVisibility(View.VISIBLE);
 
-		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
-		layoutParams.leftMargin = pixPos;
-		setLayoutParams(layoutParams);
+	public TimelineMarker(Context context, int second, int timelineHeight) {
+		super(context);
+		
+		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
+		
+		LayoutParams markerParams = second %5 == 0 ?
+				new RelativeLayout.LayoutParams(2, timelineHeight * 2 / 5) :
+				new RelativeLayout.LayoutParams(2, timelineHeight * 4 / 8);
+
+		markerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		markerParams.addRule(RelativeLayout.ALIGN_LEFT);
+		markerParams.leftMargin = pixelPerSecond * second;
+		setLayoutParams(markerParams);
+		setBackgroundColor(Color.BLACK);
 	}
 
-	private void addTrackPosition() {
-		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2,
-				LayoutParams.WRAP_CONTENT);
-		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		setLayoutParams(seperatorParams);
-		setBackgroundColor(context.getResources().getColor(colorId));
-		setVisibility(View.INVISIBLE);
-	}
 
-	public View getTrackPosition() {
-		return this;
-	}
 
 }
