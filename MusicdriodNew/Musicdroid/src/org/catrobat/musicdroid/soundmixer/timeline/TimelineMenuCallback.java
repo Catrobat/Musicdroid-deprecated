@@ -22,12 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class TimelineMenuCallback implements ActionMode.Callback {
 	MainActivity parent = null;

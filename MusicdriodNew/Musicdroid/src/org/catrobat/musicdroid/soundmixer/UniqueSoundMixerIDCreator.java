@@ -20,43 +20,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.soundmixer.timeline;
+package org.catrobat.musicdroid.soundmixer;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class TimelineTrackPosition extends View {
-	private Context context;
-	private int colorId;
+import android.util.Log;
 
-	public TimelineTrackPosition(Context c, int colId) {
-		super(c);
-		context = c;
-		colorId = colId;
-		addTrackPosition();
+/**
+ * @author matthias
+ *
+ */
+public class UniqueSoundMixerIDCreator {
+	AtomicInteger atomicInteger;
+	
+	public UniqueSoundMixerIDCreator()
+	{
+		atomicInteger = new AtomicInteger();
 	}
-
-	public void updateTrackPosition(int pixPos, int secPos) {
-		setVisibility(View.VISIBLE);
-
-		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
-		layoutParams.leftMargin = pixPos;
-		setLayoutParams(layoutParams);
+	
+	public int getNewId()
+	{
+		int newId = atomicInteger.incrementAndGet();
+		Log.i("UniqueID", "NewID = " + newId);
+		return newId;
 	}
-
-	private void addTrackPosition() {
-		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2,
-				LayoutParams.WRAP_CONTENT);
-		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		setLayoutParams(seperatorParams);
-		setBackgroundColor(context.getResources().getColor(colorId));
-		setVisibility(View.INVISIBLE);
-	}
-
-	public View getTrackPosition() {
-		return this;
-	}
-
+	
 }

@@ -85,7 +85,7 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 			SoundTrackDrums stvd = new SoundTrackDrums();
 			parent.addSoundTrack(new SoundTrackView(parent, stvd));
 			break;
-		case PIANO:
+		case PIANO: 
 			parent.startActivity(new Intent(parent, DrawTrackActivity.class));
 			// SoundTrackPiano stvp = new SoundTrackPiano();
 			// parent.addSoundTrack(new SoundTrackView(parent, stvp));
