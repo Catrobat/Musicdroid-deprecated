@@ -39,7 +39,6 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
 import org.catrobat.musicdroid.tools.StringFormatter;
-import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class RecorderLayout extends Handler implements OnClickListener,
 		OnLongClickListener {
