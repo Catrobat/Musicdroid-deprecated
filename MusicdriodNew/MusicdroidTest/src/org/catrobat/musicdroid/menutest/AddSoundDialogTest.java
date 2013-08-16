@@ -56,30 +56,29 @@ public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainAct
 	public void testAddSoundButton()
 	{
 		 /*Test if dialog disappears when clicking on screen*/
-		 solo.clickOnView(getActivity().findViewById(R.id.btn_add));
-		 assertTrue("Add Sounds dialog not visible",
-					solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true));
-		 solo.sleep(1000);
-
-		 solo.clickOnScreen(20, screenHeight/2);
-		 solo.sleep(1000);
-		 assertFalse("Add Sounds dialog not visible",
+		solo.sleep(1000);
+		solo.clickOnView(getActivity().findViewById(R.id.btn_add));
+		assertTrue("Add Sounds dialog not visible",
+					solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 5000, true));
+		solo.sleep(1000);
+		solo.clickOnScreen(20, screenHeight/2);
+		solo.sleep(1000);
+		assertFalse("Add Sounds dialog not visible",
 		 			solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 1000, true));
-		 solo.sleep(1000);
+		solo.sleep(1000);
 
 		 
 		 /*Test if dialog disappears when clicking back-button */
-		 solo.clickOnView(getActivity().findViewById(R.id.btn_add));
-		 assertTrue("Add Sounds dialog not visible",
+		solo.clickOnView(getActivity().findViewById(R.id.btn_add));
+		assertTrue("Add Sounds dialog not visible",
 					solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true));
-		 solo.sleep(1000);
+		solo.sleep(1000);
 		 
-		 solo.goBack();
-		 assertFalse("Add Sounds dialog not visible",
+		solo.goBack();
+		assertFalse("Add Sounds dialog not visible",
 		 			solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 1000, true));
-		 solo.sleep(1000);
-	}
-	
+		solo.sleep(1000);
+	}	
 	public void testDialogMenuEntries()
 	{
 		/*Test if all menu entries are there*/

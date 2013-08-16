@@ -134,7 +134,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		//Unlock Sound Track
 		solo.sleep(100);
 		solo.clickOnView(v.findViewById(R.id.lock_button));
-		solo.sleep(100);
+		solo.sleep(1000);
 		
 		//Drag again, view should move  
 		new_location = new int[2];
