@@ -38,7 +38,7 @@ public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainAct
 	public AddSoundDialogTest() {
 		super(MainActivity.class);
 	}
-	
+	 
 	@Override
 	protected void setUp() {
 		 solo = new Solo(getInstrumentation(), getActivity());			
