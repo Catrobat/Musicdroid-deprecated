@@ -186,7 +186,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		helper.addDummyTrack(this);
 		solo.sleep(2000);
 		solo.clickOnView(playImageButton);
-		solo.sleep(3000);
+		solo.sleep(5000);
 		
 		lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width >= SoundMixer.getInstance().getPixelPerSecond()*4);

@@ -179,12 +179,12 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void resetTimeline() {
-		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions
-				.entrySet().iterator();
+		timelineProgressBar.reset();
+		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
 
 		while (it.hasNext()) {
-			HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>) it
-					.next();
+			HashMap.Entry<Integer, TimelineTrackPosition> pairs = 
+												(Entry<Integer, TimelineTrackPosition>) it.next();
 			removeView(pairs.getValue().getTrackPosition());
 		}
 	}

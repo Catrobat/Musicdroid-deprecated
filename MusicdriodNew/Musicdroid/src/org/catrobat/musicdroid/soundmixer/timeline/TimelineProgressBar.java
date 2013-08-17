@@ -64,4 +64,11 @@ public class TimelineProgressBar extends View {
 		positionLayout.width = 0;
 		setLayoutParams(positionLayout);
 	}
+
+	public void reset() 
+	{
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.width = 0;
+		setLayoutParams(params);
+	}
 }
