@@ -60,6 +60,7 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 	public void testButtonChangesOnClick()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		solo.clickOnView(playImageButton);
 		solo.sleep(1000);
 		assertFalse(Statusbar.getInstance().getDisplayPlayButton());
@@ -71,6 +72,7 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 	public void testRewindButtonAppearsOnPlayButtonClick()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		assertTrue(rewindImageButton.getVisibility() == View.INVISIBLE);
 		solo.clickOnView(playImageButton);
 		solo.sleep(5000);

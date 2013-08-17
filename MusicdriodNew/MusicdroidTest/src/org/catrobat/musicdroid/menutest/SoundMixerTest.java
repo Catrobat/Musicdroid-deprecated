@@ -60,8 +60,9 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testResetSoundMixerAtNewSongYes()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		helper.addDummyTrack(this);
-		solo.sleep(5000);
+		solo.sleep(2000);
 		
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 3);
 		
@@ -78,8 +79,9 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testSoundMixerUnchangedAtNewSongNo()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		helper.addDummyTrack(this);
-		solo.sleep(5000);
+		solo.sleep(2000);
 		
 		int oldCount = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount(); 
 		assertTrue(oldCount >= 3);
@@ -97,13 +99,15 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testAddTrackAtClickingAddSoundButton()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 	}
 	
 	public void testDeleteTrack()
 	{
 		helper.addDummyTrack(this);
-		solo.sleep(4000);
+		solo.sleep(2000);
 		
 		int number_of_childs_old = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
 		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
@@ -124,8 +128,9 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testCopyTrack()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		helper.addDummyTrack(this);
-		solo.sleep(5000);
+		solo.sleep(2000);
 		
 		int number_of_childs_old = ((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
 		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
@@ -146,8 +151,9 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	public void testAddMultipleTracksAndDelete()
 	{
 		helper.addDummyTrack(this);
+		solo.sleep(2000);
 		helper.addDummyTrack(this);
-		solo.sleep(5000);
+		solo.sleep(2000);
 		
 		testDeleteTrack();
 	}

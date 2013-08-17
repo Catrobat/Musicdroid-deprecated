@@ -67,6 +67,7 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 	public void testObserver()
 	{
 		uiHelper.addDummyTrack(this);
+		solo.sleep(2000);
 		solo.clickOnView(getActivity().findViewById(R.id.btn_play));
 		solo.sleep(10000);
 		

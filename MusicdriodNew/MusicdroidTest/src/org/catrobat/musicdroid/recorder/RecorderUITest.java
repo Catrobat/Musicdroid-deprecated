@@ -77,7 +77,10 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 	
 	protected void tearDown()
 	{
+
+		Log.i("RecorderUITest", "TearDown Start");
 		solo.finishOpenedActivities();
+		Log.i("RecorderUITest", "TearDown End");
 	}
 	
 	public void testOrientation()

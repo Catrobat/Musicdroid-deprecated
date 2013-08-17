@@ -59,8 +59,9 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	public void testSoundTrackViewInactive()
 	{
 		ui_helper.addDummyTrack(this);
+		solo.sleep(2000);
 		ui_helper.addDummyTrack(this);
-		solo.sleep(3000);
+		solo.sleep(2000);
 		assertTrue(((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 2);
 		
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
@@ -116,7 +117,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		int[] new_location = new int[2];
 
 		ui_helper.addDummyTrack(this);
-		solo.sleep(4000);
+		solo.sleep(2000);
 		
 		SoundTrackView v = (SoundTrackView)((RelativeLayout)getActivity().findViewById(R.id.sound_mixer_relative)).getChildAt(1);
 		
