@@ -22,17 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.projecttest;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
-import android.util.Log;
+import android.util.LogPrinter;
 
 import junit.framework.TestCase;
 
@@ -73,7 +69,11 @@ public class LogTagTest extends TestCase {
 	        }
 	    } else {
 	    	if(file_or_directory.getName().endsWith(".java"))
-	          checkClassForTag(file_or_directory);
+	    	{
+	            checkClassForTag(file_or_directory);
+	            checkLogCallForTag(file_or_directory);
+	    	}
+	    	  
 	    }
 	}
 	
@@ -95,7 +95,30 @@ public class LogTagTest extends TestCase {
 	        	missingTagFiles.append(file.getAbsolutePath() + NEWLINE);
 	        }
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	protected void checkLogCallForTag(File file)
+	{
+	    StringBuilder fileContents = new StringBuilder((int)file.length());
+	    Scanner scanner;
+	    String lineSeparator = System.getProperty("line.separator");
+		try {
+			scanner = new Scanner(file);
+	        while(scanner.hasNextLine()) {        
+	            fileContents.append(scanner.nextLine() + lineSeparator);
+	        }
+	        String classAsString = fileContents.toString();
+	        
+	        String logPattern = "Log.(d|e|i|v|w)\\(TAG";
+	        classAsString = classAsString.replaceAll(logPattern, "");
+	        
+	        if(classAsString.contains("Log."))
+	        {
+	        	missingTagFiles.append(file.getAbsolutePath() + NEWLINE);
+	        }
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		
 	}

@@ -32,7 +32,6 @@ import android.util.Log;
 
 public class Recorder {
 	private static final String TAG = Recorder.class.getSimpleName();
-	private Context context = null;
 	private RecorderLayout layout = null;
 	private static MediaRecorder recorder = null;
 	private AudioVisualizer visualizer = null;
@@ -40,7 +39,6 @@ public class Recorder {
 	private boolean stop = false;
 
 	public Recorder(Context c, RecorderLayout layout, AudioVisualizer visualizer) {
-		this.context = c;
 		this.layout = layout;
 		this.visualizer = visualizer;
 	}
@@ -85,7 +83,7 @@ public class Recorder {
 
 						sleepCounter = sleepCounter + 1;
 					} catch (Exception e) {
-						Log.v("Error", e.toString());
+						Log.v(TAG, e.toString());
 					}
 				}
 			}
