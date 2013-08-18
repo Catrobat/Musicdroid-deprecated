@@ -100,7 +100,7 @@ public class Player {
 						counter = counter + 1;
 
 					} catch (Exception e) {
-						Log.v("Error", e.toString());
+						Log.v(TAG, e.toString());
 					}
 				}
 			}

@@ -43,7 +43,7 @@ import android.widget.TextView;
 import com.jayway.android.robotium.solo.Solo;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private final static String TAG = RecorderUITest.class.getSimpleName();
+	private static final String TAG = RecorderUITest.class.getSimpleName();
 	protected Solo solo = null;
 	protected String testFilename = "testfile.mp3";
 	protected MediaPlayer mediaPlayer = null;

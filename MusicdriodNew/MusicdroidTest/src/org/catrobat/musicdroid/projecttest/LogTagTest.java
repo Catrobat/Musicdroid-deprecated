@@ -23,16 +23,14 @@
 package org.catrobat.musicdroid.projecttest;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
-
-import android.util.Log;
+import org.catrobat.musicdroid.tools.Utils;
 
 import junit.framework.TestCase;
 
@@ -42,12 +40,19 @@ import junit.framework.TestCase;
  */
 public class LogTagTest extends TestCase {
 	private static final String TAG = LogTagTest.class.getSimpleName();
-	private String NEWLINE = System.getProperty("line.separator");
+	private static final String NEWLINE = System.getProperty("line.separator");
+	private static final String ANYTHING = ".*";
+	private static final String OPENING_BRACKET = "\\(";
+	private static final String LOG_CALL = "Log\\.(d|e|i|v|w)";
+	private static final String LOG_TAG = "TAG";
+	private static final String COMMA = ",";
+	
 	private StringBuilder missingTagFiles = new StringBuilder();
+	private StringBuilder untaggedLogs = new StringBuilder();
 
-	final String[] path_to_projects = {
+	private final String[] pathToProjects = {
 											"../Musicdroid/src",
-											"../MusicdroidTests/src",
+											"../MusicdroidTest/src",
 											"../MusicdroidUiTest/src"
 										};
 	
@@ -58,46 +63,53 @@ public class LogTagTest extends TestCase {
 	}
 	
 	public void testIfLogTagInEachClass() throws Exception{
-		for (String path_to_project : path_to_projects) {
-			File directory = new File(path_to_project);
-			walkThroughDirectories(directory);
+		for (String pathToProject : pathToProjects)
+		{
+			File directory = new File(pathToProject);
+			assertTrue("Couldn't find directory: " + pathToProject, directory.exists() && directory.isDirectory());
+			assertTrue("Couldn't read directory: " + pathToProject, directory.canRead());
+	
+			List<File> filesToCheck = Utils.getFilesFromDirectoryByExtension(directory, new String[] { ".java", });
+			for (File file : filesToCheck) {
+				checkFileForLog(file);
+			}
 		}
 		assertEquals(missingTagFiles.toString(), 0, missingTagFiles.length());
-	}
-
-	protected void walkThroughDirectories(File file_or_directory) {
-	    if (file_or_directory.isDirectory()) {
-	        String[] directoryContent = file_or_directory.list();
-	        for (int index=0; index < directoryContent.length; index++) {
-	        	walkThroughDirectories(new File(file_or_directory, directoryContent[index]));
-	        }
-	    } else {
-	    	if(file_or_directory.getName().endsWith(".java"))
-	          checkClassForTag(file_or_directory);
-	    }
+		assertEquals(untaggedLogs.toString(), 0, untaggedLogs.length());
 	}
 	
-	protected void checkClassForTag(File file)
+	private void checkFileForLog(File file) throws IOException
 	{
-	    StringBuilder fileContents = new StringBuilder((int)file.length());
-	    Scanner scanner;
-	    String lineSeparator = System.getProperty("line.separator");
-		try {
-			scanner = new Scanner(file);
-	        while(scanner.hasNextLine()) {        
-	            fileContents.append(scanner.nextLine() + lineSeparator);
-	        }
-	        String classAsString = fileContents.toString();
-	        String tagString = buildTagString(file);
-	        System.out.println(tagString);
-	        if(!classAsString.contains(tagString))
-	        {
-	        	missingTagFiles.append(file.getAbsolutePath() + NEWLINE);
-	        }
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		assertTrue("Could not read file " + file.getAbsolutePath(), file.exists() && file.canRead());
+				
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		StringBuilder fileContents  = new StringBuilder();
+		int lineCount = 1;
+		String line = null;
+
+		String logPattern = ANYTHING + LOG_CALL + OPENING_BRACKET + ANYTHING;
+		String validTaggedLogPattern = ANYTHING + LOG_CALL + OPENING_BRACKET + "TAG," + ANYTHING;
+		
+		while ((line = reader.readLine()) != null) {			
+			if (line.matches(logPattern) && !line.matches(validTaggedLogPattern)) {
+				untaggedLogs.append(file.getAbsolutePath() + " in line " + lineCount + NEWLINE);
+			}
+			fileContents.append(line);
+			++lineCount;
+		}
+		
+		if(!containsTagMember(fileContents.toString(), file))
+		{
+			System.out.println(file.getName());
+			missingTagFiles.append(file.getAbsolutePath() + NEWLINE);
+		}
+		reader.close();
+	}
+	
+	private boolean containsTagMember(String fileAsString, File file)
+	{
+		String tagString = buildTagString(file);
+		return fileAsString.contains(tagString);
 	}
 	
 	private String buildTagString(File file)

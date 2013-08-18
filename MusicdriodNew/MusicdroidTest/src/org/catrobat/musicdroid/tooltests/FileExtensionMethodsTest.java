@@ -31,7 +31,7 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
  *
  */
 public class FileExtensionMethodsTest extends TestCase {
-	private final static String TAG = FileExtensionMethodsTest.class.getSimpleName();
+	private static final String TAG = FileExtensionMethodsTest.class.getSimpleName();
 
 	public void testGetFilenameFromPath()
 	{

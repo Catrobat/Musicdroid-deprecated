@@ -34,7 +34,7 @@ import com.jayway.android.robotium.solo.Solo;
  *
  */
 public class TrackCreator {
-	private final static String TAG = TrackCreator.class.getSimpleName();
+	private static final String TAG = TrackCreator.class.getSimpleName();
 	
 	public static void createMicTrack(Solo solo, int durationSeconds)
 	{
