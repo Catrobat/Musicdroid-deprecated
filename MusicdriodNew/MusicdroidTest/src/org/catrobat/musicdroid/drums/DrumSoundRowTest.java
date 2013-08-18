@@ -77,9 +77,9 @@ public class DrumSoundRowTest  extends ActivityInstrumentationTestCase2<MainActi
 		View clear = solo.getView(R.id.drums_context_clear_preset);
 		solo.clickOnView(clear);
 		
-		layoutManager = ((DrumsActivity)solo.getCurrentActivity()).getDrumsLayoutManager();
-		row = layoutManager.getDrumSoundRowsArray().get(0);
-		layout = row.getLayout();
+//		layoutManager = ((DrumsActivity)solo.getCurrentActivity()).getDrumsLayoutManager();
+//		row = layoutManager.getDrumSoundRowsArray().get(0);
+//		layout = row.getLayout();
 		testButton = (DrumButton)layout.findViewById(R.id.drum_button_1_2);
 		solo.clickOnView(testButton);
 		solo.sleep(1000);
