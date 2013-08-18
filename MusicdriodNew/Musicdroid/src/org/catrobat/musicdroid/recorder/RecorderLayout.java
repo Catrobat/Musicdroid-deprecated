@@ -22,6 +22,11 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
+import org.catrobat.musicdroid.tools.StringFormatter;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,13 +40,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
-import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class RecorderLayout extends Handler implements OnClickListener,
 		OnLongClickListener {
+	private static final String TAG = RecorderLayout.class.getSimpleName();
 	private Context context = null;
 	private TextView filenameTextView = null;
 	private ImageButton recordImageButton = null;
@@ -53,7 +55,6 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	private boolean isRecording = false;
 	private boolean isPlaying = false;
 	private boolean soundRecorded = false;
-	private int trackDuration = 0;
 	private int pixelPerSecond = 0;
 
 	public RecorderLayout() {
@@ -78,9 +79,9 @@ public class RecorderLayout extends Handler implements OnClickListener,
 				.findViewById(R.id.microphone_add_to_sound_mixer_box);
 
 		if (recordDurationTextView == null) {
-			Log.i("RecorderLayout", "Text View is Null");
+			Log.i(TAG, "Text View is Null");
 		} else {
-			Log.i("RecorderLayout", "Text View is not Null");
+			Log.i(TAG, "Text View is not Null");
 		}
 
 		reorderToRecordLayout();
@@ -200,10 +201,9 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	}
 
 	public void setTrackDuration(int duration) {
-		trackDuration = duration;
 		int width = progressBarBoxRelativeLayout.getWidth();// ((LayoutParams)progressBarBoxRelativeLayout.getLayoutParams()).width;
 		pixelPerSecond = width / duration;
-		Log.i("RecorderLayout", "setTrackDuration: width = " + width
+		Log.i(TAG, "setTrackDuration: width = " + width
 				+ " duration = " + duration);
 	}
 

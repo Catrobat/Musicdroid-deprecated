@@ -22,6 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.SoundManager;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.DeviceInfo;
+import org.catrobat.musicdroid.tools.StringFormatter;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -36,15 +43,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.SoundManager;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.tools.DeviceInfo;
-import org.catrobat.musicdroid.tools.StringFormatter;
-
 public class SoundTrackView extends RelativeLayout implements OnClickListener,
 		View.OnTouchListener {
+	private static final String TAG = SoundTrackView.class.getSimpleName();
 	public final static int MINIMAL_WIDTH = 280;
 	public final static int EXPANDED_WIDTH = 400;
 
@@ -182,7 +183,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 			displayPlayButton = false;
 			playImageButton
 					.setImageResource(R.drawable.pause_button_sound_track);
-			Log.e("VOLUME: ", "" + soundTrack.getVolume());
+			Log.e(TAG, "" + soundTrack.getVolume());
 			SoundManager.playSound(soundTrack.getSoundPoolId(), 1,
 					soundTrack.getVolume());
 		} else {

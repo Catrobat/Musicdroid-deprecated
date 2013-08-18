@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.preferences;
 import android.test.AndroidTestCase;
 
 public class PreferencesManagerTest extends AndroidTestCase {
+	private final static String TAG = PreferencesManagerTest.class.getSimpleName();
 	public static final int SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE = 45;
 	public static final String SOUNDTRACK_DEFAULT_LENGTH_KEY = "soundtrack_length_default";
 	public static final int SOUNDTRACK_LENGTH_DEFAULT_VALUE = 45;

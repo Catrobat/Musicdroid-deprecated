@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 
 public class TimelineEventHandler extends Handler {
+	private static final String TAG = TimelineEventHandler.class.getSimpleName();
 	private Timeline timeline = null;
 	
 	public TimelineEventHandler(Timeline timeline)

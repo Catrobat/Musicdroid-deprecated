@@ -27,10 +27,11 @@ import junit.framework.TestCase;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 /**
- * @author matthias
+ * @author matthias schlesinger
  *
  */
 public class FileExtensionMethodsTest extends TestCase {
+	private final static String TAG = FileExtensionMethodsTest.class.getSimpleName();
 
 	public void testGetFilenameFromPath()
 	{

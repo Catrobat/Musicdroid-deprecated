@@ -22,10 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
 public class NoteNameTest extends TestCase {
+	private static final String TAG = NoteNameTest.class.getSimpleName();
 
 	public void testMidi() {
 		assertEquals(36, NoteName.C1.getMidi());

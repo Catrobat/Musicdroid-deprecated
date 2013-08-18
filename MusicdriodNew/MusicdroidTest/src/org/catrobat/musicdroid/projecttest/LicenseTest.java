@@ -39,6 +39,7 @@
 //
 //public class LicenseTest extends TestCase {
 //	
+//	private final static String TAG = LicenseTest.class.getSimpleName();
 //	private static final boolean REPLACE_LICENSE_TEXT = false;
 //	private String NEWLINE = System.getProperty("line.separator");
 //	private StringBuilder missingLicenseTextFiles = new StringBuilder();

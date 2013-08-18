@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class PreferenceActivity extends Activity {
+	private static final String TAG = PreferenceActivity.class.getSimpleName();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

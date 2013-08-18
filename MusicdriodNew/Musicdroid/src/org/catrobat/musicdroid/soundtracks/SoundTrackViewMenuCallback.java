@@ -22,15 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 public class SoundTrackViewMenuCallback implements ActionMode.Callback {
+	private static final String TAG = SoundTrackViewMenuCallback.class.getSimpleName();
 	MainActivity parent = null;
 
 	public SoundTrackViewMenuCallback(MainActivity p) {

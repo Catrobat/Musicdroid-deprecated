@@ -22,12 +22,14 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
-import android.util.Log;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.util.Log;
+
 public class SoundTrackDrums extends SoundTrack {
+	private static final String TAG = SoundTrackDrums.class.getSimpleName();
 
 	public SoundTrackDrums() {
 		type = SoundType.DRUMS;
@@ -38,6 +40,6 @@ public class SoundTrackDrums extends SoundTrack {
 	}
 
 	public SoundTrackDrums(SoundTrackDrums stm) {
-		Log.e("Calling copy constr", "drums");
+		Log.e(TAG, "drums");
 	}
 }

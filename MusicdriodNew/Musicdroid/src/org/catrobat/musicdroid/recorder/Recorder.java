@@ -31,6 +31,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class Recorder {
+	private static final String TAG = Recorder.class.getSimpleName();
 	private Context context = null;
 	private RecorderLayout layout = null;
 	private static MediaRecorder recorder = null;
@@ -52,7 +53,7 @@ public class Recorder {
 		try {
 			recorder.prepare();
 		} catch (IOException e) {
-			Log.e("LOG", "prepare() failed");
+			Log.e(TAG, "prepare() failed");
 		}
 
 		recorder.start();
@@ -93,7 +94,7 @@ public class Recorder {
 	}
 
 	private void setPreferences() {
-		Log.i("Recorder", "Filename = "
+		Log.i(TAG, "Filename = "
 				+ AudioHandler.getInstance().getFilenameFullPath());
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);

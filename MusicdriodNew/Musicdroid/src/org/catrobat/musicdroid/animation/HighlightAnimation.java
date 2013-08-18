@@ -28,6 +28,8 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
 public class HighlightAnimation {
+	private static final String TAG = HighlightAnimation.class.getSimpleName();
+	
 	private HighlightAnimation() {}
 	
 	public static void highlightViewAnimation(View v) {

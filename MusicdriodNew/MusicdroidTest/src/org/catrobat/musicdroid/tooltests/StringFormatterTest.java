@@ -22,15 +22,16 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tooltests;
 
-import org.catrobat.musicdroid.tools.StringFormatter;
-
 import junit.framework.TestCase;
+
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 /**
  * @author matthias
  *
  */
 public class StringFormatterTest extends TestCase {
+	private final static String TAG = StringFormatterTest.class.getSimpleName();
 
 	public void testStringFormatter()
 	{

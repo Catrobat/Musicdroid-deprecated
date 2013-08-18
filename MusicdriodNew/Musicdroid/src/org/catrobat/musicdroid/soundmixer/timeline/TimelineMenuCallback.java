@@ -31,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class TimelineMenuCallback implements ActionMode.Callback {
+	private static final String TAG = TimelineMenuCallback.class.getSimpleName();
 	MainActivity parent = null;
 	Timeline timeline = null;
 

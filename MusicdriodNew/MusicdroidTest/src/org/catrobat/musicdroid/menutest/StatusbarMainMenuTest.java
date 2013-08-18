@@ -22,18 +22,20 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
-import android.widget.ImageButton;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.ImageButton;
+
 import com.jayway.android.robotium.solo.Solo;
 
 public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private static final String TAG = StatusbarMainMenuTest.class.getSimpleName();
 	protected Solo solo = null;
 	protected ImageButton playImageButton = null;
 	protected ImageButton rewindImageButton = null;

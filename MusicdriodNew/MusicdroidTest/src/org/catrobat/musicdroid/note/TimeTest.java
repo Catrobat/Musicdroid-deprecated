@@ -22,11 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Tact;
 import junit.framework.TestCase;
 
 public class TimeTest extends TestCase {
+	private static final String TAG = TimeTest.class.getSimpleName();
 
 	public void testTime1() {
 		Tact time = new Tact();

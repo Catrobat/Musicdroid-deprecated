@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.soundmixer;
 
 public interface HorizontalScrollViewListener {
+	public static final String TAG = HorizontalScrollViewListener.class.getSimpleName();
 
 	void onScrollChanged(ObservableHorizontalScrollView scrollView, int x,
 			int y, int oldx, int oldy);

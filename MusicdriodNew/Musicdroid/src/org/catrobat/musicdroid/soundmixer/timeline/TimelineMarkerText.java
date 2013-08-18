@@ -35,6 +35,7 @@ import android.widget.TextView;
  *
  */
 public class TimelineMarkerText extends TextView {
+	private static final String TAG = TimelineMarkerText.class.getSimpleName();
 
 	public TimelineMarkerText(Context context) {
 		super(context);
