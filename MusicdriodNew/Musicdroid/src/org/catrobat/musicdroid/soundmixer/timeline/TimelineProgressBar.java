@@ -36,6 +36,7 @@ import android.widget.RelativeLayout.LayoutParams;
  *
  */
 public class TimelineProgressBar extends View {
+	private static final String TAG = TimelineProgressBar.class.getSimpleName();
 	public TimelineProgressBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -49,7 +50,7 @@ public class TimelineProgressBar extends View {
 
 	public void setProgres(int positionInSeconds)
 	{
-		Log.i("TimelineProgressBar", "MessageDuration = " + positionInSeconds
+		Log.i(TAG, "MessageDuration = " + positionInSeconds
 				+ "  Width = " + positionInSeconds
 				* SoundMixer.getInstance().getPixelPerSecond());
 		LayoutParams params = (LayoutParams) getLayoutParams();

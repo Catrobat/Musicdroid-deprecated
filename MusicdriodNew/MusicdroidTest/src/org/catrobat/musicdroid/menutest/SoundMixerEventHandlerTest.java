@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.menutest;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.test.ActivityInstrumentationTestCase2;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
@@ -33,9 +32,12 @@ import org.catrobat.musicdroid.soundmixer.SoundMixerEventHandler;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import com.jayway.android.robotium.solo.Solo;
 
 public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2<MainActivity> implements Observer {
+	private static final String TAG = SoundMixerEventHandlerTest.class.getSimpleName();
 	protected SoundMixerEventHandler eventHandler = null;
 	protected UITestHelper uiHelper = null;
 	protected Solo solo = null;

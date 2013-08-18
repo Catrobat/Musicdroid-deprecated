@@ -29,16 +29,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import junit.framework.TestCase;
 import android.os.Environment;
 import android.text.format.Time;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
-
-import junit.framework.TestCase;
 
 public class ProjectSerializationTest extends TestCase {
+	private static final String TAG = ProjectSerializationTest.class.getSimpleName();
 
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();

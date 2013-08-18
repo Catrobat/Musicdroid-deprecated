@@ -22,15 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.metronom;
 
-import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
-import android.util.Log;
-import android.widget.ImageView;
 import org.catrobat.musicdroid.animation.MetronomAnimation;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
 
+import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
+import android.widget.ImageView;
+
 public class Metronom {
+	private static final String TAG = Metronom.class.getSimpleName();
 	private static final int METRONOM_OFF = 0;
 	private static final int METRONOM_LIGHT = 1;
 	private static final int METRONOM_LIGHT_AND_SOUND = 2;
@@ -67,7 +69,7 @@ public class Metronom {
 	}
 
 	public void startMetronome() {
-		Log.i("Metronom", "START");
+		Log.i(TAG, "START");
 		initializeValues();
 		play = true;
 		if (metronomState == METRONOM_OFF)

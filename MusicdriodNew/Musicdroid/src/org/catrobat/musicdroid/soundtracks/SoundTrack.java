@@ -25,11 +25,13 @@ package org.catrobat.musicdroid.soundtracks;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.util.Log;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.util.Log;
+
 public class SoundTrack implements Observer {
+	private static final String TAG = SoundTrack.class.getSimpleName();
 	protected SoundType type = null;
 	protected String name = null;
 	protected int duration = 0; // in seconds
@@ -51,12 +53,12 @@ public class SoundTrack implements Observer {
 	}
 
 	public void setStartPoint(int start) {
-		Log.e("START POINT", "" + start);
+		Log.e(TAG, "" + start);
 		startPoint = start;
 	}
 
 	public void setVolume(float vol) {
-		Log.e("SET VOLUME", "" + vol);
+		Log.e(TAG, "" + vol);
 		volume = vol;
 	}
 
@@ -91,7 +93,7 @@ public class SoundTrack implements Observer {
 	@Override
 	public void update(Observable observable, Object data) {
 		int cur_time = (Integer) data;
-		Log.i("Incoming Object: ", "" + cur_time);
+		Log.i(TAG, "" + cur_time);
 		if (cur_time == startPoint) {
 			SoundManager.playSound(soundpoolId, 1, volume);
 		}

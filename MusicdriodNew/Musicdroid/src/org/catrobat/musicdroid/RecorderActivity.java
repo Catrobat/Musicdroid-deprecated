@@ -22,6 +22,11 @@
  ******************************************************************************/
 package org.catrobat.musicdroid;
 
+import org.catrobat.musicdroid.recorder.AudioHandler;
+import org.catrobat.musicdroid.recorder.RecorderLayout;
+import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
+import org.catrobat.musicdroid.soundmixer.Statusbar;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,18 +37,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import org.catrobat.musicdroid.recorder.AudioHandler;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
-import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
-import org.catrobat.musicdroid.soundmixer.Statusbar;
 
 public class RecorderActivity extends FragmentActivity {
+	private static final String TAG = RecorderActivity.class.getSimpleName();
 	private RecorderLayout layout = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("RecorderActivitiy", "ONCREATE");
+		Log.i(TAG, "ONCREATE");
 
 		setContentView(R.layout.activity_recorder);
 		initTopStatusBar();
@@ -71,7 +73,7 @@ public class RecorderActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i("RecorderActivity", "ON RESUME");
+		Log.i(TAG, "ON RESUME");
 
 		setContentView(R.layout.activity_recorder);
 
@@ -87,7 +89,7 @@ public class RecorderActivity extends FragmentActivity {
 		super.onPause();
 		layout.reset();
 		AudioHandler.getInstance().reset();
-		Log.i("RecorderActivity",
+		Log.i(TAG,
 				"OnPause: "
 						+ ((LinearLayout) findViewById(R.id.recorder_activity_layout))
 								.getChildCount());
@@ -96,7 +98,7 @@ public class RecorderActivity extends FragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		Log.i("RecorderActivity", "onOptionsItemSelected");
+		Log.i(TAG, "onOptionsItemSelected");
 		switch (item.getItemId()) {
 		case R.id.btn_settings:
 			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(

@@ -22,12 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
@@ -36,9 +30,17 @@ import org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+
 import com.jayway.android.robotium.solo.Solo;
 
 public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private static final String TAG = TimelineTest.class.getSimpleName();
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected Timeline timeline = null;
@@ -86,8 +88,8 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		int numTextViewsTopEnd = ((RelativeLayout)timeline.getChildAt(0)).getChildCount();
 		int numViewsBottomEnd = ((RelativeLayout)timeline.getChildAt(1)).getChildCount();
 		
-		Log.i("Begin: " + numTextViewsTopBegin, "End: " + numTextViewsTopEnd);
-		Log.i("Begin: " + numViewsBottomBegin, "End: " + numViewsBottomEnd);
+		Log.i(TAG, "End: " + numTextViewsTopEnd);
+		Log.i(TAG, "End: " + numViewsBottomEnd);
 		assertFalse(numTextViewsTopBegin == numTextViewsTopEnd);
 		assertFalse(numViewsBottomBegin == numViewsBottomEnd);
 		
@@ -108,7 +110,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		int margin = ((RelativeLayout.LayoutParams)startMarker.getLayoutParams()).leftMargin;
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
 		
-		Log.i("StartEndMarkerTest", "Margin: " + margin + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
+		Log.i(TAG, "Margin: " + margin + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
 		assertTrue(margin >= clickXPosition-pixelPerSecond*2 && margin <= clickXPosition+pixelPerSecond*2);
 		
 		//End Marker
@@ -117,7 +119,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		View endMarker = timeline.findViewById(R.id.timeline_end_point);
 		int marginEnd = ((RelativeLayout.LayoutParams)endMarker.getLayoutParams()).leftMargin;
 		
-		Log.i("StartEndMarkerTest", "Margin: " + marginEnd + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
+		Log.i(TAG, "Margin: " + marginEnd + " ClickX: " + clickXPosition + " PpS: " + pixelPerSecond);
 		assertTrue(marginEnd >= clickXPosition-pixelPerSecond && marginEnd <= clickXPosition+pixelPerSecond);
 	}
 	

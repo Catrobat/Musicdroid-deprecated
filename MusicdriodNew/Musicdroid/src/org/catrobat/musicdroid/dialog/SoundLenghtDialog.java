@@ -22,6 +22,9 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.dialog;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -30,10 +33,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class SoundLenghtDialog extends DialogFragment {
+	private static final String TAG = SoundLenghtDialog.class.getSimpleName();
 	private NumberPicker pickerMin = null;
 	private NumberPicker pickerSec = null;
 

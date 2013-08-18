@@ -22,18 +22,20 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.preferences;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
+import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
-import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnPreferenceClickListener, OnSharedPreferenceChangeListener {
+	private static final String TAG = SettingsFragment.class.getSimpleName();
 	private SoundLenghtDialog settingsDialog = null;
 	private MetronomQuickSettingsDialog metronomSettingsDialog = null;
 	private Preference metronomDialogPreference = null;

@@ -31,6 +31,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class Player {
+	private static final String TAG = Player.class.getSimpleName();
 	private RecorderLayout layout = null;
 	private MediaPlayer mediaPlayer = null;
 	private boolean stop = false;
@@ -40,7 +41,7 @@ public class Player {
 	}
 
 	public void playRecordedFile() {
-		Log.i("Player", "playRecorderFile");
+		Log.i(TAG, "PlayRecorderFile called");
 		mediaPlayer = new MediaPlayer();
 
 		try {
@@ -48,23 +49,23 @@ public class Player {
 					.getFilenameFullPath());
 			mediaPlayer.prepare();
 		} catch (IllegalArgumentException e) {
-			Log.i("Player-Exception", "IllegalArgumentException");
+			Log.e(TAG, "IllegalArgumentException");
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			Log.i("Player-Exception", "SecurityException");
+			Log.e(TAG, "SecurityException");
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			Log.i("Player-Exception", "IllegalStateException");
+			Log.e(TAG, "IllegalStateException");
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.i("Player-Exception", "IOException");
+			Log.i(TAG, "IOException");
 			e.printStackTrace();
 		}
 
 		mediaPlayer.setOnPreparedListener(new OnPreparedListener() {
 
 			public void onPrepared(MediaPlayer mp) {
-				Log.i("Player", "Prepared");
+				Log.i(TAG, "Player is prepared");
 				int duration = mediaPlayer.getDuration();
 				layout.setTrackDuration(duration / 1000);
 				stop = false;

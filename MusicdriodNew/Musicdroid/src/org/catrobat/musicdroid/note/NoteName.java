@@ -22,6 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+
 public enum NoteName {
 	// C3 = c'(http://img.docstoccdn.com/thumb/orig/28179105.png)
 	C1(36), C1S(37), D1(38), D1S(39), E1(40), F1(41), F1S(42), G1(43), G1S(44), A1(
@@ -34,6 +35,7 @@ public enum NoteName {
 			93), A5S(94), B5(95);
 
 	private int midi;
+	private static final String TAG = NoteName.class.getSimpleName();
 	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
 	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
 

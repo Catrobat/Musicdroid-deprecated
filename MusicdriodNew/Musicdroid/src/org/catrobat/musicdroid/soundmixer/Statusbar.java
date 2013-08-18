@@ -39,6 +39,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 public class Statusbar extends Observable implements OnTouchListener {
+	private static final String TAG = Statusbar.class.getSimpleName();
 	public static Statusbar instance = null;
 	private ImageButton playButton;
 	private ImageButton rewindButton;

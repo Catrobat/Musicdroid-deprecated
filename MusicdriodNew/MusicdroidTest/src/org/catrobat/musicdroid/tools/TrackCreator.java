@@ -22,15 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
-import java.io.File;
-
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.types.SoundType;
 
-import android.app.Activity;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.jayway.android.robotium.solo.Solo;
 
@@ -39,6 +34,7 @@ import com.jayway.android.robotium.solo.Solo;
  *
  */
 public class TrackCreator {
+	private final static String TAG = TrackCreator.class.getSimpleName();
 	
 	public static void createMicTrack(Solo solo, int durationSeconds)
 	{

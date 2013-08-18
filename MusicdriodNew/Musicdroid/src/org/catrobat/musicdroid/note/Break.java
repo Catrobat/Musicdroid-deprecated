@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 public class Break extends Symbol implements Serializable {
 
+	private static final String TAG = Break.class.getSimpleName();
 	private static final long serialVersionUID = 4617673494732123149L;
 
 	public Break(NoteLength length) {

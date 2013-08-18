@@ -22,12 +22,14 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.animation;
 
+import org.catrobat.musicdroid.R;
+
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
-import org.catrobat.musicdroid.R;
 
 public class MetronomAnimation extends AnimationDrawable {
+	private static final String TAG = MetronomAnimation.class.getSimpleName();
 	private int intervalTick;
 	private int intervalTock;
 	private int sign; // 1 or -1
@@ -87,10 +89,10 @@ public class MetronomAnimation extends AnimationDrawable {
 		sign = roundError < 0 ? -1 : 1;
 		numIterationsToOneMs = Math.abs((int) Math.round(1 / roundError));
 
-		Log.i("MetronomAnimation", "SPB = " + secondsPerBeat
+		Log.i(TAG, "SPB = " + secondsPerBeat
 				+ " intervalTick = " + intervalTick + " intervalTock = "
 				+ intervalTock);
-		Log.i("MetronomAnimation", "RoundError = " + roundError
+		Log.i(TAG, "RoundError = " + roundError
 				+ " NumIterMs = " + numIterationsToOneMs);
 	}
 

@@ -24,15 +24,17 @@ package org.catrobat.musicdroid;
 
 import java.io.File;
 
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class MenuFileActivity extends FragmentActivity {
+	private static final String TAG = MenuFileActivity.class.getSimpleName();
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

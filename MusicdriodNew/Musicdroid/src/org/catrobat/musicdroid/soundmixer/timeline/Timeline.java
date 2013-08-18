@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Timeline extends RelativeLayout {
+	private static final String TAG = Timeline.class.getSimpleName();
 	private Context context = null;
 	private RelativeLayout timelineTop = null;
 	private RelativeLayout timelineBottom = null;
@@ -127,14 +128,14 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void addNewTrackPosition(int id, int colorRes) {
-		Log.i("Timeline", "AddTrackPos ID = " + id);
+		Log.i(TAG, "AddTrackPos ID = " + id);
 		TimelineTrackPosition trackPosition = new TimelineTrackPosition(context,colorRes);
 		timelineBottom.addView(trackPosition);
 		trackPositions.put(id, trackPosition);
 	}
 	
 	public void removeTrackPosition(int id) {
-		Log.i("Timeline", "RemoveTrackPosition ID = " + id);
+		Log.i(TAG, "RemoveTrackPosition ID = " + id);
 		TimelineTrackPosition tp = trackPositions.get(id);
 		timelineBottom.removeView(tp.getTrackPosition());
 		trackPositions.remove(id);

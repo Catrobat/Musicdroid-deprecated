@@ -22,13 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
 import junit.framework.TestCase;
 
 public class ProjectTest extends TestCase {
+	private static final String TAG = ProjectTest.class.getSimpleName();
 
 	public void testAddTrack() {
 		Project project = new Project();

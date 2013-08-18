@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class TimelineTrackPosition extends View {
+	private static final String TAG = TimelineTrackPosition.class.getSimpleName();
 	private Context context;
 	private int colorId;
 

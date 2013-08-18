@@ -38,6 +38,7 @@ import org.catrobat.musicdroid.tools.DeviceInfo;
 import android.widget.Toast;
 
 public class SoundMixer {
+	private static final String TAG = SoundMixer.class.getSimpleName();
 	public static SoundMixer instance = null;
 	private SoundMixerLayout layout;
 	protected MainActivity parentActivity;

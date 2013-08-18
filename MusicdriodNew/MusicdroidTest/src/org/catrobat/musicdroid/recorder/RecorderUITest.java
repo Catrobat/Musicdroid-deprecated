@@ -24,6 +24,11 @@ package org.catrobat.musicdroid.recorder;
 
 import java.io.File;
 
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.tools.FileExtensionMethods;
+import org.catrobat.musicdroid.types.SoundType;
+
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.test.ActivityInstrumentationTestCase2;
@@ -34,14 +39,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
-import org.catrobat.musicdroid.types.SoundType;
 
 import com.jayway.android.robotium.solo.Solo;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private final static String TAG = RecorderUITest.class.getSimpleName();
 	protected Solo solo = null;
 	protected String testFilename = "testfile.mp3";
 	protected MediaPlayer mediaPlayer = null;
@@ -190,7 +192,7 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		f = new File(AudioHandler.getInstance().getFilenameFullPath());
   	    if (f.exists())
   	    {
-  	    	Log.i("AASD", "Modified" + modified);
+  	    	Log.i(TAG, "Modified" + modified);
   	    	assertTrue(modified < f.lastModified());
   	    }
 	}

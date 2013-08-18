@@ -38,6 +38,7 @@ import android.widget.RelativeLayout.LayoutParams;
  *
  */
 public class SoundMixerLayout implements HorizontalScrollViewListener  {
+	private static final String TAG = SoundMixerLayout.class.getSimpleName();
 	private ObservableHorizontalScrollView horScrollView;
 	private RelativeLayout parentLayout;
 	private SoundMixer soundMixer;
@@ -93,7 +94,7 @@ public class SoundMixerLayout implements HorizontalScrollViewListener  {
 	}
 
 	private void reorderTrackPositionOnRemoveTrack(int trackPosition) {
-		Log.i("SoundMixerLayout", "Reorder: Track Pos = " + trackPosition);
+		Log.i(TAG, "Reorder: Track Pos = " + trackPosition);
 		
 		int numberOfTracksInSoundMixer = soundMixer.getNumberOfTracks();
 		if (trackPosition != 0 && trackPosition != numberOfTracksInSoundMixer - 1) {
