@@ -31,8 +31,6 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
  *
  */
 public class FileExtensionMethodsTest extends TestCase {
-	private static final String TAG = FileExtensionMethodsTest.class.getSimpleName();
-
 	public void testGetFilenameFromPath()
 	{
 		String path = "/dummy/test/check.xml";
