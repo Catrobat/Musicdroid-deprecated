@@ -22,6 +22,9 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -29,8 +32,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineOnTouchListener implements OnTouchListener {
 	private Timeline timeline;

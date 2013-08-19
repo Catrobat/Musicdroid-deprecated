@@ -49,13 +49,13 @@
     	 android:layout_height="wrap_content"
     	 android:layout_below="@+id/timeline_top">
 	     
-         <View 
+         <org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar 
 	     android:layout_width="0dp"
 	     android:layout_height="fill_parent"
 	     android:layout_alignParentBottom="true"
     	 android:layout_alignParentLeft="true"
 	     android:background="@color/holo_blue_light"
-	     android:id="@+id/timeline_currentPosition"
+	     android:id="@+id/timeline_progressBar"
          />
              
 	     <ImageButton

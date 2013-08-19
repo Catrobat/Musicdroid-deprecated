@@ -32,6 +32,7 @@ import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
+import org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
 
@@ -43,7 +44,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 	protected Timeline timeline = null;
 	protected UITestHelper helper;
 	protected ImageButton playImageButton = null;
-	protected View currentPositionView =  null;
+	protected TimelineProgressBar timelineProgressBar =  null;
 	
 	public TimelineTest() {
 		super(MainActivity.class);
@@ -56,7 +57,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		 helper = new UITestHelper(solo, getActivity());
 		 timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 		 playImageButton = (ImageButton) getActivity().findViewById(R.id.btn_play);
-		 currentPositionView = (View) timeline.findViewById(R.id.timeline_currentPosition);
+		 timelineProgressBar = (TimelineProgressBar) timeline.findViewById(R.id.timeline_progressBar);
 	}
 	
 	@Override
@@ -180,18 +181,18 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 	
 	public void testTimelineProgressBar()
 	{
-		LayoutParams lp = (LayoutParams) currentPositionView.getLayoutParams();
+		LayoutParams lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width == 0);
 		helper.addTrack(SoundType.DRUMS);
 		solo.clickOnView(playImageButton);
 		solo.sleep(5000);
 		
-		lp = (LayoutParams) currentPositionView.getLayoutParams();
+		lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width >= SoundMixer.getInstance().getPixelPerSecond()*4);
 		 
 		//assert progressbar remains unchanged after pressing stop button
 		solo.clickOnView(playImageButton);
-		lp = (LayoutParams) currentPositionView.getLayoutParams();
+		lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width >= SoundMixer.getInstance().getPixelPerSecond()*5);
 	}
 	
@@ -201,7 +202,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		ImageButton rewindImageButton = (ImageButton) getActivity().findViewById(R.id.btn_rewind);
 		solo.clickOnView(rewindImageButton);
 		
-		LayoutParams lp = (LayoutParams) currentPositionView.getLayoutParams();
+		LayoutParams lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width == 0);
 	}
 	
@@ -209,12 +210,12 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 	{
 		testTimelineProgressBar();
 		
-		LayoutParams lp = (LayoutParams) currentPositionView.getLayoutParams();
+		LayoutParams lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		int startWidth = lp.width;
 		
 		solo.clickOnView(playImageButton);
 		solo.sleep(1000);
-		lp = (LayoutParams) currentPositionView.getLayoutParams();
+		lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width >= startWidth + SoundMixer.getInstance().getPixelPerSecond());
 		solo.clickOnView(playImageButton);
 	}
