@@ -20,33 +20,26 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid;
 
-import java.io.Serializable;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.recorder.RecorderLayout;
 
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
-
-public class Break extends Symbol implements Serializable {
-
-	private static final long serialVersionUID = 4617673494732123149L;
-
-	public Break(NoteLength length) {
-		super(length);
-	}
+public class NoteSheetActivity extends Activity {
+	private RecorderLayout layout = null;
 
 	@Override
-	public String toString() {
-		return "[Break] noteLength=" + noteLength;
-	}
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-	/* (non-Javadoc)
-	 * @see org.catrobat.musicdroid.note.Symbol#draw(org.catrobat.musicdroid.tool.draw.NoteSheetCanvas)
-	 */
-	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key) {
-		// TODO Auto-generated method stub
-		
+		NoteSheetView noteSheetView = new NoteSheetView(this);
+
+		setContentView(noteSheetView);
+
 	}
-	
-	
 }

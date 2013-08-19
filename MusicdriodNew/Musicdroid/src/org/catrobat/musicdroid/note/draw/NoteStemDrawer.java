@@ -20,27 +20,46 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid;
+package org.catrobat.musicdroid.note.draw;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public class DrawTrackActivity extends Activity {
-	private RecorderLayout layout = null;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_recorder);
+/**
+ * @author Bianca TEUFL
+ * 
+ */
+public class NoteStemDrawer {
 
-		DrawTrackView trackView = new DrawTrackView(this, R.drawable.violine);
+	private static final double LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES = 3.5;
 
-		setContentView(trackView);
+	public static void drawStem(NoteSheetCanvas noteSheetCanvas,
+			NoteLength noteLength, Point startPointOfNoteStem,
+			boolean isUpDirectedStem) {
 
+		Point endPointOfNoteStem = new Point();
+		int stemLength = (int) (Math
+				.round(LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES
+						* noteSheetCanvas.getDistanceBetweenNoteLines()));
+
+		endPointOfNoteStem.x = startPointOfNoteStem.x;
+
+		if (isUpDirectedStem) {
+			endPointOfNoteStem.y = startPointOfNoteStem.y - stemLength;
+		} else {
+			endPointOfNoteStem.y = startPointOfNoteStem.y + stemLength;
+		}
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStrokeWidth(4);
+
+		noteSheetCanvas.getCanvas().drawLine(startPointOfNoteStem.x,
+				startPointOfNoteStem.y, endPointOfNoteStem.x,
+				endPointOfNoteStem.y, paint);
 	}
 }

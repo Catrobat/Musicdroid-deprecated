@@ -20,33 +20,25 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.draw;
 
-import java.io.Serializable;
-
+import org.catrobat.musicdroid.note.Symbol;
+import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public class Break extends Symbol implements Serializable {
+import android.graphics.Canvas;
+import android.media.ToneGenerator;
 
-	private static final long serialVersionUID = 4617673494732123149L;
+/**
+ * @author Bianca TEUFL
+ * 
+ */
+public class TrackDrawer {
 
-	public Break(NoteLength length) {
-		super(length);
+	public static void drawTrack(NoteSheetCanvas noteSheetCanvas, Track track) {
+
+		for (Symbol currentSymbol : track.getSymbolList()) {
+			currentSymbol.draw(noteSheetCanvas, track.getKey());
+		}
 	}
-
-	@Override
-	public String toString() {
-		return "[Break] noteLength=" + noteLength;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.catrobat.musicdroid.note.Symbol#draw(org.catrobat.musicdroid.tool.draw.NoteSheetCanvas)
-	 */
-	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 }
