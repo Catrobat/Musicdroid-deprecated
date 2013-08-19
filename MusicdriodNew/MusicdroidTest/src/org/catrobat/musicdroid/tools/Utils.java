@@ -26,21 +26,17 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 
 public class Utils {
 	private static final String TAG = Utils.class.getSimpleName();
 
-	static public List<File> getFilesFromDirectoryByExtension(File directory, String extension) {
-		String[] extensions = { extension };
-		return getFilesFromDirectoryByExtension(directory, extensions);
-	}
-
-	static public List<File> getFilesFromDirectoryByExtension(File directory, final String[] extensions) {
+	public static List<File> getFilesFromDirectoryByExtension(File directory, final String... extensions) {
 		List<File> filesFound = new ArrayList<File>();
 		File[] contents = directory.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
-				// ignore automatically created build.xml files
 				if (pathname.getName().equals("build.xml")) {
 					return false;
 				}

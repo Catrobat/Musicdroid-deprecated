@@ -27,13 +27,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import org.catrobat.musicdroid.tools.Utils;
+
 import junit.framework.TestCase;
 
-/**
- * @author matthias schlesinger
- *
- */
+import org.catrobat.musicdroid.tools.Utils;
+
 public class LogTagTest extends TestCase {
 	private static final String NEWLINE = System.getProperty("line.separator");
 	private static final String ANYTHING = ".*";
@@ -50,12 +48,6 @@ public class LogTagTest extends TestCase {
 											"../MusicdroidUiTest/src"
 										};
 	
-	public LogTagTest() {
-	}
-
-	public void setUp() throws Exception {
-	}
-	
 	public void testLogsUseTagMember() throws Exception{
 		for (String pathToProject : pathToProjects)
 		{
@@ -65,7 +57,7 @@ public class LogTagTest extends TestCase {
 			assertTrue("Couldn't read directory: " + pathToProject, directory.canRead());
 	
 			List<File> filesToCheck = 
-					Utils.getFilesFromDirectoryByExtension(directory, new String[] { ".java", });
+					Utils.getFilesFromDirectoryByExtension(directory, ".java");
 			for (File file : filesToCheck) {
 				checkFileForLogs(file);
 			}
