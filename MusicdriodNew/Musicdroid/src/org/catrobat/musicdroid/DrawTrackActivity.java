@@ -29,9 +29,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class DrawTrackActivity extends Activity {
-	private static final String TAG = DrawTrackActivity.class.getSimpleName();
-	private RecorderLayout layout = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

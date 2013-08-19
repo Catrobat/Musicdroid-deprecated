@@ -28,7 +28,6 @@ import android.test.ActivityInstrumentationTestCase2;
 
 
 public class SoundManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private static final String TAG = SoundManagerTest.class.getSimpleName();
 	
 	public SoundManagerTest(Class<MainActivity> activityClass) {
 		super(activityClass);

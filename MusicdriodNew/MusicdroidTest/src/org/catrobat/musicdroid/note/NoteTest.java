@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.note;
 import junit.framework.TestCase;
 
 public class NoteTest extends TestCase {
-	private static final String TAG = NoteTest.class.getSimpleName();
 
 	public void testNote() {
 		NoteName name = NoteName.C1;

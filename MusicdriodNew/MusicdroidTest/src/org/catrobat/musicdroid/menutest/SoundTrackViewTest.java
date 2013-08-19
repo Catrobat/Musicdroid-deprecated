@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import com.jayway.android.robotium.solo.Solo;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private static final String TAG = SoundTrackViewTest.class.getSimpleName();
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected UITestHelper ui_helper;

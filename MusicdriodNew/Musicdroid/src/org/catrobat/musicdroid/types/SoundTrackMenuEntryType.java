@@ -32,7 +32,6 @@ public enum SoundTrackMenuEntryType {
 			R.string.sound_track_menu_entry_copy,
 			R.string.help_sound_track_menu_entry_copy);
 
-	private static final String TAG = SoundTrackMenuEntryType.class.getSimpleName();
 	private int nameResource;
 	private int helpTextResource;
 

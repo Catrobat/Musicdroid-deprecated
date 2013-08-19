@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.note;
 import java.io.Serializable;
 
 public class Tact implements Serializable {
-	private static final String TAG = Tact.class.getSimpleName();
 	private static final long serialVersionUID = 888797518903394570L;
 
 	private int beatsPerTact;

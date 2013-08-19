@@ -32,7 +32,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class SoundMixerMenuCallback implements ActionMode.Callback {
-	private static final String TAG = SoundMixerMenuCallback.class.getSimpleName();
 	MainActivity parent = null;
 	private SoundLenghtDialog settingsDialog = null;
 	private MetronomQuickSettingsDialog metronomDialog = null;

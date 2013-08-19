@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Project implements Serializable {
-	private static final String TAG = Project.class.getSimpleName();
 	private static final long serialVersionUID = 7396763540934053009L;
 
 	private List<Track> tracks;

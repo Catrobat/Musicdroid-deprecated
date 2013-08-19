@@ -41,7 +41,6 @@ import android.widget.GridView;
 
 public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 		OnItemLongClickListener {
-	private static final String TAG = AddSoundDialog.class.getSimpleName();
 	private static AddSoundDialog instance;
 	private MainActivity parent;
 	private AddSoundAdapter addSoundButtonAdapter;

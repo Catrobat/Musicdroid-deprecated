@@ -35,7 +35,6 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 public class SoundLenghtDialog extends DialogFragment {
-	private static final String TAG = SoundLenghtDialog.class.getSimpleName();
 	private NumberPicker pickerMin = null;
 	private NumberPicker pickerSec = null;
 

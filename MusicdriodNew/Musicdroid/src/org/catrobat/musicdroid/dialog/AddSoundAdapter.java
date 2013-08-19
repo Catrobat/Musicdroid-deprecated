@@ -37,7 +37,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AddSoundAdapter extends BaseAdapter {
-	private static final String TAG = AddSoundAdapter.class.getSimpleName();
 	private Context context;
 	private ArrayList<SoundType> buttonsList;
 

@@ -24,5 +24,4 @@ package org.catrobat.musicdroid.note;
 
 public enum Key {
 	BASS, VIOLIN;
-	private static final String TAG = Key.class.getSimpleName();
 }

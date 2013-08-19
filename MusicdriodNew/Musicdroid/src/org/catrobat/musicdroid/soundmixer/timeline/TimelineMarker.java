@@ -35,7 +35,6 @@ import android.widget.RelativeLayout.LayoutParams;
  *
  */
 public class TimelineMarker extends View {
-	private static final String TAG = TimelineMarker.class.getSimpleName();
 
 	public TimelineMarker(Context context) {
 		super(context);

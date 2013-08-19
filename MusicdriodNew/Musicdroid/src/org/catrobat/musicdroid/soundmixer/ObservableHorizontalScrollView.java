@@ -27,7 +27,6 @@ import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
 public class ObservableHorizontalScrollView extends HorizontalScrollView {
-	private static final String TAG = ObservableHorizontalScrollView.class.getSimpleName();
 	private HorizontalScrollViewListener scrollViewListener = null;
 
 	public ObservableHorizontalScrollView(Context context) {

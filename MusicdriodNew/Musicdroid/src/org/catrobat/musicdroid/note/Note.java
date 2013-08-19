@@ -26,7 +26,6 @@ import java.io.Serializable;
 
 public class Note extends Symbol implements Serializable {
 
-	private static final String TAG = Note.class.getSimpleName();
 	private static final long serialVersionUID = 2238272682118731619L;
 
 	private NoteName name;

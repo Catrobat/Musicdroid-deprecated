@@ -27,7 +27,6 @@ package org.catrobat.musicdroid.tools;
  *
  */
 public class StringFormatter {
-	private static final String TAG = StringFormatter.class.getSimpleName();
 	private static String SEPERATOR = ":";
 	
 	public static String durationStringFromInt(int duration) {

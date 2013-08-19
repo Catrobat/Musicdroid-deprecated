@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MenuFileActivity extends FragmentActivity {
-	private static final String TAG = MenuFileActivity.class.getSimpleName();
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

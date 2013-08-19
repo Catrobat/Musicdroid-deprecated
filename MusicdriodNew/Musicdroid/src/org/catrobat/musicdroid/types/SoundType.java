@@ -35,7 +35,6 @@ public enum SoundType {
 			R.string.help_menu_new_recording, R.color.sound_view_mic_color,
 			R.color.sound_view_mic_expanded_color);
 
-	private static final String TAG = SoundType.class.getSimpleName();
 	private int nameResource;
 	private int imageResouce;
 	private int helpTextResource;

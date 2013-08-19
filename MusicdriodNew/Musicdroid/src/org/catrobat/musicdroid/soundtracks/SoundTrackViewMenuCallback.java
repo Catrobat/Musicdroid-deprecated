@@ -32,7 +32,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class SoundTrackViewMenuCallback implements ActionMode.Callback {
-	private static final String TAG = SoundTrackViewMenuCallback.class.getSimpleName();
 	MainActivity parent = null;
 
 	public SoundTrackViewMenuCallback(MainActivity p) {

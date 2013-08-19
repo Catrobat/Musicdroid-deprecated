@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.note;
 import junit.framework.TestCase;
 
 public class BreakTest extends TestCase {
-	private static final String TAG = BreakTest.class.getSimpleName();
 
 	public void testBreak() {
 		Break br = new Break(NoteLength.WHOLE);

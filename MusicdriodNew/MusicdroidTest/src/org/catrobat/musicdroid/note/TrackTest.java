@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.note;
 import junit.framework.TestCase;
 
 public class TrackTest extends TestCase {
-	private static final String TAG = TrackTest.class.getSimpleName();
 
 	public void testTrack1() {
 		Tact tact = new Tact();

@@ -35,7 +35,6 @@ import android.preference.PreferenceFragment;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnPreferenceClickListener, OnSharedPreferenceChangeListener {
-	private static final String TAG = SettingsFragment.class.getSimpleName();
 	private SoundLenghtDialog settingsDialog = null;
 	private MetronomQuickSettingsDialog metronomSettingsDialog = null;
 	private Preference metronomDialogPreference = null;

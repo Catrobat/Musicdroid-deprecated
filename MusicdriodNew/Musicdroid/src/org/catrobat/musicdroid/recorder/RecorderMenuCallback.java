@@ -32,7 +32,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class RecorderMenuCallback implements ActionMode.Callback {
-	private static final String TAG = RecorderMenuCallback.class.getSimpleName();
 	private RecorderActivity parent = null;
 	private MetronomQuickSettingsDialog metronomDialog = null;
 

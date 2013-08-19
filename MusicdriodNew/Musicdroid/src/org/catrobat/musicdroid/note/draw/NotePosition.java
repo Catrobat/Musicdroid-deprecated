@@ -31,7 +31,6 @@ import org.catrobat.musicdroid.note.NoteName;
  * 
  */
 public class NotePosition {
-	private static final String TAG = NotePosition.class.getSimpleName();
 	
 	private NotePosition() {
 	}

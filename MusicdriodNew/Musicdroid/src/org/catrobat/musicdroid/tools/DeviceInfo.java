@@ -32,7 +32,6 @@ import android.graphics.Point;
  *
  */
 public class DeviceInfo {
-	private static final String TAG = DeviceInfo.class.getSimpleName();
 	
 	public static Point getScreenSize(Context context) {
 		if (context == null)

@@ -35,7 +35,6 @@ public enum NoteName {
 			93), A5S(94), B5(95);
 
 	private int midi;
-	private static final String TAG = NoteName.class.getSimpleName();
 	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
 	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
 

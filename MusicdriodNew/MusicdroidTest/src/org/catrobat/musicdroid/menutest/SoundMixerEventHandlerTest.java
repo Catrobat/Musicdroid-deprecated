@@ -37,7 +37,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 
 public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2<MainActivity> implements Observer {
-	private static final String TAG = SoundMixerEventHandlerTest.class.getSimpleName();
 	protected SoundMixerEventHandler eventHandler = null;
 	protected UITestHelper uiHelper = null;
 	protected Solo solo = null;

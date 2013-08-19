@@ -28,7 +28,6 @@ import android.app.Dialog;
 import android.content.Context;
 
 public class BaseDialog extends Dialog {
-	private static final String TAG = BaseDialog.class.getSimpleName();
 	
 	public BaseDialog(Context context) {
 		super(context, R.style.CustomMusicdroidDialog);

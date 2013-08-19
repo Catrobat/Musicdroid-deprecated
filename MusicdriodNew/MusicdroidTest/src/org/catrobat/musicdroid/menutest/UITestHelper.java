@@ -32,7 +32,6 @@ import android.view.View;
 import com.jayway.android.robotium.solo.Solo;
 
 public class UITestHelper {
-	private static final String TAG = UITestHelper.class.getSimpleName(); 
 	private Solo solo;
 	private Activity activity;
 	

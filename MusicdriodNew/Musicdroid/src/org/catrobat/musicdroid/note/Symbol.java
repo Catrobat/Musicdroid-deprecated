@@ -24,7 +24,6 @@ package org.catrobat.musicdroid.note;
 
 
 public abstract class Symbol {
-	private static final String TAG = Symbol.class.getSimpleName();
 	protected NoteLength noteLength;
 
 	Symbol(NoteLength noteLength) {

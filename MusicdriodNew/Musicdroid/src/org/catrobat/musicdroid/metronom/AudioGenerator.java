@@ -27,7 +27,6 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 public class AudioGenerator {
-	private static final String TAG = AudioGenerator.class.getSimpleName();
 	private int sampleRate;
 	private AudioTrack audioTrack;
 

@@ -35,7 +35,6 @@ import android.widget.RelativeLayout;
 import com.jayway.android.robotium.solo.Solo;
 
 public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private static final String TAG = SoundMixerTest.class.getSimpleName();
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected Timeline timeline = null;

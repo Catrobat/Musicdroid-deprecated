@@ -31,7 +31,6 @@ import org.catrobat.musicdroid.tools.StringFormatter;
  *
  */
 public class StringFormatterTest extends TestCase {
-	private static final String TAG = StringFormatterTest.class.getSimpleName();
 
 	public void testStringFormatter()
 	{

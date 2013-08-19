@@ -36,7 +36,6 @@ import android.view.View;
 import android.widget.EditText;
 
 public class ChangeFilenameDialog extends DialogFragment {
-	private static final String TAG = ChangeFilenameDialog.class.getSimpleName();
 	private EditText editText = null;
 
 	@Override

@@ -34,12 +34,10 @@ import android.os.Environment;
 import android.text.format.Time;
 
 public class ProjectSerializationTest extends TestCase {
-	private static final String TAG = ProjectSerializationTest.class.getSimpleName();
 
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
+		new Time();
 		Track track = new Track();
 		project.addTrack(track);
 		File file = new File(Environment.getExternalStorageDirectory(),

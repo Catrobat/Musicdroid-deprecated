@@ -31,7 +31,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 
 public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private static final String TAG = AddSoundDialogTest.class.getSimpleName();
 	protected Solo solo = null;
 	protected int screenWidth;
 	protected int screenHeight;

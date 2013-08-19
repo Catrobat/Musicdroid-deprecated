@@ -42,7 +42,6 @@ import android.view.View;
  * 
  */
 public class DrawTrackView extends View {
-	private static final String TAG = DrawTrackView.class.getSimpleName();
 	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
 	private static final int BOLD_BAR_WIDTH = 5;
 	private static final int THIN_BAR_WIDTH = 2;
@@ -52,7 +51,6 @@ public class DrawTrackView extends View {
 
 	private Paint paint;
 
-	private Track track;
 	private int xStartPositionOfLine;
 	private int xEndPositionOfLine;
 	private int yCenter;

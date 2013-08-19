@@ -30,7 +30,6 @@ import android.util.Log;
 
 
 public class Utils {
-	private static final String TAG = Utils.class.getSimpleName();
 
 	public static List<File> getFilesFromDirectoryByExtension(File directory, final String... extensions) {
 		List<File> filesFound = new ArrayList<File>();
