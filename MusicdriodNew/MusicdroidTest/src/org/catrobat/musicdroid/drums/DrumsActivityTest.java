@@ -12,9 +12,9 @@ import org.catrobat.musicdroid.types.SoundType;
 
 public class DrumsActivityTest  extends ActivityInstrumentationTestCase2<MainActivity>{
 	protected Solo solo = null;
-	protected DrumsLayout layoutManager = null;
+	protected LayoutDrums layoutManager = null;
 	protected DrumSoundRow row = null;
-	protected DrumSoundRowLayout layout = null;
+	protected LayoutDrumSoundRow layout = null;
 	
 	public DrumsActivityTest() {
 		super(MainActivity.class);

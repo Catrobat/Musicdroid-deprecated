@@ -15,7 +15,7 @@ import org.catrobat.musicdroid.types.SoundType;
 
 public class DrumsLayoutManagerTest  extends ActivityInstrumentationTestCase2<MainActivity>{
 	protected Solo solo = null;
-	protected DrumsLayout layoutManager = null;
+	protected LayoutDrums layoutManager = null;
 	
 	public DrumsLayoutManagerTest() {
 		super(MainActivity.class);

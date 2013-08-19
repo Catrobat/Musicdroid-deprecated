@@ -15,9 +15,10 @@ import org.catrobat.musicdroid.types.DrumType;
 
 @Root
 public class DrumSoundRow implements Observer {
+	private static final String TAG = DrumSoundRow.class.getSimpleName();
 	private Context context = null;
-	private DrumsLayout layoutManager = null;
-	private DrumSoundRowLayout layout = null;
+	private LayoutDrums layoutDrums = null;
+	private LayoutDrumSoundRow layoutRow = null;
 	private SoundPool soundpool = null;
 	@ElementArray
 	private int[] beatArray = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -30,13 +31,14 @@ public class DrumSoundRow implements Observer {
 	
 	public DrumSoundRow() {}
 	
-	public DrumSoundRow(Context context, DrumsLayout manager, DrumType drumType) {
+	public DrumSoundRow(Context context, LayoutDrums manager, DrumType drumType) 
+	{
 		this.context = context;
-		this.layoutManager = manager;
+		this.layoutDrums = manager;
 		this.rawId = drumType.getSoundResource();
 		this.soundRowName = this.context.getResources().getString(drumType.getNameResource());
 		
-		layout = new DrumSoundRowLayout(this.context, this, this.soundRowName);
+		layoutRow = new LayoutDrumSoundRow(this.context, this, this.soundRowName);
 		
         soundPoolId = SoundManager.loadSound(rawId);
 		//MIT-FIX
@@ -45,9 +47,10 @@ public class DrumSoundRow implements Observer {
 	}
 	
 	@Override
-	public void update(Observable observable, Object data) {
+	public void update(Observable observable, Object data) 
+	{
 		int currentBeat = (Integer)data;
-		Log.i("DrumSoundRowa", "Incoming Object: " + currentBeat);
+		Log.d(TAG, "Incoming Object: " + currentBeat);
 		if(beatArray[currentBeat] == 1)
 		{
 			SoundManager.playSingleSound(soundPoolId, 1, 1);
@@ -57,7 +60,13 @@ public class DrumSoundRow implements Observer {
 	public void togglePosition(int position)
 	{
 		beatArray[position] = beatArray[position] == 0 ? 1 : 0;
-		layoutManager.setUnsavedChanges(true);
+		layoutDrums.setUnsavedChanges(true);
+	}
+
+	public void updateRow(DrumSoundRow sourceRow) {
+		setSoundPoolId(sourceRow.getSoundPoolId());
+	    setBeatArray(sourceRow.getBeatArray());
+	    setSoundRowNameAndUpdateLayout(sourceRow.getSoundRowName());		
 	}
 	
 	public int getBeatArrayValueAtPosition(int position)
@@ -67,10 +76,20 @@ public class DrumSoundRow implements Observer {
 	
 	public void setSoundPoolIdByDrumString(String drumString)
 	{
-		DrumType type = layoutManager.getDrumTypeByString(drumString);
+		DrumType type = layoutDrums.getDrumTypeByString(drumString);
 		soundPoolId = SoundManager.loadSound(type.getSoundResource());
 		soundRowName = context.getResources().getString(type.getNameResource());
-		layoutManager.setUnsavedChanges(true); 
+		layoutDrums.setUnsavedChanges(true); 
+	}
+	
+	public void setSoundRowNameAndUpdateLayout(String srn)
+	{
+		Log.i(TAG, "setSoundRowNameAndUpdateLayout " + soundRowName);
+		if(!soundRowName.equals(srn))
+		{
+		  soundRowName = srn;
+		  layoutRow.setDrumSoundRowName(soundRowName);
+		}
 	}
 	
 	public int getSoundPoolId()
@@ -91,7 +110,7 @@ public class DrumSoundRow implements Observer {
 	public void setBeatArray(int[] beatArray)
 	{
 		this.beatArray = beatArray;
-		layout.updateOnPresetLoad(this.beatArray);
+		layoutRow.updateOnPresetLoad(this.beatArray);
 	}
 	
 	public void setSoundPoolId(int spId)
@@ -104,9 +123,9 @@ public class DrumSoundRow implements Observer {
 		rawId = rId;
 	}
 	
-	public DrumSoundRowLayout getLayout()
+	public LayoutDrumSoundRow getLayout()
 	{
-		return layout;
+		return layoutRow;
 	}
 	
 	public String getSoundRowName()
@@ -118,15 +137,4 @@ public class DrumSoundRow implements Observer {
 	{
 		soundRowName = srn;
 	}
-	
-	public void setSoundRowNameAndUpdateLayout(String srn)
-	{
-		Log.i("DrumSoundRow", "setSoundRowNameAndUpdateLayout " + soundRowName);
-		if(!soundRowName.equals(srn))
-		{
-		  soundRowName = srn;
-		  layout.setDrumSoundRowName(soundRowName);
-		}
-	}
-	
 }

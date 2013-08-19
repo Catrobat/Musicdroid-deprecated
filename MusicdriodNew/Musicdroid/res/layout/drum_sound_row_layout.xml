@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.catrobat.musicdroid.drums.DrumSoundRowLayout
+<org.catrobat.musicdroid.drums.LayoutDrumSoundRow
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/org.catrobat.musicdroid"
     android:layout_width="fill_parent"
@@ -242,4 +242,4 @@
 	         /> 	         
 	   </RelativeLayout>
    </LinearLayout> 
-</org.catrobat.musicdroid.drums.DrumSoundRowLayout>
+</org.catrobat.musicdroid.drums.LayoutDrumSoundRow>

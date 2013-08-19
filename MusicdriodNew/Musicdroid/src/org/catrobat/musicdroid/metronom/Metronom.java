@@ -45,8 +45,9 @@ public class Metronom {
 	private int metronomState;
 	private double accentSound;
 	private double sound;
-	private final int tickLengthInSamples = 1000; //
-	private AudioGenerator audioGenerator = new AudioGenerator(8000);
+	private static final int TICK_LENGTH_IN_SAMPLES = 1000; //
+	private static final int SAMPLE_RATE = 8000;
+	private AudioGenerator audioGenerator = new AudioGenerator(SAMPLE_RATE);
 
 	public Metronom(Context c) {
 		context = c;
@@ -62,7 +63,7 @@ public class Metronom {
 		beat = 4;
 		sound = 261.63;
 		accentSound = 392.00;
-		silenceDuration = (int) (((60 / beatsPerMinute) * 8000) - tickLengthInSamples);
+		silenceDuration = (int) (((60 / beatsPerMinute) * SAMPLE_RATE) - TICK_LENGTH_IN_SAMPLES);
 		animation = new MetronomAnimation(context, beatsPerMinute);
 	}
 
@@ -86,34 +87,32 @@ public class Metronom {
 
 	private void play() {
 		new Thread(new Runnable() {
-			double[] tickArray = audioGenerator.getSineWave(
-					tickLengthInSamples, 8000, accentSound);
-			double[] tockArray = audioGenerator.getSineWave(
-					tickLengthInSamples, 8000, sound);
+			double[] tickArray = audioGenerator.getSineWave(TICK_LENGTH_IN_SAMPLES, SAMPLE_RATE, accentSound);
+			double[] tockArray = audioGenerator.getSineWave(TICK_LENGTH_IN_SAMPLES, SAMPLE_RATE, sound);
 			double silence = 0;
 			double[] soundArray = new double[8000];
-			int t = 0, s = 0, b = 0;
+			int tickCounter = 0, sampleCounter = 0, beatCounter = 0;
 
 			@Override
 			public void run() {
 				while (play) {
 					for (int i = 0; i < soundArray.length && play; i++) {
-						if (t < tickLengthInSamples) {
-							if (b == 0) {
-								soundArray[i] = tockArray[t];
+						if (tickCounter < TICK_LENGTH_IN_SAMPLES) {
+							if (beatCounter == 0) {
+								soundArray[i] = tockArray[tickCounter];
 							} else {
-								soundArray[i] = tickArray[t];
+								soundArray[i] = tickArray[tickCounter];
 							}
-							t++;
+							tickCounter++;
 						} else {
 							soundArray[i] = silence;
-							s++;
-							if (s >= silenceDuration) {
-								t = 0;
-								s = 0;
-								b++;
-								if (b > (beat - 1))
-									b = 0;
+							sampleCounter++;
+							if (sampleCounter >= silenceDuration) {
+								tickCounter = 0;
+								sampleCounter = 0;
+								beatCounter++;
+								if (beatCounter > (beat - 1))
+									beatCounter = 0;
 							}
 						}
 					}

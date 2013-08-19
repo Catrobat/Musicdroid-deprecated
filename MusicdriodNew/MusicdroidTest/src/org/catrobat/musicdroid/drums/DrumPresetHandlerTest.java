@@ -15,7 +15,7 @@ import com.jayway.android.robotium.solo.Solo;
 public class DrumPresetHandlerTest extends ActivityInstrumentationTestCase2<MainActivity>{
 	protected Solo solo = null;
 	DrumPresetHandler presetHandler = null;
-	DrumsLayout layoutManager = null;
+	LayoutDrums layoutManager = null;
 	String filename = "test";
 	
 	public DrumPresetHandlerTest() {

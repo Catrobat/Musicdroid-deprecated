@@ -9,16 +9,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import org.catrobat.musicdroid.R;
 
-public class DrumSoundPositionRowLayout extends RelativeLayout{
+public class LayoutDrumSoundPositionRow extends RelativeLayout{
 	private Context context = null;
 	private ArrayList<ImageView> positionArray = null;
 
 	
-	public DrumSoundPositionRowLayout(Context context, AttributeSet attrs) {
+	public LayoutDrumSoundPositionRow(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}	
 	
-	public DrumSoundPositionRowLayout(Context context) {
+	public LayoutDrumSoundPositionRow(Context context) {
 		super(context);
 		this.context = context;
 		this.positionArray = new ArrayList<ImageView>();

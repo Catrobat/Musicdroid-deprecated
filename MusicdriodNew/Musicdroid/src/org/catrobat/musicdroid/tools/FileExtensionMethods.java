@@ -22,6 +22,8 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
+import java.io.File;
+
 /**
  * @author matthias schlesinger
  *
@@ -47,5 +49,14 @@ public class FileExtensionMethods {
 			file = file.substring(0, pos);
 		}
 		return file;
+	}
+	
+
+	
+	public static void checkPathExistsAndCreateDirectory(String path)
+	{
+		File f = new File(path);
+		if(!f.exists())
+		  f.mkdir();
 	}
 }

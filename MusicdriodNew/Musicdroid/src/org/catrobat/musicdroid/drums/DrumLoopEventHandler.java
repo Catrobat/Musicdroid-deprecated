@@ -6,6 +6,7 @@ import android.util.Log;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 
 public class DrumLoopEventHandler extends Observable {
+	private static final String TAG = DrumLoopEventHandler.class.getSimpleName();
 	private boolean shouldContinue;
 	private int num_loops = 2000;
 	private static final int ONE_MINUTE_IN_MILISECONDS = 60000;
@@ -21,7 +22,7 @@ public class DrumLoopEventHandler extends Observable {
 		        	int beat = 0;
 		        	int loops = 0; 
 		        	int sleepDuration = computeSleep();
-		        	Log.i("DrumLoopEventHandler", "Sleep = " + sleepDuration);
+		        	Log.d(TAG, "Sleep = " + sleepDuration);
 		        	
 		            while (shouldContinue && (num_loops > 0 && loops < num_loops)) {
 		                try {

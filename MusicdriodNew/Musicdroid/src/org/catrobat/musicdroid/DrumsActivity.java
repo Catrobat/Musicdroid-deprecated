@@ -19,12 +19,13 @@ import org.catrobat.musicdroid.dialog.listener.LoadFileDialogListener;
 import org.catrobat.musicdroid.drums.DrumLoopEventHandler;
 import org.catrobat.musicdroid.drums.DrumPreset;
 import org.catrobat.musicdroid.drums.DrumPresetHandler;
-import org.catrobat.musicdroid.drums.DrumsLayout;
+import org.catrobat.musicdroid.drums.LayoutDrums;
 import org.catrobat.musicdroid.drums.DrumsMenuCallback;
 import org.catrobat.musicdroid.drums.StatusbarDrums;
 
 public class DrumsActivity extends FragmentActivity {
-	private DrumsLayout drumsLayout = null;
+	private static final String TAG = DrumsActivity.class.getSimpleName();
+	private LayoutDrums drumsLayout = null;
 	private DrumLoopEventHandler drumLoopEventHandler = null;
 	private DrumPresetHandler drumPresetHandler = null;
 	private SavePresetDialog savePresetDialog = null;
@@ -38,7 +39,7 @@ public class DrumsActivity extends FragmentActivity {
         setContentView(R.layout.activity_drums);
         
         drumLoopEventHandler = new DrumLoopEventHandler();
-        drumsLayout = new DrumsLayout(this);
+        drumsLayout = new LayoutDrums(this);
         drumPresetHandler = new DrumPresetHandler();	
         
         initTopStatusBar();
@@ -59,7 +60,7 @@ public class DrumsActivity extends FragmentActivity {
         	String path = intent.hasExtra("path") ? intent.getStringExtra("path") : null;
         	if(path != null)
         	{
-        		Log.i("DrumsActivity", "edit mode = true");
+        		Log.i(TAG, "edit mode = true");
         		editMode = true;
         		loadPresetByName(path);
         	}
@@ -203,7 +204,7 @@ public class DrumsActivity extends FragmentActivity {
     	return drumLoopEventHandler;
     }
     
-    public DrumsLayout getDrumsLayoutManager()
+    public LayoutDrums getDrumsLayoutManager()
     {
     	return drumsLayout;
     }

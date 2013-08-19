@@ -8,14 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import org.catrobat.musicdroid.DrumsActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.dialog.ExportDrumSoundDialog;
 import org.catrobat.musicdroid.dialog.listener.ExportDrumSoundDialogListener;
 import org.catrobat.musicdroid.types.DrumType;
 
-public class DrumsLayout implements OnClickListener {
+public class LayoutDrums implements OnClickListener {
+	private static final String TAG = LayoutDrums.class.getSimpleName();
 	private Context context = null;
 	private RelativeLayout soundRowBox = null; 
 	private RelativeLayout addDrumsToSoundMixerBox = null;
@@ -25,7 +25,7 @@ public class DrumsLayout implements OnClickListener {
 	private HashMap<String, DrumType> stringToDrumTypeMap;
 	private ExportDrumSoundDialog addToSoundMixerDialog = null;
 	
-	public DrumsLayout(Context c)
+	public LayoutDrums(Context c)
 	{
 		this.context = c;
 		this.soundRowBox = (RelativeLayout) ((DrumsActivity)context).findViewById(R.id.drums_drum_row_box);
@@ -41,27 +41,25 @@ public class DrumsLayout implements OnClickListener {
 		
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v) 
+	{	
 		if(v.getId() == R.id.drums_add_to_sound_mixer_box)
 		{
 			handleOnAddToSoundmixerClick();
 		}
-		
 	}
 	
 	public void loadPresetToDrumLayout(DrumPreset preset)
 	{
-		Log.i("DrumsLayoutManager", "loadPresetToDrumLayout");
+		Log.i(TAG, "loadPresetToDrumLayout");
 		if(preset.getDrumSoundRowsArray().size() != drumSoundRowsArray.size())
 		{
-			Log.e("DrumsLayoutManager", "Error at loading preset: to few/much drum rows");
+			Log.e(TAG, "Error at loading preset: to few/much drum rows");
 		}
-		for(int i = 0; i < drumSoundRowsArray.size(); i++)
+		for(int rowIndex = 0; rowIndex < drumSoundRowsArray.size(); rowIndex++)
 		{
-		    DrumSoundRow r = preset.getDrumSoundRowsArray().get(i);
-		    drumSoundRowsArray.get(i).setSoundPoolId(r.getSoundPoolId());
-		    drumSoundRowsArray.get(i).setBeatArray(r.getBeatArray());
-		    drumSoundRowsArray.get(i).setSoundRowNameAndUpdateLayout(r.getSoundRowName());
+		    DrumSoundRow presetRow = preset.getDrumSoundRowsArray().get(rowIndex);
+		    drumSoundRowsArray.get(rowIndex).updateRow(presetRow);
 		}
 	} 
 	
@@ -76,29 +74,37 @@ public class DrumsLayout implements OnClickListener {
 	private void handleOnAddToSoundmixerClick()
 	{
 		addToSoundMixerDialog.show(((DrumsActivity)context).getFragmentManager(), null);
-		//((RecorderActivity)context).returnToMainActivtiy();
 	}
-	
 	
 	private void populateDrumToDrumSoundMap()
 	{
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.BASE_DRUM.getNameResource()), DrumType.BASE_DRUM);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.SNARE_DRUM.getNameResource()), DrumType.SNARE_DRUM);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.SNARE_DRUM_HARD.getNameResource()), DrumType.SNARE_DRUM_HARD);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.HIGH_HAT_CLOSED.getNameResource()), DrumType.HIGH_HAT_CLOSED);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.HIGH_HAT_OPEN.getNameResource()), DrumType.HIGH_HAT_OPEN);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TOM_HIGH.getNameResource()), DrumType.TOM_HIGH);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TOM_LOW.getNameResource()), DrumType.TOM_LOW);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TAMBOURINE.getNameResource()), DrumType.TAMBOURINE);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.CRASH_ONE.getNameResource()), DrumType.CRASH_ONE);
-		stringToDrumTypeMap.put(context.getResources().getString(DrumType.CRASH_TWO.getNameResource()), DrumType.CRASH_TWO);	
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.BASE_DRUM.getNameResource()),
+								DrumType.BASE_DRUM);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.SNARE_DRUM.getNameResource()), 
+								DrumType.SNARE_DRUM);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.SNARE_DRUM_HARD.getNameResource()), 
+								DrumType.SNARE_DRUM_HARD);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.HIGH_HAT_CLOSED.getNameResource()), 
+							    DrumType.HIGH_HAT_CLOSED);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.HIGH_HAT_OPEN.getNameResource()), 
+								DrumType.HIGH_HAT_OPEN);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TOM_HIGH.getNameResource()), 
+								DrumType.TOM_HIGH);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TOM_LOW.getNameResource()), 
+								DrumType.TOM_LOW);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.TAMBOURINE.getNameResource()), 
+								DrumType.TAMBOURINE);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.CRASH_ONE.getNameResource()), 
+								DrumType.CRASH_ONE);
+		stringToDrumTypeMap.put(context.getResources().getString(DrumType.CRASH_TWO.getNameResource()), 
+								DrumType.CRASH_TWO);	
 	}
 	
 	
 	private void initializeDrumSoundRows() 
 	{
 		DrumSoundPositionRow position = new DrumSoundPositionRow(context);
-		DrumSoundPositionRowLayout positionLayout = position.getLayout();
+		LayoutDrumSoundPositionRow positionLayout = position.getLayout();
 		positionLayout.setId(getNewId());
 		((DrumsActivity)context).addObserverToEventHandler(position);
 		soundRowBox.addView(positionLayout);
@@ -114,7 +120,7 @@ public class DrumsLayout implements OnClickListener {
 	private int addNewDrumSoundRow(DrumType type, int alignBelowId)
 	{
 		DrumSoundRow soundRow = new DrumSoundRow(context, this, type);
-		DrumSoundRowLayout soundRowLayout = soundRow.getLayout();
+		LayoutDrumSoundRow soundRowLayout = soundRow.getLayout();
 		soundRowLayout.setId(getNewId());
 		soundRowLayout.align(RelativeLayout.BELOW,  alignBelowId);
 		soundRowBox.addView(soundRowLayout);

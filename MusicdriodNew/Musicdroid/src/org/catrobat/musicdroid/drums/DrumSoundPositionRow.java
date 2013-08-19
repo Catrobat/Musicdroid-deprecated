@@ -11,15 +11,15 @@ import android.os.Message;
 
 public class DrumSoundPositionRow extends Handler implements Observer{
 	private Context context = null;
-	private DrumSoundPositionRowLayout layout = null;
+	private LayoutDrumSoundPositionRow layout = null;
 
 	public DrumSoundPositionRow(Context context) {
 		this.context = context;
 		
-        layout = new DrumSoundPositionRowLayout(this.context);
+        layout = new LayoutDrumSoundPositionRow(this.context);
 	}
 
-	public DrumSoundPositionRowLayout getLayout() {
+	public LayoutDrumSoundPositionRow getLayout() {
 		return layout;
 	}
 	

@@ -38,15 +38,14 @@ import android.widget.Spinner;
  */
 public class DrumSoundSpinner extends Spinner {
 	private ArrayAdapter<String> adapter = null;
-	private DrumSoundRow drumSoundRow = null;
 	
-	public DrumSoundSpinner(Context context, AttributeSet attrs) {
+	public DrumSoundSpinner(Context context, AttributeSet attrs) 
+	{
 		super(context, attrs);
 	}
 
-	public void initialize(Context context, DrumSoundRow drumSoundRow) {
-		this.drumSoundRow = drumSoundRow;
-		
+	public void initialize(Context context, DrumSoundRow drumSoundRow) 
+	{
 		ArrayList<String> spinnerArray = DrumType.getTypeArray(context);
 		adapter = new ArrayAdapter<String>(context, R.layout.custom_simple_spinner_item, spinnerArray);
 		adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
@@ -61,5 +60,14 @@ public class DrumSoundSpinner extends Spinner {
 	{
 		setSelection(adapter.getPosition(itemName));
 	}
+
+	public void performCustomClick() 
+	{
+		setEnabled(true);
+	    this.setClickable(true);
+	    this.performClick();
+	    this.setEnabled(false);
+	    this.setClickable(false);	
+    }
 
 }
