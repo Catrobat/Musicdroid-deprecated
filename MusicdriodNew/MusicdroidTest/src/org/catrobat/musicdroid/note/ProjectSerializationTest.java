@@ -29,21 +29,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import junit.framework.TestCase;
 import android.os.Environment;
 import android.text.format.Time;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
-
-import junit.framework.TestCase;
 
 public class ProjectSerializationTest extends TestCase {
 
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
+		new Time();
 		Track track = new Track();
 		project.addTrack(track);
 		File file = new File(Environment.getExternalStorageDirectory(),

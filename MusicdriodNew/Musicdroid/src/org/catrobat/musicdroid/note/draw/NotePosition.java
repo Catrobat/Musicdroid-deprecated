@@ -23,8 +23,8 @@
 package org.catrobat.musicdroid.note.draw;
 
 import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Note;
+import org.catrobat.musicdroid.note.NoteName;
 
 /**
  * @author Bianca

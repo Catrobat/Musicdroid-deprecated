@@ -24,17 +24,19 @@ package org.catrobat.musicdroid.recorder;
 
 import java.io.File;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Environment;
-import android.util.Log;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Environment;
+import android.util.Log;
+
 public class AudioHandler {
+	private static final String TAG = AudioHandler.class.getSimpleName();
 	public static AudioHandler instance = null;
 	private RecorderLayout layout = null;
 	private Context context = null;
@@ -70,7 +72,7 @@ public class AudioHandler {
 	}
 
 	public boolean startRecording() {
-		Log.i("AudioHandler", "StartRecording");
+		Log.i(TAG, "StartRecording");
 		File check = new File(path + '/' + filename);
 		if (check.exists()) {
 			showDialog();

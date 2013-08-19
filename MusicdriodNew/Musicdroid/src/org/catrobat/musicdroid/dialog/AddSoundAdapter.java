@@ -24,6 +24,9 @@ package org.catrobat.musicdroid.dialog;
 
 import java.util.ArrayList;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.types.SoundType;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -32,13 +35,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.types.SoundType;
 
 public class AddSoundAdapter extends BaseAdapter {
-
 	private Context context;
-
 	private ArrayList<SoundType> buttonsList;
 
 	public AddSoundAdapter(Context context, boolean fromCatrobat) {

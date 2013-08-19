@@ -22,16 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
+
 public class RecorderMenuCallback implements ActionMode.Callback {
-	RecorderActivity parent = null;
+	private RecorderActivity parent = null;
 	private MetronomQuickSettingsDialog metronomDialog = null;
 
 	public RecorderMenuCallback(RecorderActivity p) {

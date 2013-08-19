@@ -22,18 +22,18 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.dialog;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.recorder.AudioHandler;
+import org.catrobat.musicdroid.tools.FileExtensionMethods;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.recorder.AudioHandler;
-import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 public class ChangeFilenameDialog extends DialogFragment {
 	private EditText editText = null;
@@ -64,7 +64,6 @@ public class ChangeFilenameDialog extends DialogFragment {
 		AlertDialog dialog = builder.create();
 
 		String filename = AudioHandler.getInstance().getFilename();
-		Log.i("ChangeFilenameDialog", "Filename: " + filename);
 		editText = (EditText) view.findViewById(R.id.dialog_edittext);
 		editText.setText(FileExtensionMethods.removeFileEnding(filename));
 

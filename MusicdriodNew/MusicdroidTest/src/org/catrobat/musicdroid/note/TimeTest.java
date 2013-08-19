@@ -22,8 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Tact;
 import junit.framework.TestCase;
 
 public class TimeTest extends TestCase {

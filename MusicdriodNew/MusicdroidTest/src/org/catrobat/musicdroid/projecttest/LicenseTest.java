@@ -39,13 +39,14 @@
 //
 //public class LicenseTest extends TestCase {
 //	
+//	private static final String TAG = LicenseTest.class.getSimpleName();
 //	private static final boolean REPLACE_LICENSE_TEXT = false;
 //	private String NEWLINE = System.getProperty("line.separator");
 //	private StringBuilder missingLicenseTextFiles = new StringBuilder();
 //
 //	final String[] path_to_projects = {
 //											"../Musicdroid/src",
-//											"../MusicdroidTests/src",
+//											"../MusicdroidTest/src",
 //											"../MusicdroidUiTest/src"
 //										};
 //	private  String[] license = {};

@@ -22,15 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
-import java.io.File;
-
 import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.types.SoundType;
 
-import android.app.Activity;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.jayway.android.robotium.solo.Solo;
 

@@ -22,8 +22,9 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import android.test.ActivityInstrumentationTestCase2;
 import org.catrobat.musicdroid.MainActivity;
+
+import android.test.ActivityInstrumentationTestCase2;
 
 
 public class SoundManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {

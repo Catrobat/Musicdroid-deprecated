@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-public abstract class Symbol {
 
+public abstract class Symbol {
 	protected NoteLength noteLength;
 
 	Symbol(NoteLength noteLength) {

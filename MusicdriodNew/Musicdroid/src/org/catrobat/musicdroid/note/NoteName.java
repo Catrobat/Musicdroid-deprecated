@@ -22,6 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+
 public enum NoteName {
 	// C3 = c'(http://img.docstoccdn.com/thumb/orig/28179105.png)
 	C1(36), C1S(37), D1(38), D1S(39), E1(40), F1(41), F1S(42), G1(43), G1S(44), A1(

@@ -31,6 +31,7 @@ import android.util.Log;
  *
  */
 public class UniqueSoundMixerIDCreator {
+	private static final String TAG = UniqueSoundMixerIDCreator.class.getSimpleName();
 	AtomicInteger atomicInteger;
 	
 	public UniqueSoundMixerIDCreator()
@@ -41,7 +42,7 @@ public class UniqueSoundMixerIDCreator {
 	public int getNewId()
 	{
 		int newId = atomicInteger.incrementAndGet();
-		Log.i("UniqueID", "NewID = " + newId);
+		Log.i(TAG, "NewID = " + newId);
 		return newId;
 	}
 	

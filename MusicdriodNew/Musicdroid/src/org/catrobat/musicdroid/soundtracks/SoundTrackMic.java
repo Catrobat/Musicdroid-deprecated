@@ -22,13 +22,15 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
-import android.util.Log;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 import org.catrobat.musicdroid.types.SoundType;
 
+import android.util.Log;
+
 public class SoundTrackMic extends SoundTrack {
+	private static final String TAG = SoundTrackMic.class.getSimpleName();
 
 	public SoundTrackMic() {
 		type = SoundType.MIC;
@@ -36,7 +38,7 @@ public class SoundTrackMic extends SoundTrack {
 		soundfileRawId = R.raw.test_wav;
 		duration = SoundManager.getSoundfileDuration(soundfileRawId);
 		soundpoolId = SoundManager.loadSound(soundfileRawId);
-		Log.i("SoundTrackMIC", "SoundpoolID = " + soundpoolId);
+		Log.i(TAG, "SoundpoolID = " + soundpoolId);
 	}
 
 	public SoundTrackMic(String path) {
@@ -47,7 +49,7 @@ public class SoundTrackMic extends SoundTrack {
 	}
 
 	public SoundTrackMic(SoundTrackMic stm) {
-		Log.e("Calling copy constr", "mic");
+		Log.e(TAG, "mic");
 	}
 
 }

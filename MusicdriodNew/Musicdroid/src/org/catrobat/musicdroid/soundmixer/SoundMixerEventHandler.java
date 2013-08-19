@@ -33,6 +33,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class SoundMixerEventHandler extends Observable {
+	private static final String TAG = SoundMixerEventHandler.class.getSimpleName();
 	private SoundMixer mixer;
 	private int longestTrack = 0;
 	private int endPoint = 0;
@@ -71,7 +72,7 @@ public class SoundMixerEventHandler extends Observable {
 						} catch (Exception e) {
 						}
 					}
-					Log.i("TIME: " + time, "EndPoint: " + endPoint);
+					Log.i(TAG, "EndPoint: " + endPoint);
 					SoundManager.stopAllSounds();
 					return;
 				}
@@ -80,7 +81,7 @@ public class SoundMixerEventHandler extends Observable {
 	}
 
 	private void sendTrackPositionMessage(int time) {
-		Log.i("Set position message", "");
+		Log.i(TAG, "");
 		Message msg = new Message();
 		Bundle b = new Bundle();
 		b.putInt("position", time);
@@ -103,7 +104,7 @@ public class SoundMixerEventHandler extends Observable {
 	}
 
 	public void computeSecondInPixel() {
-		Log.e("Longest Track ", "" + longestTrack);
+		Log.e(TAG, "" + longestTrack);
 		secondInPixel = screenWidth / longestTrack;
 	}
 
@@ -138,7 +139,7 @@ public class SoundMixerEventHandler extends Observable {
 			return startPoint;
 	}
 	public boolean setEndPoint(int endPoint) {
-		Log.i("Set EndPoint", "EndPoint = " + endPoint);
+		Log.i(TAG, "EndPoint = " + endPoint);
 
 		if (endPoint < startPoint)
 			return false;

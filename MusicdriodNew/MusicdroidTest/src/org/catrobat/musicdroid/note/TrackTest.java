@@ -22,14 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.NoteName;
-import org.catrobat.musicdroid.note.Symbol;
-import org.catrobat.musicdroid.note.Tact;
-import org.catrobat.musicdroid.note.Track;
 import junit.framework.TestCase;
 
 public class TrackTest extends TestCase {

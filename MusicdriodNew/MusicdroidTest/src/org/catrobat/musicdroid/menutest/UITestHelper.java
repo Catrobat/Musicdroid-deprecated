@@ -22,11 +22,12 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import android.app.Activity;
-import android.view.View;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
+
+import android.app.Activity;
+import android.view.View;
 
 import com.jayway.android.robotium.solo.Solo;
 

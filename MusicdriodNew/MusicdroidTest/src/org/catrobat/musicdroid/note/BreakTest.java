@@ -22,8 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.NoteLength;
 import junit.framework.TestCase;
 
 public class BreakTest extends TestCase {

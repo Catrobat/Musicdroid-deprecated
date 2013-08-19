@@ -22,11 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.dialog;
 
-import android.app.Dialog;
-import android.content.Context;
 import org.catrobat.musicdroid.R;
 
+import android.app.Dialog;
+import android.content.Context;
+
 public class BaseDialog extends Dialog {
+	
 	public BaseDialog(Context context) {
 		super(context, R.style.CustomMusicdroidDialog);
 	}

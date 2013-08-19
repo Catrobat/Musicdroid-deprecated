@@ -22,7 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.NoteName;
 import junit.framework.TestCase;
 
 public class NoteNameTest extends TestCase {
