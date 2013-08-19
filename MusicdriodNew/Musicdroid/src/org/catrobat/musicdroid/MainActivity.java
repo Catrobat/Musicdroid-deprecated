@@ -34,9 +34,14 @@ import android.view.MenuItem;
 import org.catrobat.musicdroid.dialog.AddSoundDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
 import org.catrobat.musicdroid.preferences.PreferenceActivity;
-import org.catrobat.musicdroid.soundmixer.*;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.soundmixer.SoundMixerMenuCallback;
+import org.catrobat.musicdroid.soundmixer.Statusbar;
 import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
-import org.catrobat.musicdroid.soundtracks.*;
+import org.catrobat.musicdroid.soundtracks.SoundTrack;
+import org.catrobat.musicdroid.soundtracks.SoundTrackMic;
+import org.catrobat.musicdroid.soundtracks.SoundTrackView;
+import org.catrobat.musicdroid.soundtracks.SoundTrackViewMenuCallback;
 
 public class MainActivity extends MenuFileActivity {
 	protected Statusbar statusbar;
@@ -117,7 +122,6 @@ public class MainActivity extends MenuFileActivity {
 	public void onDestroy() {
 		super.onDestroy();
 		SoundMixer.getInstance().resetSoundMixer();
-		
 	}
 	
 	@Override

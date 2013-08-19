@@ -29,7 +29,7 @@ import android.content.Context;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
+ 
 /**
  * @author matthias schlesinger
  *

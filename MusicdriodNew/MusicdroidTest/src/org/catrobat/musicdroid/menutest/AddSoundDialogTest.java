@@ -38,7 +38,7 @@ public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainAct
 	public AddSoundDialogTest() {
 		super(MainActivity.class);
 	}
-	
+	 
 	@Override
 	protected void setUp() {
 		 solo = new Solo(getInstrumentation(), getActivity());			
@@ -46,6 +46,12 @@ public class AddSoundDialogTest extends ActivityInstrumentationTestCase2<MainAct
 		 screenHeight = solo.getCurrentActivity().getWindowManager().getDefaultDisplay().getHeight();
 		 helper = new UITestHelper(solo, getActivity());
 	}
+	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
 	
 	public void testAddSoundButton()
 	{

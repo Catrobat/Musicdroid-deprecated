@@ -48,8 +48,13 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		 solo = new Solo(getInstrumentation(), getActivity());
 		 mixer = SoundMixer.getInstance();
 		 ui_helper = new UITestHelper(solo, getActivity());
-		 
 	}
+	
+	@Override
+	protected void tearDown()
+	{
+		solo.finishOpenedActivities();
+	}	
 	
 	public void testSoundTrackViewInactive()
 	{
