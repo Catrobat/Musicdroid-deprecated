@@ -43,6 +43,8 @@ public class NotePosition {
 		NoteName middleNote;
 		if (key == Key.VIOLIN) {
 			middleNote = NoteName.B3;
+		} else if (key == Key.BASS) {
+			middleNote = NoteName.D3;
 		} else {
 			throw new UnsupportedOperationException();
 		}

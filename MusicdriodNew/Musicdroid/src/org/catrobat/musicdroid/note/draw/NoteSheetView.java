@@ -33,7 +33,9 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Note;
@@ -71,9 +73,15 @@ public class NoteSheetView extends View {
 		this.context = context;
 		paint = new Paint();
 		track = new Track();
-		track.addSymbol(new Note(NoteName.A3S, NoteLength.WHOLE));
-		track.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+
+		track.addSymbol(new Note(NoteName.C3, NoteLength.WHOLE));
+		track.addSymbol(new Note(NoteName.C3S, NoteLength.QUARTER));
+		track.addSymbol(new Note(NoteName.D3, NoteLength.WHOLE));
+		track.addSymbol(new Note(NoteName.D3S, NoteLength.WHOLE));
+		track.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
+
 		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
+
 	}
 
 	@Override
