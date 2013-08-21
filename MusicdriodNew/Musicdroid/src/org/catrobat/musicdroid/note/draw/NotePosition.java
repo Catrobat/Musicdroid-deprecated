@@ -25,27 +25,30 @@ package org.catrobat.musicdroid.note.draw;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Note;
+import org.catrobat.musicdroid.note.Track;
 
 /**
  * @author Bianca
  * 
  */
 public class NotePosition {
-	
-	private NotePosition() {
+
+	public NotePosition() {
+
 	}
 
-	public static double getLinePosition(Key key, Note note) {
-		if (key == Key.VIOLIN)
-			return getToneDistanceFromToneToMiddleLineInHalfTones(key, note);
-			
-		throw new UnsupportedOperationException();
-	}
+	public static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key,
+			Note tone) {
+		NoteName currentNote = tone.getNoteName();
+		NoteName middleNote;
+		if (key == Key.VIOLIN) {
+			middleNote = NoteName.B3;
+		} else if (key == Key.BASS) {
+			middleNote = NoteName.D3;
+		} else {
+			throw new UnsupportedOperationException();
+		}
 
-	private static int getToneDistanceFromToneToMiddleLineInHalfTones(Key key, Note note) {
-		NoteName currentNote = note.getNoteName();
-		NoteName middleNote = NoteName.B3;
-		
 		return NoteName.calculateDistance(currentNote, middleNote);
 	}
 }

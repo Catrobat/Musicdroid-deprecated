@@ -22,6 +22,8 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+
 public abstract class Symbol {
 
 	protected NoteLength noteLength;
@@ -49,4 +51,7 @@ public abstract class Symbol {
 	public String toString() {
 		return "[Symbol] noteLength=" + noteLength;
 	}
+
+
+	public abstract void draw(NoteSheetCanvas noteSheetCanvas, Key key);
 }

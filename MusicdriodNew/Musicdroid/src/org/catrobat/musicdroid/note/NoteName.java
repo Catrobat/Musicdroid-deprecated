@@ -37,7 +37,7 @@ public enum NoteName {
 	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
 	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
 
-	private NoteName(int midi) { 
+	private NoteName(int midi) {
 		this.midi = midi;
 	}
 
@@ -72,8 +72,38 @@ public enum NoteName {
 		}
 		return false;
 	}
-	
+
 	public static int calculateDistance(NoteName name1, NoteName name2) {
-		return name1.midi - name2.midi;
+		int distance = name2.midi - name1.midi;
+
+		boolean isDownGoing = distance > 0;
+
+		NoteName smallNote;
+		NoteName largeNote;
+
+		if (isDownGoing) {
+			smallNote = name1;
+			largeNote = name2;
+		} else {
+			smallNote = name2;
+			largeNote = name1;
+		}
+		int calculatedDistance = 0;
+		if (smallNote.getMidi() != largeNote.getMidi()) {
+
+			if (smallNote.isSigned()) {
+				calculatedDistance = 1;
+			} else if (largeNote.isSigned()) {
+				calculatedDistance = -1;
+			}
+			for (; smallNote.getMidi() != largeNote.getMidi(); smallNote = smallNote
+					.next()) {
+
+				if (!smallNote.isSigned()) {
+					calculatedDistance++;
+				}
+			}
+		}
+		return (isDownGoing ? calculatedDistance : calculatedDistance * (-1));
 	}
 }
