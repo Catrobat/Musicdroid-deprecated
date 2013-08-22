@@ -24,6 +24,14 @@ package org.catrobat.musicdroid.note;
 
 import java.io.Serializable;
 
+import org.catrobat.musicdroid.note.draw.NoteBodyDrawer;
+import org.catrobat.musicdroid.note.draw.NotePosition;
+import org.catrobat.musicdroid.note.draw.NoteStemDrawer;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+
+import android.graphics.Point;
+import android.graphics.RectF;
+
 public class Note extends Symbol implements Serializable {
 
 	private static final long serialVersionUID = 2238272682118731619L;
@@ -67,5 +75,52 @@ public class Note extends Symbol implements Serializable {
 	@Override
 	public String toString() {
 		return "[Note] noteLength=" + noteLength + " name=" + name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.catrobat.musicdroid.note.Symbol#draw(org.catrobat.musicdroid.tool
+	 * .draw.NoteSheetCanvas)
+	 */
+	@Override
+	public void draw(NoteSheetCanvas noteSheetCanvas, Key key) {
+		int toneDistanceFromToneToMiddleLineInHalfTones = NotePosition
+				.getToneDistanceFromToneToMiddleLineInHalfTones(key, this);
+
+		RectF noteSurroundingRect;
+
+		if (noteLength == NoteLength.WHOLE || noteLength == NoteLength.HALF) {
+			noteSurroundingRect = NoteBodyDrawer.drawBody(noteSheetCanvas,
+					toneDistanceFromToneToMiddleLineInHalfTones, false);
+		} else {
+			noteSurroundingRect = NoteBodyDrawer.drawBody(noteSheetCanvas,
+					toneDistanceFromToneToMiddleLineInHalfTones, true);
+		}
+
+		if (isStemNeeded()) {
+			Point startPointOfStem = new Point();
+			startPointOfStem.y = (int) Math
+					.round((noteSurroundingRect.bottom + noteSurroundingRect.top) / 2.0);
+
+			boolean isUpDirectedStem;
+
+			if (toneDistanceFromToneToMiddleLineInHalfTones > 0) {
+				isUpDirectedStem = true;
+				startPointOfStem.x = (int) noteSurroundingRect.right;
+			} else {
+				isUpDirectedStem = false;
+				startPointOfStem.x = (int) noteSurroundingRect.left;
+			}
+			// TODO: check stem-style
+
+			NoteStemDrawer.drawStem(noteSheetCanvas, noteLength,
+					startPointOfStem, isUpDirectedStem);
+		}
+	}
+
+	private boolean isStemNeeded() {
+		return noteLength != NoteLength.WHOLE;
 	}
 }
