@@ -28,21 +28,20 @@ import org.catrobat.musicdroid.tools.StringFormatter;
 
 /**
  * @author matthias
- *
+ * 
  */
 public class StringFormatterTest extends TestCase {
 
-	public void testStringFormatter()
-	{
+	public void testStringFormatter() {
 		int duration = 5;
 		assertTrue(StringFormatter.durationStringFromInt(duration).equals("00:05"));
-		
+
 		duration = 60;
 		assertTrue(StringFormatter.durationStringFromInt(duration).equals("01:00"));
-		
+
 		duration = 990;
 		assertTrue(StringFormatter.durationStringFromInt(duration).equals("16:30"));
-		
+
 		duration = 3600;
 		assertTrue(StringFormatter.durationStringFromInt(duration).equals("1:00:00"));
 	}

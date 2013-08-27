@@ -22,15 +22,15 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-import java.util.Observable;
+import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 
-import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
+import java.util.Observable;
 
 public class SoundMixerEventHandler extends Observable {
 	private static final String TAG = SoundMixerEventHandler.class.getSimpleName();
@@ -46,12 +46,10 @@ public class SoundMixerEventHandler extends Observable {
 
 	public SoundMixerEventHandler(SoundMixer m) {
 		mixer = m;
-		setEndPoint(PreferenceManager.getInstance().getPreference(
-				PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
+		setEndPoint(PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY));
 		screenWidth = DeviceInfo.getScreenWidth(mixer.parentActivity);
 		secondInPixel = screenWidth
-				/ PreferenceManager.getInstance().getPreference(
-						PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
+				/ PreferenceManager.getInstance().getPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY);
 	}
 
 	public void play() {
@@ -138,6 +136,7 @@ public class SoundMixerEventHandler extends Observable {
 		else
 			return startPoint;
 	}
+
 	public boolean setEndPoint(int endPoint) {
 		Log.i(TAG, "EndPoint = " + endPoint);
 

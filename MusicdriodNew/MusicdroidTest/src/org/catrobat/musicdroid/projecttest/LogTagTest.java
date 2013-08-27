@@ -22,15 +22,15 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.projecttest;
 
+import junit.framework.TestCase;
+
+import org.catrobat.musicdroid.tools.Utils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-
-import junit.framework.TestCase;
-
-import org.catrobat.musicdroid.tools.Utils;
 
 public class LogTagTest extends TestCase {
 	private static final String NEWLINE = System.getProperty("line.separator");
@@ -39,44 +39,36 @@ public class LogTagTest extends TestCase {
 	private static final String LOG_CALL = "Log\\.(d|e|i|v|w)";
 	private static final String LOG_TAG = "TAG";
 	private static final String COMMA = ",";
-	
+
 	private StringBuilder untaggedLogs = new StringBuilder();
 
-	private final String[] pathToProjects = {
-											"../Musicdroid/src",
-											"../MusicdroidTest/src",
-											"../MusicdroidUiTest/src"
-										};
-	
-	public void testLogsUseTagMember() throws Exception{
-		for (String pathToProject : pathToProjects)
-		{
+	private final String[] pathToProjects = { "../Musicdroid/src", "../MusicdroidTest/src", "../MusicdroidUiTest/src" };
+
+	public void testLogsUseTagMember() throws Exception {
+		for (String pathToProject : pathToProjects) {
 			File directory = new File(pathToProject);
-			assertTrue("Couldn't find directory: " + pathToProject, directory.exists() && 
-																	directory.isDirectory());
+			assertTrue("Couldn't find directory: " + pathToProject, directory.exists() && directory.isDirectory());
 			assertTrue("Couldn't read directory: " + pathToProject, directory.canRead());
-	
-			List<File> filesToCheck = 
-					Utils.getFilesFromDirectoryByExtension(directory, ".java");
+
+			List<File> filesToCheck = Utils.getFilesFromDirectoryByExtension(directory, ".java");
 			for (File file : filesToCheck) {
 				checkFileForLogs(file);
 			}
 		}
 		assertEquals(untaggedLogs.toString(), 0, untaggedLogs.length());
 	}
-	
-	private void checkFileForLogs(File file) throws IOException
-	{
+
+	private void checkFileForLogs(File file) throws IOException {
 		assertTrue("Could not read file " + file.getAbsolutePath(), file.exists() && file.canRead());
-				
+
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		int lineCount = 1;
 		String line = null;
 
 		String logPattern = ANYTHING + LOG_CALL + OPENING_BRACKET + ANYTHING;
 		String validTaggedLogPattern = ANYTHING + LOG_CALL + OPENING_BRACKET + LOG_TAG + COMMA + ANYTHING;
-		
-		while ((line = reader.readLine()) != null) {			
+
+		while ((line = reader.readLine()) != null) {
 			if (line.matches(logPattern) && !line.matches(validTaggedLogPattern)) {
 				untaggedLogs.append(file.getAbsolutePath() + " in line " + lineCount + NEWLINE);
 			}

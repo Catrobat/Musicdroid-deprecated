@@ -22,40 +22,38 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
-import org.catrobat.musicdroid.soundtracks.SoundTrackView;
-
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
+import org.catrobat.musicdroid.soundtracks.SoundTrackView;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
-public class SoundMixerLayout implements HorizontalScrollViewListener  {
+public class SoundMixerLayout implements HorizontalScrollViewListener {
 	private static final String TAG = SoundMixerLayout.class.getSimpleName();
 	private ObservableHorizontalScrollView horScrollView;
 	private RelativeLayout parentLayout;
 	private SoundMixer soundMixer;
-	private Timeline timeline; 
+	private Timeline timeline;
 
 	public SoundMixerLayout(MainActivity activity, SoundMixer mixer) {
 		soundMixer = mixer;
 		horScrollView = (ObservableHorizontalScrollView) activity.findViewById(R.id.sound_mixer_view);
-		parentLayout = (RelativeLayout) horScrollView
-				.findViewById(R.id.sound_mixer_relative);
+		parentLayout = (RelativeLayout) horScrollView.findViewById(R.id.sound_mixer_relative);
 
 		horScrollView.setScrollViewListener(this);
 	}
 
 	@Override
-	public void onScrollChanged(ObservableHorizontalScrollView scrollView,
-			int x, int y, int oldx, int oldy) {
+	public void onScrollChanged(ObservableHorizontalScrollView scrollView, int x, int y, int oldx, int oldy) {
 	}
 
 	public void addTrackToLayout(SoundTrackView track) {
@@ -67,7 +65,7 @@ public class SoundMixerLayout implements HorizontalScrollViewListener  {
 		parentLayout.removeView(removedTrack);
 		reorderTrackPositionOnRemoveTrack(positionOfRemovedTrack);
 	}
-	
+
 	public void disableUnselectedViews(int callingTrackId) {
 		for (int child = 0; child < parentLayout.getChildCount(); child++) {
 			View view = parentLayout.getChildAt(child);
@@ -95,14 +93,13 @@ public class SoundMixerLayout implements HorizontalScrollViewListener  {
 
 	private void reorderTrackPositionOnRemoveTrack(int trackPosition) {
 		Log.i(TAG, "Reorder: Track Pos = " + trackPosition);
-		
+
 		int numberOfTracksInSoundMixer = soundMixer.getNumberOfTracks();
 		if (trackPosition != 0 && trackPosition != numberOfTracksInSoundMixer - 1) {
 			SoundTrackView predecessor = soundMixer.getTrackAtPosition(trackPosition - 1);
 			SoundTrackView successor = soundMixer.getTrackAtPosition(trackPosition + 1);
 			successor.alignTrack(RelativeLayout.BELOW, predecessor.getId());
-		}
-		else if (trackPosition == 0 && numberOfTracksInSoundMixer > 1) {
+		} else if (trackPosition == 0 && numberOfTracksInSoundMixer > 1) {
 			SoundTrackView successor = soundMixer.getTrackAtPosition(trackPosition + 1);
 			successor.alignTrack(RelativeLayout.BELOW, timeline.getId());
 		}
@@ -114,14 +111,12 @@ public class SoundMixerLayout implements HorizontalScrollViewListener  {
 		parentLayout.addView(timeline, lp);
 	}
 
-
 	public void removeView(SoundTrackView removedView) {
 		parentLayout.removeView(removedView);
 	}
 
 	public void resizeLayoutWidth(int newWidth) {
-		ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) parentLayout
-				.getLayoutParams();
+		ViewGroup.LayoutParams layoutParams = parentLayout.getLayoutParams();
 		layoutParams.width = newWidth;
 		parentLayout.setLayoutParams(layoutParams);
 	}

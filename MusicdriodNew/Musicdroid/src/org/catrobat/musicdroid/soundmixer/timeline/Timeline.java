@@ -22,16 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.preferences.PreferenceManager;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.tools.DeviceInfo;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -40,6 +30,16 @@ import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.preferences.PreferenceManager;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.DeviceInfo;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Timeline extends RelativeLayout {
 	private static final String TAG = Timeline.class.getSimpleName();
@@ -77,8 +77,8 @@ public class Timeline extends RelativeLayout {
 
 	private void initTimeline() {
 		height = DeviceInfo.getScreenHeight(context) / 18;
-		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				DeviceInfo.getScreenWidth(context), height * 2);
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DeviceInfo.getScreenWidth(context),
+				height * 2);
 		setLayoutParams(layoutParams);
 		setBackgroundColor(getResources().getColor(R.color.background_holo_light));
 
@@ -103,7 +103,7 @@ public class Timeline extends RelativeLayout {
 			addMarker(second);
 		}
 	}
-	
+
 	public void resizeTimeline(int newLength) {
 		int oldLength = getWidth() / SoundMixer.getInstance().getPixelPerSecond();
 
@@ -116,24 +116,22 @@ public class Timeline extends RelativeLayout {
 			}
 		}
 	}
-	
-	private void addMarker(int second)
-	{
-		timelineBottom.addView(new TimelineMarker(context, second, height));			
-		if (second > 0 && second % 5 == 0 && second > lastSetTime)
-		{
+
+	private void addMarker(int second) {
+		timelineBottom.addView(new TimelineMarker(context, second, height));
+		if (second > 0 && second % 5 == 0 && second > lastSetTime) {
 			lastSetTime = second;
-		    timelineTop.addView(new TimelineMarkerText(context, second));
+			timelineTop.addView(new TimelineMarkerText(context, second));
 		}
 	}
 
 	public void addNewTrackPosition(int id, int colorRes) {
 		Log.i(TAG, "AddTrackPos ID = " + id);
-		TimelineTrackPosition trackPosition = new TimelineTrackPosition(context,colorRes);
+		TimelineTrackPosition trackPosition = new TimelineTrackPosition(context, colorRes);
 		timelineBottom.addView(trackPosition);
 		trackPositions.put(id, trackPosition);
 	}
-	
+
 	public void removeTrackPosition(int id) {
 		Log.i(TAG, "RemoveTrackPosition ID = " + id);
 		TimelineTrackPosition tp = trackPositions.get(id);
@@ -141,8 +139,7 @@ public class Timeline extends RelativeLayout {
 		trackPositions.remove(id);
 	}
 
-	public void updateTimelineOnMove(int id, int pixPos, int secPos,
-			int duration) {
+	public void updateTimelineOnMove(int id, int pixPos, int secPos, int duration) {
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
 		trackPositions.get(id).updateTrackPosition(pixPos, secPos);
 		if ((secPos + duration) * pixelPerSecond > getWidth()) {
@@ -164,12 +161,10 @@ public class Timeline extends RelativeLayout {
 		int leftMargin = startPointX - (startPointX % pixelPerSecond);
 		setBoundaryPointParameters(endPointImageButton, leftMargin);
 	}
-	
-	private void setBoundaryPointParameters(ImageButton boundaryPoint, int leftMargin)
-	{
+
+	private void setBoundaryPointParameters(ImageButton boundaryPoint, int leftMargin) {
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		RelativeLayout.LayoutParams layout = (LayoutParams) boundaryPoint
-				.getLayoutParams();
+		RelativeLayout.LayoutParams layout = (LayoutParams) boundaryPoint.getLayoutParams();
 		layout.height = getHeight();
 		layout.width = pixelPerSecond;
 		layout.setMargins(leftMargin, 0, 0, 0);
@@ -180,16 +175,14 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void resetTimeline() {
-		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions
-				.entrySet().iterator();
+		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
 
 		while (it.hasNext()) {
-			HashMap.Entry<Integer, TimelineTrackPosition> pairs = (Entry<Integer, TimelineTrackPosition>) it
-					.next();
+			HashMap.Entry<Integer, TimelineTrackPosition> pairs = it.next();
 			removeView(pairs.getValue().getTrackPosition());
 		}
 	}
-	
+
 	public void rewind() {
 		timelineProgressBar.rewind();
 	}
@@ -209,9 +202,8 @@ public class Timeline extends RelativeLayout {
 	public TimelineProgressBar getTimelineProgressBar() {
 		return timelineProgressBar;
 	}
-	
-	public TimelineEventHandler getTimelineEventHandler()
-	{
+
+	public TimelineEventHandler getTimelineEventHandler() {
 		return timelineEventHandler;
 	}
 }

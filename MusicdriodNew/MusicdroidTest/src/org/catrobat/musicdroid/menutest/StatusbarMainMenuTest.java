@@ -22,28 +22,28 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.soundmixer.Statusbar;
-import org.catrobat.musicdroid.types.SoundType;
-
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.jayway.android.robotium.solo.Solo;
 
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.soundmixer.Statusbar;
+import org.catrobat.musicdroid.types.SoundType;
+
 public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected ImageButton playImageButton = null;
 	protected ImageButton rewindImageButton = null;
 	protected UITestHelper helper = null;
-	
+
 	public StatusbarMainMenuTest() {
 		super(MainActivity.class);
 	}
-	
+
 	@Override
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
@@ -51,15 +51,13 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 		playImageButton = (ImageButton) getActivity().findViewById(R.id.btn_play);
 		rewindImageButton = (ImageButton) getActivity().findViewById(R.id.btn_rewind);
 	}
-	
+
 	@Override
-	protected void tearDown()
-	{
+	protected void tearDown() {
 		solo.finishOpenedActivities();
 	}
-	
-	public void testButtonChangesOnClick()
-	{
+
+	public void testButtonChangesOnClick() {
 		helper.addTrack(SoundType.DRUMS);
 		solo.clickOnView(playImageButton);
 		solo.sleep(1000);
@@ -68,9 +66,8 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 		solo.sleep(1000);
 		assertTrue(Statusbar.getInstance().getDisplayPlayButton());
 	}
-	
-	public void testRewindButtonAppearsOnPlayButtonClick()
-	{
+
+	public void testRewindButtonAppearsOnPlayButtonClick() {
 		helper.addTrack(SoundType.DRUMS);
 		assertTrue(rewindImageButton.getVisibility() == View.INVISIBLE);
 		solo.clickOnView(playImageButton);
@@ -78,15 +75,12 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 		solo.clickOnView(playImageButton);
 		assertTrue(rewindImageButton.getVisibility() == View.VISIBLE);
 	}
-	
-	public void testRewindButton()
-	{
+
+	public void testRewindButton() {
 		testRewindButtonAppearsOnPlayButtonClick();
 		assertTrue(SoundMixer.getInstance().getStopPointFromEventHandler() > 4);
 		solo.clickOnView(rewindImageButton);
-		assertTrue(SoundMixer.getInstance().getStopPointFromEventHandler() == 0);	
+		assertTrue(SoundMixer.getInstance().getStopPointFromEventHandler() == 0);
 	}
-	
-	
 
 }

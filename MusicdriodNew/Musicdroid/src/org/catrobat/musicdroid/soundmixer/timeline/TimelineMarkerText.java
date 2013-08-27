@@ -22,17 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-import org.catrobat.musicdroid.tools.StringFormatter;
-
 import android.content.Context;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
- 
+
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+import org.catrobat.musicdroid.tools.StringFormatter;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class TimelineMarkerText extends TextView {
 
@@ -41,17 +41,13 @@ public class TimelineMarkerText extends TextView {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public TimelineMarkerText(Context context, int second) {
 		super(context);
-		
+
 		setText(StringFormatter.durationStringFromInt(second));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		textParams.leftMargin = SoundMixer.getInstance().getPixelPerSecond()*second - 25;
+		LayoutParams textParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+		textParams.leftMargin = SoundMixer.getInstance().getPixelPerSecond() * second - 25;
 		setLayoutParams(textParams);
 	}
-
-
 
 }

@@ -22,13 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
-import java.util.Observable;
-import java.util.Observer;
+import android.util.Log;
 
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.types.SoundType;
 
-import android.util.Log;
+import java.util.Observable;
+import java.util.Observer;
 
 public class SoundTrack implements Observer {
 	private static final String TAG = SoundTrack.class.getSimpleName();

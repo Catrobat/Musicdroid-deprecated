@@ -22,14 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.dialog;
 
-import org.catrobat.musicdroid.DrawTrackActivity;
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
-import org.catrobat.musicdroid.soundtracks.SoundTrackView;
-import org.catrobat.musicdroid.types.SoundType;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,8 +31,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
-public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
-		OnItemLongClickListener {
+import org.catrobat.musicdroid.DrawTrackActivity;
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
+import org.catrobat.musicdroid.soundtracks.SoundTrackView;
+import org.catrobat.musicdroid.types.SoundType;
+
+public class AddSoundDialog extends BaseDialog implements OnItemClickListener, OnItemLongClickListener {
 	private static AddSoundDialog instance;
 	private MainActivity parent;
 	private AddSoundAdapter addSoundButtonAdapter;
@@ -75,35 +74,33 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapterView, View button,
-			int position, long id) {
+	public void onItemClick(AdapterView<?> adapterView, View button, int position, long id) {
 		SoundType toolType = addSoundButtonAdapter.getSoundType(position);
 
 		switch (toolType) {
-		case DRUMS:
-			SoundTrackDrums stvd = new SoundTrackDrums();
-			parent.addSoundTrack(new SoundTrackView(parent, stvd));
-			break;
-		case PIANO: 
-			parent.startActivity(new Intent(parent, DrawTrackActivity.class));
-			// SoundTrackPiano stvp = new SoundTrackPiano();
-			// parent.addSoundTrack(new SoundTrackView(parent, stvp));
-			break;
-		case MIC:
-			// SoundTrackMic stvm = new SoundTrackMic();
-			// parent.addSoundTrack(new SoundTrackView(parent, stvm));
-			Intent intent = new Intent(parent, RecorderActivity.class);
-			parent.startActivityForResult(intent, 1);
-			break;
-		default:
-			break;
+			case DRUMS:
+				SoundTrackDrums stvd = new SoundTrackDrums();
+				parent.addSoundTrack(new SoundTrackView(parent, stvd));
+				break;
+			case PIANO:
+				parent.startActivity(new Intent(parent, DrawTrackActivity.class));
+				// SoundTrackPiano stvp = new SoundTrackPiano();
+				// parent.addSoundTrack(new SoundTrackView(parent, stvp));
+				break;
+			case MIC:
+				// SoundTrackMic stvm = new SoundTrackMic();
+				// parent.addSoundTrack(new SoundTrackView(parent, stvm));
+				Intent intent = new Intent(parent, RecorderActivity.class);
+				parent.startActivityForResult(intent, 1);
+				break;
+			default:
+				break;
 		}
 		dismiss();
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> adapterView, View button,
-			int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> adapterView, View button, int position, long id) {
 		// Display help message
 		return true;
 	}

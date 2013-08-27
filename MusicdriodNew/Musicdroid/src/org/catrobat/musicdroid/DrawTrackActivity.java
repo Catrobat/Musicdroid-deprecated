@@ -22,11 +22,10 @@
  ******************************************************************************/
 package org.catrobat.musicdroid;
 
-import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
-
 import android.app.Activity;
 import android.os.Bundle;
+
+import org.catrobat.musicdroid.note.draw.DrawTrackView;
 
 public class DrawTrackActivity extends Activity {
 	@Override

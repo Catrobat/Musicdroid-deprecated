@@ -22,7 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-
 public enum NoteLength {
 	WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH;
 }
