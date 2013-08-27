@@ -35,13 +35,13 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
-public class RecorderLayout extends Handler implements OnClickListener,
-		OnLongClickListener {
+public class RecorderLayout extends Handler implements OnClickListener, OnLongClickListener {
 	private Context context = null;
 	private TextView filenameTextView = null;
 	private ImageButton recordImageButton = null;
@@ -62,19 +62,14 @@ public class RecorderLayout extends Handler implements OnClickListener,
 	public void init(Context context) {
 		this.context = context;
 
-		filenameTextView = (TextView) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_filename);
-		recordImageButton = (ImageButton) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_record_button);
-		recordDurationTextView = (TextView) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_duration_text);
-		playImageButton = (ImageButton) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_play_button);
-		progressBarView = (View) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_progress_bar);
-		progressBarBoxRelativeLayout = (RelativeLayout) (View) ((RecorderActivity) context)
+		filenameTextView = (TextView) ((RecorderActivity) context).findViewById(R.id.microphone_filename);
+		recordImageButton = (ImageButton) ((RecorderActivity) context).findViewById(R.id.microphone_record_button);
+		recordDurationTextView = (TextView) ((RecorderActivity) context).findViewById(R.id.microphone_duration_text);
+		playImageButton = (ImageButton) ((RecorderActivity) context).findViewById(R.id.microphone_play_button);
+		progressBarView = ((RecorderActivity) context).findViewById(R.id.microphone_progress_bar);
+		progressBarBoxRelativeLayout = (RelativeLayout) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_progress_bar_box);
-		addToSoundMixerBoxRelativeLayout = (RelativeLayout) (View) ((RecorderActivity) context)
+		addToSoundMixerBoxRelativeLayout = (RelativeLayout) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_add_to_sound_mixer_box);
 
 		if (recordDurationTextView == null) {
@@ -119,12 +114,11 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		Bundle b = msg.getData();
 		if (b.containsKey("duration")) {
 			int key = b.getInt("duration");
-			if(recordDurationTextView != null)
-			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(key));
+			if (recordDurationTextView != null)
+				recordDurationTextView.setText(StringFormatter.durationStringFromInt(key));
 		} else if (b.containsKey("trackposition")) {
 			int position = b.getInt("trackposition");
-			LayoutParams params = (LayoutParams) progressBarView
-					.getLayoutParams();
+			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
 			params.width = pixelPerSecond * position;
 			progressBarView.setLayoutParams(params);
 		}
@@ -142,14 +136,12 @@ public class RecorderLayout extends Handler implements OnClickListener,
 				reorderToRecordLayout();
 
 			AudioHandler.getInstance().startRecording();
-			recordImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.pause_button));
+			recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
 			recordImageButton.setColorFilter(Color.WHITE);
 		} else if (isRecording) {
 			isRecording = false;
 			AudioHandler.getInstance().stopRecording();
-			recordImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.record_button));
+			recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 			recordImageButton.setColorFilter(Color.RED);
 			soundRecorded = true;
 			reorderToPlayLayout();
@@ -160,13 +152,11 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		if (!isPlaying) {
 			isPlaying = true;
 			AudioHandler.getInstance().playRecordedFile();
-			playImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.pause_button));
+			playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
 		} else if (isPlaying) {
 			isPlaying = false;
 			AudioHandler.getInstance().stopRecordedFile();
-			playImageButton.setImageDrawable(context.getResources()
-					.getDrawable(R.drawable.play_button));
+			playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
 		}
 	}
 
@@ -176,14 +166,12 @@ public class RecorderLayout extends Handler implements OnClickListener,
 
 	public void handlePlaySoundComplete() {
 		isPlaying = false;
-		playImageButton.setImageDrawable(context.getResources().getDrawable(
-				R.drawable.play_button));
+		playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
 	}
 
 	public void resetLayoutToRecord() {
 		isRecording = false;
-		recordImageButton.setImageDrawable(context.getResources().getDrawable(
-				R.drawable.record_button));
+		recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 		recordImageButton.setColorFilter(Color.RED);
 		if (!recordDurationTextView.getText().equals("00:00"))
 			reorderToPlayLayout();
@@ -203,8 +191,7 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		trackDuration = duration;
 		int width = progressBarBoxRelativeLayout.getWidth();// ((LayoutParams)progressBarBoxRelativeLayout.getLayoutParams()).width;
 		pixelPerSecond = width / duration;
-		Log.i("RecorderLayout", "setTrackDuration: width = " + width
-				+ " duration = " + duration);
+		Log.i("RecorderLayout", "setTrackDuration: width = " + width + " duration = " + duration);
 	}
 
 	private void reorderToRecordLayout() {
@@ -213,10 +200,8 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		progressBarBoxRelativeLayout.setVisibility(View.GONE);
 		playImageButton.setVisibility(View.GONE);
 
-		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
-				RelativeLayout.ALIGN_PARENT_LEFT, 0);
-		((LayoutParams) recordImageButton.getLayoutParams())
-				.addRule(RelativeLayout.CENTER_IN_PARENT);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT);
 	}
 
 	private void reorderToPlayLayout() {
@@ -225,10 +210,8 @@ public class RecorderLayout extends Handler implements OnClickListener,
 		progressBarBoxRelativeLayout.setVisibility(View.VISIBLE);
 		playImageButton.setVisibility(View.VISIBLE);
 
-		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
-				RelativeLayout.CENTER_IN_PARENT, 0);
-		((LayoutParams) recordImageButton.getLayoutParams())
-				.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 	}
 
 	public void reset() {

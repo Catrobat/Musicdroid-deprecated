@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.recorder.AudioHandler;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
@@ -48,18 +49,16 @@ public class ChangeFilenameDialog extends DialogFragment {
 		builder.setView(view);
 
 		builder.setTitle(R.string.dialog_change_filename_title)
-				.setNegativeButton(R.string.settings_button_apply,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								AudioHandler.getInstance().setFilename(
-										editText.getText().toString() + ".mp3");
-							}
-						})
-				.setPositiveButton(R.string.settings_button_discard,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+				.setNegativeButton(R.string.settings_button_apply, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						AudioHandler.getInstance().setFilename(editText.getText().toString() + ".mp3");
+					}
+				}).setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
 
 		AlertDialog dialog = builder.create();
 

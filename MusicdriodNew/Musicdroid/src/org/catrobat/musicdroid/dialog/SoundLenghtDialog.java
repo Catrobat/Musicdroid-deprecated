@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
@@ -50,24 +51,21 @@ public class SoundLenghtDialog extends DialogFragment {
 		builder.setView(view);
 
 		builder.setTitle(R.string.settings_default_length_title)
-				.setNegativeButton(R.string.settings_button_apply,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								int minutes = pickerMin.getValue();
-								int seconds = pickerSec.getValue();
+				.setNegativeButton(R.string.settings_button_apply, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						int minutes = pickerMin.getValue();
+						int seconds = pickerSec.getValue();
 
-								// PreferenceManager.getInstance().setPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY,
-								// minutes*60+seconds);
-								SoundMixer.getInstance()
-										.setSoundTrackLengthAndResizeTracks(
-												minutes, seconds);
-							}
-						})
-				.setPositiveButton(R.string.settings_button_discard,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
+						// PreferenceManager.getInstance().setPreference(PreferenceManager.SOUNDTRACK_DEFAULT_LENGTH_KEY,
+						// minutes*60+seconds);
+						SoundMixer.getInstance().setSoundTrackLengthAndResizeTracks(minutes, seconds);
+					}
+				}).setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
 
 		AlertDialog dialog = builder.create();
 

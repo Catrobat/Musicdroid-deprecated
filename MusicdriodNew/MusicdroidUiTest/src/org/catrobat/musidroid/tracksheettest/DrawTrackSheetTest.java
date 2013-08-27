@@ -22,12 +22,9 @@
  ******************************************************************************/
 package org.catrobat.musidroid.tracksheettest;
 
-import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.test.R;
-
-
-
 import junit.framework.TestCase;
+
+import org.catrobat.musicdroid.note.draw.DrawTrackView;
 
 /**
  * @author Bianca TEUFL
@@ -42,6 +39,4 @@ public class DrawTrackSheetTest extends TestCase {
 		super.setUp();
 	}
 
-	
-	
 }

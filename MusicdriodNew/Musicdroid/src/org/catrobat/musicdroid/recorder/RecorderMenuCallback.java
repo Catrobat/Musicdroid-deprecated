@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.recorder;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
 import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
@@ -52,13 +53,11 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
 		MenuItem item = mode.getMenu().getItem(1);
-		if (item.getIcon().getConstantState() == parent.getResources()
-				.getDrawable(R.drawable.checkbox_unchecked).getConstantState())
-			PreferenceManager.getInstance().setPreference(
-					PreferenceManager.PLAY_PLAYBACK_KEY, 0);
+		if (item.getIcon().getConstantState() == parent.getResources().getDrawable(R.drawable.checkbox_unchecked)
+				.getConstantState())
+			PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 0);
 		else
-			PreferenceManager.getInstance().setPreference(
-					PreferenceManager.PLAY_PLAYBACK_KEY, 1);
+			PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 1);
 	}
 
 	/**
@@ -71,8 +70,7 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 		mode.setTitle(R.string.recorder_context_title);
 
 		MenuItem item = mode.getMenu().getItem(1);
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
 			item.setIcon(R.drawable.checkbox_checked);
 		else
 			item.setIcon(R.drawable.checkbox_unchecked);
@@ -84,17 +82,16 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.recorder_context_playback:
-			if (item.getIcon().getConstantState() == parent.getResources()
-					.getDrawable(R.drawable.checkbox_unchecked)
-					.getConstantState())
-				item.setIcon(R.drawable.checkbox_checked);
-			else
-				item.setIcon(R.drawable.checkbox_unchecked);
-			break;
-		case R.id.recorder_context_bpm:
-			metronomDialog.show(parent.getFragmentManager(), null);
-			mode.finish();
+			case R.id.recorder_context_playback:
+				if (item.getIcon().getConstantState() == parent.getResources()
+						.getDrawable(R.drawable.checkbox_unchecked).getConstantState())
+					item.setIcon(R.drawable.checkbox_checked);
+				else
+					item.setIcon(R.drawable.checkbox_unchecked);
+				break;
+			case R.id.recorder_context_bpm:
+				metronomDialog.show(parent.getFragmentManager(), null);
+				mode.finish();
 		}
 		return false;
 	}

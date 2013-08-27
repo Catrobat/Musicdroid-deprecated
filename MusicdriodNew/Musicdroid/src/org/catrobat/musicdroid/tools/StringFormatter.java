@@ -24,23 +24,23 @@ package org.catrobat.musicdroid.tools;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class StringFormatter {
 	private static String SEPERATOR = ":";
-	
+
 	public static String durationStringFromInt(int duration) {
-	    int hours = (int) duration / 3600;
-	    int remainder = (int) duration - hours * 3600;
-	    int minutes = remainder / 60;
-	    remainder = remainder - minutes * 60;
-	    int seconds = remainder;
-		
+		int hours = duration / 3600;
+		int remainder = duration - hours * 3600;
+		int minutes = remainder / 60;
+		remainder = remainder - minutes * 60;
+		int seconds = remainder;
+
 		String durationString = "";
-		
-		if(hours > 0)
+
+		if (hours > 0)
 			durationString = "" + hours + SEPERATOR;
-		
+
 		String min = "" + minutes;
 		String sec = "" + seconds;
 

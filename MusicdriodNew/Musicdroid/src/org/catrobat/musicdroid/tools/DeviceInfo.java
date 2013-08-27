@@ -22,14 +22,14 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
-import org.catrobat.musicdroid.MainActivity;
-
 import android.content.Context;
 import android.graphics.Point;
 
+import org.catrobat.musicdroid.MainActivity;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class DeviceInfo {
 	public static Point getScreenSize(Context context) {
@@ -38,14 +38,11 @@ public class DeviceInfo {
 
 		if (android.os.Build.VERSION.SDK_INT >= 13) {
 			Point size = new Point();
-			((MainActivity) context).getWindowManager().getDefaultDisplay()
-					.getSize(size);
+			((MainActivity) context).getWindowManager().getDefaultDisplay().getSize(size);
 			return size;
 		} else {
-			int width = ((MainActivity) context).getWindowManager()
-					.getDefaultDisplay().getWidth();
-			int height = ((MainActivity) context).getWindowManager()
-					.getDefaultDisplay().getHeight();
+			int width = ((MainActivity) context).getWindowManager().getDefaultDisplay().getWidth();
+			int height = ((MainActivity) context).getWindowManager().getDefaultDisplay().getHeight();
 			return new Point(width, height);
 		}
 	}

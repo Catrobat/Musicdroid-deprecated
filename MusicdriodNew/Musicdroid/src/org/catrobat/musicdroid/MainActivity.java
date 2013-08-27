@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import org.catrobat.musicdroid.dialog.AddSoundDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
 import org.catrobat.musicdroid.preferences.PreferenceActivity;
@@ -55,7 +56,7 @@ public class MainActivity extends MenuFileActivity {
 		super.prepareFolderStructure();
 
 		AddSoundDialog.init(this);
-		
+
 		setContentView(R.layout.activity_main);
 
 		initTopStatusBar();
@@ -82,28 +83,26 @@ public class MainActivity extends MenuFileActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.menu_item_quit:
-			showSecurityQuestionBeforeExit();
-			return true;
-		case R.id.menu_item_preferences:
-			Intent intent = new Intent(MainActivity.this,
-					PreferenceActivity.class);
-			MainActivity.this.startActivity(intent);
-			return true;
-		case android.R.id.home:
-			showSecurityQuestionBeforeExit();
-			return true;
-		case R.id.btn_add:
-			AddSoundDialog.getInstance().show();
-			return true;
-		case R.id.btn_settings:
-			SoundMixerMenuCallback callbackSoundMixerMenu = new SoundMixerMenuCallback(
-					this);
-			startActionMode(callbackSoundMixerMenu);
-			return true;
-		default:
-			// calls MenuFileActivitys onOptionItemSelect for all File-Related entries
-			return super.onOptionsItemSelected(item);
+			case R.id.menu_item_quit:
+				showSecurityQuestionBeforeExit();
+				return true;
+			case R.id.menu_item_preferences:
+				Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
+				MainActivity.this.startActivity(intent);
+				return true;
+			case android.R.id.home:
+				showSecurityQuestionBeforeExit();
+				return true;
+			case R.id.btn_add:
+				AddSoundDialog.getInstance().show();
+				return true;
+			case R.id.btn_settings:
+				SoundMixerMenuCallback callbackSoundMixerMenu = new SoundMixerMenuCallback(this);
+				startActionMode(callbackSoundMixerMenu);
+				return true;
+			default:
+				// calls MenuFileActivitys onOptionItemSelect for all File-Related entries
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -123,7 +122,7 @@ public class MainActivity extends MenuFileActivity {
 		super.onDestroy();
 		SoundMixer.getInstance().resetSoundMixer();
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -132,8 +131,7 @@ public class MainActivity extends MenuFileActivity {
 			if (resultCode == Activity.RESULT_OK) {
 				if (data.hasExtra("mic_filename")) {
 					String result = data.getStringExtra("mic_filename");
-					Log.i("MainActivity", "Received String from Activity "
-							+ result);
+					Log.i("MainActivity", "Received String from Activity " + result);
 					SoundTrackMic stm = new SoundTrackMic(result);
 					addSoundTrack(new SoundTrackView(this, stm));
 				}
@@ -148,29 +146,26 @@ public class MainActivity extends MenuFileActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.closing_security_question);
 		builder.setCancelable(true);
-		builder.setNegativeButton(R.string.yes,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						SoundMixer.getInstance().resetSoundMixer();
-						finish();
-					}
-				});
-		builder.setPositiveButton(R.string.no,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		builder.setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				SoundMixer.getInstance().resetSoundMixer();
+				finish();
+			}
+		});
+		builder.setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 
 	public void startActionMode(int id, SoundTrack soundTrack) {
 		SoundMixer.getInstance().setCallingParameters(id, soundTrack);
-		SoundTrackViewMenuCallback callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(
-				this);
+		SoundTrackViewMenuCallback callbackSoundTrackViewMenu = new SoundTrackViewMenuCallback(this);
 		startActionMode(callbackSoundTrackViewMenu);
 	}
 

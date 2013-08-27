@@ -56,13 +56,11 @@ public class Tact implements Serializable {
 
 		Tact tact = (Tact) obj;
 
-		return (beatsPerTact == tact.getBeatsPerTact())
-				&& noteLength.equals(tact.getNoteLength());
+		return (beatsPerTact == tact.getBeatsPerTact()) && noteLength.equals(tact.getNoteLength());
 	}
 
 	@Override
 	public String toString() {
-		return "[Tact] beatsPerTact=" + beatsPerTact + " noteLength="
-				+ noteLength;
+		return "[Tact] beatsPerTact=" + beatsPerTact + " noteLength=" + noteLength;
 	}
 }

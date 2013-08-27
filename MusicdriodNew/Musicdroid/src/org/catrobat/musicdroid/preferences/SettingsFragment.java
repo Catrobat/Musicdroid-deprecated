@@ -28,12 +28,13 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
 
-public class SettingsFragment extends PreferenceFragment implements
-		OnPreferenceClickListener, OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements OnPreferenceClickListener,
+		OnSharedPreferenceChangeListener {
 	private SoundLenghtDialog settingsDialog = null;
 	private MetronomQuickSettingsDialog metronomSettingsDialog = null;
 	private Preference metronomDialogPreference = null;
@@ -48,12 +49,10 @@ public class SettingsFragment extends PreferenceFragment implements
 		settingsDialog = new SoundLenghtDialog();
 		metronomSettingsDialog = new MetronomQuickSettingsDialog();
 
-		dialogPreference = (Preference) getPreferenceScreen().findPreference(
-				"preferences_max_soundmixer_length");
+		dialogPreference = getPreferenceScreen().findPreference("preferences_max_soundmixer_length");
 		dialogPreference.setOnPreferenceClickListener(this);
 
-		metronomDialogPreference = (Preference) getPreferenceScreen()
-				.findPreference("preferences_bpm");
+		metronomDialogPreference = getPreferenceScreen().findPreference("preferences_bpm");
 		metronomDialogPreference.setOnPreferenceClickListener(this);
 
 	}
@@ -72,8 +71,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals("preferences_max_soundmixer_length")) {
 		}
 	}
@@ -81,15 +79,13 @@ public class SettingsFragment extends PreferenceFragment implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		getPreferenceScreen().getSharedPreferences()
-				.registerOnSharedPreferenceChangeListener(this);
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
 	}
 
 	@Override
 	public void onPause() {
-		getPreferenceScreen().getSharedPreferences()
-				.unregisterOnSharedPreferenceChangeListener(this);
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 		super.onPause();
 	}
 
