@@ -22,10 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.animation.HighlightAnimation;
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Observable;
@@ -37,6 +33,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
+
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.animation.HighlightAnimation;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	public static Statusbar instance = null;
@@ -60,44 +59,38 @@ public class Statusbar extends Observable implements OnTouchListener {
 		this.context = c;
 		displayPlayButton = true;
 
-		playButton = (ImageButton) ((Activity) context)
-				.findViewById(R.id.btn_play);
+		playButton = (ImageButton) ((Activity) context).findViewById(R.id.btn_play);
 		playButton.setOnTouchListener(this);
 
-		rewindButton = (ImageButton) ((Activity) context)
-				.findViewById(R.id.btn_rewind);
-		((RelativeLayout.LayoutParams) playButton.getLayoutParams())
-				.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		((RelativeLayout.LayoutParams) rewindButton.getLayoutParams()).addRule(
-				RelativeLayout.LEFT_OF, playButton.getId());
+		rewindButton = (ImageButton) ((Activity) context).findViewById(R.id.btn_rewind);
+		((RelativeLayout.LayoutParams) playButton.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+		((RelativeLayout.LayoutParams) rewindButton.getLayoutParams()).addRule(RelativeLayout.LEFT_OF,
+				playButton.getId());
 		rewindButton.setOnTouchListener(this);
 		rewindButton.setVisibility(View.INVISIBLE);
 
-		metronomLightImageView = (ImageView) ((Activity) context)
-				.findViewById(R.id.metronom_light);
-		metronomLightImageView
-				.setColorFilter(R.color.abs__background_holo_dark);
+		metronomLightImageView = (ImageView) ((Activity) context).findViewById(R.id.metronom_light);
+		metronomLightImageView.setColorFilter(R.color.abs__background_holo_dark);
 	}
 
 	public void modifyStatusbarForRecorderActivity() {
 		playButton.setVisibility(View.GONE);
 		rewindButton.setVisibility(View.GONE);
-		LayoutParams lp = (LayoutParams) metronomLightImageView
-				.getLayoutParams();
+		LayoutParams lp = (LayoutParams) metronomLightImageView.getLayoutParams();
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
 	}
 
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
 		switch (view.getId()) {
-		case R.id.btn_play:
-			onPlayTouch(event);
-			return true;
-		case R.id.btn_rewind:
-			onRewindTouch(event);
-			return true;
-		default:
-			return false;
+			case R.id.btn_play:
+				onPlayTouch(event);
+				return true;
+			case R.id.btn_rewind:
+				onRewindTouch(event);
+				return true;
+			default:
+				return false;
 		}
 	}
 
@@ -109,12 +102,9 @@ public class Statusbar extends Observable implements OnTouchListener {
 				rewindButton.setVisibility(View.VISIBLE);
 				if (!SoundMixer.getInstance().playAllSoundsInSoundmixer()) {
 					playButton.setImageResource(R.drawable.play_button);
-					Toast.makeText(
-							((Activity) context).getApplicationContext(),
-							R.string.toast_empty_soundmixer, Toast.LENGTH_LONG)
-							.show();
-					HighlightAnimation.highlightViewAnimation(
-							((Activity) context).findViewById(R.id.btn_add));
+					Toast.makeText(((Activity) context).getApplicationContext(), R.string.toast_empty_soundmixer,
+							Toast.LENGTH_LONG).show();
+					HighlightAnimation.highlightViewAnimation(((Activity) context).findViewById(R.id.btn_add));
 					displayPlayButton = true;
 				}
 			} else {

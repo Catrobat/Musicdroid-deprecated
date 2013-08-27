@@ -22,17 +22,18 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import java.io.File;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
 import android.util.Log;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
+
+import java.io.File;
 
 public class AudioHandler {
 	public static AudioHandler instance = null;
@@ -83,11 +84,9 @@ public class AudioHandler {
 
 	public void stopRecording() {
 		recorder.stopRecording();
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
 			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
-		else if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		else if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
 			SoundMixer.getInstance().stopMetronom();
 	}
 
@@ -100,38 +99,29 @@ public class AudioHandler {
 	}
 
 	private void showDialog() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				context);
-		alertDialogBuilder
-				.setMessage(R.string.dialog_warning_file_overwritten_at_record)
-				.setCancelable(true)
-				.setPositiveButton(R.string.dialog_abort,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								layout.resetLayoutToRecord();
-							}
-						})
-				.setNegativeButton(R.string.dialog_continue,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-								checkAndStartPlaybackAndMetronom();
-								recorder.record();
-							}
-						});
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setMessage(R.string.dialog_warning_file_overwritten_at_record).setCancelable(true)
+				.setPositiveButton(R.string.dialog_abort, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						layout.resetLayoutToRecord();
+					}
+				}).setNegativeButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						checkAndStartPlaybackAndMetronom();
+						recorder.record();
+					}
+				});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
 	}
 
 	private void checkAndStartPlaybackAndMetronom() {
-		int metronom = PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY);
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
-			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer()
-					&& metronom > 0)
+		int metronom = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
+			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
 				SoundMixer.getInstance().startMetronom();
 		} else if (metronom > 0) {
 			SoundMixer.getInstance().startMetronom();
@@ -140,8 +130,7 @@ public class AudioHandler {
 
 	public void setFilename(String f) {
 		this.filename = f;
-		layout.updateFilename(FileExtensionMethods.removeFileEnding(
-				this.filename));
+		layout.updateFilename(FileExtensionMethods.removeFileEnding(this.filename));
 	}
 
 	public String getFilenameFullPath() {

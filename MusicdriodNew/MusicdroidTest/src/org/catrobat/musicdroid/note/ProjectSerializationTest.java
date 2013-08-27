@@ -22,21 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+import android.os.Environment;
+import android.text.format.Time;
+
+import junit.framework.TestCase;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import android.os.Environment;
-import android.text.format.Time;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
-
-import junit.framework.TestCase;
 
 public class ProjectSerializationTest extends TestCase {
 
@@ -46,11 +42,9 @@ public class ProjectSerializationTest extends TestCase {
 		Time time = new Time();
 		Track track = new Track();
 		project.addTrack(track);
-		File file = new File(Environment.getExternalStorageDirectory(),
-				"projectSerializedTest");
+		File file = new File(Environment.getExternalStorageDirectory(), "projectSerializedTest");
 
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
-				file));
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 		out.writeObject(project);
 		out.close();
 

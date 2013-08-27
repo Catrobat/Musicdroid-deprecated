@@ -22,14 +22,14 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
 import org.catrobat.musicdroid.dialog.SoundLenghtDialog;
-
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class SoundMixerMenuCallback implements ActionMode.Callback {
 	MainActivity parent = null;
@@ -71,14 +71,14 @@ public class SoundMixerMenuCallback implements ActionMode.Callback {
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.soundmixer_context_bpm:
-			metronomDialog.show(parent.getFragmentManager(), null);
-			mode.finish();
-			break;
-		case R.id.soundmixer_context_length:
-			settingsDialog.show(parent.getFragmentManager(), null);
-			mode.finish();
-			break;
+			case R.id.soundmixer_context_bpm:
+				metronomDialog.show(parent.getFragmentManager(), null);
+				mode.finish();
+				break;
+			case R.id.soundmixer_context_length:
+				settingsDialog.show(parent.getFragmentManager(), null);
+				mode.finish();
+				break;
 		}
 		return false;
 	}

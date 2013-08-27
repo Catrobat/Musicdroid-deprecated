@@ -43,8 +43,7 @@ import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
-public class SoundTrackView extends RelativeLayout implements OnClickListener,
-		View.OnTouchListener {
+public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener {
 	public final static int MINIMAL_WIDTH = 280;
 	public final static int EXPANDED_WIDTH = 400;
 
@@ -83,15 +82,13 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	}
 
 	public void initSoundTrackView() {
-		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				computeWidthRelativeToDuration(), DeviceInfo.getScreenHeight(context) / 6);
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(computeWidthRelativeToDuration(),
+				DeviceInfo.getScreenHeight(context) / 6);
 		setLayoutParams(layoutParams);
-		setBackgroundColor(getResources().getColor(
-				soundTrack.getType().getColorResource()));
+		setBackgroundColor(getResources().getColor(soundTrack.getType().getColorResource()));
 		setOnClickListener(this);
 		setOnTouchListener(this);
-		setRessources(soundTrack.getType().getImageResource(),
-				soundTrack.getName(), soundTrack.getDuration());
+		setRessources(soundTrack.getType().getImageResource(), soundTrack.getName(), soundTrack.getDuration());
 		setFocusableInTouchMode(true);
 
 		if (collapse)
@@ -112,22 +109,21 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	protected void setRessources(int id, String name, int duration) {
 		soundTypeImageView = (ImageView) findViewById(R.id.img_sound_track_type);
 		soundTrackViewSubMenuLayout = (RelativeLayout) findViewById(R.id.sound_track_view_sub_layout);
-		verticalSeperatorView = (View) findViewById(R.id.vertical_seperator);
+		verticalSeperatorView = findViewById(R.id.vertical_seperator);
 		soundtrackDescriptionTextView = (TextView) findViewById(R.id.sound_track_text);
-		horizontalSeperatorView = (View) findViewById(R.id.horizontal_seperator);
+		horizontalSeperatorView = findViewById(R.id.horizontal_seperator);
 		playImageButton = (ImageButton) findViewById(R.id.play_button);
 		volumeImageButton = (ImageButton) findViewById(R.id.volume_button);
 		lockImageButton = (ImageButton) findViewById(R.id.lock_button);
 		expandImageButton = (ImageButton) findViewById(R.id.expand_button);
 
-		RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		vp.addRule(RelativeLayout.CENTER_VERTICAL);
 		soundTypeImageView.setLayoutParams(vp);
 		soundTypeImageView.setImageResource(id);
 
-		soundtrackDescriptionTextView.setText(name + " | "
-				+ StringFormatter.durationStringFromInt(duration));
+		soundtrackDescriptionTextView.setText(name + " | " + StringFormatter.durationStringFromInt(duration));
 
 		volumeImageButton.setOnClickListener(soundTrackViewOnClickListener);
 		playImageButton.setOnClickListener(soundTrackViewOnClickListener);
@@ -137,30 +133,30 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 		soundTypeImageView.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				((MainActivity) getContext()).startActionMode(getId(),
-						soundTrack);
+				((MainActivity) getContext()).startActionMode(getId(), soundTrack);
 				return true;
 			}
 		});
 	}
 
 	final OnClickListener soundTrackViewOnClickListener = new OnClickListener() {
+		@Override
 		public void onClick(final View v) {
 			switch (v.getId()) {
-			case R.id.volume_button:
-				handleOnClickVolumeButton();
-				break;
-			case R.id.play_button:
-				handleOnClickPlayButton();
-				break;
-			case R.id.lock_button:
-				handleOnClickLockButton();
-				break;
-			case R.id.expand_button:
-				handleOnClickExpandButton();
-				break;
-			default:
-				break;
+				case R.id.volume_button:
+					handleOnClickVolumeButton();
+					break;
+				case R.id.play_button:
+					handleOnClickPlayButton();
+					break;
+				case R.id.lock_button:
+					handleOnClickLockButton();
+					break;
+				case R.id.expand_button:
+					handleOnClickExpandButton();
+					break;
+				default:
+					break;
 			}
 		}
 	};
@@ -180,15 +176,12 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	private void handleOnClickPlayButton() {
 		if (displayPlayButton) {
 			displayPlayButton = false;
-			playImageButton
-					.setImageResource(R.drawable.pause_button_sound_track);
+			playImageButton.setImageResource(R.drawable.pause_button_sound_track);
 			Log.e("VOLUME: ", "" + soundTrack.getVolume());
-			SoundManager.playSound(soundTrack.getSoundPoolId(), 1,
-					soundTrack.getVolume());
+			SoundManager.playSound(soundTrack.getSoundPoolId(), 1, soundTrack.getVolume());
 		} else {
 			displayPlayButton = true;
-			playImageButton
-					.setImageResource(R.drawable.play_button_sound_track);
+			playImageButton.setImageResource(R.drawable.play_button_sound_track);
 			SoundManager.stopSound(soundTrack.getSoundPoolId());
 		}
 	}
@@ -217,46 +210,43 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		Toast.makeText(getContext().getApplicationContext(),
-				"You clicked - here's a Toast", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getContext().getApplicationContext(), "You clicked - here's a Toast", Toast.LENGTH_SHORT).show();
 	}
 
+	@Override
 	public boolean onTouch(View view, MotionEvent event) {
 		final int X = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN:
-			getParent().requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view
-					.getLayoutParams();
-			xDelta = X - lParams.leftMargin;
-			break;
-		case MotionEvent.ACTION_MOVE:
-			if (moveableLocked)
+			case MotionEvent.ACTION_DOWN:
+				getParent().requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+				xDelta = X - lParams.leftMargin;
 				break;
+			case MotionEvent.ACTION_MOVE:
+				if (moveableLocked)
+					break;
 
-			getParent().requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view
-					.getLayoutParams();
-			int old_margin = layoutParams.leftMargin;
-			int margin = X - xDelta;
+				getParent().requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+				int old_margin = layoutParams.leftMargin;
+				int margin = X - xDelta;
 
-			if (margin < 0)
-				margin = 0;
-			// if(margin > helper.getScreenWidth()-layoutParams.width) margin =
-			// helper.getScreenWidth()-layoutParams.width;
+				if (margin < 0)
+					margin = 0;
+				// if(margin > helper.getScreenWidth()-layoutParams.width) margin =
+				// helper.getScreenWidth()-layoutParams.width;
 
-			if (margin != old_margin) {
-				layoutParams.leftMargin = margin;
-				int start_point = SoundMixer.getInstance()
-						.getStartPointByPixel(margin);
-				soundTrack.setStartPoint(start_point);
-				SoundMixer.getInstance().updateTimelineOnMove(getId(), margin,
-						start_point, soundTrack.getDuration());
-				view.setLayoutParams(layoutParams);
-			}
-			ret = true;
-			break;
+				if (margin != old_margin) {
+					layoutParams.leftMargin = margin;
+					int start_point = SoundMixer.getInstance().getStartPointByPixel(margin);
+					soundTrack.setStartPoint(start_point);
+					SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, start_point,
+							soundTrack.getDuration());
+					view.setLayoutParams(layoutParams);
+				}
+				ret = true;
+				break;
 		}
 		// invalidate();
 		return ret;
@@ -320,35 +310,28 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 
 		if (lParams.width < MINIMAL_WIDTH)
 			collapse();
-		if (expandImageButton.getVisibility() == View.VISIBLE
-				&& lParams.width >= MINIMAL_WIDTH)
+		if (expandImageButton.getVisibility() == View.VISIBLE && lParams.width >= MINIMAL_WIDTH)
 			expandToFullSize();
 	}
 
 	public void disableView() {
 		setBackgroundColor(Color.GRAY);
-		soundTypeImageView
-				.setColorFilter(R.color.foreground_disabled_holo_dark);
+		soundTypeImageView.setColorFilter(R.color.foreground_disabled_holo_dark);
 		playImageButton.setColorFilter(R.color.foreground_disabled_holo_dark);
 		lockImageButton.setColorFilter(R.color.foreground_disabled_holo_dark);
-		soundtrackDescriptionTextView.setTextColor(getResources().getColor(
-				R.color.foreground_disabled_holo_dark));
-		horizontalSeperatorView.setBackgroundColor(getResources().getColor(
-				R.color.foreground_disabled_holo_dark));
-		verticalSeperatorView.setBackgroundColor(getResources().getColor(
-				R.color.foreground_disabled_holo_dark));
+		soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
+		horizontalSeperatorView.setBackgroundColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
+		verticalSeperatorView.setBackgroundColor(getResources().getColor(R.color.foreground_disabled_holo_dark));
 		playImageButton.setEnabled(false);
 		lockImageButton.setEnabled(false);
 	}
 
 	public void enableView() {
-		setBackgroundColor(getResources().getColor(
-				soundTrack.getType().getColorResource()));
+		setBackgroundColor(getResources().getColor(soundTrack.getType().getColorResource()));
 		soundTypeImageView.setColorFilter(Color.WHITE);
 		playImageButton.setColorFilter(Color.WHITE);
 		lockImageButton.setColorFilter(Color.WHITE);
-		soundtrackDescriptionTextView.setTextColor(getResources().getColor(
-				R.color.custom_background_color));
+		soundtrackDescriptionTextView.setTextColor(getResources().getColor(R.color.custom_background_color));
 		horizontalSeperatorView.setBackgroundColor(Color.WHITE);
 		verticalSeperatorView.setBackgroundColor(Color.WHITE);
 		playImageButton.setEnabled(true);
@@ -358,7 +341,6 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener,
 	public SoundTrack getSoundTrack() {
 		return soundTrack;
 	}
-
 
 	public void alignTrack(int alignment, int alignTo) {
 		RelativeLayout.LayoutParams params = (LayoutParams) this.getLayoutParams();

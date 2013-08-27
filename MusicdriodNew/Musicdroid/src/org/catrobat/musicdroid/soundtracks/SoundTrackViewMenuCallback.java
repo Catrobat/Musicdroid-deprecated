@@ -26,6 +26,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
@@ -64,20 +65,19 @@ public class SoundTrackViewMenuCallback implements ActionMode.Callback {
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.soundtrack_context_edit:
-			Toast.makeText(parent.getBaseContext(),
-					"Editing of tracks not yet implemented ", Toast.LENGTH_LONG)
-					.show();
-			mode.finish();
-			break;
-		case R.id.soundtrack_context_copy:
-			SoundMixer.getInstance().handleCopy();
-			mode.finish();
-			break;
-		case R.id.soundtrack_context_delete:
-			SoundMixer.getInstance().deleteCallingTrack();
-			mode.finish();
-			break;
+			case R.id.soundtrack_context_edit:
+				Toast.makeText(parent.getBaseContext(), "Editing of tracks not yet implemented ", Toast.LENGTH_LONG)
+						.show();
+				mode.finish();
+				break;
+			case R.id.soundtrack_context_copy:
+				SoundMixer.getInstance().handleCopy();
+				mode.finish();
+				break;
+			case R.id.soundtrack_context_delete:
+				SoundMixer.getInstance().deleteCallingTrack();
+				mode.finish();
+				break;
 		}
 		return false;
 	}

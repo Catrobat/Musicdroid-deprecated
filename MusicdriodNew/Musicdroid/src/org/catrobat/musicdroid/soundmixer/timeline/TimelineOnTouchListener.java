@@ -22,9 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -32,6 +29,9 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineOnTouchListener implements OnTouchListener {
 	private Timeline timeline;
@@ -41,8 +41,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 	public TimelineOnTouchListener(Timeline t) {
 		this.timeline = t;
-		startPoint = (ImageButton) timeline
-				.findViewById(R.id.timeline_start_point);
+		startPoint = (ImageButton) timeline.findViewById(R.id.timeline_start_point);
 		endPoint = (ImageButton) timeline.findViewById(R.id.timeline_end_point);
 	}
 
@@ -63,41 +62,39 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	}
 
 	@SuppressWarnings("deprecation")
-	final GestureDetector gestureDetector = new GestureDetector(
-			new GestureDetector.SimpleOnGestureListener() {
-				public void onLongPress(final MotionEvent e) {
-					// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
-					// e.getY());
-					int[] location = { (int) e.getX(), (int) e.getY() };
-					timeline.setClickLocation(location);
-					timeline.startTimelineActionMode();
-				}
-			});
+	final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+		@Override
+		public void onLongPress(final MotionEvent e) {
+			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
+			// e.getY());
+			int[] location = { (int) e.getX(), (int) e.getY() };
+			timeline.setClickLocation(location);
+			timeline.startTimelineActionMode();
+		}
+	});
 
 	private boolean handleStartPointOnTouch(MotionEvent event) {
 		final int X = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN:
-			timeline.requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) startPoint
-					.getLayoutParams();
-			xDelta = X - lParams.leftMargin;
-			break;
-		case MotionEvent.ACTION_MOVE:
-			timeline.requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) startPoint
-					.getLayoutParams();
-			int old_margin = layoutParams.leftMargin;
-			int margin = X - xDelta;
+			case MotionEvent.ACTION_DOWN:
+				timeline.requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
+				xDelta = X - lParams.leftMargin;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				timeline.requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
+				int old_margin = layoutParams.leftMargin;
+				int margin = X - xDelta;
 
-			if (margin != old_margin) {
-				layoutParams.leftMargin = margin;
-				int[] location = { margin, 0 };
-				SoundMixer.getInstance().setStartPoint(location);
-			}
-			ret = true;
-			break;
+				if (margin != old_margin) {
+					layoutParams.leftMargin = margin;
+					int[] location = { margin, 0 };
+					SoundMixer.getInstance().setStartPoint(location);
+				}
+				ret = true;
+				break;
 		}
 		return ret;
 	}
@@ -106,26 +103,24 @@ public class TimelineOnTouchListener implements OnTouchListener {
 		final int X = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN:
-			timeline.requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) endPoint
-					.getLayoutParams();
-			xDelta = X - lParams.leftMargin;
-			break;
-		case MotionEvent.ACTION_MOVE:
-			timeline.requestDisallowInterceptTouchEvent(true);
-			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) endPoint
-					.getLayoutParams();
-			int old_margin = layoutParams.leftMargin;
-			int margin = X - xDelta;
+			case MotionEvent.ACTION_DOWN:
+				timeline.requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
+				xDelta = X - lParams.leftMargin;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				timeline.requestDisallowInterceptTouchEvent(true);
+				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
+				int old_margin = layoutParams.leftMargin;
+				int margin = X - xDelta;
 
-			if (margin != old_margin) {
-				layoutParams.leftMargin = margin;
-				int[] location = { margin, 0 };
-				SoundMixer.getInstance().setEndPoint(location);
-			}
-			ret = true;
-			break;
+				if (margin != old_margin) {
+					layoutParams.leftMargin = margin;
+					int[] location = { margin, 0 };
+					SoundMixer.getInstance().setEndPoint(location);
+				}
+				ret = true;
+				break;
 		}
 		return ret;
 	}

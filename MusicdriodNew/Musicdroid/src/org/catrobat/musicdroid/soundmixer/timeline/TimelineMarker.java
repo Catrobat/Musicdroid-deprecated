@@ -22,17 +22,17 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class TimelineMarker extends View {
 
@@ -41,15 +41,13 @@ public class TimelineMarker extends View {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public TimelineMarker(Context context, int second, int timelineHeight) {
 		super(context);
-		
+
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
-		
-		LayoutParams markerParams = second %5 == 0 ?
-				new RelativeLayout.LayoutParams(2, timelineHeight * 2 / 5) :
-				new RelativeLayout.LayoutParams(2, timelineHeight * 4 / 8);
+
+		LayoutParams markerParams = second % 5 == 0 ? new RelativeLayout.LayoutParams(2, timelineHeight * 2 / 5)
+				: new RelativeLayout.LayoutParams(2, timelineHeight * 4 / 8);
 
 		markerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		markerParams.addRule(RelativeLayout.ALIGN_LEFT);
@@ -57,7 +55,5 @@ public class TimelineMarker extends View {
 		setLayoutParams(markerParams);
 		setBackgroundColor(Color.BLACK);
 	}
-
-
 
 }
