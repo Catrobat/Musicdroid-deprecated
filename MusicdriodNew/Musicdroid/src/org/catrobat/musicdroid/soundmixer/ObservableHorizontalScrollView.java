@@ -33,8 +33,7 @@ public class ObservableHorizontalScrollView extends HorizontalScrollView {
 		super(context);
 	}
 
-	public ObservableHorizontalScrollView(Context context, AttributeSet attrs,
-			int defStyle) {
+	public ObservableHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -42,8 +41,7 @@ public class ObservableHorizontalScrollView extends HorizontalScrollView {
 		super(context, attrs);
 	}
 
-	public void setScrollViewListener(
-			HorizontalScrollViewListener scrollViewListener) {
+	public void setScrollViewListener(HorizontalScrollViewListener scrollViewListener) {
 		this.scrollViewListener = scrollViewListener;
 	}
 

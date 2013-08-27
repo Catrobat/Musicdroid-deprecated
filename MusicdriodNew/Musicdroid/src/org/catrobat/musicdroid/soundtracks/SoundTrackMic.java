@@ -22,12 +22,12 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
+import android.util.Log;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 import org.catrobat.musicdroid.types.SoundType;
-
-import android.util.Log;
 
 public class SoundTrackMic extends SoundTrack {
 	private static final String TAG = SoundTrackMic.class.getSimpleName();

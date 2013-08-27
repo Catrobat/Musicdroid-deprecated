@@ -22,11 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid;
 
-import org.catrobat.musicdroid.recorder.AudioHandler;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
-import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
-import org.catrobat.musicdroid.soundmixer.Statusbar;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +32,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+
+import org.catrobat.musicdroid.recorder.AudioHandler;
+import org.catrobat.musicdroid.recorder.RecorderLayout;
+import org.catrobat.musicdroid.recorder.RecorderMenuCallback;
+import org.catrobat.musicdroid.soundmixer.Statusbar;
 
 public class RecorderActivity extends FragmentActivity {
 	private static final String TAG = RecorderActivity.class.getSimpleName();
@@ -89,10 +89,7 @@ public class RecorderActivity extends FragmentActivity {
 		super.onPause();
 		layout.reset();
 		AudioHandler.getInstance().reset();
-		Log.i(TAG,
-				"OnPause: "
-						+ ((LinearLayout) findViewById(R.id.recorder_activity_layout))
-								.getChildCount());
+		Log.i(TAG, "OnPause: " + ((LinearLayout) findViewById(R.id.recorder_activity_layout)).getChildCount());
 	}
 
 	@Override
@@ -100,11 +97,10 @@ public class RecorderActivity extends FragmentActivity {
 
 		Log.i(TAG, "onOptionsItemSelected");
 		switch (item.getItemId()) {
-		case R.id.btn_settings:
-			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(
-					this);
-			startActionMode(callbackSoundMixerMenu);
-			return true;
+			case R.id.btn_settings:
+				RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(this);
+				startActionMode(callbackSoundMixerMenu);
+				return true;
 		}
 		return false;
 	}
@@ -119,8 +115,7 @@ public class RecorderActivity extends FragmentActivity {
 
 	public void returnToMainActivtiy() {
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra("mic_filename", AudioHandler.getInstance()
-				.getFilenameFullPath());
+		returnIntent.putExtra("mic_filename", AudioHandler.getInstance().getFilenameFullPath());
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
@@ -129,20 +124,18 @@ public class RecorderActivity extends FragmentActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.on_recorder_back_pressed_security_question);
 		builder.setCancelable(true);
-		builder.setNegativeButton(R.string.yes,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						finish();
-					}
-				});
-		builder.setPositiveButton(R.string.no,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		builder.setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				finish();
+			}
+		});
+		builder.setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

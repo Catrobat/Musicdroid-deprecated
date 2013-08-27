@@ -21,13 +21,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.catrobat.musicdroid.tools;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.util.Log;
-
 
 public class Utils {
 
@@ -44,8 +42,8 @@ public class Utils {
 						return true;
 					}
 				}
-				return (pathname.isDirectory() && !pathname.getName().equals("gen") && 
-						!pathname.getName().equals("reports"));
+				return (pathname.isDirectory() && !pathname.getName().equals("gen") && !pathname.getName().equals(
+						"reports"));
 			}
 		});
 

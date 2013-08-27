@@ -22,38 +22,36 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.types.SoundType;
-
 import android.widget.ImageButton;
 
 import com.jayway.android.robotium.solo.Solo;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.types.SoundType;
+
 /**
  * @author matthias
- *
+ * 
  */
 public class TrackCreator {
-	
-	public static void createMicTrack(Solo solo, int durationSeconds)
-	{
+
+	public static void createMicTrack(Solo solo, int durationSeconds) {
 		solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.btn_add));
 		solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
 		solo.sleep(100);
 		solo.clickOnText(solo.getString(SoundType.MIC.getNameResource()));
-		solo.sleep(2000); 
- 	    
+		solo.sleep(2000);
+
 		ImageButton recordButton = (ImageButton) solo.getCurrentActivity().findViewById(R.id.microphone_record_button);
 		solo.clickOnView(recordButton);
 		solo.sleep(1000);
-		
-		if(solo.searchText(solo.getCurrentActivity().getString(R.string.dialog_continue)))
-		{
-    	  solo.clickOnButton(solo.getCurrentActivity().getString(R.string.dialog_continue));
+
+		if (solo.searchText(solo.getCurrentActivity().getString(R.string.dialog_continue))) {
+			solo.clickOnButton(solo.getCurrentActivity().getString(R.string.dialog_continue));
 		}
-		
-		solo.sleep(durationSeconds*1000);
-		
+
+		solo.sleep(durationSeconds * 1000);
+
 		solo.clickOnView(recordButton);
 		solo.sleep(1000);
 		solo.clickOnText(solo.getCurrentActivity().getString(R.string.recorder_add_to_sound_mixer_text));

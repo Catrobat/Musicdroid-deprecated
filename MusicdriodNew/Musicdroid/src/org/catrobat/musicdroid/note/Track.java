@@ -56,7 +56,7 @@ public class Track implements Serializable {
 	public Tact getTact() {
 		return tact;
 	}
-	
+
 	public int getBeatsPerMinute() {
 		return beatsPerMinute;
 	}
@@ -85,7 +85,8 @@ public class Track implements Serializable {
 
 		Track track = (Track) obj;
 
-		if ((key.equals(track.getKey())) && (tact.equals(track.getTact()) && (beatsPerMinute == track.getBeatsPerMinute()))
+		if ((key.equals(track.getKey()))
+				&& (tact.equals(track.getTact()) && (beatsPerMinute == track.getBeatsPerMinute()))
 				&& (size() == track.size())) {
 			for (int i = 0; i < size(); i++) {
 				if (!getSymbol(i).equals(track.getSymbol(i))) {

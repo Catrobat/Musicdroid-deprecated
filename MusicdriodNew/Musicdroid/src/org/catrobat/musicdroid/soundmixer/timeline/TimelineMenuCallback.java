@@ -22,13 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer.timeline;
 
-import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.soundmixer.SoundMixer;
-
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.catrobat.musicdroid.MainActivity;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineMenuCallback implements ActionMode.Callback {
 	MainActivity parent = null;
@@ -69,14 +69,14 @@ public class TimelineMenuCallback implements ActionMode.Callback {
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.timeline_context_add_start_point:
-			SoundMixer.getInstance().setStartPoint(timeline.getClickLocation());
-			mode.finish();
-			break;
-		case R.id.timeline_context_add_end_point:
-			SoundMixer.getInstance().setEndPoint(timeline.getClickLocation());
-			mode.finish();
-			break;
+			case R.id.timeline_context_add_start_point:
+				SoundMixer.getInstance().setStartPoint(timeline.getClickLocation());
+				mode.finish();
+				break;
+			case R.id.timeline_context_add_end_point:
+				SoundMixer.getInstance().setEndPoint(timeline.getClickLocation());
+				mode.finish();
+				break;
 		}
 		return false;
 	}

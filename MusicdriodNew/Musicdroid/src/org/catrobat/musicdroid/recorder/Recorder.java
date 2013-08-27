@@ -22,13 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.IOException;
 
 public class Recorder {
 	private static final String TAG = Recorder.class.getSimpleName();
@@ -92,8 +92,7 @@ public class Recorder {
 	}
 
 	private void setPreferences() {
-		Log.i(TAG, "Filename = "
-				+ AudioHandler.getInstance().getFilenameFullPath());
+		Log.i(TAG, "Filename = " + AudioHandler.getInstance().getFilenameFullPath());
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		recorder.setOutputFile(AudioHandler.getInstance().getFilenameFullPath());
@@ -103,8 +102,7 @@ public class Recorder {
 	private void sendDurationMessage() {
 		Message msg = new Message();
 		Bundle b = new Bundle();
-		b.putInt("duration",
-				(int) ((System.currentTimeMillis() - startTime) / 1000));
+		b.putInt("duration", (int) ((System.currentTimeMillis() - startTime) / 1000));
 		msg.setData(b);
 		layout.sendMessage(msg);
 	}

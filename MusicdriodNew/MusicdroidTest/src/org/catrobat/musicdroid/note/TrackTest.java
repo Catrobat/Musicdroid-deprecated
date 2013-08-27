@@ -106,7 +106,8 @@ public class TrackTest extends TestCase {
 		Key key = Key.BASS;
 		Track track = new Track(key, new Tact(), 60);
 
-		assertEquals("[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
+		assertEquals(
+				"[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
 				track.toString());
 	}
 }
