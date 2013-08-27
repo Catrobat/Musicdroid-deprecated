@@ -24,9 +24,7 @@ package org.catrobat.musicdroid;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import org.catrobat.musicdroid.R;
+
 import org.catrobat.musicdroid.note.draw.DrawTrackView;
 import org.catrobat.musicdroid.recorder.RecorderLayout;
 

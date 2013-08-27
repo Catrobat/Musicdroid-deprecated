@@ -34,6 +34,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
+
 import org.catrobat.musicdroid.note.Track;
 
 /**
@@ -91,10 +92,8 @@ public class DrawTrackView extends View {
 		xEndPositionOfLine = this.screenWidth - PADDING_BETWEEN_SYMBOLS;
 		this.yCenter = screenHeight / 2;
 		this.xStartPositionOfLine = PADDING_BETWEEN_SYMBOLS;
-		this.distanceBetweenLines = screenHeight
-				/ POSSIBLE_LINE_SPACES_ON_SCREEN;
-		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS
-				* distanceBetweenLines;
+		this.distanceBetweenLines = screenHeight / POSSIBLE_LINE_SPACES_ON_SCREEN;
+		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS * distanceBetweenLines;
 		paint.setColor(Color.BLACK);
 
 		drawLines();
@@ -110,10 +109,8 @@ public class DrawTrackView extends View {
 	private void drawLines() {
 
 		for (int lineDistanceFromCenterLine = -NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine <= NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine++) {
-			int actualLinePosition = yCenter + lineDistanceFromCenterLine
-					* distanceBetweenLines;
-			canvas.drawLine(xStartPositionOfLine, actualLinePosition,
-					xEndPositionOfLine, actualLinePosition, paint);
+			int actualLinePosition = yCenter + lineDistanceFromCenterLine * distanceBetweenLines;
+			canvas.drawLine(xStartPositionOfLine, actualLinePosition, xEndPositionOfLine, actualLinePosition, paint);
 		}
 
 	}
@@ -134,15 +131,15 @@ public class DrawTrackView extends View {
 	}
 
 	private void drawThinBar(int xBarStartPosition) {
-		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
-				xBarStartPosition + THIN_BAR_WIDTH, yCenter + halfBarHeight);
+		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight, xBarStartPosition + THIN_BAR_WIDTH, yCenter
+				+ halfBarHeight);
 
 		canvas.drawRect(boldBar, paint);
 	}
 
 	private void drawBoldBar(int xBarStartPosition) {
-		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight,
-				xBarStartPosition + BOLD_BAR_WIDTH, yCenter + halfBarHeight);
+		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight, xBarStartPosition + BOLD_BAR_WIDTH, yCenter
+				+ halfBarHeight);
 
 		canvas.drawRect(boldBar, paint);
 	}
@@ -152,14 +149,11 @@ public class DrawTrackView extends View {
 		Bitmap bm = BitmapFactory.decodeResource(res, idOfKeyImage);
 		int keyHeight = distanceBetweenLines * HEIGHT_OF_KEY_IN_LINE_SPACES;
 
-		Point leftUpperOfRect = new Point(xStartPositionOfLine
-				+ PADDING_BETWEEN_SYMBOLS, yCenter - keyHeight / 2);
+		Point leftUpperOfRect = new Point(xStartPositionOfLine + PADDING_BETWEEN_SYMBOLS, yCenter - keyHeight / 2);
 
-		Point rightBottomOfRect = new Point(xStartPositionOfLine
-				+ distanceBetweenLines * 3, yCenter + keyHeight / 2);
+		Point rightBottomOfRect = new Point(xStartPositionOfLine + distanceBetweenLines * 3, yCenter + keyHeight / 2);
 
-		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y,
-				rightBottomOfRect.x, rightBottomOfRect.y);
+		Rect rect = new Rect(leftUpperOfRect.x, leftUpperOfRect.y, rightBottomOfRect.x, rightBottomOfRect.y);
 
 		canvas.drawBitmap(bm, null, rect, null);
 	}

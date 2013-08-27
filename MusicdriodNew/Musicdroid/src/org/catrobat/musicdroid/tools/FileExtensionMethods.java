@@ -24,7 +24,7 @@ package org.catrobat.musicdroid.tools;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class FileExtensionMethods {
 	public static String getFilenameFromPath(String path) {

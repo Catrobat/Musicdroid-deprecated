@@ -47,8 +47,7 @@ public class TimelineTrackPosition extends View {
 	}
 
 	private void addTrackPosition() {
-		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2,
-				LayoutParams.WRAP_CONTENT);
+		LayoutParams seperatorParams = new RelativeLayout.LayoutParams(2, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		seperatorParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		setLayoutParams(seperatorParams);
 		setBackgroundColor(context.getResources().getColor(colorId));

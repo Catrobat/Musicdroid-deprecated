@@ -22,14 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.Break;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.NoteName;
-import org.catrobat.musicdroid.note.Symbol;
-import org.catrobat.musicdroid.note.Tact;
-import org.catrobat.musicdroid.note.Track;
 import junit.framework.TestCase;
 
 public class TrackTest extends TestCase {
@@ -114,7 +106,8 @@ public class TrackTest extends TestCase {
 		Key key = Key.BASS;
 		Track track = new Track(key, new Tact(), 60);
 
-		assertEquals("[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
+		assertEquals(
+				"[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
 				track.toString());
 	}
 }
