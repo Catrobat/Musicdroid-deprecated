@@ -22,15 +22,15 @@
  ******************************************************************************/
 package org.catrobat.musicdroid;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class SoundManager {
 
@@ -55,8 +55,7 @@ public class SoundManager {
 		soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
 		soundPoolMap = new HashMap<Integer, Integer>();
 		soundPlayMap = new HashMap<Integer, Integer>();
-		audioManager = (AudioManager) context
-				.getSystemService(Context.AUDIO_SERVICE);
+		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 
 	public static void addSound(int Index, int SoundID) {
@@ -77,18 +76,14 @@ public class SoundManager {
 	}
 
 	public static void loadSounds() {
-		soundPoolMap.put(soundPlayMap.size() + 1,
-				soundPool.load(context, R.raw.test_midi, 1));
-		soundPoolMap.put(soundPlayMap.size() + 1,
-				soundPool.load(context, R.raw.test_wav, 1));
+		soundPoolMap.put(soundPlayMap.size() + 1, soundPool.load(context, R.raw.test_midi, 1));
+		soundPoolMap.put(soundPlayMap.size() + 1, soundPool.load(context, R.raw.test_wav, 1));
 	}
 
 	public static void playSoundByRawId(int raw_id, float speed) {
-		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
 		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>) it
-					.next();
+			HashMap.Entry<Integer, Integer> pairs = it.next();
 			if (pairs.getValue() == raw_id) {
 				playSound(pairs.getKey(), speed, 1);
 				return;
@@ -97,11 +92,9 @@ public class SoundManager {
 	}
 
 	public static void stopSoundByRawId(int raw_id) {
-		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
 		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>) it
-					.next();
+			HashMap.Entry<Integer, Integer> pairs = it.next();
 			if (pairs.getValue() == raw_id) {
 				stopSound(pairs.getKey());
 				return;
@@ -110,10 +103,8 @@ public class SoundManager {
 	}
 
 	public static void playSound(int index, float speed, float volume) {
-		float streamVolume = audioManager
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume
-				/ audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
 		Log.i("SoundManager", "SoundPoolID = " + index);
 		int poolId = soundPoolMap.get(index);
@@ -123,11 +114,9 @@ public class SoundManager {
 	}
 
 	public static void stopAllSounds() {
-		Iterator<Entry<Integer, Integer>> it = soundPlayMap.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Integer>> it = soundPlayMap.entrySet().iterator();
 		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = (Entry<Integer, Integer>) it
-					.next();
+			HashMap.Entry<Integer, Integer> pairs = it.next();
 			soundPool.stop(pairs.getValue());
 		}
 		soundPlayMap.clear();

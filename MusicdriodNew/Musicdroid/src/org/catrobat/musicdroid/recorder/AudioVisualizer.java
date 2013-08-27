@@ -22,9 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +29,9 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
+
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
 
 public class AudioVisualizer extends Handler {
 	private static final int MAX_AMPLITUDE = 32800;
@@ -41,18 +41,15 @@ public class AudioVisualizer extends Handler {
 
 	public AudioVisualizer(Context context) {
 		this.context = context;
-		equalizerView = (View) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_equalizer);
-		microphoneImageView = (ImageView) ((RecorderActivity) context)
-				.findViewById(R.id.microphone);
+		equalizerView = ((RecorderActivity) context).findViewById(R.id.microphone_equalizer);
+		microphoneImageView = (ImageView) ((RecorderActivity) context).findViewById(R.id.microphone);
 	}
 
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle b = msg.getData();
 		int amplitude = b.getInt("amplitude");
-		int newHeight = microphoneImageView.getHeight() * amplitude
-				/ MAX_AMPLITUDE;
+		int newHeight = microphoneImageView.getHeight() * amplitude / MAX_AMPLITUDE;
 		LayoutParams params = (LayoutParams) equalizerView.getLayoutParams();
 		params.height = newHeight;
 		params.width = microphoneImageView.getWidth();

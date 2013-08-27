@@ -26,20 +26,19 @@ import android.util.Log;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class CommunicationThread extends Thread {
 	private RecorderMessageDispatcher messageDispatcher = null;
 	private Recorder recorder = null;
 	private long startTime;
 	private boolean stop = false;
-	
-	public CommunicationThread(RecorderMessageDispatcher dispatcher, Recorder recorder)
-	{
+
+	public CommunicationThread(RecorderMessageDispatcher dispatcher, Recorder recorder) {
 		this.messageDispatcher = dispatcher;
 		this.recorder = recorder;
 	}
-	
+
 	@Override
 	public void run() {
 		stop = false;
@@ -48,21 +47,19 @@ public class CommunicationThread extends Thread {
 		while (!stop) {
 			try {
 				Thread.sleep(125);
-			    sendCommunicationMessages(sleepCounter);
+				sendCommunicationMessages(sleepCounter);
 				sleepCounter = sleepCounter + 1;
 			} catch (Exception e) {
 				Log.v("Error", e.toString());
 			}
 		}
 	}
-	
-	public void stopThread()
-	{
+
+	public void stopThread() {
 		stop = true;
 	}
-	
-	private void sendCommunicationMessages(int sleepCounter)
-	{
+
+	private void sendCommunicationMessages(int sleepCounter) {
 		if (sleepCounter % 8 == 0)
 			messageDispatcher.sendDurationMessage(startTime);
 

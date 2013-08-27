@@ -28,8 +28,9 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
 public class HighlightAnimation {
-	private HighlightAnimation() {}
-	
+	private HighlightAnimation() {
+	}
+
 	public static void highlightViewAnimation(View v) {
 		final Animation animation = new AlphaAnimation(1, 0);
 		animation.setDuration(750);

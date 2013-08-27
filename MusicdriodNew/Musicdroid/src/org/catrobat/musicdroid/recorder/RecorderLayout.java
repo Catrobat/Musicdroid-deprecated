@@ -22,10 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-import org.catrobat.musicdroid.tools.StringFormatter;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +33,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class RecorderLayout extends Handler {
 	private Context context = null;
@@ -51,7 +51,6 @@ public class RecorderLayout extends Handler {
 	private boolean inStateRecording = false;
 	private boolean inStatePlaying = false;
 	private int pixelPerSecond = 0;
-	
 
 	public RecorderLayout(Context context) {
 		init(context);
@@ -60,26 +59,19 @@ public class RecorderLayout extends Handler {
 	private void init(Context context) {
 		this.context = context;
 
-		filenameTextView = (TextView) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_filename);
-		recordImageButton = (ImageButton) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_record_button);
-		recordDurationTextView = (TextView) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_duration_text);
-		playImageButton = (ImageButton) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_play_button);
-		progressBarView = (View) ((RecorderActivity) context)
-				.findViewById(R.id.microphone_progress_bar);
-		progressBarBox = (RelativeLayout) (View) ((RecorderActivity) context)
+		filenameTextView = (TextView) ((RecorderActivity) context).findViewById(R.id.microphone_filename);
+		recordImageButton = (ImageButton) ((RecorderActivity) context).findViewById(R.id.microphone_record_button);
+		recordDurationTextView = (TextView) ((RecorderActivity) context).findViewById(R.id.microphone_duration_text);
+		playImageButton = (ImageButton) ((RecorderActivity) context).findViewById(R.id.microphone_play_button);
+		progressBarView = ((RecorderActivity) context).findViewById(R.id.microphone_progress_bar);
+		progressBarBox = (RelativeLayout) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_progress_bar_box);
-		addToSoundMixerBox = (RelativeLayout) (View) ((RecorderActivity) context)
+		addToSoundMixerBox = (RelativeLayout) ((RecorderActivity) context)
 				.findViewById(R.id.microphone_add_to_sound_mixer_box);
 
 		reorderToRecordLayout();
 
-		RecorderOnClickListener onClickListener = new RecorderOnClickListener(
-															(RecorderActivity)context, 
-															this);
+		RecorderOnClickListener onClickListener = new RecorderOnClickListener((RecorderActivity) context, this);
 		filenameTextView.setOnLongClickListener(onClickListener);
 		recordImageButton.setColorFilter(Color.RED);
 		recordImageButton.setOnClickListener(onClickListener);
@@ -91,14 +83,11 @@ public class RecorderLayout extends Handler {
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle data = msg.getData();
-		if (data.containsKey("duration")) 
-		{
+		if (data.containsKey("duration")) {
 			int duration = data.getInt("duration");
-			if(recordDurationTextView != null)
-			  recordDurationTextView.setText(StringFormatter.durationStringFromInt(duration));
-		} 
-		else if (data.containsKey("trackposition")) 
-		{
+			if (recordDurationTextView != null)
+				recordDurationTextView.setText(StringFormatter.durationStringFromInt(duration));
+		} else if (data.containsKey("trackposition")) {
 			int position = data.getInt("trackposition");
 			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
 			params.width = pixelPerSecond * position;
@@ -106,51 +95,41 @@ public class RecorderLayout extends Handler {
 		}
 	}
 
-	public void updateLayoutOnRecordStart()
-	{
+	public void updateLayoutOnRecordStart() {
 		inStateRecording = true;
 		if (playImageButton.getVisibility() == View.VISIBLE)
 			reorderToRecordLayout();
 
-		recordImageButton.setImageDrawable(context.getResources()
-				.getDrawable(R.drawable.pause_button));
+		recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
 		recordImageButton.setColorFilter(Color.WHITE);
 	}
-	
-	public void updateLayoutOnRecordStop()
-	{
+
+	public void updateLayoutOnRecordStop() {
 		inStateRecording = false;
-		recordImageButton.setImageDrawable(context.getResources()
-				.getDrawable(R.drawable.record_button));
+		recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 		recordImageButton.setColorFilter(Color.RED);
 		soundRecorded = true;
 		reorderToPlayLayout();
 	}
-	
-	public void updateLayoutOnPlay()
-	{
+
+	public void updateLayoutOnPlay() {
 		inStatePlaying = true;
-		playImageButton.setImageDrawable(context.getResources()
-				.getDrawable(R.drawable.pause_button));
+		playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
 	}
-	
-	public void updateLayoutOnPause()
-	{
+
+	public void updateLayoutOnPause() {
 		inStatePlaying = false;
-		playImageButton.setImageDrawable(context.getResources()
-				.getDrawable(R.drawable.play_button));
+		playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
 	}
 
 	public void handlePlaySoundComplete() {
 		inStatePlaying = false;
-		playImageButton.setImageDrawable(context.getResources().getDrawable(
-				R.drawable.play_button));
+		playImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.play_button));
 	}
 
 	public void resetLayoutToRecord() {
 		inStateRecording = false;
-		recordImageButton.setImageDrawable(context.getResources().getDrawable(
-				R.drawable.record_button));
+		recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 		recordImageButton.setColorFilter(Color.RED);
 		if (!recordDurationTextView.getText().equals("00:00"))
 			reorderToPlayLayout();
@@ -163,8 +142,7 @@ public class RecorderLayout extends Handler {
 	public void setTrackDuration(int duration) {
 		int width = progressBarBox.getWidth();
 		pixelPerSecond = width / duration;
-		Log.i("RecorderLayout", "setTrackDuration: width = " + width
-				+ " duration = " + duration);
+		Log.i("RecorderLayout", "setTrackDuration: width = " + width + " duration = " + duration);
 	}
 
 	private void reorderToRecordLayout() {
@@ -173,10 +151,8 @@ public class RecorderLayout extends Handler {
 		progressBarBox.setVisibility(View.GONE);
 		playImageButton.setVisibility(View.GONE);
 
-		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
-				RelativeLayout.ALIGN_PARENT_LEFT, 0);
-		((LayoutParams) recordImageButton.getLayoutParams())
-				.addRule(RelativeLayout.CENTER_IN_PARENT);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT);
 	}
 
 	private void reorderToPlayLayout() {
@@ -185,18 +161,16 @@ public class RecorderLayout extends Handler {
 		progressBarBox.setVisibility(View.VISIBLE);
 		playImageButton.setVisibility(View.VISIBLE);
 
-		((LayoutParams) recordImageButton.getLayoutParams()).addRule(
-				RelativeLayout.CENTER_IN_PARENT, 0);
-		((LayoutParams) recordImageButton.getLayoutParams())
-				.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+		((LayoutParams) recordImageButton.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 	}
 
-	public void setFilename(String filename){
+	public void setFilename(String filename) {
 		if (filenameTextView == null)
 			return;
 		filenameTextView.setText(filename);
 	}
-	
+
 	public void reset() {
 		recordDurationTextView = null;
 	}
@@ -204,11 +178,11 @@ public class RecorderLayout extends Handler {
 	public boolean isSoundRecorded() {
 		return soundRecorded;
 	}
-	
+
 	public boolean inStatePlaying() {
 		return inStatePlaying;
 	}
-	
+
 	public boolean inStateRecording() {
 		return inStateRecording;
 	}

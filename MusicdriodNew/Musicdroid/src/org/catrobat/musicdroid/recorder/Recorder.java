@@ -22,15 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import java.io.IOException;
+import android.content.Context;
+import android.media.MediaRecorder;
+import android.util.Log;
 
 import org.catrobat.musicdroid.RecorderActivity;
 
-import android.content.Context;
-import android.media.MediaRecorder;
-import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
+import java.io.IOException;
 
 public class Recorder {
 	private Context context = null;
@@ -47,7 +45,7 @@ public class Recorder {
 	public boolean record() {
 		recorder = new MediaRecorder();
 		communicationThread = new CommunicationThread(messageDispatcher, this);
-		
+
 		setPreferences();
 		try {
 			recorder.prepare();
@@ -74,13 +72,11 @@ public class Recorder {
 	private void setPreferences() {
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		recorder.setOutputFile(((RecorderActivity)context).
-					getCurrentRecordingSession().getPathToFile());
+		recorder.setOutputFile(((RecorderActivity) context).getCurrentRecordingSession().getPathToFile());
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 	}
-	
-	public int getMaxAmplitude()
-	{
+
+	public int getMaxAmplitude() {
 		return recorder.getMaxAmplitude();
 	}
 

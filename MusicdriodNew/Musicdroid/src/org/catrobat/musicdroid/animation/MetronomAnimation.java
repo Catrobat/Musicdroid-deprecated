@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.animation;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
+
 import org.catrobat.musicdroid.R;
 
 public class MetronomAnimation extends AnimationDrawable {
@@ -37,7 +38,7 @@ public class MetronomAnimation extends AnimationDrawable {
 	public MetronomAnimation(Context context, double beatsPerMinute) {
 		new AnimationDrawable();
 		this.context = context;
-		
+
 		computeValues(beatsPerMinute);
 
 		createBeatFrames(0);
@@ -45,17 +46,15 @@ public class MetronomAnimation extends AnimationDrawable {
 
 		setOneShot(false);
 	}
-	
-	private void createBeatFrames(int startBeat)
-	{
+
+	private void createBeatFrames(int startBeat) {
 		addBlinkingFrames(R.drawable.metronom_light_tick, getIntervalLength(startBeat));
 		for (int i = startBeat + 1; i <= startBeat + 3; i++) {
 			addBlinkingFrames(R.drawable.metronom_light_tock, getIntervalLength(i));
 		}
 	}
-	
-	private void addBlinkingFrames(int drawableRessource, int intervalLength)
-	{
+
+	private void addBlinkingFrames(int drawableRessource, int intervalLength) {
 		addFrame(context.getResources().getDrawable(drawableRessource), intervalTick);
 		addFrame(context.getResources().getDrawable(R.drawable.metronom_light), getIntervalLength(0));
 	}
@@ -74,10 +73,9 @@ public class MetronomAnimation extends AnimationDrawable {
 		sign = roundError < 0 ? -1 : 1;
 		numIterationsToOneMs = Math.abs((int) Math.round(1 / roundError));
 
-		Log.i("MetronomAnimation", "SPB = " + secondsPerBeat
-				+ " intervalTick = " + intervalTick + " intervalTock = "+ intervalTock);
-		Log.i("MetronomAnimation", "RoundError = " + roundError
-				+ " NumIterMs = " + numIterationsToOneMs);
+		Log.i("MetronomAnimation", "SPB = " + secondsPerBeat + " intervalTick = " + intervalTick + " intervalTock = "
+				+ intervalTock);
+		Log.i("MetronomAnimation", "RoundError = " + roundError + " NumIterMs = " + numIterationsToOneMs);
 	}
 
 }

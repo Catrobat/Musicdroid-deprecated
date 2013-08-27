@@ -22,13 +22,13 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import java.io.IOException;
-
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.IOException;
 
 public class Player {
 	private RecorderLayout layout = null;
@@ -62,6 +62,7 @@ public class Player {
 
 		mediaPlayer.setOnPreparedListener(new OnPreparedListener() {
 
+			@Override
 			public void onPrepared(MediaPlayer mp) {
 				Log.i("Player", "Prepared");
 				int duration = mediaPlayer.getDuration();
@@ -72,12 +73,12 @@ public class Player {
 			}
 		});
 
-		mediaPlayer
-				.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-					public void onCompletion(MediaPlayer mp) {
-						stopPlaying();
-					}
-				});
+		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				stopPlaying();
+			}
+		});
 	}
 
 	public void stopPlaying() {

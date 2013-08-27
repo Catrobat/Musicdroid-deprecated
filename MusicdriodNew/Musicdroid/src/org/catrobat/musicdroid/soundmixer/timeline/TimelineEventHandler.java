@@ -28,9 +28,8 @@ import android.os.Message;
 
 public class TimelineEventHandler extends Handler {
 	private Timeline timeline = null;
-	
-	public TimelineEventHandler(Timeline timeline)
-	{
+
+	public TimelineEventHandler(Timeline timeline) {
 		this.timeline = timeline;
 	}
 
