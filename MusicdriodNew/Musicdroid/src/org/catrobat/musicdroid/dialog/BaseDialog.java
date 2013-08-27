@@ -24,6 +24,7 @@ package org.catrobat.musicdroid.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+
 import org.catrobat.musicdroid.R;
 
 public class BaseDialog extends Dialog {

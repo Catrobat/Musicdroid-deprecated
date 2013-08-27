@@ -28,24 +28,22 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 /**
  * @author matthias
- *
+ * 
  */
 public class FileExtensionMethodsTest extends TestCase {
 
-	public void testGetFilenameFromPath()
-	{
+	public void testGetFilenameFromPath() {
 		String path = "/dummy/test/check.xml";
 		assertTrue((FileExtensionMethods.getFilenameFromPath(path)).equals("check"));
-		
+
 		path = "/dummy/test/check";
 		assertTrue((FileExtensionMethods.getFilenameFromPath(path)).equals("check"));
 	}
-	
-	public void testRemoveExtension()
-	{
+
+	public void testRemoveExtension() {
 		String filename = "check.xml";
 		assertTrue((FileExtensionMethods.removeFileEnding(filename)).equals("check"));
-		
+
 		filename = "check";
 		assertTrue((FileExtensionMethods.removeFileEnding(filename)).equals("check"));
 	}

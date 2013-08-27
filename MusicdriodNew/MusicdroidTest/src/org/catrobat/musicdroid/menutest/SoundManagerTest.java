@@ -23,19 +23,18 @@
 package org.catrobat.musicdroid.menutest;
 
 import android.test.ActivityInstrumentationTestCase2;
+
 import org.catrobat.musicdroid.MainActivity;
 
-
 public class SoundManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	
+
 	public SoundManagerTest(Class<MainActivity> activityClass) {
 		super(activityClass);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void testPlaySound()
-	{
+	public void testPlaySound() {
 
 	}
-	
+
 }
