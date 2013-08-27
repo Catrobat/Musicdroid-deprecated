@@ -22,30 +22,29 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.recorder;
 
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.RecorderActivity;
-import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.dialog.ChangeFilenameDialog;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class RecorderOnClickListener implements OnClickListener, OnLongClickListener {
 	private RecorderActivity recorderActivity;
 	private RecorderLayout recorderLayout;
 	private AudioHandler audioHandler;
-	
-	public RecorderOnClickListener(RecorderActivity activity, RecorderLayout layout)
-	{
+
+	public RecorderOnClickListener(RecorderActivity activity, RecorderLayout layout) {
 		recorderActivity = activity;
 		recorderLayout = layout;
 		audioHandler = new AudioHandler(activity, layout);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.microphone_record_button) {
@@ -66,33 +65,27 @@ public class RecorderOnClickListener implements OnClickListener, OnLongClickList
 		}
 		return false;
 	}
-	
+
 	private void handleOnFilenameLongClick() {
 		ChangeFilenameDialog dialog = new ChangeFilenameDialog();
-		dialog.show(((RecorderActivity) recorderActivity).getFragmentManager(), null);
+		dialog.show(recorderActivity.getFragmentManager(), null);
 	}
 
 	private void handleOnRecordClick() {
-		if(recorderLayout.inStateRecording())
-		{
+		if (recorderLayout.inStateRecording()) {
 			audioHandler.stopRecording();
 			recorderLayout.updateLayoutOnRecordStop();
-		}
-		else
-		{
+		} else {
 			audioHandler.startRecording(recorderActivity.getCurrentRecordingSession());
 			recorderLayout.updateLayoutOnRecordStart();
 		}
 	}
 
 	private void handleOnPlayClick() {
-		if(recorderLayout.inStatePlaying())
-		{
+		if (recorderLayout.inStatePlaying()) {
 			audioHandler.stopRecordedFile();
 			recorderLayout.updateLayoutOnPause();
-		}
-		else
-		{
+		} else {
 			audioHandler.playRecordedFile(recorderActivity.getCurrentRecordingSession());
 			recorderLayout.updateLayoutOnPlay();
 		}

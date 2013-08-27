@@ -26,7 +26,7 @@ import java.io.File;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class FileExtensionMethods {
 	public static String getFilenameFromPath(String path) {
@@ -50,13 +50,10 @@ public class FileExtensionMethods {
 		}
 		return file;
 	}
-	
 
-	
-	public static void checkPathExistsAndCreateDirectory(String path)
-	{
+	public static void checkPathExistsAndCreateDirectory(String path) {
 		File f = new File(path);
-		if(!f.exists())
-		  f.mkdir();
+		if (!f.exists())
+			f.mkdir();
 	}
 }

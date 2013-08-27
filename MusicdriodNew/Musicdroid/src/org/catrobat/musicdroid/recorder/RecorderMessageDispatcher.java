@@ -27,12 +27,12 @@ import android.os.Message;
 
 /**
  * @author matthias
- *
+ * 
  */
 public class RecorderMessageDispatcher {
-	private RecorderLayout recorderLayout; 
+	private RecorderLayout recorderLayout;
 	private AudioVisualizer audioVisualizer;
-	
+
 	public RecorderMessageDispatcher(RecorderLayout layout, AudioVisualizer visualizer) {
 		recorderLayout = layout;
 		audioVisualizer = visualizer;

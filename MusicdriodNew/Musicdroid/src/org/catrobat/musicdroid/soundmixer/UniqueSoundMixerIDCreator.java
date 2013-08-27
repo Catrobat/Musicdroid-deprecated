@@ -22,27 +22,25 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.util.Log;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author matthias
- *
+ * 
  */
 public class UniqueSoundMixerIDCreator {
 	AtomicInteger atomicInteger;
-	
-	public UniqueSoundMixerIDCreator()
-	{
+
+	public UniqueSoundMixerIDCreator() {
 		atomicInteger = new AtomicInteger();
 	}
-	
-	public int getNewId()
-	{
+
+	public int getNewId() {
 		int newId = atomicInteger.incrementAndGet();
 		Log.i("UniqueID", "NewID = " + newId);
 		return newId;
 	}
-	
+
 }

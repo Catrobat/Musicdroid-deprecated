@@ -26,18 +26,17 @@ import android.os.Environment;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class RecordingSession {
 	private String path = null;
 	private String filename = null;
-	
-	public RecordingSession()
-	{
+
+	public RecordingSession() {
 		this.path = Environment.getExternalStorageDirectory().getAbsolutePath();
 		this.filename = "test.mp3";
 	}
-	
+
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
@@ -45,8 +44,8 @@ public class RecordingSession {
 	public String getPathToFile() {
 		return path + "/" + filename;
 	}
-	
-	public String getFilename(){
+
+	public String getFilename() {
 		return filename;
 	}
 

@@ -26,6 +26,7 @@ import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.widget.ImageView;
+
 import org.catrobat.musicdroid.animation.MetronomAnimation;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
@@ -55,10 +56,8 @@ public class Metronom {
 
 	private void initializeValues() {
 		metronomView = Statusbar.getInstance().getMetronomLight();
-		beatsPerMinute = PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_BPM_KEY);
-		metronomState = PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY);
+		beatsPerMinute = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
+		metronomState = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
 		audioGenerator.createPlayer();
 		beat = 4;
 		sound = 261.63;

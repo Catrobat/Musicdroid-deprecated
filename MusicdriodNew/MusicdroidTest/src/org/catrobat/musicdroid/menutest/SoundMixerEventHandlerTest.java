@@ -22,26 +22,24 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.menutest;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import android.test.ActivityInstrumentationTestCase2;
+
+import com.jayway.android.robotium.solo.Solo;
+
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.SoundMixerEventHandler;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
-import org.catrobat.musicdroid.soundtrack.SoundTrackDummy;
-import org.catrobat.musicdroid.soundtracks.SoundTrackView;
-import org.catrobat.musicdroid.types.SoundType;
 
-import com.jayway.android.robotium.solo.Solo;
+import java.util.Observable;
+import java.util.Observer;
 
 public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2<MainActivity> implements Observer {
 	protected SoundMixerEventHandler eventHandler = null;
 	protected UITestHelper uiHelper = null;
 	protected Solo solo = null;
-	
+
 	public SoundMixerEventHandlerTest(Class<MainActivity> activityClass) {
 		super(activityClass);
 	}
@@ -49,7 +47,7 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 	public SoundMixerEventHandlerTest() {
 		super(MainActivity.class);
 	}
-	
+
 	@Override
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
@@ -57,34 +55,32 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 		eventHandler = SoundMixer.getInstance().getEventHandler();
 		eventHandler.addObserver(this);
 	}
-	
-	@Override
-	protected void tearDown()
-	{
-		solo.finishOpenedActivities();
-	}	
 
-	public void testObserver()
-	{
+	@Override
+	protected void tearDown() {
+		solo.finishOpenedActivities();
+	}
+
+	public void testObserver() {
 		uiHelper.addDummyTrack(this);
 		solo.sleep(2000);
 		solo.clickOnView(getActivity().findViewById(R.id.btn_play));
 		solo.sleep(10000);
-		
+
 		solo.clickOnView(getActivity().findViewById(R.id.btn_rewind));
-		
-		int[] timelineLocation = {0,0};
+
+		int[] timelineLocation = { 0, 0 };
 		Timeline timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 		timeline.getLocationOnScreen(timelineLocation);
-		
-		int clickXPosition = timelineLocation[0]+200;
+
+		int clickXPosition = timelineLocation[0] + 200;
 		uiHelper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
-		
+
 		solo.clickOnView(getActivity().findViewById(R.id.btn_play));
 		solo.sleep(1000);
-		
+
 	}
-	
+
 	@Override
 	public void update(Observable observable, Object data) {
 		int i = (Integer) data;

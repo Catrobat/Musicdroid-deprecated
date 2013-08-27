@@ -28,33 +28,30 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class OnSpinnerClickListener implements OnItemSelectedListener {
 	private boolean spinnerInitialized = false;
 	private DrumSoundRow drumSoundRow = null;
-	
+
 	public OnSpinnerClickListener(DrumSoundRow drumSoundRow) {
 		this.drumSoundRow = drumSoundRow;
 	}
-	
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, 
-            int pos, long id) {
 
-		if(spinnerInitialized)
-		{
-		   drumSoundRow.setSoundPoolIdByDrumString((String) parent.getSelectedItem());
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+		if (spinnerInitialized) {
+			drumSoundRow.setSoundPoolIdByDrumString((String) parent.getSelectedItem());
 		}
 
-		spinnerInitialized = true;  
-    }
-    
+		spinnerInitialized = true;
+	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

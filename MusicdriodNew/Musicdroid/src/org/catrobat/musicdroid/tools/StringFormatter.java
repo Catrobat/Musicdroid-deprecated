@@ -26,23 +26,23 @@ import org.catrobat.musicdroid.preferences.PreferenceManager;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class StringFormatter {
 	private static String SEPERATOR = ":";
-	
+
 	public static String durationStringFromInt(int duration) {
-	    int hours = (int) duration / 3600;
-	    int remainder = (int) duration - hours * 3600;
-	    int minutes = remainder / 60;
-	    remainder = remainder - minutes * 60;
-	    int seconds = remainder;
-		
+		int hours = duration / 3600;
+		int remainder = duration - hours * 3600;
+		int minutes = remainder / 60;
+		remainder = remainder - minutes * 60;
+		int seconds = remainder;
+
 		String durationString = "";
-		
-		if(hours > 0)
+
+		if (hours > 0)
 			durationString = "" + hours + SEPERATOR;
-		
+
 		String min = "" + minutes;
 		String sec = "" + seconds;
 
@@ -53,27 +53,22 @@ public class StringFormatter {
 
 		return durationString + min + SEPERATOR + sec;
 	}
-		
-	public static String buildDrumExportDurationString(int progress, int beatsPerLoop)
-	{
-		return "Number of Loops: " + progress + 
-				" / Duration: " + secondsByBPM(progress, beatsPerLoop) + " Sec";
+
+	public static String buildDrumExportDurationString(int progress, int beatsPerLoop) {
+		return "Number of Loops: " + progress + " / Duration: " + secondsByBPM(progress, beatsPerLoop) + " Sec";
 	}
-	
-	private static int secondsByBPM(int progress, int beatsPerLoop)
-	{
-		return beatsPerLoop * progress * 60 /
-				PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
+
+	private static int secondsByBPM(int progress, int beatsPerLoop) {
+		return beatsPerLoop * progress * 60
+				/ PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
 	}
-	
-	public static String beatArrayToString(int[] beatArray)
-	{
+
+	public static String beatArrayToString(int[] beatArray) {
 		String beatArrayString = "BeatArray = ";
-		for(int beatCount = 0; beatCount < beatArray.length; beatCount++)
-		{
-			beatArrayString += beatArray[beatCount] + " "; 
+		for (int beatCount = 0; beatCount < beatArray.length; beatCount++) {
+			beatArrayString += beatArray[beatCount] + " ";
 		}
-		
+
 		return beatArrayString;
 	}
 }

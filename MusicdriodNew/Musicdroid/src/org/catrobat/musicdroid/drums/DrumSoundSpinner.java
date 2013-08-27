@@ -22,52 +22,48 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.drums;
 
-import java.util.ArrayList;
-
-import org.catrobat.musicdroid.R;
-import org.catrobat.musicdroid.types.DrumType;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.types.DrumType;
+
+import java.util.ArrayList;
+
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class DrumSoundSpinner extends Spinner {
 	private ArrayAdapter<String> adapter = null;
-	
-	public DrumSoundSpinner(Context context, AttributeSet attrs) 
-	{
+
+	public DrumSoundSpinner(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public void initialize(Context context, DrumSoundRow drumSoundRow) 
-	{
+	public void initialize(Context context, DrumSoundRow drumSoundRow) {
 		ArrayList<String> spinnerArray = DrumType.getTypeArray(context);
 		adapter = new ArrayAdapter<String>(context, R.layout.custom_simple_spinner_item, spinnerArray);
 		adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
 		setAdapter(adapter);
-		
+
 		setEnabled(false);
 		setClickable(false);
 		setOnItemSelectedListener(new OnSpinnerClickListener(drumSoundRow));
 	}
-	
-	public void setSelectionByName(String itemName)
-	{
+
+	public void setSelectionByName(String itemName) {
 		setSelection(adapter.getPosition(itemName));
 	}
 
-	public void performCustomClick() 
-	{
+	public void performCustomClick() {
 		setEnabled(true);
-	    this.setClickable(true);
-	    this.performClick();
-	    this.setEnabled(false);
-	    this.setClickable(false);	
-    }
+		this.setClickable(true);
+		this.performClick();
+		this.setEnabled(false);
+		this.setClickable(false);
+	}
 
 }

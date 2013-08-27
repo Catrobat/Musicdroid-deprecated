@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundmixer;
 
-import java.util.ArrayList;
+import android.widget.Toast;
 
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
@@ -35,7 +35,7 @@ import org.catrobat.musicdroid.soundtracks.SoundTrack;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 
-import android.widget.Toast;
+import java.util.ArrayList;
 
 public class SoundMixer {
 	public static SoundMixer instance = null;
@@ -68,13 +68,12 @@ public class SoundMixer {
 		timeline = new Timeline(activity);
 		metronom = new Metronom(activity);
 		idCreator = new UniqueSoundMixerIDCreator();
-		
+
 		timeline.setId(idCreator.getNewId());
 		layout.addTimelineToLayout(timeline);
 
-		activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity,
-				timeline));
-		
+		activity.setCallbackTimelineMenu(new TimelineMenuCallback(activity, timeline));
+
 		soundMixerLength = defaultTrackLength;
 		pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
 	}
@@ -94,8 +93,7 @@ public class SoundMixer {
 		eventHandler.addObserver(track.getSoundTrack());
 		layout.addTrackToLayout(track);
 		tracks.add(track);
-		timeline.addNewTrackPosition(track.getId(), track.getSoundTrack()
-				.getType().getColorResource());
+		timeline.addNewTrackPosition(track.getId(), track.getSoundTrack().getType().getColorResource());
 	}
 
 	public boolean playAllSoundsInSoundmixer() {
@@ -103,8 +101,7 @@ public class SoundMixer {
 			return false;
 		}
 
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
 			startMetronom();
 		eventHandler.play();
 		return true;
@@ -112,8 +109,7 @@ public class SoundMixer {
 
 	public void stopAllSoundsInSoundmixer() {
 		eventHandler.stopNotifyThread();
-		if (PreferenceManager.getInstance().getPreference(
-				PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
 			stopMetronom();
 		SoundManager.stopAllSounds();
 	}
@@ -128,8 +124,7 @@ public class SoundMixer {
 		timeline.rewind();
 	}
 
-	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos,
-			int duration) {
+	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration) {
 		timeline.updateTimelineOnMove(id, pix_pos, sec_pos, duration);
 	}
 
@@ -167,14 +162,13 @@ public class SoundMixer {
 	private void checkLongestTrack(int newTrackLength) {
 		if (newTrackLength > soundMixerLength) {
 			soundMixerLength = newTrackLength;
-			layout.resizeLayoutWidth(getPixelPerSecond()*newTrackLength);
+			layout.resizeLayoutWidth(getPixelPerSecond() * newTrackLength);
 			timeline.resizeTimeline(newTrackLength);
 		}
 	}
 
 	public void resetSoundMixer() {
-		for(int i = 0; i < tracks.size(); i++)
-		{
+		for (int i = 0; i < tracks.size(); i++) {
 			tracks.get(i).removeAllViews();
 			layout.removeView(tracks.get(i));
 		}
@@ -191,7 +185,7 @@ public class SoundMixer {
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds) {
 		int newLength = minutes * 60 + seconds;
 		soundMixerLength = newLength;
-		layout.resizeLayoutWidth(getPixelPerSecond()*newLength);
+		layout.resizeLayoutWidth(getPixelPerSecond() * newLength);
 		timeline.resizeTimeline(newLength);
 	}
 
@@ -199,16 +193,14 @@ public class SoundMixer {
 		if (eventHandler.setStartPoint(location[0] / pixelPerSecond))
 			timeline.setStartPoint(location[0]);
 		else
-			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT).show();
 	}
 
 	public void setEndPoint(int[] location) {
 		if (eventHandler.setEndPoint(location[0] / pixelPerSecond))
 			timeline.setEndPoint(location[0]);
 		else
-			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT).show();
 	}
 
 	public void setCallingParameters(int id, SoundTrack track) {
@@ -234,8 +226,7 @@ public class SoundMixer {
 
 	public int getPixelPerSecond() {
 		if (pixelPerSecond == 0)
-			pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity)
-					/ defaultTrackLength;
+			pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
 		return pixelPerSecond;
 	}
 
@@ -250,9 +241,8 @@ public class SoundMixer {
 	public SoundTrackView getTrackAtPosition(int position) {
 		return tracks.get(position);
 	}
-	
-	public Timeline getTimeline()
-	{
+
+	public Timeline getTimeline() {
 		return timeline;
 	}
 }

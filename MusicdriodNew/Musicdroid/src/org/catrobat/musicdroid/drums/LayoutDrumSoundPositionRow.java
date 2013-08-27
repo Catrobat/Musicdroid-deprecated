@@ -1,37 +1,35 @@
 package org.catrobat.musicdroid.drums;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import org.catrobat.musicdroid.R;
 
-public class LayoutDrumSoundPositionRow extends RelativeLayout{
+import java.util.ArrayList;
+
+public class LayoutDrumSoundPositionRow extends RelativeLayout {
 	private Context context = null;
 	private ArrayList<ImageView> positionArray = null;
 
-	
 	public LayoutDrumSoundPositionRow(Context context, AttributeSet attrs) {
 		super(context, attrs);
-	}	
-	
+	}
+
 	public LayoutDrumSoundPositionRow(Context context) {
 		super(context);
 		this.context = context;
 		this.positionArray = new ArrayList<ImageView>();
-		
-        LayoutInflater inflater = LayoutInflater.from(this.context);
-        inflater.inflate(R.layout.drum_sound_row_position_layout, this);
-        
-        populatePositionMap();
+
+		LayoutInflater inflater = LayoutInflater.from(this.context);
+		inflater.inflate(R.layout.drum_sound_row_position_layout, this);
+
+		populatePositionMap();
 	}
 
-
-	private void populatePositionMap()
-	{
+	private void populatePositionMap() {
 		positionArray.add((ImageView) findViewById(R.id.drum_position_1));
 		positionArray.add((ImageView) findViewById(R.id.drum_position_2));
 		positionArray.add((ImageView) findViewById(R.id.drum_position_3));
@@ -52,14 +50,14 @@ public class LayoutDrumSoundPositionRow extends RelativeLayout{
 
 	public void setBeatVisibility(int beat) {
 		setPreviousBeatInvisible(beat);
-		positionArray.get(beat).setVisibility(VISIBLE);	
+		positionArray.get(beat).setVisibility(VISIBLE);
 	}
-	
+
 	private void setPreviousBeatInvisible(int beat) {
-		if(beat == 0)
-			positionArray.get(positionArray.size()-1).setVisibility(INVISIBLE);
+		if (beat == 0)
+			positionArray.get(positionArray.size() - 1).setVisibility(INVISIBLE);
 		else
-			positionArray.get(beat-1).setVisibility(INVISIBLE);
+			positionArray.get(beat - 1).setVisibility(INVISIBLE);
 	}
-	
+
 }

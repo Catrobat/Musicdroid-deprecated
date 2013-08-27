@@ -29,7 +29,7 @@ import org.catrobat.musicdroid.types.SoundType;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class SoundTrackDummy extends SoundTrack {
 	public SoundTrackDummy() {

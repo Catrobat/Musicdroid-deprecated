@@ -22,8 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.dialog;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -32,8 +30,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.types.SoundType;
+
+import java.util.ArrayList;
 
 public class AddSoundAdapter extends BaseAdapter {
 
@@ -82,12 +83,9 @@ public class AddSoundAdapter extends BaseAdapter {
 		if (rowView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			rowView = inflater.inflate(R.layout.add_sound_button, null);
-			ImageView imageView = (ImageView) rowView
-					.findViewById(R.id.add_sound_button_image);
-			imageView.setImageResource(buttonsList.get(position)
-					.getImageResource());
-			TextView textView = (TextView) rowView
-					.findViewById(R.id.add_sound_button_text);
+			ImageView imageView = (ImageView) rowView.findViewById(R.id.add_sound_button_image);
+			imageView.setImageResource(buttonsList.get(position).getImageResource());
+			TextView textView = (TextView) rowView.findViewById(R.id.add_sound_button_text);
 			textView.setText(buttonsList.get(position).getNameResource());
 		}
 		return rowView;

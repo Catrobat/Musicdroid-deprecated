@@ -26,11 +26,10 @@ import android.util.Log;
 
 /**
  * @author matthias schlesinger
- *
+ * 
  */
 public class Logger {
-	public static void beatArrayToLog(String classString, int[] beatArray)
-	{
+	public static void beatArrayToLog(String classString, int[] beatArray) {
 		Log.i(classString, StringFormatter.beatArrayToString(beatArray));
 	}
 

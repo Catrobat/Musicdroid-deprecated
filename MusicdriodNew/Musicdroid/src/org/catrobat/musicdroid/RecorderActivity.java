@@ -83,8 +83,7 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 		super.onPause();
 		layout.reset();
 		Log.i("RecorderActivity",
-				"OnPause: " + ((LinearLayout) findViewById(R.id.recorder_activity_layout))
-								.getChildCount());
+				"OnPause: " + ((LinearLayout) findViewById(R.id.recorder_activity_layout)).getChildCount());
 	}
 
 	@Override
@@ -92,14 +91,14 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 
 		Log.i("RecorderActivity", "onOptionsItemSelected");
 		switch (item.getItemId()) {
-		case R.id.btn_settings:
-			RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(this);
-			startActionMode(callbackSoundMixerMenu);
-			return true;
+			case R.id.btn_settings:
+				RecorderMenuCallback callbackSoundMixerMenu = new RecorderMenuCallback(this);
+				startActionMode(callbackSoundMixerMenu);
+				return true;
 		}
 		return false;
 	}
-	
+
 	private void initTopStatusBar() {
 		getActionBar().setCustomView(R.layout.status_bar);
 		getActionBar().setDisplayShowHomeEnabled(true);
@@ -119,20 +118,18 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.on_recorder_back_pressed_security_question);
 		builder.setCancelable(true);
-		builder.setNegativeButton(R.string.yes,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						finish();
-					}
-				});
-		builder.setPositiveButton(R.string.no,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		builder.setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				finish();
+			}
+		});
+		builder.setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
@@ -142,10 +139,9 @@ public class RecorderActivity extends FragmentActivity implements ChangeFilename
 		getCurrentRecordingSession().setFilename(filename);
 		layout.setFilename(FileExtensionMethods.removeFileEnding(filename));
 	}
-	
-	public RecordingSession getCurrentRecordingSession()
-	{
-		if(currentSession == null)
+
+	public RecordingSession getCurrentRecordingSession() {
+		if (currentSession == null)
 			currentSession = new RecordingSession();
 		return currentSession;
 	}

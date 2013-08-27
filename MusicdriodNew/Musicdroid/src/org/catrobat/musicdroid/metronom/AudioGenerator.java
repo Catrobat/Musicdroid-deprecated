@@ -35,12 +35,10 @@ public class AudioGenerator {
 		this.sampleRate = sampleRate;
 	}
 
-	public double[] getSineWave(int samples, int sampleRate,
-			double frequencyOfTone) {
+	public double[] getSineWave(int samples, int sampleRate, double frequencyOfTone) {
 		double[] sample = new double[samples];
 		for (int i = 0; i < samples; i++) {
-			sample[i] = Math.sin(2 * Math.PI * i
-					/ (sampleRate / frequencyOfTone));
+			sample[i] = Math.sin(2 * Math.PI * i / (sampleRate / frequencyOfTone));
 		}
 		return sample;
 	}
@@ -58,9 +56,8 @@ public class AudioGenerator {
 	}
 
 	public void createPlayer() {
-		audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate,
-				AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-				sampleRate, AudioTrack.MODE_STREAM);
+		audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_MONO,
+				AudioFormat.ENCODING_PCM_16BIT, sampleRate, AudioTrack.MODE_STREAM);
 
 		audioTrack.play();
 	}
