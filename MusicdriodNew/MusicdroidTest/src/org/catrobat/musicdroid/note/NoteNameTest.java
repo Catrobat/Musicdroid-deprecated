@@ -34,7 +34,7 @@ public class NoteNameTest extends TestCase {
 		assertEquals(84, NoteName.C5.getMidi());
 	}
 
-	public void testNext() {
+	public void testNext1() {
 		NoteName a5s = NoteName.A5S;
 		NoteName b5 = NoteName.B5;
 
@@ -42,11 +42,55 @@ public class NoteNameTest extends TestCase {
 		assertEquals(b5, b5.next());
 	}
 
-	public void testPrevious() {
+	public void testNext2() {
+		NoteName b5 = NoteName.B5;
+
+		assertEquals(b5, b5.next());
+	}
+
+	public void testPrevious1() {
 		NoteName c1 = NoteName.C1;
 		NoteName c1s = NoteName.C1S;
 
 		assertEquals(c1, c1.previous());
 		assertEquals(c1, c1s.previous());
+	}
+
+	public void testPrevious2() {
+		NoteName c1 = NoteName.C1;
+
+		assertEquals(c1, c1.previous());
+	}
+
+	public void testCalculateDistance1() {
+		NoteName c1 = NoteName.C1;
+		NoteName c1s = NoteName.C1S;
+
+		assertEquals(-1, NoteName.calculateDistance(c1, c1s));
+	}
+
+	public void testCalculateDistance2() {
+		NoteName c1 = NoteName.C1;
+		NoteName c1s = NoteName.C1S;
+
+		assertEquals(1, NoteName.calculateDistance(c1s, c1));
+	}
+
+	public void testCalculateDistance3() {
+		NoteName c1 = NoteName.C1;
+
+		assertEquals(0, NoteName.calculateDistance(c1, c1));
+	}
+
+	public void testIsSigned1() {
+		NoteName c1 = NoteName.C1;
+
+		assertFalse(c1.isSigned());
+	}
+
+	public void testIsSigned2() {
+		NoteName c1s = NoteName.C1S;
+
+		assertTrue(c1s.isSigned());
 	}
 }

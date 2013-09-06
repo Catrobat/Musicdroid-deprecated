@@ -61,6 +61,15 @@ public class TrackTest extends TestCase {
 		assertEquals(0, track.size());
 	}
 
+	public void testGetSymbol() {
+		Track track = new Track();
+
+		Symbol symbol = new Break(NoteLength.QUARTER);
+		track.addSymbol(symbol);
+
+		assertEquals(symbol, track.getSymbol(0));
+	}
+
 	public void testEquals1() {
 		Track track1 = new Track();
 		track1.addSymbol(new Break(NoteLength.HALF));
@@ -91,12 +100,33 @@ public class TrackTest extends TestCase {
 	}
 
 	public void testEquals4() {
+		Track track1 = new Track(Key.BASS, new Tact(), 60);
+		Track track2 = new Track();
+
+		assertFalse(track1.equals(track2));
+	}
+
+	public void testEquals5() {
+		Track track1 = new Track(Key.VIOLIN, new Tact(), 20);
+		Track track2 = new Track();
+
+		assertFalse(track1.equals(track2));
+	}
+
+	public void testEquals6() {
+		Track track1 = new Track(Key.VIOLIN, new Tact(12, NoteLength.SIXTEENTH), 60);
+		Track track2 = new Track();
+
+		assertFalse(track1.equals(track2));
+	}
+
+	public void testEquals7() {
 		Track track = new Track();
 
 		assertFalse(track.equals(null));
 	}
 
-	public void testEquals5() {
+	public void testEquals8() {
 		Track track = new Track();
 
 		assertFalse(track.equals(""));
