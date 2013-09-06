@@ -34,6 +34,15 @@ public class ProjectTest extends TestCase {
 		assertEquals(1, project.size());
 	}
 
+	public void testGetTrack() {
+		Project project = new Project();
+		Track track = new Track();
+
+		project.addTrack(track);
+
+		assertEquals(track, project.getTrack(0));
+	}
+
 	public void testRemoveTrack() {
 		Project project = new Project();
 
@@ -45,16 +54,6 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testEquals1() {
-		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
-
-		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.HALF));
-
-		assertTrue(track1.equals(track2));
-	}
-
-	public void testEquals2() {
 		Project project1 = new Project();
 		project1.addTrack(new Track());
 
@@ -62,6 +61,16 @@ public class ProjectTest extends TestCase {
 		project2.addTrack(new Track());
 
 		assertTrue(project1.equals(project2));
+	}
+
+	public void testEquals2() {
+		Project project1 = new Project();
+		project1.addTrack(new Track());
+
+		Project project2 = new Project();
+		project2.addTrack(new Track(Key.BASS, new Tact(), 105));
+
+		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals3() {
