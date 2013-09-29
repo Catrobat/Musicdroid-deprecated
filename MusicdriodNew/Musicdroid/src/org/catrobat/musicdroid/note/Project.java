@@ -28,12 +28,18 @@ import java.util.List;
 
 public class Project implements Serializable {
 
-	private static final long serialVersionUID = 7396763540934053009L;
+	private static final long serialVersionUID = 7396763540934053008L;
 
+	private String name;
 	private List<Track> tracks;
 
-	public Project() {
+	public Project(String name) {
+		this.name = name;
 		this.tracks = new LinkedList<Track>();
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void addTrack(Track track) {
@@ -60,6 +66,10 @@ public class Project implements Serializable {
 
 		Project project = (Project) obj;
 
+		if (false == name.equals(project.getName())) {
+			return false;
+		}
+
 		if (size() == project.size()) {
 			for (int i = 0; i < size(); i++) {
 				if (!getTrack(i).equals(project.getTrack(i))) {
@@ -75,6 +85,6 @@ public class Project implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Project] trackCount=" + size();
+		return "[Project] name=" + name + " trackCount=" + size();
 	}
 }
