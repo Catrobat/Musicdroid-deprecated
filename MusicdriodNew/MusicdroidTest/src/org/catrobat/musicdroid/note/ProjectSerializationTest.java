@@ -22,9 +22,6 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import android.os.Environment;
-import android.text.format.Time;
-
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -38,11 +35,9 @@ public class ProjectSerializationTest extends TestCase {
 
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
 		Track track = new Track();
 		project.addTrack(track);
-		File file = new File(Environment.getExternalStorageDirectory(), "projectSerializedTest");
+		File file = new File("projectSerializedTest");
 
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 		out.writeObject(project);
