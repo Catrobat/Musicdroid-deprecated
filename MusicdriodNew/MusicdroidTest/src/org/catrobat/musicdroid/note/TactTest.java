@@ -24,7 +24,7 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
-public class TimeTest extends TestCase {
+public class TactTest extends TestCase {
 
 	public void testTime1() {
 		Tact time = new Tact();
@@ -34,15 +34,17 @@ public class TimeTest extends TestCase {
 	}
 
 	public void testTime2() {
-		Tact tact = new Tact(19, NoteLength.EIGHT);
+		int beatsPerTact = 19;
+		Tact tact = new Tact(beatsPerTact, NoteLength.EIGHT);
 
-		assertEquals(19, tact.getBeatsPerTact());
+		assertEquals(beatsPerTact, tact.getBeatsPerTact());
 		assertEquals(NoteLength.EIGHT, tact.getNoteLength());
 	}
 
 	public void testEquals1() {
-		Tact time1 = new Tact(19, NoteLength.EIGHT);
-		Tact time2 = new Tact(19, NoteLength.EIGHT);
+		int beatsPerTact = 19;
+		Tact time1 = new Tact(beatsPerTact, NoteLength.EIGHT);
+		Tact time2 = new Tact(beatsPerTact, NoteLength.EIGHT);
 
 		assertTrue(time1.equals(time2));
 	}
@@ -55,19 +57,26 @@ public class TimeTest extends TestCase {
 	}
 
 	public void testEquals3() {
-		Tact time1 = new Tact(19, NoteLength.EIGHT);
+		Tact time1 = new Tact(20, NoteLength.EIGHT);
 		Tact time2 = new Tact(20, NoteLength.SIXTEENTH);
 
 		assertFalse(time1.equals(time2));
 	}
 
 	public void testEquals4() {
+		Tact time1 = new Tact(19, NoteLength.EIGHT);
+		Tact time2 = new Tact(20, NoteLength.SIXTEENTH);
+
+		assertFalse(time1.equals(time2));
+	}
+
+	public void testEquals5() {
 		Tact time = new Tact();
 
 		assertFalse(time.equals(null));
 	}
 
-	public void testEquals5() {
+	public void testEquals6() {
 		Tact time = new Tact();
 
 		assertFalse(time.equals(""));
