@@ -40,6 +40,7 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 
 public class MetronomQuickSettingsDialog extends DialogFragment implements OnSeekBarChangeListener {
+	private static final String TAG = MetronomQuickSettingsDialog.class.getSimpleName();
 	private SeekBar bpm = null;
 	private Spinner state = null;
 	private TextView bpmText = null;
@@ -93,7 +94,7 @@ public class MetronomQuickSettingsDialog extends DialogFragment implements OnSee
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i("MetronomQuickSettings", "RESUME");
+		Log.i(TAG, "onResume");
 		bpm.setProgress(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY) - 54);
 		bpmText.setText(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY) + " BPM");
 		state.setSelection(PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY));
@@ -102,7 +103,7 @@ public class MetronomQuickSettingsDialog extends DialogFragment implements OnSee
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		bpmText.setText(progress + 54 + " BPM");
-		Log.i("MetronomQuickSettings", "Progress = " + progress + 54);
+		Log.i(TAG, "ProgressBar changed. New Progress = " + progress + 54);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
 
 public class Metronom {
+	private static final String TAG = Metronom.class.getSimpleName();
 	private static final int METRONOM_OFF = 0;
 	private static final int METRONOM_LIGHT = 1;
 	private static final int METRONOM_LIGHT_AND_SOUND = 2;
@@ -66,7 +67,7 @@ public class Metronom {
 	}
 
 	public void startMetronome() {
-		Log.i("Metronom", "START");
+		Log.i(TAG, "START");
 		initializeValues();
 		play = true;
 		if (metronomState == METRONOM_OFF)

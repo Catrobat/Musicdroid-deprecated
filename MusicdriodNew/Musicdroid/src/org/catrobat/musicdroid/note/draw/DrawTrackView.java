@@ -35,14 +35,11 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 
-import org.catrobat.musicdroid.note.Track;
-
 /**
  * @author florian.winkelbauer, bteufl
  * 
  */
 public class DrawTrackView extends View {
-
 	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
 	private static final int BOLD_BAR_WIDTH = 5;
 	private static final int THIN_BAR_WIDTH = 2;
@@ -52,7 +49,6 @@ public class DrawTrackView extends View {
 
 	private Paint paint;
 
-	private Track track;
 	private int xStartPositionOfLine;
 	private int xEndPositionOfLine;
 	private int yCenter;

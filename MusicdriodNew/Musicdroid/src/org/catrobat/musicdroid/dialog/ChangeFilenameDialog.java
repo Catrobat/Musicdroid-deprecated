@@ -27,7 +27,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -63,7 +62,6 @@ public class ChangeFilenameDialog extends DialogFragment {
 		AlertDialog dialog = builder.create();
 
 		String filename = AudioHandler.getInstance().getFilename();
-		Log.i("ChangeFilenameDialog", "Filename: " + filename);
 		editText = (EditText) view.findViewById(R.id.dialog_edittext);
 		editText.setText(FileExtensionMethods.removeFileEnding(filename));
 

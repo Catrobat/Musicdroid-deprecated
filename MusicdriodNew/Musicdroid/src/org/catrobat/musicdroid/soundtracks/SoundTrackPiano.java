@@ -29,6 +29,7 @@ import org.catrobat.musicdroid.SoundManager;
 import org.catrobat.musicdroid.types.SoundType;
 
 public class SoundTrackPiano extends SoundTrack {
+	private static final String TAG = SoundTrackPiano.class.getSimpleName();
 
 	public SoundTrackPiano() {
 		type = SoundType.PIANO;
@@ -39,7 +40,7 @@ public class SoundTrackPiano extends SoundTrack {
 	}
 
 	public SoundTrackPiano(SoundTrackPiano stm) {
-		Log.e("Calling copy constr", "piano");
+		Log.e(TAG, "piano");
 	}
 
 }

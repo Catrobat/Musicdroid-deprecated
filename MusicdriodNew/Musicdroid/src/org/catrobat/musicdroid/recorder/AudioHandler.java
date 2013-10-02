@@ -36,6 +36,7 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
 import java.io.File;
 
 public class AudioHandler {
+	private static final String TAG = AudioHandler.class.getSimpleName();
 	public static AudioHandler instance = null;
 	private RecorderLayout layout = null;
 	private Context context = null;
@@ -71,7 +72,7 @@ public class AudioHandler {
 	}
 
 	public boolean startRecording() {
-		Log.i("AudioHandler", "StartRecording");
+		Log.i(TAG, "StartRecording");
 		File check = new File(path + '/' + filename);
 		if (check.exists()) {
 			showDialog();

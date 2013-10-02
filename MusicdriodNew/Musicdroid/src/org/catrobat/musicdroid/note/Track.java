@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Track implements Serializable {
-
 	private static final long serialVersionUID = 7483021689872527955L;
 
 	// TODO fw Instrument

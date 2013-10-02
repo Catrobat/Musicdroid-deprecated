@@ -34,6 +34,7 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineOnTouchListener implements OnTouchListener {
+	private static final String TAG = TimelineOnTouchListener.class.getSimpleName();
 	private Timeline timeline;
 	private ImageButton startPoint = null;
 	private ImageButton endPoint = null;
@@ -49,14 +50,14 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
 		if (v.getId() == startPoint.getId()) {
-			Log.i("TOUCH: ", "StartPoint");
+			Log.i(TAG, "StartPoint");
 			return handleStartPointOnTouch(event);
 		}
 		if (v.getId() == endPoint.getId()) {
-			Log.i("TOUCH: ", "EndPoint");
+			Log.i(TAG, "EndPoint");
 			return handleEndPointOnTouch(event);
 		}
-		Log.i("TOUCH: ", "Timeline");
+		Log.i(TAG, "Timeline");
 		return gestureDetector.onTouchEvent(event);
 
 	}
@@ -65,7 +66,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 		@Override
 		public void onLongPress(final MotionEvent e) {
-			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
+			// Log.i(TAG, "X = " + e.getX() + " | Y = " +
 			// e.getY());
 			int[] location = { (int) e.getX(), (int) e.getY() };
 			timeline.setClickLocation(location);

@@ -44,6 +44,7 @@ import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener {
+	private static final String TAG = SoundTrackView.class.getSimpleName();
 	public final static int MINIMAL_WIDTH = 280;
 	public final static int EXPANDED_WIDTH = 400;
 
@@ -177,7 +178,7 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		if (displayPlayButton) {
 			displayPlayButton = false;
 			playImageButton.setImageResource(R.drawable.pause_button_sound_track);
-			Log.e("VOLUME: ", "" + soundTrack.getVolume());
+			Log.e(TAG, "" + soundTrack.getVolume());
 			SoundManager.playSound(soundTrack.getSoundPoolId(), 1, soundTrack.getVolume());
 		} else {
 			displayPlayButton = true;

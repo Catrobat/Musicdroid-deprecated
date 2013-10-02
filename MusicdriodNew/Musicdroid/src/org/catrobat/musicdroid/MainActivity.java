@@ -45,6 +45,7 @@ import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.soundtracks.SoundTrackViewMenuCallback;
 
 public class MainActivity extends MenuFileActivity {
+	private static final String TAG = MainActivity.class.getSimpleName();
 	protected Statusbar statusbar;
 	protected SoundMixer mixer;
 	protected SoundLenghtDialog settingsDialog = null;
@@ -65,7 +66,6 @@ public class MainActivity extends MenuFileActivity {
 		SoundMixer.getInstance().initSoundMixer(this);
 
 		// TESTING
-		SoundManager.getInstance();
 		SoundManager.initSounds(this);
 		// SoundManager.loadSounds();
 	}
@@ -131,7 +131,7 @@ public class MainActivity extends MenuFileActivity {
 			if (resultCode == Activity.RESULT_OK) {
 				if (data.hasExtra("mic_filename")) {
 					String result = data.getStringExtra("mic_filename");
-					Log.i("MainActivity", "Received String from Activity " + result);
+					Log.i(TAG, "Received String from Activity " + result);
 					SoundTrackMic stm = new SoundTrackMic(result);
 					addSoundTrack(new SoundTrackView(this, stm));
 				}

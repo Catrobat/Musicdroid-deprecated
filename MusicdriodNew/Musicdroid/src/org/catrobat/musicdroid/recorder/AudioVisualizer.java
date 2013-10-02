@@ -35,12 +35,10 @@ import org.catrobat.musicdroid.RecorderActivity;
 
 public class AudioVisualizer extends Handler {
 	private static final int MAX_AMPLITUDE = 32800;
-	private Context context = null;
 	private View equalizerView = null;
 	private ImageView microphoneImageView = null;
 
 	public AudioVisualizer(Context context) {
-		this.context = context;
 		equalizerView = ((RecorderActivity) context).findViewById(R.id.microphone_equalizer);
 		microphoneImageView = (ImageView) ((RecorderActivity) context).findViewById(R.id.microphone);
 	}

@@ -26,11 +26,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
 
 public class DrawTrackActivity extends Activity {
-	private RecorderLayout layout = null;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -28,6 +28,7 @@ import android.content.Context;
 import org.catrobat.musicdroid.R;
 
 public class BaseDialog extends Dialog {
+
 	public BaseDialog(Context context) {
 		super(context, R.style.CustomMusicdroidDialog);
 	}

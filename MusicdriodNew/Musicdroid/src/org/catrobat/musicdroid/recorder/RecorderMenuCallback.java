@@ -32,7 +32,7 @@ import org.catrobat.musicdroid.dialog.MetronomQuickSettingsDialog;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 
 public class RecorderMenuCallback implements ActionMode.Callback {
-	RecorderActivity parent = null;
+	private RecorderActivity parent = null;
 	private MetronomQuickSettingsDialog metronomDialog = null;
 
 	public RecorderMenuCallback(RecorderActivity p) {

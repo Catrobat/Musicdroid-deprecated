@@ -33,8 +33,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class SoundManager {
-
-	static private SoundManager _instance;
+	private static final String TAG = SoundManager.class.getSimpleName();
 	private static SoundPool soundPool;
 	private static HashMap<Integer, Integer> soundPoolMap;
 	private static HashMap<Integer, Integer> soundPlayMap;
@@ -42,12 +41,6 @@ public class SoundManager {
 	private static Context context;
 
 	private SoundManager() {
-	}
-
-	static synchronized public SoundManager getInstance() {
-		if (_instance == null)
-			_instance = new SoundManager();
-		return _instance;
 	}
 
 	public static void initSounds(Context theContext) {
@@ -106,10 +99,10 @@ public class SoundManager {
 		float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-		Log.i("SoundManager", "SoundPoolID = " + index);
+		Log.i(TAG, "SoundPoolID = " + index);
 		int poolId = soundPoolMap.get(index);
 		Integer stream_id = soundPool.play(poolId, volume, volume, 1, 0, speed);
-		Log.e("PUT: ", "" + index + " " + stream_id);
+		Log.e(TAG, "" + index + " " + stream_id);
 		soundPlayMap.put(index, stream_id);
 	}
 
@@ -133,7 +126,6 @@ public class SoundManager {
 		soundPool = null;
 		soundPoolMap.clear();
 		audioManager.unloadSoundEffects();
-		_instance = null;
 	}
 
 	public static int getSoundfileDuration(int soundfile_id) {
@@ -143,14 +135,14 @@ public class SoundManager {
 	}
 
 	public static int getSoundfileDurationByPath(String path) {
-		Log.i("Player", "playRecorderFile");
+		Log.i(TAG, "playRecorderFile");
 		MediaPlayer player = new MediaPlayer();
 
 		try {
 			player.setDataSource(path);
 			player.prepare();
 		} catch (Exception e) {
-			Log.i("Player-Exception", "Exception");
+			Log.i(TAG, "Exception");
 			e.printStackTrace();
 		}
 

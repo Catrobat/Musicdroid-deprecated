@@ -27,11 +27,10 @@ import junit.framework.TestCase;
 import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 /**
- * @author matthias
+ * @author matthias schlesinger
  * 
  */
 public class FileExtensionMethodsTest extends TestCase {
-
 	public void testGetFilenameFromPath() {
 		String path = "/dummy/test/check.xml";
 		assertTrue((FileExtensionMethods.getFilenameFromPath(path)).equals("check"));

@@ -36,6 +36,8 @@ import org.catrobat.musicdroid.soundmixer.SoundMixer;
  * 
  */
 public class TimelineProgressBar extends View {
+	private static final String TAG = TimelineProgressBar.class.getSimpleName();
+
 	public TimelineProgressBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -47,7 +49,7 @@ public class TimelineProgressBar extends View {
 	}
 
 	public void setProgres(int positionInSeconds) {
-		Log.i("TimelineProgressBar", "MessageDuration = " + positionInSeconds + "  Width = " + positionInSeconds
+		Log.i(TAG, "MessageDuration = " + positionInSeconds + "  Width = " + positionInSeconds
 				* SoundMixer.getInstance().getPixelPerSecond());
 		LayoutParams params = (LayoutParams) getLayoutParams();
 		params.width = positionInSeconds * SoundMixer.getInstance().getPixelPerSecond();

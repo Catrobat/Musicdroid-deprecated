@@ -38,8 +38,7 @@ public class ProjectSerializationTest extends TestCase {
 
 	public void testSerialize() throws IOException, ClassNotFoundException {
 		Project project = new Project();
-		Key key = Key.BASS;
-		Time time = new Time();
+		new Time();
 		Track track = new Track();
 		project.addTrack(track);
 		File file = new File(Environment.getExternalStorageDirectory(), "projectSerializedTest");

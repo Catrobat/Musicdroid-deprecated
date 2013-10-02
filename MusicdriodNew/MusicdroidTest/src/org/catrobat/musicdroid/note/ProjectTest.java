@@ -25,7 +25,6 @@ package org.catrobat.musicdroid.note;
 import junit.framework.TestCase;
 
 public class ProjectTest extends TestCase {
-
 	public void testAddTrack() {
 		Project project = new Project();
 

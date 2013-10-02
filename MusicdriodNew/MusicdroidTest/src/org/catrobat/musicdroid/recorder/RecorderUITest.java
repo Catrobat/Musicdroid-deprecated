@@ -43,6 +43,7 @@ import org.catrobat.musicdroid.types.SoundType;
 import java.io.File;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private static final String TAG = RecorderUITest.class.getSimpleName();
 	protected Solo solo = null;
 	protected String testFilename = "testfile.mp3";
 	protected MediaPlayer mediaPlayer = null;
@@ -179,7 +180,7 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 
 		f = new File(AudioHandler.getInstance().getFilenameFullPath());
 		if (f.exists()) {
-			Log.i("AASD", "Modified" + modified);
+			Log.i(TAG, "Modified" + modified);
 			assertTrue(modified < f.lastModified());
 		}
 	}

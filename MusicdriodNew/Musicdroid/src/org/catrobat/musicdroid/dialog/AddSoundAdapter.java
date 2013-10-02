@@ -37,9 +37,7 @@ import org.catrobat.musicdroid.types.SoundType;
 import java.util.ArrayList;
 
 public class AddSoundAdapter extends BaseAdapter {
-
 	private Context context;
-
 	private ArrayList<SoundType> buttonsList;
 
 	public AddSoundAdapter(Context context, boolean fromCatrobat) {

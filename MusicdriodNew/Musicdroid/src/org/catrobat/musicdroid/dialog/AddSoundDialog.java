@@ -40,7 +40,6 @@ import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
 
 public class AddSoundDialog extends BaseDialog implements OnItemClickListener, OnItemLongClickListener {
-
 	private static AddSoundDialog instance;
 	private MainActivity parent;
 	private AddSoundAdapter addSoundButtonAdapter;
