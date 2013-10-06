@@ -23,5 +23,15 @@
 package org.catrobat.musicdroid.note;
 
 public enum NoteLength {
-	WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH;
+	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
+
+	private float length;
+
+	private NoteLength(float length) {
+		this.length = length;
+	}
+
+	public static int calculateDuration(NoteLength noteLength, int beatsPerMinute) {
+		return Math.round(noteLength.length * beatsPerMinute);
+	}
 }

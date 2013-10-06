@@ -89,7 +89,7 @@ public class ProjectTest extends TestCase {
 		project1.addTrack(new Track());
 
 		Project project2 = new Project("Project");
-		project2.addTrack(new Track(Key.BASS, new Tact(), 105));
+		project2.addTrack(new Track(Key.BASS, new Tact()));
 
 		assertFalse(project1.equals(project2));
 	}

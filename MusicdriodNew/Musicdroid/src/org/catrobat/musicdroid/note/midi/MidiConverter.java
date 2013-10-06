@@ -22,18 +22,99 @@
  */
 package org.catrobat.musicdroid.note.midi;
 
+import com.leff.midi.MidiFile;
+import com.leff.midi.MidiTrack;
+import com.leff.midi.event.meta.Tempo;
+
+import org.catrobat.musicdroid.note.Note;
+import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Symbol;
+import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MidiConverter {
+
+	// TODO bei 60 bpm sollte eine Viertelnote auch eine Sekunde dauern
+	// TODO Takt einbauen
+	// TODO Noten "halten" einbauen
+
+	private static int DEFAULT_VELOCITY = 64;
+	private static int DEFAULT_CHANNEL = 1;
+	private static int MAX_CHANNEL = 16;
 
 	private MidiConverter() {
 	}
 
-	public static File convertProjectToMidiFile(Project project) {
-		File midi = new File(project.getName());
+	public static void convertAndWriteMidi(Project project) throws IOException {
+		MidiFile midi = convert(project);
+		midi.writeToFile(new File(project.getName() + ".midi"));
+	}
 
-		return midi;
+	private static MidiFile convert(Project project) {
+		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
+
+		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
+		tracks.add(tempoTrack);
+
+		for (MidiTrack track : createNoteTracks(project)) {
+			tracks.add(track);
+		}
+
+		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
+	}
+
+	private static MidiTrack createTempoTrack(int beatsPerMinute) {
+		MidiTrack tempoTrack = new MidiTrack();
+
+		Tempo t = new Tempo();
+		t.setBpm(beatsPerMinute);
+
+		tempoTrack.insertEvent(t);
+
+		return tempoTrack;
+	}
+
+	private static ArrayList<MidiTrack> createNoteTracks(Project project) {
+		ArrayList<MidiTrack> noteTracks = new ArrayList<MidiTrack>();
+
+		int channel = DEFAULT_CHANNEL;
+		int beatsPerMinute = project.getBeatsPerMinute();
+
+		for (int i = 0; i < project.size(); i++) {
+			MidiTrack noteTrack = createNoteTrack(project.getTrack(i), channel, beatsPerMinute);
+			noteTracks.add(noteTrack);
+
+			if (channel == MAX_CHANNEL) {
+				break;
+			}
+
+			channel++;
+		}
+
+		return noteTracks;
+	}
+
+	private static MidiTrack createNoteTrack(Track track, int channel, int beatsPerMinute) {
+		MidiTrack noteTrack = new MidiTrack();
+
+		int tick = 0;
+
+		for (int i = 0; i < track.size(); i++) {
+			Symbol symbol = track.getSymbol(i);
+			int duration = NoteLength.calculateDuration(symbol.getNoteLength(), beatsPerMinute);
+
+			if (symbol instanceof Note) {
+				Note note = (Note) symbol;
+				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
+			}
+
+			tick += duration;
+		}
+
+		return noteTrack;
 	}
 }

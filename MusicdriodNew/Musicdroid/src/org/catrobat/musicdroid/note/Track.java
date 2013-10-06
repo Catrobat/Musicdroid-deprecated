@@ -33,21 +33,18 @@ public class Track implements Serializable {
 	// TODO fw Instrument
 	private Key key;
 	private Tact tact;
-	private int beatsPerMinute;
 	private List<Symbol> symbols;
 
 	public Track() {
 		this.symbols = new ArrayList<Symbol>();
 		this.key = Key.VIOLIN;
 		this.tact = new Tact();
-		this.beatsPerMinute = 60;
 	}
 
-	public Track(Key key, Tact tact, int beatsPerMinute) {
+	public Track(Key key, Tact tact) {
 		this.symbols = new ArrayList<Symbol>();
 		this.key = key;
 		this.tact = tact;
-		this.beatsPerMinute = beatsPerMinute;
 	}
 
 	public Key getKey() {
@@ -56,10 +53,6 @@ public class Track implements Serializable {
 
 	public Tact getTact() {
 		return tact;
-	}
-
-	public int getBeatsPerMinute() {
-		return beatsPerMinute;
 	}
 
 	public void addSymbol(Symbol symbol) {
@@ -86,9 +79,7 @@ public class Track implements Serializable {
 
 		Track track = (Track) obj;
 
-		if ((key.equals(track.getKey()))
-				&& (tact.equals(track.getTact()) && (beatsPerMinute == track.getBeatsPerMinute()))
-				&& (size() == track.size())) {
+		if ((key.equals(track.getKey())) && (tact.equals(track.getTact()) && (size() == track.size()))) {
 			for (int i = 0; i < size(); i++) {
 				if (!getSymbol(i).equals(track.getSymbol(i))) {
 					return false;
@@ -103,6 +94,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] key=" + key + " symbolCount=" + size() + " beatsPerMinute=" + beatsPerMinute;
+		return "[Track] key=" + key + " symbolCount=" + size();
 	}
 }

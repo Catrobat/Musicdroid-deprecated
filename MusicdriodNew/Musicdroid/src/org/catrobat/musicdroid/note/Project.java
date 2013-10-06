@@ -31,15 +31,26 @@ public class Project implements Serializable {
 	private static final long serialVersionUID = 7396763540934053008L;
 
 	private String name;
+	private int beatsPerMinute;
 	private List<Track> tracks;
 
 	public Project(String name) {
 		this.name = name;
 		this.tracks = new LinkedList<Track>();
+		this.beatsPerMinute = 60;
+	}
+
+	public Project(String name, int beatsPerMinute) {
+		this(name);
+		this.beatsPerMinute = beatsPerMinute;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public int getBeatsPerMinute() {
+		return beatsPerMinute;
 	}
 
 	public void addTrack(Track track) {

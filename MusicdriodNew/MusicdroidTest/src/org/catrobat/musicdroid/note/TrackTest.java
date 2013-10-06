@@ -37,7 +37,7 @@ public class TrackTest extends TestCase {
 
 	public void testTrack2() {
 		Tact tact = new Tact(3, NoteLength.QUARTER);
-		Track track = new Track(Key.BASS, tact, 60);
+		Track track = new Track(Key.BASS, tact);
 
 		assertEquals(tact, track.getTact());
 		assertEquals(Key.BASS, track.getKey());
@@ -100,33 +100,26 @@ public class TrackTest extends TestCase {
 	}
 
 	public void testEquals4() {
-		Track track1 = new Track(Key.BASS, new Tact(), 60);
+		Track track1 = new Track(Key.BASS, new Tact());
 		Track track2 = new Track();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals5() {
-		Track track1 = new Track(Key.VIOLIN, new Tact(), 20);
+		Track track1 = new Track(Key.VIOLIN, new Tact(12, NoteLength.SIXTEENTH));
 		Track track2 = new Track();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals6() {
-		Track track1 = new Track(Key.VIOLIN, new Tact(12, NoteLength.SIXTEENTH), 60);
-		Track track2 = new Track();
-
-		assertFalse(track1.equals(track2));
-	}
-
-	public void testEquals7() {
 		Track track = new Track();
 
 		assertFalse(track.equals(null));
 	}
 
-	public void testEquals8() {
+	public void testEquals7() {
 		Track track = new Track();
 
 		assertFalse(track.equals(""));
@@ -134,10 +127,8 @@ public class TrackTest extends TestCase {
 
 	public void testToString() {
 		Key key = Key.BASS;
-		Track track = new Track(key, new Tact(), 60);
+		Track track = new Track(key, new Tact());
 
-		assertEquals(
-				"[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
-				track.toString());
+		assertEquals("[Track] key=" + key + " symbolCount=" + track.size(), track.toString());
 	}
 }
