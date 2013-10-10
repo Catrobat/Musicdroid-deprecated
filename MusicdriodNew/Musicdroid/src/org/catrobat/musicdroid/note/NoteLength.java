@@ -31,7 +31,7 @@ public enum NoteLength {
 		this.length = length;
 	}
 
-	public static int calculateDuration(NoteLength noteLength, int beatsPerMinute) {
-		return Math.round(noteLength.length * beatsPerMinute);
+	public static int calculateDuration(NoteLength noteLength) {
+		return Math.round(384 / 48 * 60 * noteLength.length);
 	}
 }

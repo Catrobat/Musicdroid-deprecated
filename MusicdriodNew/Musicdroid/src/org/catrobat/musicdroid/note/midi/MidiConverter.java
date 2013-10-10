@@ -38,7 +38,6 @@ import java.util.ArrayList;
 
 public class MidiConverter {
 
-	// TODO bei 60 bpm sollte eine Viertelnote auch eine Sekunde dauern
 	// TODO Takt einbauen
 	// TODO Noten "halten" einbauen
 
@@ -82,10 +81,9 @@ public class MidiConverter {
 		ArrayList<MidiTrack> noteTracks = new ArrayList<MidiTrack>();
 
 		int channel = DEFAULT_CHANNEL;
-		int beatsPerMinute = project.getBeatsPerMinute();
 
 		for (int i = 0; i < project.size(); i++) {
-			MidiTrack noteTrack = createNoteTrack(project.getTrack(i), channel, beatsPerMinute);
+			MidiTrack noteTrack = createNoteTrack(project.getTrack(i), channel);
 			noteTracks.add(noteTrack);
 
 			if (channel == MAX_CHANNEL) {
@@ -98,15 +96,15 @@ public class MidiConverter {
 		return noteTracks;
 	}
 
-	private static MidiTrack createNoteTrack(Track track, int channel, int beatsPerMinute) {
+	private static MidiTrack createNoteTrack(Track track, int channel) {
 		MidiTrack noteTrack = new MidiTrack();
 
 		int tick = 0;
 
 		for (int i = 0; i < track.size(); i++) {
 			Symbol symbol = track.getSymbol(i);
-			int duration = NoteLength.calculateDuration(symbol.getNoteLength(), beatsPerMinute);
-
+			int duration = NoteLength.calculateDuration(symbol.getNoteLength());
+			System.out.println("" + duration);
 			if (symbol instanceof Note) {
 				Note note = (Note) symbol;
 				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);

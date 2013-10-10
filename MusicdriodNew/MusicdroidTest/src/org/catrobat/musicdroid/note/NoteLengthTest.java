@@ -33,51 +33,36 @@ public class NoteLengthTest extends TestCase {
 	private static float WHOLE_DURATION = 4f;
 
 	public void testCalculateDuration1() {
-		NoteLength noteLength = NoteLength.SIXTEENTH;
-		int beatsPerMinute = 60;
-
-		int expected = Math.round(beatsPerMinute * SIXTEENTH_DURATION);
-		int actual = NoteLength.calculateDuration(noteLength, beatsPerMinute);
+		int expected = Math.round(384 / 48 * 60 * SIXTEENTH_DURATION);
+		int actual = NoteLength.calculateDuration(NoteLength.SIXTEENTH);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration2() {
-		NoteLength noteLength = NoteLength.EIGHT;
-		int beatsPerMinute = 60;
-
-		int expected = Math.round(beatsPerMinute * EIGHT_DURATION);
-		int actual = NoteLength.calculateDuration(noteLength, beatsPerMinute);
+		int expected = Math.round(384 / 48 * 60 * EIGHT_DURATION);
+		int actual = NoteLength.calculateDuration(NoteLength.EIGHT);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration3() {
-		NoteLength noteLength = NoteLength.QUARTER;
-		int beatsPerMinute = 60;
-
-		int expected = Math.round(beatsPerMinute * QUARTER_DURATION);
-		int actual = NoteLength.calculateDuration(noteLength, beatsPerMinute);
+		int expected = Math.round(384 / 48 * 60 * QUARTER_DURATION);
+		int actual = NoteLength.calculateDuration(NoteLength.QUARTER);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration4() {
-		NoteLength noteLength = NoteLength.HALF;
-		int beatsPerMinute = 60;
-
-		int expected = Math.round(beatsPerMinute * HALF_DURATION);
-		int actual = NoteLength.calculateDuration(noteLength, beatsPerMinute);
+		int expected = Math.round(384 / 48 * 60 * HALF_DURATION);
+		int actual = NoteLength.calculateDuration(NoteLength.HALF);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration5() {
-		NoteLength noteLength = NoteLength.WHOLE;
-		int beatsPerMinute = 60;
-
-		int expected = Math.round(beatsPerMinute * WHOLE_DURATION);
-		int actual = NoteLength.calculateDuration(noteLength, beatsPerMinute);
+		int expected = Math.round(384 / 48 * 60 * WHOLE_DURATION);
+		int actual = NoteLength.calculateDuration(NoteLength.WHOLE);
 
 		assertEquals(expected, actual);
 	}

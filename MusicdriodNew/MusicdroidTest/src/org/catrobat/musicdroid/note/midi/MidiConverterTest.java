@@ -35,7 +35,7 @@ import java.io.IOException;
 public class MidiConverterTest extends TestCase {
 
 	public void testConvertAndWriteMidi() {
-		Project project = new Project("TestMidi", 60);
+		Project project = new Project("TestMidi", 120);
 		Track track1 = new Track();
 		Track track2 = new Track();
 
@@ -57,6 +57,18 @@ public class MidiConverterTest extends TestCase {
 		track1.addSymbol(new Note(NoteName.F4, NoteLength.QUARTER));
 		track1.addSymbol(new Note(NoteName.G4, NoteLength.QUARTER));
 		track1.addSymbol(new Note(NoteName.A4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C4, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.D4, NoteLength.QUARTER));
 
 		track2.addSymbol(new Note(NoteName.A3, NoteLength.WHOLE));
 		track2.addSymbol(new Note(NoteName.B3, NoteLength.HALF));
@@ -90,7 +102,7 @@ public class MidiConverterTest extends TestCase {
 		track2.addSymbol(new Note(NoteName.E4, NoteLength.SIXTEENTH));
 		track2.addSymbol(new Note(NoteName.E4, NoteLength.SIXTEENTH));
 
-		project.addTrack(track1);
+		//project.addTrack(track1);
 		project.addTrack(track2);
 
 		try {
