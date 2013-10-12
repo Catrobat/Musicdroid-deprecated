@@ -26,42 +26,44 @@ import junit.framework.TestCase;
 
 public class NoteLengthTest extends TestCase {
 
-	private static float SIXTEENTH_DURATION = 1 / 4f;
-	private static float EIGHT_DURATION = 1 / 2f;
-	private static float QUARTER_DURATION = 1f;
-	private static float HALF_DURATION = 2f;
-	private static float WHOLE_DURATION = 4f;
+	private static final float SIXTEENTH_DURATION = 1 / 4f;
+	private static final float EIGHT_DURATION = 1 / 2f;
+	private static final float QUARTER_DURATION = 1f;
+	private static final float HALF_DURATION = 2f;
+	private static final float WHOLE_DURATION = 4f;
+
+	private static final int DEFAULT_DURATION = 384 / 48 * 60;
 
 	public void testCalculateDuration1() {
-		int expected = Math.round(384 / 48 * 60 * SIXTEENTH_DURATION);
+		int expected = Math.round(DEFAULT_DURATION * SIXTEENTH_DURATION);
 		int actual = NoteLength.calculateDuration(NoteLength.SIXTEENTH);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration2() {
-		int expected = Math.round(384 / 48 * 60 * EIGHT_DURATION);
+		int expected = Math.round(DEFAULT_DURATION * EIGHT_DURATION);
 		int actual = NoteLength.calculateDuration(NoteLength.EIGHT);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration3() {
-		int expected = Math.round(384 / 48 * 60 * QUARTER_DURATION);
+		int expected = Math.round(DEFAULT_DURATION * QUARTER_DURATION);
 		int actual = NoteLength.calculateDuration(NoteLength.QUARTER);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration4() {
-		int expected = Math.round(384 / 48 * 60 * HALF_DURATION);
+		int expected = Math.round(DEFAULT_DURATION * HALF_DURATION);
 		int actual = NoteLength.calculateDuration(NoteLength.HALF);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration5() {
-		int expected = Math.round(384 / 48 * 60 * WHOLE_DURATION);
+		int expected = Math.round(DEFAULT_DURATION * WHOLE_DURATION);
 		int actual = NoteLength.calculateDuration(NoteLength.WHOLE);
 
 		assertEquals(expected, actual);

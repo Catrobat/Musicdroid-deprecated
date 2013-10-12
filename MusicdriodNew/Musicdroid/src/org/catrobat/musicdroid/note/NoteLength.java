@@ -25,6 +25,9 @@ package org.catrobat.musicdroid.note;
 public enum NoteLength {
 	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
 
+	// http://stackoverflow.com/questions/2467995/actual-note-duration-from-midi-duration
+	private static final int DEFAULT_DURATION = 384 / 48 * 60;
+
 	private float length;
 
 	private NoteLength(float length) {
@@ -32,6 +35,6 @@ public enum NoteLength {
 	}
 
 	public static int calculateDuration(NoteLength noteLength) {
-		return Math.round(384 / 48 * 60 * noteLength.length);
+		return Math.round(DEFAULT_DURATION * noteLength.length);
 	}
 }
