@@ -24,6 +24,7 @@ package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
+import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
 import org.catrobat.musicdroid.note.Note;
@@ -38,14 +39,13 @@ import java.util.ArrayList;
 
 public class MidiConverter {
 
-	// TODO Takt einbauen
 	// TODO Noten "halten" einbauen
 
 	private static int DEFAULT_VELOCITY = 64;
 	private static int DEFAULT_CHANNEL = 1;
 	private static int MAX_CHANNEL = 16;
 
-	private MidiConverter() {
+	protected MidiConverter() {
 	}
 
 	public static void convertAndWriteMidi(Project project) throws IOException {
@@ -53,7 +53,7 @@ public class MidiConverter {
 		midi.writeToFile(new File(project.getName() + ".midi"));
 	}
 
-	private static MidiFile convert(Project project) {
+	protected static MidiFile convert(Project project) {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
 		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
@@ -99,15 +99,19 @@ public class MidiConverter {
 	private static MidiTrack createNoteTrack(Track track, int channel) {
 		MidiTrack noteTrack = new MidiTrack();
 
+		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
+		noteTrack.insertEvent(program);
+
 		int tick = 0;
 
 		for (int i = 0; i < track.size(); i++) {
 			Symbol symbol = track.getSymbol(i);
 			int duration = NoteLength.calculateDuration(symbol.getNoteLength());
-			System.out.println("" + duration);
+
 			if (symbol instanceof Note) {
 				Note note = (Note) symbol;
 				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
+
 			}
 
 			tick += duration;

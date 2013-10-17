@@ -30,21 +30,27 @@ public class Track implements Serializable {
 
 	private static final long serialVersionUID = 7483021689872527955L;
 
-	// TODO fw Instrument
+	private Instrument instrument;
 	private Key key;
 	private Tact tact;
 	private List<Symbol> symbols;
 
 	public Track() {
 		this.symbols = new ArrayList<Symbol>();
+		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
 		this.key = Key.VIOLIN;
 		this.tact = new Tact();
 	}
 
-	public Track(Key key, Tact tact) {
+	public Track(Instrument instrument, Key key, Tact tact) {
 		this.symbols = new ArrayList<Symbol>();
+		this.instrument = instrument;
 		this.key = key;
 		this.tact = tact;
+	}
+
+	public Instrument getInstrument() {
+		return instrument;
 	}
 
 	public Key getKey() {
@@ -79,6 +85,10 @@ public class Track implements Serializable {
 
 		Track track = (Track) obj;
 
+		if (track.getInstrument() != getInstrument()) {
+			return false;
+		}
+
 		if ((key.equals(track.getKey())) && (tact.equals(track.getTact()) && (size() == track.size()))) {
 			for (int i = 0; i < size(); i++) {
 				if (!getSymbol(i).equals(track.getSymbol(i))) {
@@ -94,6 +104,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] key=" + key + " symbolCount=" + size();
+		return "[Track] instrument= " + instrument + " key=" + key + " symbolCount=" + size();
 	}
 }
