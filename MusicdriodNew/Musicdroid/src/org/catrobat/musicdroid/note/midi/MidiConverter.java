@@ -39,8 +39,6 @@ import java.util.ArrayList;
 
 public class MidiConverter {
 
-	// TODO Noten "halten" einbauen
-
 	private static int DEFAULT_VELOCITY = 64;
 	private static int DEFAULT_CHANNEL = 1;
 	private static int MAX_CHANNEL = 16;
