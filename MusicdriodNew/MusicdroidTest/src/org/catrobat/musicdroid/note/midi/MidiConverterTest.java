@@ -31,12 +31,14 @@ import com.leff.midi.event.meta.Tempo;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.Break;
 import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Note;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Symbol;
 import org.catrobat.musicdroid.note.Tact;
 import org.catrobat.musicdroid.note.Track;
 
@@ -46,14 +48,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MidiConverterTest extends TestCase {
-
-	private static final int BEATS_PER_MINUTE = 120;
-
-	private static final Instrument INSTRUMENT_ONE = Instrument.GUNSHOT;
-	private static final Instrument INSTRUMENT_TWO = Instrument.WHISTLE;
-
-	private static final Note NOTE_ONE_TRACK_ONE = new Note(NoteName.C4, NoteLength.QUARTER);
-	private static final Note NOTE_ONE_TRACK_TWO = new Note(NoteName.B3, NoteLength.HALF);
 
 	public void testConvertAndWriteMidi() {
 		Project project = createProject();
@@ -74,17 +68,50 @@ public class MidiConverterTest extends TestCase {
 
 		MidiFile midi = MidiConverter.convert(project);
 
-		assertMidi(midi);
+		assertMidi(project, midi);
 	}
 
 	private Project createProject() {
-		Project project = new Project("TestMidi", BEATS_PER_MINUTE);
-		Track track1 = new Track(INSTRUMENT_ONE, Key.VIOLIN, new Tact());
-		Track track2 = new Track(INSTRUMENT_TWO, Key.VIOLIN, new Tact());
+		Project project = new Project("TestMidi", 120);
+		Track track1 = new Track(Instrument.GUNSHOT, Key.VIOLIN, new Tact());
+		Track track2 = new Track(Instrument.WHISTLE, Key.VIOLIN, new Tact());
 
-		track1.addSymbol(NOTE_ONE_TRACK_ONE);
+		track1.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		track1.addSymbol(new Break(NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		track1.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
 
-		track2.addSymbol(NOTE_ONE_TRACK_TWO);
+		track2.addSymbol(new Note(NoteName.B1, NoteLength.WHOLE));
+		track2.addSymbol(new Note(NoteName.B2, NoteLength.HALF));
+		track2.addSymbol(new Note(NoteName.B2, NoteLength.HALF));
+		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
+		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
+		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
+		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
 
 		project.addTrack(track1);
 		project.addTrack(track2);
@@ -92,59 +119,74 @@ public class MidiConverterTest extends TestCase {
 		return project;
 	}
 
-	private void assertMidi(MidiFile midi) {
-		assertEquals(3, midi.getTrackCount());
+	private void assertMidi(Project project, MidiFile midi) {
+		int tempoTrackCount = 1;
+		int noteTrackCount = project.size();
+
+		int trackCount = tempoTrackCount + noteTrackCount;
+		assertEquals(trackCount, midi.getTrackCount());
 
 		ArrayList<MidiTrack> tracks = midi.getTracks();
 
 		MidiTrack tempoTrack = tracks.get(0);
-		MidiTrack noteTrack1 = tracks.get(1);
-		MidiTrack noteTrack2 = tracks.get(2);
+		assertTempoTrack(project, tempoTrack);
 
-		assertTempoTrack(tempoTrack);
-		assertNoteTrack1(noteTrack1);
-		assertNoteTrack2(noteTrack2);
+		for (int i = 1; i < tracks.size(); i++) {
+			MidiTrack noteTrack = tracks.get(i);
+			assertNoteTrack(project.getTrack(i - 1), noteTrack);
+		}
 	}
 
-	private void assertTempoTrack(MidiTrack tempoTrack) {
+	private void assertTempoTrack(Project project, MidiTrack tempoTrack) {
 		assertEquals(1, tempoTrack.getEventCount());
+
 		Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
 		Tempo tempo = (Tempo) it.next();
 
-		assertEquals(BEATS_PER_MINUTE, (int) tempo.getBpm());
+		assertEquals(project.getBeatsPerMinute(), (int) tempo.getBpm());
 	}
 
-	private void assertNoteTrack1(MidiTrack noteTrack1) {
-		assertEquals(3, noteTrack1.getEventCount());
+	private void assertNoteTrack(Track track, MidiTrack noteTrack1) {
+		int noteOnEventCount = track.size();
+
+		for (int i = 0; i < track.size(); i++) {
+			if (track.getSymbol(i) instanceof Break) {
+				noteOnEventCount--;
+			}
+		}
+
+		int noteOffEventCount = noteOnEventCount;
+		int programChangeEventCount = 1;
+
+		int eventCount = noteOnEventCount + noteOffEventCount + programChangeEventCount;
+		assertEquals(eventCount, noteTrack1.getEventCount());
 
 		Iterator<MidiEvent> it = noteTrack1.getEvents().iterator();
 
 		ProgramChange program = (ProgramChange) it.next();
-		assertEquals(INSTRUMENT_ONE.getProgram(), program.getProgramNumber());
+		assertEquals(track.getInstrument().getProgram(), program.getProgramNumber());
 
-		NoteOn noteOn1 = (NoteOn) it.next();
-		assertEquals(NOTE_ONE_TRACK_ONE.getNoteName().getMidi(), noteOn1.getNoteValue());
-		assertEquals(0, noteOn1.getTick());
+		int i = 0;
+		int tick = 0;
 
-		NoteOn noteOn2 = (NoteOn) it.next();
-		assertEquals(NOTE_ONE_TRACK_ONE.getNoteName().getMidi(), noteOn2.getNoteValue());
-		assertEquals(NoteLength.calculateDuration(NOTE_ONE_TRACK_ONE.getNoteLength()), noteOn2.getTick());
-	}
+		while (it.hasNext()) {
+			NoteOn noteOn = (NoteOn) it.next();
+			Symbol symbol = track.getSymbol(i);
 
-	private void assertNoteTrack2(MidiTrack noteTrack2) {
-		assertEquals(3, noteTrack2.getEventCount());
+			if (symbol instanceof Break) {
+				tick += NoteLength.calculateDuration(symbol.getNoteLength());
+				continue;
+			}
 
-		Iterator<MidiEvent> it = noteTrack2.getEvents().iterator();
+			i++;
+			Note note = (Note) symbol;
 
-		ProgramChange program = (ProgramChange) it.next();
-		assertEquals(INSTRUMENT_TWO.getProgram(), program.getProgramNumber());
+			assertEquals(note.getNoteName().getMidi(), noteOn.getNoteValue());
+			assertEquals(tick, noteOn.getTick());
 
-		NoteOn noteOn1 = (NoteOn) it.next();
-		assertEquals(NOTE_ONE_TRACK_TWO.getNoteName().getMidi(), noteOn1.getNoteValue());
-		assertEquals(0, noteOn1.getTick());
-
-		NoteOn noteOn2 = (NoteOn) it.next();
-		assertEquals(NOTE_ONE_TRACK_TWO.getNoteName().getMidi(), noteOn2.getNoteValue());
-		assertEquals(NoteLength.calculateDuration(NOTE_ONE_TRACK_TWO.getNoteLength()), noteOn2.getTick());
+			NoteOn noteOff = (NoteOn) it.next();
+			tick += NoteLength.calculateDuration(symbol.getNoteLength());
+			assertEquals(tick, noteOff.getTick());
+		}
 	}
 }

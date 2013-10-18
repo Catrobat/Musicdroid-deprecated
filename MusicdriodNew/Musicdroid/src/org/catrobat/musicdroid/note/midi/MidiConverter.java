@@ -109,7 +109,6 @@ public class MidiConverter {
 			if (symbol instanceof Note) {
 				Note note = (Note) symbol;
 				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
-
 			}
 
 			tick += duration;
