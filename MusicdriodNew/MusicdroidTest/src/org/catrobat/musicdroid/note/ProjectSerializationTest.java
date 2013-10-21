@@ -22,6 +22,8 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+import android.os.Environment;
+
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -37,7 +39,7 @@ public class ProjectSerializationTest extends TestCase {
 		Project project = new Project("projectSerializedTest");
 		Track track = new Track();
 		project.addTrack(track);
-		File file = new File(project.getName());
+		File file = new File(Environment.getExternalStorageDirectory(), project.getName());
 
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 		out.writeObject(project);

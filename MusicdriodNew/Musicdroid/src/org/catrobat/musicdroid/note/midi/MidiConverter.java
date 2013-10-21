@@ -27,6 +27,7 @@ import com.leff.midi.MidiTrack;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
+import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.Note;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.Project;
@@ -34,24 +35,41 @@ import org.catrobat.musicdroid.note.Symbol;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MidiConverter {
 
 	private static int DEFAULT_VELOCITY = 64;
-	private static int DEFAULT_CHANNEL = 1;
 	private static int MAX_CHANNEL = 16;
 
-	protected MidiConverter() {
+	private ArrayList<Instrument> usedChannels;
+
+	public MidiConverter() {
+		usedChannels = new ArrayList<Instrument>();
 	}
 
-	public static void convertAndWriteMidi(Project project) throws IOException {
-		MidiFile midi = convert(project);
+	public Project readFileAndConvertMidi(File file) throws FileNotFoundException, IOException {
+		MidiFile midi = new MidiFile(file);
+
+		return convertMidi(midi, file.getName());
+	}
+
+	protected Project convertMidi(MidiFile midi, String name) {
+		Project project = new Project(name);
+
+		// TODO
+
+		return project;
+	}
+
+	public void convertProjectAndWriteMidi(Project project) throws IOException, MidiException {
+		MidiFile midi = convertProject(project);
 		midi.writeToFile(new File(project.getName() + ".midi"));
 	}
 
-	protected static MidiFile convert(Project project) {
+	protected MidiFile convertProject(Project project) throws MidiException {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
 		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
@@ -64,7 +82,7 @@ public class MidiConverter {
 		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
 	}
 
-	private static MidiTrack createTempoTrack(int beatsPerMinute) {
+	private MidiTrack createTempoTrack(int beatsPerMinute) {
 		MidiTrack tempoTrack = new MidiTrack();
 
 		Tempo t = new Tempo();
@@ -75,27 +93,21 @@ public class MidiConverter {
 		return tempoTrack;
 	}
 
-	private static ArrayList<MidiTrack> createNoteTracks(Project project) {
+	private ArrayList<MidiTrack> createNoteTracks(Project project) throws MidiException {
 		ArrayList<MidiTrack> noteTracks = new ArrayList<MidiTrack>();
 
-		int channel = DEFAULT_CHANNEL;
-
 		for (int i = 0; i < project.size(); i++) {
-			MidiTrack noteTrack = createNoteTrack(project.getTrack(i), channel);
+			MidiTrack noteTrack = createNoteTrack(project.getTrack(i));
 			noteTracks.add(noteTrack);
-
-			if (channel == MAX_CHANNEL) {
-				break;
-			}
-
-			channel++;
 		}
 
 		return noteTracks;
 	}
 
-	private static MidiTrack createNoteTrack(Track track, int channel) {
+	private MidiTrack createNoteTrack(Track track) throws MidiException {
 		MidiTrack noteTrack = new MidiTrack();
+
+		int channel = addInstrumentAndGetChannel(track.getInstrument());
 
 		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
 		noteTrack.insertEvent(program);
@@ -115,5 +127,17 @@ public class MidiConverter {
 		}
 
 		return noteTrack;
+	}
+
+	protected int addInstrumentAndGetChannel(Instrument instrument) throws MidiException {
+		if (usedChannels.contains(instrument)) {
+			return usedChannels.indexOf(instrument) + 1;
+		} else if (usedChannels.size() == MAX_CHANNEL) {
+			throw new MidiException("You cannot have more than " + MAX_CHANNEL + " channels!");
+		} else {
+			usedChannels.add(instrument);
+
+			return usedChannels.indexOf(instrument) + 1;
+		}
 	}
 }

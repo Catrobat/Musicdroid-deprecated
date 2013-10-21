@@ -49,11 +49,48 @@ import java.util.Iterator;
 
 public class MidiConverterTest extends TestCase {
 
-	public void testConvertAndWriteMidi() {
+	private static final String PROJECT_NAME = "TestMidi";
+
+	public void testConvertMidi() throws MidiException {
+		MidiConverter converter = new MidiConverter();
+		Project expectedProject = createProject();
+
+		MidiFile midi = converter.convertProject(expectedProject);
+
+		Project actualProject = converter.convertMidi(midi, PROJECT_NAME);
+
+		assertEquals(expectedProject, actualProject);
+	}
+
+	public void testAddInstrumentAndGetChannel() throws MidiException {
+		MidiConverter converter = new MidiConverter();
+
+		int[] expectedChannels = { 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACCORDION, Instrument.ACOUSTIC_BASS,
+				Instrument.ACOUSTIC_BASS, Instrument.ACOUSTIC_GRAND_PIANO, Instrument.AGOGO_BELLS, Instrument.APPLAUSE,
+				Instrument.BAGPIPE, Instrument.BANJO, Instrument.BASSOON, Instrument.BRASS_SECTION, Instrument.CELLO,
+				Instrument.CHURCH_ORGAN, Instrument.CLARINET, Instrument.DISTORTION_GUITAR,
+				Instrument.ELECTRIC_BASS_FINGER, Instrument.FX_1_RAIN, Instrument.FX_8_SCI_FI };
+
+		for (int i = 0; i < instruments.length; i++) {
+			int actualChannel = converter.addInstrumentAndGetChannel(instruments[i]);
+
+			assertEquals(expectedChannels[i], actualChannel);
+		}
+
+		try {
+			converter.addInstrumentAndGetChannel(Instrument.HARMONICA);
+			assertTrue(false);
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testConvertProjectAndWriteMidi() throws MidiException {
+		MidiConverter converter = new MidiConverter();
 		Project project = createProject();
 
 		try {
-			MidiConverter.convertAndWriteMidi(project);
+			converter.convertProjectAndWriteMidi(project);
 		} catch (IOException e) {
 			assertTrue(false);
 		}
@@ -63,16 +100,17 @@ public class MidiConverterTest extends TestCase {
 		file.delete();
 	}
 
-	public void testConvertMidi() {
+	public void testConvertProject() throws MidiException {
+		MidiConverter converter = new MidiConverter();
 		Project project = createProject();
 
-		MidiFile midi = MidiConverter.convert(project);
+		MidiFile midi = converter.convertProject(project);
 
 		assertMidi(project, midi);
 	}
 
 	private Project createProject() {
-		Project project = new Project("TestMidi", 120);
+		Project project = new Project(PROJECT_NAME, 120);
 		Track track1 = new Track(Instrument.GUNSHOT, Key.VIOLIN, new Tact());
 		Track track2 = new Track(Instrument.WHISTLE, Key.VIOLIN, new Tact());
 
