@@ -118,6 +118,7 @@ public class ProjectTest extends TestCase {
 	public void testToString() {
 		Project project = new Project("Project");
 
-		assertEquals("[Project] name=" + project.getName() + " trackCount=" + project.size(), project.toString());
+		assertEquals("[Project] name=" + project.getName() + " beatsPerMinute=" + project.getBeatsPerMinute()
+				+ " trackCount=" + project.size(), project.toString());
 	}
 }

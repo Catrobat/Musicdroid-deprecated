@@ -96,6 +96,6 @@ public class Project implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Project] name=" + name + " trackCount=" + size();
+		return "[Project] name=" + name + " beatsPerMinute=" + beatsPerMinute + " trackCount=" + size();
 	}
 }
