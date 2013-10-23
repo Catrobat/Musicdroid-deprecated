@@ -29,4 +29,7 @@ public class MidiException extends Exception {
 	public MidiException(String error) {
 		super(error);
 	}
+
+	public MidiException() {
+	}
 }

@@ -45,8 +45,9 @@ public enum NoteName {
 	public NoteName next() {
 		int index = this.ordinal() + 1;
 
-		if (index >= values().length)
+		if (index >= values().length) {
 			index--;
+		}
 
 		return values()[index];
 	}
@@ -54,8 +55,9 @@ public enum NoteName {
 	public NoteName previous() {
 		int index = this.ordinal() - 1;
 
-		if (index < 0)
+		if (index < 0) {
 			index++;
+		}
 
 		return values()[index];
 	}
@@ -72,5 +74,17 @@ public enum NoteName {
 
 	public static int calculateDistance(NoteName name1, NoteName name2) {
 		return name1.midi - name2.midi;
+	}
+
+	public static NoteName getNoteNameFromMidiValue(int midiValue) {
+		NoteName[] noteNames = NoteName.values();
+
+		for (int i = 0; i < noteNames.length; i++) {
+			if (noteNames[i].getMidi() == midiValue) {
+				return noteNames[i];
+			}
+		}
+
+		return C3;
 	}
 }

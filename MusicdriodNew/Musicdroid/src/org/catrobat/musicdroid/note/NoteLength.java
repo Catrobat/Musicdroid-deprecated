@@ -26,15 +26,33 @@ public enum NoteLength {
 	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
 
 	// http://stackoverflow.com/questions/2467995/actual-note-duration-from-midi-duration
-	private static final int DEFAULT_DURATION = 384 / 48 * 60;
+	protected static final double DEFAULT_DURATION = 384 / 48 * 60;
 
-	private float length;
+	private double length;
 
-	private NoteLength(float length) {
+	private NoteLength(double length) {
 		this.length = length;
 	}
 
-	public static int calculateDuration(NoteLength noteLength) {
+	public double getLength() {
+		return length;
+	}
+
+	public static long calculateDuration(NoteLength noteLength) {
 		return Math.round(DEFAULT_DURATION * noteLength.length);
+	}
+
+	public static NoteLength getNoteLengthFromDuration(long duration) {
+		NoteLength[] noteLengths = NoteLength.values();
+
+		double length = duration / DEFAULT_DURATION;
+
+		for (int i = 0; i < noteLengths.length; i++) {
+			if (noteLengths[i].getLength() == length) {
+				return noteLengths[i];
+			}
+		}
+
+		return QUARTER;
 	}
 }

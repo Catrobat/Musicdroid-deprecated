@@ -93,4 +93,31 @@ public class NoteNameTest extends TestCase {
 
 		assertTrue(c1s.isSigned());
 	}
+
+	public void testGetNoteNameFromMidiValue1() {
+		int midiValue = 36;
+		NoteName expectedNoteName = NoteName.C1;
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testGetNoteNameFromMidiValue2() {
+		int midiValue = 95;
+		NoteName expectedNoteName = NoteName.B5;
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testGetNoteNameFromMidiValue3() {
+		int midiValue = 96;
+		NoteName expectedNoteName = NoteName.C3;
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
 }

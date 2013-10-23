@@ -151,7 +151,7 @@ public enum Instrument {
 	HELICOPTER(125),
 	APPLAUSE(126),
 	GUNSHOT(127);
-
+	
 	private int program;
 
 	private Instrument(int program) {
@@ -160,5 +160,17 @@ public enum Instrument {
 
 	public int getProgram() {
 		return program;
+	}
+	
+	public static Instrument getInstrumentFromProgram(int program) {
+		Instrument[] instruments = Instrument.values();
+		
+		for (int i = 0; i < instruments.length; i++) {
+			if (instruments[i].getProgram() == program) {
+				return instruments[i];
+			}
+		}
+		
+		return ACOUSTIC_GRAND_PIANO;
 	}
 }

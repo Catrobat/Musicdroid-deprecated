@@ -32,40 +32,65 @@ public class NoteLengthTest extends TestCase {
 	private static final float HALF_DURATION = 2f;
 	private static final float WHOLE_DURATION = 4f;
 
-	private static final int DEFAULT_DURATION = 384 / 48 * 60;
-
 	public void testCalculateDuration1() {
-		int expected = Math.round(DEFAULT_DURATION * SIXTEENTH_DURATION);
-		int actual = NoteLength.calculateDuration(NoteLength.SIXTEENTH);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * SIXTEENTH_DURATION);
+		long actual = NoteLength.calculateDuration(NoteLength.SIXTEENTH);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration2() {
-		int expected = Math.round(DEFAULT_DURATION * EIGHT_DURATION);
-		int actual = NoteLength.calculateDuration(NoteLength.EIGHT);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * EIGHT_DURATION);
+		long actual = NoteLength.calculateDuration(NoteLength.EIGHT);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration3() {
-		int expected = Math.round(DEFAULT_DURATION * QUARTER_DURATION);
-		int actual = NoteLength.calculateDuration(NoteLength.QUARTER);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * QUARTER_DURATION);
+		long actual = NoteLength.calculateDuration(NoteLength.QUARTER);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration4() {
-		int expected = Math.round(DEFAULT_DURATION * HALF_DURATION);
-		int actual = NoteLength.calculateDuration(NoteLength.HALF);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * HALF_DURATION);
+		long actual = NoteLength.calculateDuration(NoteLength.HALF);
 
 		assertEquals(expected, actual);
 	}
 
 	public void testCalculateDuration5() {
-		int expected = Math.round(DEFAULT_DURATION * WHOLE_DURATION);
-		int actual = NoteLength.calculateDuration(NoteLength.WHOLE);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * WHOLE_DURATION);
+		long actual = NoteLength.calculateDuration(NoteLength.WHOLE);
 
 		assertEquals(expected, actual);
+	}
+
+	public void testGetNoteLengthFromDuration1() {
+		NoteLength expectedNoteLength = NoteLength.WHOLE;
+		long duration = NoteLength.calculateDuration(expectedNoteLength);
+
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromDuration(duration);
+
+		assertEquals(actualNoteLength, expectedNoteLength);
+	}
+
+	public void testGetNoteLengthFromDuration2() {
+		NoteLength expectedNoteLength = NoteLength.SIXTEENTH;
+		long duration = NoteLength.calculateDuration(expectedNoteLength);
+
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromDuration(duration);
+
+		assertEquals(actualNoteLength, expectedNoteLength);
+	}
+
+	public void testGetNoteLengthFromDuration3() {
+		NoteLength expectedNoteLength = NoteLength.QUARTER;
+		long duration = NoteLength.calculateDuration(expectedNoteLength) + 1;
+
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromDuration(duration);
+
+		assertEquals(actualNoteLength, expectedNoteLength);
 	}
 }

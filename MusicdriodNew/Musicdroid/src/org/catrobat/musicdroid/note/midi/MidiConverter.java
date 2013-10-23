@@ -24,120 +24,108 @@ package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
+import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
 import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Note;
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.Symbol;
+import org.catrobat.musicdroid.note.Tact;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MidiConverter {
 
-	private static int DEFAULT_VELOCITY = 64;
-	private static int MAX_CHANNEL = 16;
+	private static final Instrument DEFAULT_INSTRUMENT = Instrument.ACOUSTIC_GRAND_PIANO;
 
-	private ArrayList<Instrument> usedChannels;
-
-	public MidiConverter() {
-		usedChannels = new ArrayList<Instrument>();
-	}
-
-	public Project readFileAndConvertMidi(File file) throws FileNotFoundException, IOException {
+	public Project readFileAndConvertMidi(File file) throws FileNotFoundException, IOException, MidiException {
 		MidiFile midi = new MidiFile(file);
 
-		return convertMidi(midi, file.getName());
+		try {
+			return convertMidi(midi, file.getName());
+		} catch (Exception e) {
+			throw new MidiException("Unsupported MIDI format!");
+		}
 	}
 
-	protected Project convertMidi(MidiFile midi, String name) {
-		Project project = new Project(name);
+	protected Project convertMidi(MidiFile midi, String name) throws MidiException {
+		ArrayList<MidiTrack> midiTracks = midi.getTracks();
 
-		// TODO
+		MidiTrack tempoTrack = midiTracks.get(0);
+
+		Project project = new Project(name, getBeatsPerMinute(tempoTrack));
+
+		for (int i = 1; i < midiTracks.size(); i++) {
+			Track track = createTrack(midiTracks.get(i));
+			project.addTrack(track);
+		}
 
 		return project;
 	}
 
-	public void convertProjectAndWriteMidi(Project project) throws IOException, MidiException {
-		MidiFile midi = convertProject(project);
-		midi.writeToFile(new File(project.getName() + ".midi"));
-	}
+	protected int getBeatsPerMinute(MidiTrack tempoTrack) throws MidiException {
+		Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
 
-	protected MidiFile convertProject(Project project) throws MidiException {
-		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
+		while (it.hasNext()) {
+			MidiEvent event = it.next();
 
-		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
-		tracks.add(tempoTrack);
-
-		for (MidiTrack track : createNoteTracks(project)) {
-			tracks.add(track);
-		}
-
-		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
-	}
-
-	private MidiTrack createTempoTrack(int beatsPerMinute) {
-		MidiTrack tempoTrack = new MidiTrack();
-
-		Tempo t = new Tempo();
-		t.setBpm(beatsPerMinute);
-
-		tempoTrack.insertEvent(t);
-
-		return tempoTrack;
-	}
-
-	private ArrayList<MidiTrack> createNoteTracks(Project project) throws MidiException {
-		ArrayList<MidiTrack> noteTracks = new ArrayList<MidiTrack>();
-
-		for (int i = 0; i < project.size(); i++) {
-			MidiTrack noteTrack = createNoteTrack(project.getTrack(i));
-			noteTracks.add(noteTrack);
-		}
-
-		return noteTracks;
-	}
-
-	private MidiTrack createNoteTrack(Track track) throws MidiException {
-		MidiTrack noteTrack = new MidiTrack();
-
-		int channel = addInstrumentAndGetChannel(track.getInstrument());
-
-		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
-		noteTrack.insertEvent(program);
-
-		int tick = 0;
-
-		for (int i = 0; i < track.size(); i++) {
-			Symbol symbol = track.getSymbol(i);
-			int duration = NoteLength.calculateDuration(symbol.getNoteLength());
-
-			if (symbol instanceof Note) {
-				Note note = (Note) symbol;
-				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
+			if (event instanceof Tempo) {
+				Tempo tempo = (Tempo) event;
+				return (int) tempo.getBpm();
 			}
-
-			tick += duration;
 		}
 
-		return noteTrack;
+		throw new MidiException("No Tempo found in track. Unsupported MIDI format!");
 	}
 
-	protected int addInstrumentAndGetChannel(Instrument instrument) throws MidiException {
-		if (usedChannels.contains(instrument)) {
-			return usedChannels.indexOf(instrument) + 1;
-		} else if (usedChannels.size() == MAX_CHANNEL) {
-			throw new MidiException("You cannot have more than " + MAX_CHANNEL + " channels!");
-		} else {
-			usedChannels.add(instrument);
+	protected Track createTrack(MidiTrack midiTrack) throws MidiException {
+		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
+		Instrument instrument = DEFAULT_INSTRUMENT;
+		ArrayList<Symbol> symbols = new ArrayList<Symbol>();
 
-			return usedChannels.indexOf(instrument) + 1;
+		while (it.hasNext()) {
+			MidiEvent event = it.next();
+
+			if (event instanceof ProgramChange) {
+				ProgramChange program = (ProgramChange) event;
+
+				instrument = Instrument.getInstrumentFromProgram(program.getProgramNumber());
+			} else if (event instanceof NoteOn) {
+				NoteOn noteOn = (NoteOn) event;
+
+				if (false == it.hasNext()) {
+					throw new MidiException("No NoteOff event found for a NoteOn event. Unsupported MIDI format");
+				}
+
+				NoteOn noteOff = (NoteOn) it.next();
+
+				NoteName note = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
+				long duration = noteOff.getTick() - noteOn.getTick();
+				NoteLength length = NoteLength.getNoteLengthFromDuration(duration);
+
+				// TODO wie geh ich mit Breaks um?
+
+				symbols.add(new Note(note, length));
+			}
 		}
+
+		Track track = new Track(instrument, Key.VIOLIN, new Tact());
+
+		for (Symbol symbol : symbols) {
+			track.addSymbol(symbol);
+		}
+
+		return track;
 	}
 }
