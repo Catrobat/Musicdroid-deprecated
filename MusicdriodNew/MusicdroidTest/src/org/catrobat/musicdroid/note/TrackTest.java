@@ -48,7 +48,7 @@ public class TrackTest extends TestCase {
 	public void testAddSymbol() {
 		Track track = new Track();
 
-		track.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		track.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
 
 		assertEquals(1, track.size());
 	}
@@ -56,7 +56,7 @@ public class TrackTest extends TestCase {
 	public void testRemoveSymbol() {
 		Track track = new Track();
 
-		Symbol symbol = new Note(NoteName.C1, NoteLength.QUARTER);
+		Symbol symbol = new Note(NoteLength.QUARTER, NoteName.C1);
 		track.addSymbol(symbol);
 		track.removeSymbol(symbol);
 

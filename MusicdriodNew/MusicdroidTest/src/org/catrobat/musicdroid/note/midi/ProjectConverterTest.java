@@ -32,6 +32,7 @@ import com.leff.midi.event.meta.Tempo;
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.Break;
+import org.catrobat.musicdroid.note.Chord;
 import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Note;
@@ -48,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ProjectConverterTest extends TestCase {
+
+	private static final String PROJECT_NAME = "TestMidi";
 
 	public void testConvertProjectAndWriteMidi() throws MidiException {
 		ProjectConverter converter = new ProjectConverter();
@@ -74,46 +77,46 @@ public class ProjectConverterTest extends TestCase {
 	}
 
 	private Project createProject() {
-		Project project = new Project("TestMidi", 120);
+		Project project = new Project(PROJECT_NAME, 120);
 		Track track1 = new Track(Instrument.GUNSHOT, Key.VIOLIN, new Tact());
 		Track track2 = new Track(Instrument.WHISTLE, Key.VIOLIN, new Tact());
 
 		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		track1.addSymbol(new Chord(NoteLength.QUARTER, new NoteName[] { NoteName.C1, NoteName.C2 }));
 		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		track1.addSymbol(new Chord(NoteLength.QUARTER, new NoteName[] { NoteName.C1, NoteName.C2 }));
 
-		track2.addSymbol(new Note(NoteName.B1, NoteLength.WHOLE));
-		track2.addSymbol(new Note(NoteName.B2, NoteLength.HALF));
-		track2.addSymbol(new Note(NoteName.B2, NoteLength.HALF));
-		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
-		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
-		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
-		track2.addSymbol(new Note(NoteName.B3, NoteLength.QUARTER));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B4, NoteLength.EIGHT));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
-		track2.addSymbol(new Note(NoteName.B5, NoteLength.SIXTEENTH));
+		track2.addSymbol(new Note(NoteLength.WHOLE, NoteName.B1));
+		track2.addSymbol(new Note(NoteLength.HALF, NoteName.B2));
+		track2.addSymbol(new Note(NoteLength.HALF, NoteName.B2));
+		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
+		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
+		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
+		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
 
 		project.addTrack(track1);
 		project.addTrack(track2);
@@ -149,13 +152,7 @@ public class ProjectConverterTest extends TestCase {
 	}
 
 	private void assertNoteTrack(Track track, MidiTrack noteTrack1) {
-		int noteOnEventCount = track.size();
-
-		for (int i = 0; i < track.size(); i++) {
-			if (track.getSymbol(i) instanceof Break) {
-				noteOnEventCount--;
-			}
-		}
+		int noteOnEventCount = getNoteOnEventCount(track);
 
 		int noteOffEventCount = noteOnEventCount;
 		int programChangeEventCount = 1;
@@ -190,6 +187,26 @@ public class ProjectConverterTest extends TestCase {
 			tick += NoteLength.calculateDuration(symbol.getNoteLength());
 			assertEquals(tick, noteOff.getTick());
 		}
+	}
+
+	private int getNoteOnEventCount(Track track) {
+		int noteOnEventCount = 0;
+
+		for (int i = 0; i < track.size(); i++) {
+			Symbol symbol = track.getSymbol(i);
+
+			if (symbol instanceof Note) {
+				noteOnEventCount++;
+			} else if (symbol instanceof Chord) {
+				Chord chord = (Chord) symbol;
+
+				for (int j = 0; j < chord.size(); j++) {
+					noteOnEventCount++;
+				}
+			}
+		}
+
+		return noteOnEventCount;
 	}
 
 	public void testAddInstrumentAndGetChannel() throws MidiException {

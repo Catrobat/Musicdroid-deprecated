@@ -89,7 +89,7 @@ public class MidiConverter {
 		throw new MidiException("No Tempo found in track. Unsupported MIDI format!");
 	}
 
-	protected Track createTrack(MidiTrack midiTrack) throws MidiException {
+	private Track createTrack(MidiTrack midiTrack) throws MidiException {
 		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
 		Instrument instrument = DEFAULT_INSTRUMENT;
 		ArrayList<Symbol> symbols = new ArrayList<Symbol>();
@@ -115,8 +115,9 @@ public class MidiConverter {
 				NoteLength length = NoteLength.getNoteLengthFromDuration(duration);
 
 				// TODO wie geh ich mit Breaks um?
+				// TODO Chords beachten
 
-				symbols.add(new Note(note, length));
+				symbols.add(new Note(length, note));
 			}
 		}
 

@@ -29,14 +29,14 @@ public class NoteTest extends TestCase {
 	public void testNote() {
 		NoteName name = NoteName.C1;
 		NoteLength noteLength = NoteLength.EIGHT;
-		Note note = new Note(name, noteLength);
+		Note note = new Note(noteLength, name);
 
 		assertEquals(name, note.getNoteName());
 		assertEquals(noteLength, note.getNoteLength());
 	}
 
 	public void testHalfToneUp() {
-		Note c1 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note c1 = new Note(NoteLength.QUARTER, NoteName.C1);
 		Note c1s = c1.halfToneUp();
 
 		assertEquals(c1.getNoteLength(), c1s.getNoteLength());
@@ -44,7 +44,7 @@ public class NoteTest extends TestCase {
 	}
 
 	public void testHalfToneDown() {
-		Note c1s = new Note(NoteName.C1S, NoteLength.QUARTER);
+		Note c1s = new Note(NoteLength.QUARTER, NoteName.C1S);
 		Note c1 = c1s.halfToneDown();
 
 		assertEquals(c1.getNoteLength(), c1s.getNoteLength());
@@ -52,34 +52,41 @@ public class NoteTest extends TestCase {
 	}
 
 	public void testEquals1() {
-		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note note2 = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note1 = new Note(NoteLength.QUARTER, NoteName.C1);
+		Note note2 = new Note(NoteLength.QUARTER, NoteName.C1);
 
 		assertTrue(note1.equals(note2));
 	}
 
 	public void testEquals2() {
-		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note note2 = new Note(NoteName.D1, NoteLength.QUARTER);
+		Note note1 = new Note(NoteLength.QUARTER, NoteName.C1);
+		Note note2 = new Note(NoteLength.QUARTER, NoteName.D1);
 
 		assertFalse(note1.equals(note2));
 	}
 
 	public void testEquals3() {
-		Note note1 = new Note(NoteName.C1, NoteLength.QUARTER);
-		Note note2 = new Note(NoteName.C1, NoteLength.HALF);
+		Note note1 = new Note(NoteLength.QUARTER, NoteName.C1);
+		Note note2 = new Note(NoteLength.HALF, NoteName.C1);
 
 		assertFalse(note1.equals(note2));
 	}
 
 	public void testEquals4() {
-		Note note = new Note(NoteName.C1, NoteLength.QUARTER);
+		Note note1 = new Note(NoteLength.QUARTER, NoteName.C1);
+		Note note2 = new Note(NoteLength.HALF, NoteName.C2);
+
+		assertFalse(note1.equals(note2));
+	}
+
+	public void testEquals5() {
+		Note note = new Note(NoteLength.QUARTER, NoteName.C1);
 
 		assertFalse(note.equals(null));
 	}
 
-	public void testEquals5() {
-		Note note = new Note(NoteName.C1, NoteLength.QUARTER);
+	public void testEquals6() {
+		Note note = new Note(NoteLength.QUARTER, NoteName.C1);
 
 		assertFalse(note.equals(""));
 	}
@@ -87,7 +94,7 @@ public class NoteTest extends TestCase {
 	public void testToString() {
 		NoteLength noteLength = NoteLength.WHOLE;
 		NoteName name = NoteName.A1;
-		Note note = new Note(name, noteLength);
+		Note note = new Note(noteLength, name);
 
 		assertEquals("[Note] noteLength=" + noteLength + " name=" + name, note.toString());
 	}

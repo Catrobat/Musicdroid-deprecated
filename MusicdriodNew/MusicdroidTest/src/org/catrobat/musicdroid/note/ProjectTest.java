@@ -104,12 +104,21 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testEquals6() {
+		Project project1 = new Project("Project1");
+		project1.addTrack(new Track());
+
+		Project project2 = new Project("Project2");
+
+		assertFalse(project1.equals(project2));
+	}
+
+	public void testEquals7() {
 		Project project = new Project("Project");
 
 		assertFalse(project.equals(null));
 	}
 
-	public void testEquals7() {
+	public void testEquals8() {
 		Project project = new Project("Project");
 
 		assertFalse(project.equals(""));

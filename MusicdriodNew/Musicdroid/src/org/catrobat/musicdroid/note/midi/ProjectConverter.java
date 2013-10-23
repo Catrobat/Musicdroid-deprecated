@@ -27,6 +27,7 @@ import com.leff.midi.MidiTrack;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
+import org.catrobat.musicdroid.note.Chord;
 import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.Note;
 import org.catrobat.musicdroid.note.NoteLength;
@@ -51,6 +52,7 @@ public class ProjectConverter {
 
 	public void convertProjectAndWriteMidi(Project project) throws IOException, MidiException {
 		MidiFile midi = convertProject(project);
+
 		midi.writeToFile(new File(project.getName() + ".midi"));
 	}
 
@@ -83,6 +85,7 @@ public class ProjectConverter {
 
 		for (int i = 0; i < project.size(); i++) {
 			Track track = project.getTrack(i);
+
 			MidiTrack noteTrack = createNoteTrack(track);
 
 			noteTracks.add(noteTrack);
@@ -107,7 +110,14 @@ public class ProjectConverter {
 
 			if (symbol instanceof Note) {
 				Note note = (Note) symbol;
+
 				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
+			} else if (symbol instanceof Chord) {
+				Chord chord = (Chord) symbol;
+
+				for (int j = 0; j < chord.size(); j++) {
+					noteTrack.insertNote(channel, chord.getNoteName(j).getMidi(), DEFAULT_VELOCITY, tick, duration);
+				}
 			}
 
 			tick += duration;

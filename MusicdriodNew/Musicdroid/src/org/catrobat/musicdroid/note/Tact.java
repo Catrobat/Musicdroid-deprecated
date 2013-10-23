@@ -28,11 +28,13 @@ public class Tact implements Serializable {
 
 	private static final long serialVersionUID = 888797518903394570L;
 
+	private static final int DEFAULT_BEATS_PER_TACT = 4;
+
 	private int beatsPerTact;
 	private NoteLength noteLength;
 
 	public Tact() {
-		this(4, NoteLength.QUARTER);
+		this(DEFAULT_BEATS_PER_TACT, NoteLength.QUARTER);
 	}
 
 	public Tact(int beatsPerTact, NoteLength noteLength) {
