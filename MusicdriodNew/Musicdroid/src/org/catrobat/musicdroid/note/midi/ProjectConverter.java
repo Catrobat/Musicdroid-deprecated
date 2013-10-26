@@ -24,15 +24,9 @@ package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
-import com.leff.midi.event.ProgramChange;
-import com.leff.midi.event.meta.Tempo;
 
-import org.catrobat.musicdroid.note.Chord;
 import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Symbol;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
@@ -41,12 +35,13 @@ import java.util.ArrayList;
 
 public class ProjectConverter {
 
-	private static int DEFAULT_VELOCITY = 64;
-	private static int MAX_CHANNEL = 16;
+	private static final int MAX_CHANNEL = 16;
 
+	private TrackConverter trackConverter;
 	private ArrayList<Instrument> usedChannels;
 
 	public ProjectConverter() {
+		trackConverter = new TrackConverter();
 		usedChannels = new ArrayList<Instrument>();
 	}
 
@@ -59,71 +54,19 @@ public class ProjectConverter {
 	protected MidiFile convertProject(Project project) throws MidiException {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
-		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
+		MidiTrack tempoTrack = trackConverter.createTempoTrack(project.getBeatsPerMinute());
 		tracks.add(tempoTrack);
-
-		for (MidiTrack track : createNoteTracks(project)) {
-			tracks.add(track);
-		}
-
-		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
-	}
-
-	private MidiTrack createTempoTrack(int beatsPerMinute) {
-		MidiTrack tempoTrack = new MidiTrack();
-
-		Tempo t = new Tempo();
-		t.setBpm(beatsPerMinute);
-
-		tempoTrack.insertEvent(t);
-
-		return tempoTrack;
-	}
-
-	private ArrayList<MidiTrack> createNoteTracks(Project project) throws MidiException {
-		ArrayList<MidiTrack> noteTracks = new ArrayList<MidiTrack>();
 
 		for (int i = 0; i < project.size(); i++) {
 			Track track = project.getTrack(i);
+			int channel = addInstrumentAndGetChannel(track.getInstrument());
 
-			MidiTrack noteTrack = createNoteTrack(track);
+			MidiTrack noteTrack = trackConverter.createNoteTrack(track, channel);
 
-			noteTracks.add(noteTrack);
+			tracks.add(noteTrack);
 		}
 
-		return noteTracks;
-	}
-
-	private MidiTrack createNoteTrack(Track track) throws MidiException {
-		MidiTrack noteTrack = new MidiTrack();
-
-		int channel = addInstrumentAndGetChannel(track.getInstrument());
-
-		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
-		noteTrack.insertEvent(program);
-
-		long tick = 0;
-
-		for (int i = 0; i < track.size(); i++) {
-			Symbol symbol = track.getSymbol(i);
-			long duration = NoteLength.calculateDuration(symbol.getNoteLength());
-
-			if (symbol instanceof Note) {
-				Note note = (Note) symbol;
-
-				noteTrack.insertNote(channel, note.getNoteName().getMidi(), DEFAULT_VELOCITY, tick, duration);
-			} else if (symbol instanceof Chord) {
-				Chord chord = (Chord) symbol;
-
-				for (int j = 0; j < chord.size(); j++) {
-					noteTrack.insertNote(channel, chord.getNoteName(j).getMidi(), DEFAULT_VELOCITY, tick, duration);
-				}
-			}
-
-			tick += duration;
-		}
-
-		return noteTrack;
+		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
 	}
 
 	protected int addInstrumentAndGetChannel(Instrument instrument) throws MidiException {

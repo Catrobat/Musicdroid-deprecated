@@ -115,7 +115,7 @@ public class MidiConverter {
 				NoteLength length = NoteLength.getNoteLengthFromDuration(duration);
 
 				// TODO wie geh ich mit Breaks um?
-				// TODO Chords beachten
+				// TODO Chords, BoundNotes beachten
 
 				symbols.add(new Note(length, note));
 			}

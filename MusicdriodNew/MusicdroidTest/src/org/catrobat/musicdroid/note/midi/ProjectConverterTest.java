@@ -82,9 +82,9 @@ public class ProjectConverterTest extends TestCase {
 		Track track2 = new Track(Instrument.WHISTLE, Key.VIOLIN, new Tact());
 
 		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Chord(NoteLength.QUARTER, new NoteName[] { NoteName.C1, NoteName.C2 }));
+		track1.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
 		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Chord(NoteLength.QUARTER, new NoteName[] { NoteName.C1, NoteName.C2 }));
+		track1.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
 
 		track2.addSymbol(new Note(NoteLength.WHOLE, NoteName.B1));
 		track2.addSymbol(new Note(NoteLength.HALF, NoteName.B2));

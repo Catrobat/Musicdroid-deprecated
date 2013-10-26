@@ -30,8 +30,8 @@ public class Note extends Symbol implements Serializable {
 
 	private NoteName name;
 
-	public Note(NoteLength length, NoteName name) {
-		super(length);
+	public Note(NoteLength noteLength, NoteName name) {
+		super(noteLength);
 		this.name = name;
 	}
 

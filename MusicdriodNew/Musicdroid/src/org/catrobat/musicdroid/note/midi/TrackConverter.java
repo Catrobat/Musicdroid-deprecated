@@ -22,11 +22,46 @@
  */
 package org.catrobat.musicdroid.note.midi;
 
-public class MidiException extends Exception {
+import com.leff.midi.MidiTrack;
+import com.leff.midi.event.ProgramChange;
+import com.leff.midi.event.meta.Tempo;
 
-	private static final long serialVersionUID = -5877964610580199490L;
+import org.catrobat.musicdroid.note.Symbol;
+import org.catrobat.musicdroid.note.Track;
 
-	public MidiException(String error) {
-		super(error);
+public class TrackConverter {
+
+	private SymbolConverter symbolConverter;
+
+	public TrackConverter() {
+		symbolConverter = new SymbolConverter();
+	}
+
+	public MidiTrack createTempoTrack(int beatsPerMinute) {
+		MidiTrack tempoTrack = new MidiTrack();
+
+		Tempo t = new Tempo();
+		t.setBpm(beatsPerMinute);
+
+		tempoTrack.insertEvent(t);
+
+		return tempoTrack;
+	}
+
+	public MidiTrack createNoteTrack(Track track, int channel) throws MidiException {
+		MidiTrack noteTrack = new MidiTrack();
+
+		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
+		noteTrack.insertEvent(program);
+
+		long tick = 0;
+
+		for (int i = 0; i < track.size(); i++) {
+			Symbol symbol = track.getSymbol(i);
+
+			tick = symbolConverter.addSymbolAndReturnNewTick(noteTrack, symbol, channel, tick);
+		}
+
+		return noteTrack;
 	}
 }

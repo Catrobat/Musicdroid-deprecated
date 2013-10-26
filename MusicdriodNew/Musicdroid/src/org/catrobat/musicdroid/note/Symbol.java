@@ -26,7 +26,7 @@ public abstract class Symbol {
 
 	protected NoteLength noteLength;
 
-	Symbol(NoteLength noteLength) {
+	protected Symbol(NoteLength noteLength) {
 		this.noteLength = noteLength;
 	}
 
