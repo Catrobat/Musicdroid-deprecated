@@ -22,54 +22,48 @@
  */
 package org.catrobat.musicdroid.note;
 
-import java.io.Serializable;
+public class NoteEvent {
 
-public class Chord extends Symbol implements Serializable {
+	private NoteName noteName;
+	private long tick;
+	private boolean noteOn;
 
-	private static final long serialVersionUID = 8777397660187943086L;
-
-	private NoteName[] names;
-
-	public Chord(NoteLength noteLength, NoteName... names) {
-		super(noteLength);
-		this.names = names;
+	public NoteEvent(NoteName noteName, long tick, boolean noteOn) {
+		this.noteName = noteName;
+		this.tick = tick;
+		this.noteOn = noteOn;
 	}
 
-	public int size() {
-		return names.length;
+	public NoteName getNoteName() {
+		return noteName;
 	}
 
-	public NoteName getNoteName(int location) {
-		return names[location];
+	public long getTick() {
+		return tick;
+	}
+
+	public boolean isNoteOn() {
+		return noteOn;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Chord)) {
+		if ((obj == null) || !(obj instanceof NoteEvent)) {
 			return false;
 		}
 
-		Chord chord = (Chord) obj;
+		NoteEvent noteEvent = (NoteEvent) obj;
 
-		if (false == super.equals(chord)) {
-			return false;
+		if ((noteName.equals(noteEvent.getNoteName())) && (tick == noteEvent.getTick())
+				&& (noteOn == noteEvent.isNoteOn())) {
+			return true;
 		}
 
-		if (names.length != chord.size()) {
-			return false;
-		}
-
-		for (int i = 0; i < names.length; i++) {
-			if (false == names[i].equals(chord.getNoteName(i))) {
-				return false;
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "[Chord] noteLength=" + noteLength + " namesCount=" + names.length;
+		return "[NoteEvent] noteName= " + noteName + " tick=" + tick + " noteOn=" + noteOn;
 	}
 }

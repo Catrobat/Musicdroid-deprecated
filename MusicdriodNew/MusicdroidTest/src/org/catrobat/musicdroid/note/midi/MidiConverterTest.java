@@ -28,14 +28,10 @@ import com.leff.midi.event.meta.Tempo;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.Break;
 import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Tact;
 import org.catrobat.musicdroid.note.Track;
 
 public class MidiConverterTest extends TestCase {
@@ -55,45 +51,18 @@ public class MidiConverterTest extends TestCase {
 
 	private Project createProject() {
 		Project project = new Project(PROJECT_NAME, 120);
-		Track track1 = new Track(Instrument.GUNSHOT, Key.VIOLIN, new Tact());
-		Track track2 = new Track(Instrument.WHISTLE, Key.VIOLIN, new Tact());
+		Track track1 = new Track(Instrument.GUNSHOT);
+		Track track2 = new Track(Instrument.WHISTLE);
 
-		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
-		track1.addSymbol(new Break(NoteLength.QUARTER));
-		track1.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
+		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track1.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
+		track1.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
+		track1.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
 
-		track2.addSymbol(new Note(NoteLength.WHOLE, NoteName.B1));
-		track2.addSymbol(new Note(NoteLength.HALF, NoteName.B2));
-		track2.addSymbol(new Note(NoteLength.HALF, NoteName.B2));
-		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
-		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
-		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
-		track2.addSymbol(new Note(NoteLength.QUARTER, NoteName.B3));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.EIGHT, NoteName.B4));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
-		track2.addSymbol(new Note(NoteLength.SIXTEENTH, NoteName.B5));
+		track2.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track2.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
+		track2.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
+		track2.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
 
 		project.addTrack(track1);
 		project.addTrack(track2);

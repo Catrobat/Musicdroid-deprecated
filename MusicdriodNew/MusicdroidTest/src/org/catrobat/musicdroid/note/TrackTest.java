@@ -27,38 +27,33 @@ import junit.framework.TestCase;
 public class TrackTest extends TestCase {
 
 	public void testTrack1() {
-		Tact tact = new Tact();
 		Track track = new Track();
 
-		assertEquals(tact.getBeatsPerTact(), track.getTact().getBeatsPerTact());
-		assertEquals(tact.getNoteLength(), track.getTact().getNoteLength());
-		assertEquals(Key.VIOLIN, track.getKey());
+		assertEquals(Instrument.ACOUSTIC_GRAND_PIANO, track.getInstrument());
 	}
 
 	public void testTrack2() {
 		Instrument instrument = Instrument.ACCORDION;
-		Tact tact = new Tact(3, NoteLength.QUARTER);
-		Track track = new Track(instrument, Key.BASS, tact);
+		Track track = new Track(instrument);
 
 		assertEquals(instrument, track.getInstrument());
-		assertEquals(tact, track.getTact());
-		assertEquals(Key.BASS, track.getKey());
 	}
 
-	public void testAddSymbol() {
+	public void testAddNoteEventl() {
 		Track track = new Track();
 
-		track.addSymbol(new Note(NoteLength.QUARTER, NoteName.C1));
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
+		track.addNoteEvent(noteEvent);
 
 		assertEquals(1, track.size());
 	}
 
-	public void testRemoveSymbol() {
+	public void testRemoveNoteEvent() {
 		Track track = new Track();
 
-		Symbol symbol = new Note(NoteLength.QUARTER, NoteName.C1);
-		track.addSymbol(symbol);
-		track.removeSymbol(symbol);
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
+		track.addNoteEvent(noteEvent);
+		track.removeNoteEvent(noteEvent);
 
 		assertEquals(0, track.size());
 	}
@@ -66,35 +61,35 @@ public class TrackTest extends TestCase {
 	public void testGetSymbol() {
 		Track track = new Track();
 
-		Symbol symbol = new Break(NoteLength.QUARTER);
-		track.addSymbol(symbol);
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
+		track.addNoteEvent(noteEvent);
 
-		assertEquals(symbol, track.getSymbol(0));
+		assertEquals(noteEvent, track.getNoteEvent(0));
 	}
 
 	public void testEquals1() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
 
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.HALF));
+		track2.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
 
 		assertTrue(track1.equals(track2));
 	}
 
 	public void testEquals2() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
 
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.WHOLE));
+		track2.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals3() {
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
 
 		Track track2 = new Track();
 
@@ -102,26 +97,19 @@ public class TrackTest extends TestCase {
 	}
 
 	public void testEquals4() {
-		Track track1 = new Track(Instrument.ACCORDION, Key.BASS, new Tact());
+		Track track1 = new Track(Instrument.ACCORDION);
 		Track track2 = new Track();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals5() {
-		Track track1 = new Track(Instrument.ACOUSTIC_GRAND_PIANO, Key.VIOLIN, new Tact(12, NoteLength.SIXTEENTH));
-		Track track2 = new Track();
-
-		assertFalse(track1.equals(track2));
-	}
-
-	public void testEquals6() {
 		Track track = new Track();
 
 		assertFalse(track.equals(null));
 	}
 
-	public void testEquals7() {
+	public void testEquals6() {
 		Track track = new Track();
 
 		assertFalse(track.equals(""));
@@ -129,10 +117,8 @@ public class TrackTest extends TestCase {
 
 	public void testToString() {
 		Instrument instrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		Key key = Key.BASS;
-		Track track = new Track(instrument, key, new Tact());
+		Track track = new Track(instrument);
 
-		assertEquals("[Track] instrument= " + instrument + " key=" + key + " symbolCount=" + track.size(),
-				track.toString());
+		assertEquals("[Track] instrument= " + instrument + " eventCount=" + track.size(), track.toString());
 	}
 }

@@ -23,18 +23,19 @@
 package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiTrack;
+import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
-import org.catrobat.musicdroid.note.Symbol;
+import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Track;
 
 public class TrackConverter {
 
-	private SymbolConverter symbolConverter;
+	private NoteEventConverter eventConverter;
 
 	public TrackConverter() {
-		symbolConverter = new SymbolConverter();
+		eventConverter = new NoteEventConverter();
 	}
 
 	public MidiTrack createTempoTrack(int beatsPerMinute) {
@@ -54,12 +55,10 @@ public class TrackConverter {
 		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
 		noteTrack.insertEvent(program);
 
-		long tick = 0;
-
 		for (int i = 0; i < track.size(); i++) {
-			Symbol symbol = track.getSymbol(i);
-
-			tick = symbolConverter.addSymbolAndReturnNewTick(noteTrack, symbol, channel, tick);
+			NoteEvent event = track.getNoteEvent(i);
+			NoteOn noteOn = eventConverter.convertNoteEvent(event, channel);
+			noteTrack.insertEvent(noteOn);
 		}
 
 		return noteTrack;

@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Catroid: An on-device visual programming system for Android devices
+/**
+ *  Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
  *  
@@ -7,38 +7,35 @@
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *  
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
- *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *  http://developer.catrobat.org/license_additional_term
+ *  
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *  
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
-package org.catrobat.musicdroid;
+ */
+package org.catrobat.musicdroid.note.midi;
 
-import android.app.Activity;
-import android.os.Bundle;
+import com.leff.midi.event.NoteOn;
 
-import org.catrobat.musicdroid.note.draw.DrawTrackView;
-import org.catrobat.musicdroid.recorder.RecorderLayout;
+import org.catrobat.musicdroid.note.NoteEvent;
 
-public class DrawTrackActivity extends Activity {
-	private RecorderLayout layout = null;
+public class NoteEventConverter {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_recorder);
+	private static final int DEFAULT_NOISE = 64;
+	private static final int DEFAULT_SILENT = 0;
 
-		DrawTrackView trackView = new DrawTrackView(this, R.drawable.violine);
-
-		setContentView(trackView);
-
+	public NoteOn convertNoteEvent(NoteEvent noteEvent, int channel) {
+		if (noteEvent.isNoteOn()) {
+			return new NoteOn(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
+		} else {
+			return new NoteOn(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
+		}
 	}
 }

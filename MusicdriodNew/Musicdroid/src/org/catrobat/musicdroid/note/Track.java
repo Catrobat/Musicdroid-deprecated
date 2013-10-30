@@ -31,50 +31,36 @@ public class Track implements Serializable {
 	private static final long serialVersionUID = 7483021689872527955L;
 
 	private Instrument instrument;
-	private Key key;
-	private Tact tact;
-	private List<Symbol> symbols;
+	private List<NoteEvent> events;
 
 	public Track() {
-		this.symbols = new ArrayList<Symbol>();
+		this.events = new ArrayList<NoteEvent>();
 		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		this.key = Key.VIOLIN;
-		this.tact = new Tact();
 	}
 
-	public Track(Instrument instrument, Key key, Tact tact) {
-		this.symbols = new ArrayList<Symbol>();
+	public Track(Instrument instrument) {
+		this.events = new ArrayList<NoteEvent>();
 		this.instrument = instrument;
-		this.key = key;
-		this.tact = tact;
 	}
 
 	public Instrument getInstrument() {
 		return instrument;
 	}
 
-	public Key getKey() {
-		return key;
+	public void addNoteEvent(NoteEvent event) {
+		events.add(event);
 	}
 
-	public Tact getTact() {
-		return tact;
+	public void removeNoteEvent(NoteEvent event) {
+		events.remove(event);
 	}
 
-	public void addSymbol(Symbol symbol) {
-		symbols.add(symbol);
-	}
-
-	public void removeSymbol(Symbol symbol) {
-		symbols.remove(symbol);
-	}
-
-	public Symbol getSymbol(int location) {
-		return symbols.get(location);
+	public NoteEvent getNoteEvent(int location) {
+		return events.get(location);
 	}
 
 	public int size() {
-		return symbols.size();
+		return events.size();
 	}
 
 	@Override
@@ -89,9 +75,9 @@ public class Track implements Serializable {
 			return false;
 		}
 
-		if ((key.equals(track.getKey())) && (tact.equals(track.getTact()) && (size() == track.size()))) {
+		if (size() == track.size()) {
 			for (int i = 0; i < size(); i++) {
-				if (!getSymbol(i).equals(track.getSymbol(i))) {
+				if (false == getNoteEvent(i).equals(track.getNoteEvent(i))) {
 					return false;
 				}
 			}
@@ -104,6 +90,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] instrument= " + instrument + " key=" + key + " symbolCount=" + size();
+		return "[Track] instrument= " + instrument + " eventCount=" + size();
 	}
 }

@@ -30,13 +30,9 @@ import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
 import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.Note;
-import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Symbol;
-import org.catrobat.musicdroid.note.Tact;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
@@ -92,7 +88,7 @@ public class MidiConverter {
 	private Track createTrack(MidiTrack midiTrack) throws MidiException {
 		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
 		Instrument instrument = DEFAULT_INSTRUMENT;
-		ArrayList<Symbol> symbols = new ArrayList<Symbol>();
+		ArrayList<NoteEvent> events = new ArrayList<NoteEvent>();
 
 		while (it.hasNext()) {
 			MidiEvent event = it.next();
@@ -112,20 +108,13 @@ public class MidiConverter {
 
 				NoteName note = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
 				long duration = noteOff.getTick() - noteOn.getTick();
-				NoteLength length = NoteLength.getNoteLengthFromDuration(duration);
 
 				// TODO wie geh ich mit Breaks um?
 				// TODO Chords, BoundNotes beachten
-
-				symbols.add(new Note(length, note));
 			}
 		}
 
-		Track track = new Track(instrument, Key.VIOLIN, new Tact());
-
-		for (Symbol symbol : symbols) {
-			track.addSymbol(symbol);
-		}
+		Track track = new Track(instrument);
 
 		return track;
 	}
