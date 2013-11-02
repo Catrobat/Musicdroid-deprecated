@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.note.midi;
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
@@ -133,13 +134,24 @@ public class ProjectConverterTest extends TestCase {
 		int i = 0;
 
 		while (it.hasNext()) {
-			NoteOn noteOnChannelEvent = (NoteOn) it.next();
 			NoteEvent noteEvent = track.getNoteEvent(i);
-
 			i++;
 
-			assertEquals(noteEvent.getNoteName().getMidi(), noteOnChannelEvent.getNoteValue());
-			assertEquals(noteEvent.getTick(), noteOnChannelEvent.getTick());
+			MidiEvent midiEvent = it.next();
+
+			if (midiEvent instanceof NoteOn) {
+				NoteOn noteOnEvent = (NoteOn) midiEvent;
+
+				assertEquals(noteEvent.getNoteName().getMidi(), noteOnEvent.getNoteValue());
+				assertEquals(noteEvent.getTick(), noteOnEvent.getTick());
+			} else if (midiEvent instanceof NoteOff) {
+				NoteOff noteOffEvent = (NoteOff) midiEvent;
+
+				assertEquals(noteEvent.getNoteName().getMidi(), noteOffEvent.getNoteValue());
+				assertEquals(noteEvent.getTick(), noteOffEvent.getTick());
+			} else {
+				assertTrue(false);
+			}
 		}
 	}
 

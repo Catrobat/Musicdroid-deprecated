@@ -95,8 +95,8 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testGetNoteNameFromMidiValue1() {
-		int midiValue = 36;
 		NoteName expectedNoteName = NoteName.C1;
+		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
 
@@ -104,8 +104,8 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testGetNoteNameFromMidiValue2() {
-		int midiValue = 95;
 		NoteName expectedNoteName = NoteName.B5;
+		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
 
@@ -113,8 +113,8 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testGetNoteNameFromMidiValue3() {
-		int midiValue = 96;
 		NoteName expectedNoteName = NoteName.C3;
+		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
 

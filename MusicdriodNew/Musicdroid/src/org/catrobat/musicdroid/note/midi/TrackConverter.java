@@ -23,7 +23,7 @@
 package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiTrack;
-import com.leff.midi.event.NoteOn;
+import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
 
@@ -56,9 +56,9 @@ public class TrackConverter {
 		noteTrack.insertEvent(program);
 
 		for (int i = 0; i < track.size(); i++) {
-			NoteEvent event = track.getNoteEvent(i);
-			NoteOn noteOn = eventConverter.convertNoteEvent(event, channel);
-			noteTrack.insertEvent(noteOn);
+			NoteEvent noteEvent = track.getNoteEvent(i);
+			MidiEvent midiEvent = eventConverter.convertNoteEvent(noteEvent, channel);
+			noteTrack.insertEvent(midiEvent);
 		}
 
 		return noteTrack;

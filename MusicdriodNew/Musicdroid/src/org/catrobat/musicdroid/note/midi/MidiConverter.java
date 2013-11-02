@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.note.midi;
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
@@ -88,33 +89,33 @@ public class MidiConverter {
 	private Track createTrack(MidiTrack midiTrack) throws MidiException {
 		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
 		Instrument instrument = DEFAULT_INSTRUMENT;
-		ArrayList<NoteEvent> events = new ArrayList<NoteEvent>();
+		ArrayList<NoteEvent> noteEvents = new ArrayList<NoteEvent>();
 
 		while (it.hasNext()) {
-			MidiEvent event = it.next();
+			MidiEvent midiEvent = it.next();
 
-			if (event instanceof ProgramChange) {
-				ProgramChange program = (ProgramChange) event;
+			if (midiEvent instanceof ProgramChange) {
+				ProgramChange program = (ProgramChange) midiEvent;
 
 				instrument = Instrument.getInstrumentFromProgram(program.getProgramNumber());
-			} else if (event instanceof NoteOn) {
-				NoteOn noteOn = (NoteOn) event;
+			} else if (midiEvent instanceof NoteOn) {
+				NoteOn noteOn = (NoteOn) midiEvent;
+				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
 
-				if (false == it.hasNext()) {
-					throw new MidiException("No NoteOff event found for a NoteOn event. Unsupported MIDI format");
-				}
+				noteEvents.add(new NoteEvent(noteName, noteOn.getTick(), true));
+			} else if (midiEvent instanceof NoteOff) {
+				NoteOff noteOff = (NoteOff) midiEvent;
+				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOff.getNoteValue());
 
-				NoteOn noteOff = (NoteOn) it.next();
-
-				NoteName note = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
-				long duration = noteOff.getTick() - noteOn.getTick();
-
-				// TODO wie geh ich mit Breaks um?
-				// TODO Chords, BoundNotes beachten
+				noteEvents.add(new NoteEvent(noteName, noteOff.getTick(), false));
 			}
 		}
 
 		Track track = new Track(instrument);
+
+		for (NoteEvent noteEvent : noteEvents) {
+			track.addNoteEvent(noteEvent);
+		}
 
 		return track;
 	}

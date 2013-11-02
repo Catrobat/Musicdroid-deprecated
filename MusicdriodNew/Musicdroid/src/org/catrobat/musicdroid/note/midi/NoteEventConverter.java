@@ -22,6 +22,8 @@
  */
 package org.catrobat.musicdroid.note.midi;
 
+import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 
 import org.catrobat.musicdroid.note.NoteEvent;
@@ -31,11 +33,11 @@ public class NoteEventConverter {
 	private static final int DEFAULT_NOISE = 64;
 	private static final int DEFAULT_SILENT = 0;
 
-	public NoteOn convertNoteEvent(NoteEvent noteEvent, int channel) {
+	public MidiEvent convertNoteEvent(NoteEvent noteEvent, int channel) {
 		if (noteEvent.isNoteOn()) {
 			return new NoteOn(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
 		} else {
-			return new NoteOn(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
+			return new NoteOff(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
 		}
 	}
 }
