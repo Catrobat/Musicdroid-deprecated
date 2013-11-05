@@ -25,21 +25,15 @@ package org.catrobat.musicdroid.note;
 public class NoteEvent {
 
 	private NoteName noteName;
-	private long tick;
 	private boolean noteOn;
 
-	public NoteEvent(NoteName noteName, long tick, boolean noteOn) {
+	public NoteEvent(NoteName noteName, boolean noteOn) {
 		this.noteName = noteName;
-		this.tick = tick;
 		this.noteOn = noteOn;
 	}
 
 	public NoteName getNoteName() {
 		return noteName;
-	}
-
-	public long getTick() {
-		return tick;
 	}
 
 	public boolean isNoteOn() {
@@ -54,8 +48,7 @@ public class NoteEvent {
 
 		NoteEvent noteEvent = (NoteEvent) obj;
 
-		if ((noteName.equals(noteEvent.getNoteName())) && (tick == noteEvent.getTick())
-				&& (noteOn == noteEvent.isNoteOn())) {
+		if ((noteName.equals(noteEvent.getNoteName())) && (noteOn == noteEvent.isNoteOn())) {
 			return true;
 		}
 
@@ -64,6 +57,6 @@ public class NoteEvent {
 
 	@Override
 	public String toString() {
-		return "[NoteEvent] noteName= " + noteName + " tick=" + tick + " noteOn=" + noteOn;
+		return "[NoteEvent] noteName= " + noteName + " noteOn=" + noteOn;
 	}
 }

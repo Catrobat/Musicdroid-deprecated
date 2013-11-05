@@ -30,6 +30,8 @@ import com.leff.midi.event.meta.Tempo;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Track;
 
+import java.util.List;
+
 public class TrackConverter {
 
 	private NoteEventConverter eventConverter;
@@ -55,10 +57,13 @@ public class TrackConverter {
 		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
 		noteTrack.insertEvent(program);
 
-		for (int i = 0; i < track.size(); i++) {
-			NoteEvent noteEvent = track.getNoteEvent(i);
-			MidiEvent midiEvent = eventConverter.convertNoteEvent(noteEvent, channel);
-			noteTrack.insertEvent(midiEvent);
+		for (long tick : track.getTicks()) {
+			List<NoteEvent> noteEventList = track.getNoteEventsForTick(tick);
+
+			for (NoteEvent noteEvent : noteEventList) {
+				MidiEvent midiEvent = eventConverter.convertNoteEvent(tick, noteEvent, channel);
+				noteTrack.insertEvent(midiEvent);
+			}
 		}
 
 		return noteTrack;

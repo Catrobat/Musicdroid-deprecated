@@ -34,8 +34,8 @@ import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.ProjectGenerator;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
@@ -45,11 +45,9 @@ import java.util.Iterator;
 
 public class ProjectConverterTest extends TestCase {
 
-	private static final String PROJECT_NAME = "TestMidi";
-
 	public void testConvertProjectAndWriteMidi() throws MidiException {
 		ProjectConverter converter = new ProjectConverter();
-		Project project = createProject();
+		Project project = ProjectGenerator.createProject();
 
 		try {
 			converter.convertProjectAndWriteMidi(project);
@@ -64,32 +62,11 @@ public class ProjectConverterTest extends TestCase {
 
 	public void testConvertProject() throws MidiException {
 		ProjectConverter converter = new ProjectConverter();
-		Project project = createProject();
+		Project project = ProjectGenerator.createProject();
 
 		MidiFile midi = converter.convertProject(project);
 
 		assertMidi(project, midi);
-	}
-
-	private Project createProject() {
-		Project project = new Project(PROJECT_NAME, 120);
-		Track track1 = new Track(Instrument.GUNSHOT);
-		Track track2 = new Track(Instrument.WHISTLE);
-
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
-		track1.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
-		track1.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
-
-		track2.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
-		track2.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
-		track2.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
-		track2.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
-
-		project.addTrack(track1);
-		project.addTrack(track2);
-
-		return project;
 	}
 
 	private void assertMidi(Project project, MidiFile midi) {
@@ -132,26 +109,32 @@ public class ProjectConverterTest extends TestCase {
 		assertEquals(track.getInstrument().getProgram(), program.getProgramNumber());
 
 		int i = 0;
+		long lastTick = 0;
 
 		while (it.hasNext()) {
-			NoteEvent noteEvent = track.getNoteEvent(i);
-			i++;
-
 			MidiEvent midiEvent = it.next();
+			long midiEventTick = midiEvent.getTick();
+
+			if (midiEventTick != lastTick) {
+				i = 0;
+			}
+
+			NoteEvent noteEvent = track.getNoteEventsForTick(midiEventTick).get(i);
+			i++;
 
 			if (midiEvent instanceof NoteOn) {
 				NoteOn noteOnEvent = (NoteOn) midiEvent;
 
 				assertEquals(noteEvent.getNoteName().getMidi(), noteOnEvent.getNoteValue());
-				assertEquals(noteEvent.getTick(), noteOnEvent.getTick());
 			} else if (midiEvent instanceof NoteOff) {
 				NoteOff noteOffEvent = (NoteOff) midiEvent;
 
 				assertEquals(noteEvent.getNoteName().getMidi(), noteOffEvent.getNoteValue());
-				assertEquals(noteEvent.getTick(), noteOffEvent.getTick());
 			} else {
 				assertTrue(false);
 			}
+
+			lastTick = midiEventTick;
 		}
 	}
 

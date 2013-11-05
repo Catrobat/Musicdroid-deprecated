@@ -24,6 +24,7 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class NoteLengthTest extends TestCase {
@@ -70,38 +71,35 @@ public class NoteLengthTest extends TestCase {
 	}
 
 	public void testGetNoteLengthFromDuration1() {
-		NoteLength[] expectedNoteLengths = { NoteLength.QUARTER, NoteLength.EIGHT, NoteLength.SIXTEENTH };
-		long duration = calculateDurationFromNoteLengths(expectedNoteLengths);
+		List<NoteLength> expectedNoteLengths = new LinkedList<NoteLength>();
+		expectedNoteLengths.add(NoteLength.QUARTER);
+		expectedNoteLengths.add(NoteLength.EIGHT);
+		expectedNoteLengths.add(NoteLength.SIXTEENTH);
 
-		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromDuration(duration);
+		long duration = NoteLength.getTickDurationFromNoteLengths(expectedNoteLengths);
 
-		assertEquals(expectedNoteLengths.length, actualNoteLengths.size());
+		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
 
-		for (int i = 0; i < expectedNoteLengths.length; i++) {
-			assertEquals(expectedNoteLengths[i], actualNoteLengths.get(i));
+		assertEquals(expectedNoteLengths.size(), actualNoteLengths.size());
+
+		for (int i = 0; i < expectedNoteLengths.size(); i++) {
+			assertEquals(expectedNoteLengths.get(i), actualNoteLengths.get(i));
 		}
 	}
 
 	public void testGetNoteLengthFromDuration2() {
-		NoteLength[] expectedNoteLengths = { NoteLength.WHOLE, NoteLength.WHOLE };
-		long duration = calculateDurationFromNoteLengths(expectedNoteLengths);
+		List<NoteLength> expectedNoteLengths = new LinkedList<NoteLength>();
+		expectedNoteLengths.add(NoteLength.WHOLE);
+		expectedNoteLengths.add(NoteLength.WHOLE);
 
-		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromDuration(duration);
+		long duration = NoteLength.getTickDurationFromNoteLengths(expectedNoteLengths);
 
-		assertEquals(expectedNoteLengths.length, actualNoteLengths.size());
+		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
 
-		for (int i = 0; i < expectedNoteLengths.length; i++) {
-			assertEquals(expectedNoteLengths[i], actualNoteLengths.get(i));
+		assertEquals(expectedNoteLengths.size(), actualNoteLengths.size());
+
+		for (int i = 0; i < expectedNoteLengths.size(); i++) {
+			assertEquals(expectedNoteLengths.get(i), actualNoteLengths.get(i));
 		}
-	}
-
-	private long calculateDurationFromNoteLengths(NoteLength[] noteLengths) {
-		long duration = 0;
-
-		for (int i = 0; i < noteLengths.length; i++) {
-			duration += noteLengths[i].getTickDuration();
-		}
-
-		return duration;
 	}
 }

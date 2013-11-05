@@ -28,11 +28,8 @@ import com.leff.midi.event.meta.Tempo;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.ProjectGenerator;
 
 public class MidiConverterTest extends TestCase {
 
@@ -41,33 +38,12 @@ public class MidiConverterTest extends TestCase {
 	public void testConvertMidi() throws MidiException {
 		ProjectConverter projectConverter = new ProjectConverter();
 		MidiConverter midiConverter = new MidiConverter();
-		Project expectedProject = createProject();
+		Project expectedProject = ProjectGenerator.createProject();
 		MidiFile midi = projectConverter.convertProject(expectedProject);
 
 		Project actualProject = midiConverter.convertMidi(midi, PROJECT_NAME);
 
 		assertEquals(expectedProject, actualProject);
-	}
-
-	private Project createProject() {
-		Project project = new Project(PROJECT_NAME, 120);
-		Track track1 = new Track(Instrument.GUNSHOT);
-		Track track2 = new Track(Instrument.WHISTLE);
-
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
-		track1.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
-		track1.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
-
-		track2.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
-		track2.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
-		track2.addNoteEvent(new NoteEvent(NoteName.C1, 64, false));
-		track2.addNoteEvent(new NoteEvent(NoteName.C2, 128, false));
-
-		project.addTrack(track1);
-		project.addTrack(track2);
-
-		return project;
 	}
 
 	public void testGetBeatsPerMinute1() throws MidiException {

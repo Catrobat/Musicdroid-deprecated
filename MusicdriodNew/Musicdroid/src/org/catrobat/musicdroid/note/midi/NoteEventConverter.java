@@ -33,11 +33,11 @@ public class NoteEventConverter {
 	private static final int DEFAULT_NOISE = 64;
 	private static final int DEFAULT_SILENT = 0;
 
-	public MidiEvent convertNoteEvent(NoteEvent noteEvent, int channel) {
+	public MidiEvent convertNoteEvent(long tick, NoteEvent noteEvent, int channel) {
 		if (noteEvent.isNoteOn()) {
-			return new NoteOn(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
+			return new NoteOn(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
 		} else {
-			return new NoteOff(noteEvent.getTick(), channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
+			return new NoteOff(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
 		}
 	}
 }

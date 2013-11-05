@@ -28,91 +28,60 @@ public class NoteEventTest extends TestCase {
 
 	public void testNoteEvent() {
 		NoteName noteName = NoteName.C1;
-		long tick = 64;
 		boolean noteOn = false;
 
-		NoteEvent noteEvent = new NoteEvent(noteName, tick, noteOn);
+		NoteEvent noteEvent = new NoteEvent(noteName, noteOn);
 
 		assertEquals(noteName, noteEvent.getNoteName());
-		assertEquals(tick, noteEvent.getTick());
 		assertEquals(noteOn, noteEvent.isNoteOn());
 	}
 
 	public void testEquals1() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, 0, true);
+		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, true);
 
 		assertTrue(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals2() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, 0, true);
+		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, true);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals3() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, 64, true);
+		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, false);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals4() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, 0, false);
+		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, false);
+		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, true);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals5() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, false);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, 64, false);
-
-		assertFalse(noteEvent1.equals(noteEvent2));
-	}
-
-	public void testEquals6() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, false);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, 0, true);
-
-		assertFalse(noteEvent1.equals(noteEvent2));
-	}
-
-	public void testEquals7() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, false);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, 64, true);
-
-		assertFalse(noteEvent1.equals(noteEvent2));
-	}
-
-	public void testEquals8() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, 0, false);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, 64, true);
-
-		assertFalse(noteEvent1.equals(noteEvent2));
-	}
-
-	public void testEquals9() {
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
 
 		assertFalse(noteEvent.equals(null));
 	}
 
-	public void testEquals10() {
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
+	public void testEquals6() {
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
 
 		assertFalse(noteEvent.equals(""));
 	}
 
 	public void testToString() {
 		NoteName noteName = NoteName.C1;
-		long tick = 64;
 		boolean noteOn = false;
 
-		NoteEvent noteEvent = new NoteEvent(noteName, tick, noteOn);
+		NoteEvent noteEvent = new NoteEvent(noteName, noteOn);
 
-		assertEquals("[NoteEvent] noteName= " + noteName + " tick=" + tick + " noteOn=" + noteOn, noteEvent.toString());
+		assertEquals("[NoteEvent] noteName= " + noteName + " noteOn=" + noteOn, noteEvent.toString());
 	}
 }

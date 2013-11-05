@@ -42,54 +42,68 @@ public class TrackTest extends TestCase {
 	public void testAddNoteEventl() {
 		Track track = new Track();
 
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
-		track.addNoteEvent(noteEvent);
+		long tick = 0;
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		track.addNoteEvent(tick, noteEvent);
 
-		assertEquals(1, track.size());
-	}
-
-	public void testRemoveNoteEvent() {
-		Track track = new Track();
-
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
-		track.addNoteEvent(noteEvent);
-		track.removeNoteEvent(noteEvent);
-
-		assertEquals(0, track.size());
+		assertEquals(1, track.getTicks().size());
+		assertEquals(1, track.getNoteEventsForTick(0).size());
 	}
 
 	public void testGetSymbol() {
 		Track track = new Track();
 
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, 0, true);
-		track.addNoteEvent(noteEvent);
+		long tick = 0;
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		track.addNoteEvent(tick, noteEvent);
 
-		assertEquals(noteEvent, track.getNoteEvent(0));
+		assertEquals(noteEvent, track.getNoteEventsForTick(tick).get(0));
+	}
+
+	public void testSize1() {
+		Track track = new Track();
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+
+		assertEquals(1, track.size());
+	}
+
+	public void testSize2() {
+		Track track = new Track();
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(64, new NoteEvent(NoteName.C1, true));
+
+		assertEquals(3, track.size());
 	}
 
 	public void testEquals1() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
+		long tick2 = 0;
 		Track track2 = new Track();
-		track2.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C1, true));
 
 		assertTrue(track1.equals(track2));
 	}
 
 	public void testEquals2() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
+		long tick2 = 0;
 		Track track2 = new Track();
-		track2.addNoteEvent(new NoteEvent(NoteName.C2, 0, true));
+		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C2, true));
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals3() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addNoteEvent(new NoteEvent(NoteName.C1, 0, true));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
 		Track track2 = new Track();
 
@@ -119,6 +133,6 @@ public class TrackTest extends TestCase {
 		Instrument instrument = Instrument.ACOUSTIC_GRAND_PIANO;
 		Track track = new Track(instrument);
 
-		assertEquals("[Track] instrument= " + instrument + " eventCount=" + track.size(), track.toString());
+		assertEquals("[Track] instrument= " + instrument + " size: " + 0, track.toString());
 	}
 }

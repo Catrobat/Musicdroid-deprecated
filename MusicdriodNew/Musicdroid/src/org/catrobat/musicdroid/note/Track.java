@@ -23,23 +23,25 @@
 package org.catrobat.musicdroid.note;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Track implements Serializable {
 
 	private static final long serialVersionUID = 7483021689872527955L;
 
 	private Instrument instrument;
-	private List<NoteEvent> events;
+	private HashMap<Long, List<NoteEvent>> events;
 
 	public Track() {
-		this.events = new ArrayList<NoteEvent>();
+		this.events = new HashMap<Long, List<NoteEvent>>();
 		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
 	}
 
 	public Track(Instrument instrument) {
-		this.events = new ArrayList<NoteEvent>();
+		this.events = new HashMap<Long, List<NoteEvent>>();
 		this.instrument = instrument;
 	}
 
@@ -47,20 +49,35 @@ public class Track implements Serializable {
 		return instrument;
 	}
 
-	public void addNoteEvent(NoteEvent event) {
-		events.add(event);
+	public void addNoteEvent(long tick, NoteEvent noteEvent) {
+		List<NoteEvent> noteEventList = null;
+
+		if (events.containsKey(tick)) {
+			noteEventList = events.get(tick);
+		} else {
+			noteEventList = new LinkedList<NoteEvent>();
+			events.put(tick, noteEventList);
+		}
+
+		noteEventList.add(noteEvent);
 	}
 
-	public void removeNoteEvent(NoteEvent event) {
-		events.remove(event);
+	public List<NoteEvent> getNoteEventsForTick(long tick) {
+		return events.get(tick);
 	}
 
-	public NoteEvent getNoteEvent(int location) {
-		return events.get(location);
+	public Set<Long> getTicks() {
+		return events.keySet();
 	}
 
 	public int size() {
-		return events.size();
+		int size = 0;
+
+		for (List<NoteEvent> noteEventList : events.values()) {
+			size += noteEventList.size();
+		}
+
+		return size;
 	}
 
 	@Override
@@ -75,9 +92,15 @@ public class Track implements Serializable {
 			return false;
 		}
 
-		if (size() == track.size()) {
-			for (int i = 0; i < size(); i++) {
-				if (false == getNoteEvent(i).equals(track.getNoteEvent(i))) {
+		Set<Long> ownTrackTicks = getTicks();
+		Set<Long> otherTrackTicks = track.getTicks();
+
+		if (otherTrackTicks.equals(ownTrackTicks)) {
+			for (long tick : ownTrackTicks) {
+				List<NoteEvent> ownNoteEventList = getNoteEventsForTick(tick);
+				List<NoteEvent> otherNoteEventList = track.getNoteEventsForTick(tick);
+
+				if (false == ownNoteEventList.equals(otherNoteEventList)) {
 					return false;
 				}
 			}
@@ -90,6 +113,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] instrument= " + instrument + " eventCount=" + size();
+		return "[Track] instrument= " + instrument + " size: " + size();
 	}
 }

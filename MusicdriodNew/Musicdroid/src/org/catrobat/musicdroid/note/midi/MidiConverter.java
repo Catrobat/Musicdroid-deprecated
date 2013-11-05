@@ -87,9 +87,36 @@ public class MidiConverter {
 	}
 
 	private Track createTrack(MidiTrack midiTrack) throws MidiException {
+		Instrument instrument = getInstrumentFromMidiTrack(midiTrack);
+		Track track = new Track(instrument);
+		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
+
+		while (it.hasNext()) {
+			MidiEvent midiEvent = it.next();
+
+			if (midiEvent instanceof NoteOn) {
+				NoteOn noteOn = (NoteOn) midiEvent;
+				long tick = noteOn.getTick();
+				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
+				NoteEvent noteEvent = new NoteEvent(noteName, true);
+
+				track.addNoteEvent(tick, noteEvent);
+			} else if (midiEvent instanceof NoteOff) {
+				NoteOff noteOff = (NoteOff) midiEvent;
+				long tick = noteOff.getTick();
+				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOff.getNoteValue());
+				NoteEvent noteEvent = new NoteEvent(noteName, false);
+
+				track.addNoteEvent(tick, noteEvent);
+			}
+		}
+
+		return track;
+	}
+
+	private Instrument getInstrumentFromMidiTrack(MidiTrack midiTrack) {
 		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
 		Instrument instrument = DEFAULT_INSTRUMENT;
-		ArrayList<NoteEvent> noteEvents = new ArrayList<NoteEvent>();
 
 		while (it.hasNext()) {
 			MidiEvent midiEvent = it.next();
@@ -98,25 +125,10 @@ public class MidiConverter {
 				ProgramChange program = (ProgramChange) midiEvent;
 
 				instrument = Instrument.getInstrumentFromProgram(program.getProgramNumber());
-			} else if (midiEvent instanceof NoteOn) {
-				NoteOn noteOn = (NoteOn) midiEvent;
-				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOn.getNoteValue());
-
-				noteEvents.add(new NoteEvent(noteName, noteOn.getTick(), true));
-			} else if (midiEvent instanceof NoteOff) {
-				NoteOff noteOff = (NoteOff) midiEvent;
-				NoteName noteName = NoteName.getNoteNameFromMidiValue(noteOff.getNoteValue());
-
-				noteEvents.add(new NoteEvent(noteName, noteOff.getTick(), false));
+				break;
 			}
 		}
 
-		Track track = new Track(instrument);
-
-		for (NoteEvent noteEvent : noteEvents) {
-			track.addNoteEvent(noteEvent);
-		}
-
-		return track;
+		return instrument;
 	}
 }

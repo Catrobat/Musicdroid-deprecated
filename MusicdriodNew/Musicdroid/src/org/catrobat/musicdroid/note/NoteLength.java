@@ -48,9 +48,9 @@ public enum NoteLength {
 		return tickDuration;
 	}
 
-	public static List<NoteLength> getNoteLengthsFromDuration(long duration) {
+	public static List<NoteLength> getNoteLengthsFromTickDuration(long duration) {
 		NoteLength[] allNoteLengths = NoteLength.values();
-		LinkedList<NoteLength> noteLengthsFromDuration = new LinkedList<NoteLength>();
+		LinkedList<NoteLength> noteLengthsList = new LinkedList<NoteLength>();
 
 		while (duration > 0) {
 			for (int i = 0; i < allNoteLengths.length; i++) {
@@ -58,7 +58,7 @@ public enum NoteLength {
 
 				if (ticks <= duration) {
 					duration = duration - ticks;
-					noteLengthsFromDuration.add(allNoteLengths[i]);
+					noteLengthsList.add(allNoteLengths[i]);
 					i--;
 				}
 			}
@@ -68,6 +68,16 @@ public enum NoteLength {
 			}
 		}
 
-		return noteLengthsFromDuration;
+		return noteLengthsList;
+	}
+
+	public static long getTickDurationFromNoteLengths(List<NoteLength> noteLengthsList) {
+		long duration = 0;
+
+		for (NoteLength noteLength : noteLengthsList) {
+			duration += noteLength.getTickDuration();
+		}
+
+		return duration;
 	}
 }
