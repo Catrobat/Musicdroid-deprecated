@@ -23,7 +23,6 @@
 package org.catrobat.musicdroid.note;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public enum NoteLength {
 	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
@@ -48,7 +47,7 @@ public enum NoteLength {
 		return tickDuration;
 	}
 
-	public static List<NoteLength> getNoteLengthsFromTickDuration(long duration) {
+	public static NoteLength[] getNoteLengthsFromTickDuration(long duration) {
 		NoteLength[] allNoteLengths = NoteLength.values();
 		LinkedList<NoteLength> noteLengthsList = new LinkedList<NoteLength>();
 
@@ -68,13 +67,15 @@ public enum NoteLength {
 			}
 		}
 
-		return noteLengthsList;
+		NoteLength[] noteLengths = new NoteLength[noteLengthsList.size()];
+
+		return noteLengthsList.toArray(noteLengths);
 	}
 
-	public static long getTickDurationFromNoteLengths(List<NoteLength> noteLengthsList) {
+	public static long getTickDurationFromNoteLengths(NoteLength[] noteLengths) {
 		long duration = 0;
 
-		for (NoteLength noteLength : noteLengthsList) {
+		for (NoteLength noteLength : noteLengths) {
 			duration += noteLength.getTickDuration();
 		}
 

@@ -20,24 +20,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.midi;
+package org.catrobat.musicdroid.note.symbol;
 
-import com.leff.midi.event.MidiEvent;
-import com.leff.midi.event.NoteOff;
-import com.leff.midi.event.NoteOn;
+import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.MockDataFactory;
+import org.catrobat.musicdroid.note.Track;
 
-public class NoteEventConverter {
+import java.util.List;
 
-	private static final int DEFAULT_NOISE = 64;
-	private static final int DEFAULT_SILENT = 0;
+public class TrackToSymbolsConverterTest extends TestCase {
 
-	public MidiEvent convertNoteEvent(long tick, NoteEvent noteEvent, int channel) {
-		if (noteEvent.isNoteOn()) {
-			return new NoteOn(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
-		} else {
-			return new NoteOff(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
+	public void testConvertTrack() {
+		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+		Track track = MockDataFactory.createTrack(Instrument.ACOUSTIC_GRAND_PIANO);
+		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbols();
+
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(track);
+
+		assertEquals(expectedSymbols.size(), actualSymbols.size());
+
+		for (int i = 0; i < expectedSymbols.size(); i++) {
+			assertEquals(expectedSymbols.get(i), actualSymbols.get(i));
 		}
 	}
 }

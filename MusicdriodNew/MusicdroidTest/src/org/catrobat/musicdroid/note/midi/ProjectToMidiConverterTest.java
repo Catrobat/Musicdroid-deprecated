@@ -35,7 +35,7 @@ import junit.framework.TestCase;
 import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.ProjectGenerator;
+import org.catrobat.musicdroid.note.MockDataFactory;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
@@ -43,11 +43,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ProjectConverterTest extends TestCase {
+public class ProjectToMidiConverterTest extends TestCase {
 
 	public void testConvertProjectAndWriteMidi() throws MidiException {
-		ProjectConverter converter = new ProjectConverter();
-		Project project = ProjectGenerator.createProject();
+		ProjectToMidiConverter converter = new ProjectToMidiConverter();
+		Project project = MockDataFactory.createProject();
 
 		try {
 			converter.convertProjectAndWriteMidi(project);
@@ -61,8 +61,8 @@ public class ProjectConverterTest extends TestCase {
 	}
 
 	public void testConvertProject() throws MidiException {
-		ProjectConverter converter = new ProjectConverter();
-		Project project = ProjectGenerator.createProject();
+		ProjectToMidiConverter converter = new ProjectToMidiConverter();
+		Project project = MockDataFactory.createProject();
 
 		MidiFile midi = converter.convertProject(project);
 
@@ -139,7 +139,7 @@ public class ProjectConverterTest extends TestCase {
 	}
 
 	public void testAddInstrumentAndGetChannel() throws MidiException {
-		ProjectConverter converter = new ProjectConverter();
+		ProjectToMidiConverter converter = new ProjectToMidiConverter();
 
 		int[] expectedChannels = { 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACCORDION, Instrument.ACOUSTIC_BASS,

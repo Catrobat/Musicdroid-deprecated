@@ -29,16 +29,16 @@ import com.leff.midi.event.meta.Tempo;
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.ProjectGenerator;
+import org.catrobat.musicdroid.note.MockDataFactory;
 
-public class MidiConverterTest extends TestCase {
+public class MidiToProjectConverterTest extends TestCase {
 
 	private static final String PROJECT_NAME = "TestMidi";
 
 	public void testConvertMidi() throws MidiException {
-		ProjectConverter projectConverter = new ProjectConverter();
-		MidiConverter midiConverter = new MidiConverter();
-		Project expectedProject = ProjectGenerator.createProject();
+		ProjectToMidiConverter projectConverter = new ProjectToMidiConverter();
+		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
+		Project expectedProject = MockDataFactory.createProject();
 		MidiFile midi = projectConverter.convertProject(expectedProject);
 
 		Project actualProject = midiConverter.convertMidi(midi, PROJECT_NAME);
@@ -47,7 +47,7 @@ public class MidiConverterTest extends TestCase {
 	}
 
 	public void testGetBeatsPerMinute1() throws MidiException {
-		MidiConverter midiConverter = new MidiConverter();
+		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
 		int expectedBeatsPerMinute = 100;
 		MidiTrack tempoTrack = new MidiTrack();
 		Tempo tempo = new Tempo();
@@ -60,7 +60,7 @@ public class MidiConverterTest extends TestCase {
 	}
 
 	public void testGetBeatsPerMinute2() {
-		MidiConverter midiConverter = new MidiConverter();
+		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
 		MidiTrack tempoTrack = new MidiTrack();
 
 		try {

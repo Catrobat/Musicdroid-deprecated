@@ -24,9 +24,6 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class NoteLengthTest extends TestCase {
 
 	private static final float SIXTEENTH_DURATION = 1 / 4f;
@@ -71,35 +68,26 @@ public class NoteLengthTest extends TestCase {
 	}
 
 	public void testGetNoteLengthFromDuration1() {
-		List<NoteLength> expectedNoteLengths = new LinkedList<NoteLength>();
-		expectedNoteLengths.add(NoteLength.QUARTER);
-		expectedNoteLengths.add(NoteLength.EIGHT);
-		expectedNoteLengths.add(NoteLength.SIXTEENTH);
+		NoteLength[] expectedNoteLengths = { NoteLength.QUARTER, NoteLength.EIGHT, NoteLength.SIXTEENTH };
 
-		long duration = NoteLength.getTickDurationFromNoteLengths(expectedNoteLengths);
-
-		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
-
-		assertEquals(expectedNoteLengths.size(), actualNoteLengths.size());
-
-		for (int i = 0; i < expectedNoteLengths.size(); i++) {
-			assertEquals(expectedNoteLengths.get(i), actualNoteLengths.get(i));
-		}
+		assertNoteLengths(expectedNoteLengths);
 	}
 
 	public void testGetNoteLengthFromDuration2() {
-		List<NoteLength> expectedNoteLengths = new LinkedList<NoteLength>();
-		expectedNoteLengths.add(NoteLength.WHOLE);
-		expectedNoteLengths.add(NoteLength.WHOLE);
+		NoteLength[] expectedNoteLengths = { NoteLength.WHOLE, NoteLength.WHOLE };
 
+		assertNoteLengths(expectedNoteLengths);
+	}
+
+	private void assertNoteLengths(NoteLength[] expectedNoteLengths) {
 		long duration = NoteLength.getTickDurationFromNoteLengths(expectedNoteLengths);
 
-		List<NoteLength> actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
+		NoteLength[] actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
 
-		assertEquals(expectedNoteLengths.size(), actualNoteLengths.size());
+		assertEquals(expectedNoteLengths.length, actualNoteLengths.length);
 
-		for (int i = 0; i < expectedNoteLengths.size(); i++) {
-			assertEquals(expectedNoteLengths.get(i), actualNoteLengths.get(i));
+		for (int i = 0; i < expectedNoteLengths.length; i++) {
+			assertEquals(expectedNoteLengths[i], actualNoteLengths[i]);
 		}
 	}
 }

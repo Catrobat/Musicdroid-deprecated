@@ -22,50 +22,22 @@
  */
 package org.catrobat.musicdroid.note.midi;
 
-import com.leff.midi.MidiTrack;
 import com.leff.midi.event.ChannelEvent;
-import com.leff.midi.event.ProgramChange;
-import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.NoteOff;
+import com.leff.midi.event.NoteOn;
 
 import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.Track;
 
-import java.util.List;
+public class NoteEventToMidiEventConverter {
 
-public class TrackConverter {
+	private static final int DEFAULT_NOISE = 64;
+	private static final int DEFAULT_SILENT = 0;
 
-	private NoteEventToMidiEventConverter eventConverter;
-
-	public TrackConverter() {
-		eventConverter = new NoteEventToMidiEventConverter();
-	}
-
-	public MidiTrack createTempoTrack(int beatsPerMinute) {
-		MidiTrack tempoTrack = new MidiTrack();
-
-		Tempo t = new Tempo();
-		t.setBpm(beatsPerMinute);
-
-		tempoTrack.insertEvent(t);
-
-		return tempoTrack;
-	}
-
-	public MidiTrack createNoteTrack(Track track, int channel) throws MidiException {
-		MidiTrack noteTrack = new MidiTrack();
-
-		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
-		noteTrack.insertEvent(program);
-
-		for (long tick : track.getTicks()) {
-			List<NoteEvent> noteEventList = track.getNoteEventsForTick(tick);
-
-			for (NoteEvent noteEvent : noteEventList) {
-				ChannelEvent channelEvent = eventConverter.convertNoteEvent(tick, noteEvent, channel);
-				noteTrack.insertEvent(channelEvent);
-			}
+	public ChannelEvent convertNoteEvent(long tick, NoteEvent noteEvent, int channel) {
+		if (noteEvent.isNoteOn()) {
+			return new NoteOn(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_NOISE);
+		} else {
+			return new NoteOff(tick, channel, noteEvent.getNoteName().getMidi(), DEFAULT_SILENT);
 		}
-
-		return noteTrack;
 	}
 }

@@ -33,14 +33,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ProjectConverter {
+public class ProjectToMidiConverter {
 
 	private static final int MAX_CHANNEL = 16;
 
 	private TrackConverter trackConverter;
 	private ArrayList<Instrument> usedChannels;
 
-	public ProjectConverter() {
+	public ProjectToMidiConverter() {
 		trackConverter = new TrackConverter();
 		usedChannels = new ArrayList<Instrument>();
 	}

@@ -22,11 +22,18 @@
  */
 package org.catrobat.musicdroid.note;
 
-public class ProjectGenerator {
+import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
+import org.catrobat.musicdroid.note.symbol.BreakSymbol;
+import org.catrobat.musicdroid.note.symbol.NoteSymbol;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class MockDataFactory {
 
 	private static final String PROJECT_NAME = "TestMidi";
 
-	private ProjectGenerator() {
+	private MockDataFactory() {
 	}
 
 	public static Project createProject() {
@@ -40,21 +47,30 @@ public class ProjectGenerator {
 		return project;
 	}
 
-	private static Track createTrack(Instrument instrument) {
+	public static Track createTrack(Instrument instrument) {
 		Track track = new Track(instrument);
 
 		long tick = 0;
 
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, true));
 
 		long quarterDuration = NoteLength.QUARTER.getTickDuration();
 		tick += quarterDuration;
 
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
+
+		tick += quarterDuration;
+
 		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
+
+		long breakDuration = quarterDuration;
+		tick += breakDuration;
+
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 
 		long quarterEightDuration = quarterDuration + NoteLength.SIXTEENTH.getTickDuration();
 		tick += quarterEightDuration;
@@ -63,5 +79,23 @@ public class ProjectGenerator {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, false));
 
 		return track;
+	}
+
+	public static List<AbstractSymbol> createSymbols() {
+		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
+
+		NoteSymbol symbol1 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C2 });
+		NoteSymbol symbol2 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
+				NoteName.D1 });
+		BreakSymbol symbol3 = new BreakSymbol(new NoteLength[] { NoteLength.QUARTER });
+		NoteSymbol symbol4 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.SIXTEENTH },
+				new NoteName[] { NoteName.E1, NoteName.F1 });
+
+		symbols.add(symbol1);
+		symbols.add(symbol2);
+		symbols.add(symbol3);
+		symbols.add(symbol4);
+
+		return symbols;
 	}
 }
