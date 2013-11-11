@@ -22,13 +22,6 @@
  */
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
-import org.catrobat.musicdroid.note.symbol.BreakSymbol;
-import org.catrobat.musicdroid.note.symbol.NoteSymbol;
-
-import java.util.LinkedList;
-import java.util.List;
-
 public class MockDataFactory {
 
 	private static final String PROJECT_NAME = "TestMidi";
@@ -47,7 +40,7 @@ public class MockDataFactory {
 		return project;
 	}
 
-	public static Track createTrack(Instrument instrument) {
+	private static Track createTrack(Instrument instrument) {
 		Track track = new Track(instrument);
 
 		long tick = 0;
@@ -79,23 +72,5 @@ public class MockDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, false));
 
 		return track;
-	}
-
-	public static List<AbstractSymbol> createSymbols() {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
-
-		NoteSymbol symbol1 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C2 });
-		NoteSymbol symbol2 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
-				NoteName.D1 });
-		BreakSymbol symbol3 = new BreakSymbol(new NoteLength[] { NoteLength.QUARTER });
-		NoteSymbol symbol4 = new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.SIXTEENTH },
-				new NoteName[] { NoteName.E1, NoteName.F1 });
-
-		symbols.add(symbol1);
-		symbols.add(symbol2);
-		symbols.add(symbol3);
-		symbols.add(symbol4);
-
-		return symbols;
 	}
 }

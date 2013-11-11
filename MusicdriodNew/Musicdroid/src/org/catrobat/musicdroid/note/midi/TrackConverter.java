@@ -57,7 +57,7 @@ public class TrackConverter {
 		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
 		noteTrack.insertEvent(program);
 
-		for (long tick : track.getTicks()) {
+		for (long tick : track.getSortedTicks()) {
 			List<NoteEvent> noteEventList = track.getNoteEventsForTick(tick);
 
 			for (NoteEvent noteEvent : noteEventList) {

@@ -24,25 +24,58 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.MockDataFactory;
+import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Track;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class TrackToSymbolsConverterTest extends TestCase {
 
-	public void testConvertTrack() {
-		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-		Track track = MockDataFactory.createTrack(Instrument.ACOUSTIC_GRAND_PIANO);
-		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbols();
+	// TODO fw mehr probieren
 
+	public void testConvertTrack1() {
+		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+		List<AbstractSymbol> expectedSymbols = new LinkedList<AbstractSymbol>();
+		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
+				NoteName.C2 }));
+
+		long tick = 0;
+		Track track = new Track();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, true));
+		tick += NoteLength.QUARTER.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, false));
 		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(track);
 
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
+		assertEquals(expectedSymbols, actualSymbols);
+	}
 
-		for (int i = 0; i < expectedSymbols.size(); i++) {
-			assertEquals(expectedSymbols.get(i), actualSymbols.get(i));
-		}
+	public void testConvertTrack2() {
+		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+		List<AbstractSymbol> expectedSymbols = new LinkedList<AbstractSymbol>();
+		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
+				NoteName.D1 }));
+		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT },
+				new NoteName[] { NoteName.E1 }));
+
+		long tick = 0;
+		Track track = new Track();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
+		tick += NoteLength.QUARTER.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
+		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT });
+		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(track);
+
+		assertEquals(expectedSymbols.size(), actualSymbols.size());
+		assertEquals(expectedSymbols, actualSymbols);
 	}
 }

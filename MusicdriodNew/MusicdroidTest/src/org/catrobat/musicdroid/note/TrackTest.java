@@ -46,7 +46,7 @@ public class TrackTest extends TestCase {
 		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
 		track.addNoteEvent(tick, noteEvent);
 
-		assertEquals(1, track.getTicks().size());
+		assertEquals(1, track.getSortedTicks().size());
 		assertEquals(1, track.getNoteEventsForTick(0).size());
 	}
 

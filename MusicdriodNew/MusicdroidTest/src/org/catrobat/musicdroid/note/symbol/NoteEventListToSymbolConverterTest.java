@@ -22,21 +22,13 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
-import org.catrobat.musicdroid.note.Track;
+import junit.framework.TestCase;
 
-import java.util.LinkedList;
-import java.util.List;
+public class NoteEventListToSymbolConverterTest extends TestCase {
 
-public class TrackToSymbolsConverter {
+	// TODO fw Tests
 
-	public List<AbstractSymbol> convertTrack(Track track) {
-		NoteEventListToSymbolConverter noteEventListConverter = new NoteEventListToSymbolConverter();
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
-
-		for (long tick : track.getSortedTicks()) {
-			symbols.addAll(noteEventListConverter.convertNoteEventList(tick, track.getNoteEventsForTick(tick)));
-		}
-
-		return symbols;
+	public void testDurp() {
+		// delete me
 	}
 }

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Track implements Serializable {
 
@@ -66,8 +67,8 @@ public class Track implements Serializable {
 		return events.get(tick);
 	}
 
-	public Set<Long> getTicks() {
-		return events.keySet();
+	public Set<Long> getSortedTicks() {
+		return new TreeSet<Long>(events.keySet());
 	}
 
 	public int size() {
@@ -92,8 +93,8 @@ public class Track implements Serializable {
 			return false;
 		}
 
-		Set<Long> ownTrackTicks = getTicks();
-		Set<Long> otherTrackTicks = track.getTicks();
+		Set<Long> ownTrackTicks = getSortedTicks();
+		Set<Long> otherTrackTicks = track.getSortedTicks();
 
 		if (otherTrackTicks.equals(ownTrackTicks)) {
 			for (long tick : ownTrackTicks) {
