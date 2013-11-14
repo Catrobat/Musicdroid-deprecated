@@ -22,11 +22,21 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
+import android.content.Context;
+
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class BreakSymbol extends AbstractSymbol {
 
 	public BreakSymbol(NoteLength[] noteLengths) {
 		super(noteLengths);
+	}
+
+	@Override
+	public void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context) {
+		// TODO Auto-generated method stub
+
 	}
 }

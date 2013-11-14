@@ -22,7 +22,11 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
+import android.content.Context;
+
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public abstract class AbstractSymbol {
 
@@ -62,4 +66,6 @@ public abstract class AbstractSymbol {
 	public String toString() {
 		return "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
 	}
+
+	public abstract void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context);
 }
