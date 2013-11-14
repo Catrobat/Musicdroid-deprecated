@@ -24,32 +24,17 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.NoteName;
-import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.MockDataFactory;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class TrackToSymbolsConverterTest extends TestCase {
 
-	// TODO fw mehr probieren
-
 	public void testConvertTrack1() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-		List<AbstractSymbol> expectedSymbols = new LinkedList<AbstractSymbol>();
-		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
-				NoteName.C2 }));
 
-		long tick = 0;
-		Track track = new Track();
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, true));
-		tick += NoteLength.QUARTER.getTickDuration();
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, false));
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(track);
+		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList1();
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack1());
 
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);
@@ -57,23 +42,29 @@ public class TrackToSymbolsConverterTest extends TestCase {
 
 	public void testConvertTrack2() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-		List<AbstractSymbol> expectedSymbols = new LinkedList<AbstractSymbol>();
-		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1,
-				NoteName.D1 }));
-		expectedSymbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT },
-				new NoteName[] { NoteName.E1 }));
 
-		long tick = 0;
-		Track track = new Track();
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
-		tick += NoteLength.QUARTER.getTickDuration();
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
-		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT });
-		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(track);
+		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList2();
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack2());
+
+		assertEquals(expectedSymbols.size(), actualSymbols.size());
+		assertEquals(expectedSymbols, actualSymbols);
+	}
+
+	public void testConvertTrack3() {
+		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+
+		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList3();
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack3());
+
+		assertEquals(expectedSymbols.size(), actualSymbols.size());
+		assertEquals(expectedSymbols, actualSymbols);
+	}
+
+	public void testConvertTrack4() {
+		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+
+		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList4();
+		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack4());
 
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);

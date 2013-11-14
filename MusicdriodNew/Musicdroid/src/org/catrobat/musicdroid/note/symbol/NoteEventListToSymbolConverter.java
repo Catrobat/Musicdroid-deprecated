@@ -49,17 +49,17 @@ public class NoteEventListToSymbolConverter {
 		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
 		List<NoteEvent> newOpenNoteEvents = new LinkedList<NoteEvent>();
 		long duration = tick - lastTick;
-		boolean hasInsertedNote = false;
 
 		for (NoteEvent noteEvent : noteEventList) {
 			if (noteEvent.isNoteOn()) {
 				if ((lastTick != tick) && (hasInsertedNoteBefore)) {
 					NoteLength[] noteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
 					symbols.add(new BreakSymbol(noteLengths));
-					hasInsertedNoteBefore = false;
 				}
 
 				newOpenNoteEvents.add(noteEvent);
+				hasInsertedNoteBefore = false;
+				lastTick = tick;
 			} else {
 				if (false == openNoteEvents.isEmpty()) {
 					NoteLength[] noteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
@@ -71,13 +71,12 @@ public class NoteEventListToSymbolConverter {
 
 					openNoteEvents.clear();
 					symbols.add(new NoteSymbol(noteLengths, noteNames));
-					hasInsertedNote = true;
+					hasInsertedNoteBefore = true;
+					lastTick = tick;
 				}
 			}
 		}
 
-		lastTick = tick;
-		hasInsertedNoteBefore = hasInsertedNote;
 		openNoteEvents = newOpenNoteEvents;
 
 		return symbols;
