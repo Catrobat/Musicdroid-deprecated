@@ -37,7 +37,7 @@ public class MockDataFactory {
 	}
 
 	public static Project createProject() {
-		Project project = new Project(PROJECT_NAME, 120);
+		Project project = new Project(PROJECT_NAME, Project.DEFAULT_BEATS_PER_MINUTE);
 		Track track1 = createTrack5(Instrument.GUNSHOT);
 		Track track2 = createTrack5(Instrument.WHISTLE);
 

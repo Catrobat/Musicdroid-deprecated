@@ -41,10 +41,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class MidiToProjectConverter {
 
 	private static final Instrument DEFAULT_INSTRUMENT = Instrument.ACOUSTIC_GRAND_PIANO;
+
+	private int beatsPerMinute;
+
+	public MidiToProjectConverter() {
+		beatsPerMinute = Project.DEFAULT_BEATS_PER_MINUTE;
+	}
 
 	public Project readFileAndConvertMidi(File file) throws FileNotFoundException, IOException, MidiException {
 		MidiFile midi = new MidiFile(file);
@@ -57,33 +64,21 @@ public class MidiToProjectConverter {
 	}
 
 	protected Project convertMidi(MidiFile midi, String name) throws MidiException {
-		ArrayList<MidiTrack> midiTracks = midi.getTracks();
+		List<Track> tracks = new ArrayList<Track>();
 
-		MidiTrack tempoTrack = midiTracks.get(0);
-
-		Project project = new Project(name, getBeatsPerMinute(tempoTrack));
-
-		for (int i = 1; i < midiTracks.size(); i++) {
-			Track track = createTrack(midiTracks.get(i));
-			project.addTrack(track);
+		for (MidiTrack midiTrack : midi.getTracks()) {
+			tracks.add(createTrack(midiTrack));
 		}
 
-		return project;
-	}
+		Project project = new Project(name, beatsPerMinute);
 
-	protected int getBeatsPerMinute(MidiTrack tempoTrack) throws MidiException {
-		Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
-
-		while (it.hasNext()) {
-			MidiEvent event = it.next();
-
-			if (event instanceof Tempo) {
-				Tempo tempo = (Tempo) event;
-				return (int) tempo.getBpm();
+		for (Track track : tracks) {
+			if (track.size() > 0) {
+				project.addTrack(track);
 			}
 		}
 
-		throw new MidiException("No Tempo found in track. Unsupported MIDI format!");
+		return project;
 	}
 
 	private Track createTrack(MidiTrack midiTrack) throws MidiException {
@@ -108,6 +103,10 @@ public class MidiToProjectConverter {
 				NoteEvent noteEvent = new NoteEvent(noteName, false);
 
 				track.addNoteEvent(tick, noteEvent);
+			} else if (midiEvent instanceof Tempo) {
+				Tempo tempo = (Tempo) midiEvent;
+
+				beatsPerMinute = (int) tempo.getBpm();
 			}
 		}
 

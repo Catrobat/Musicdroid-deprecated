@@ -33,9 +33,9 @@ import com.leff.midi.event.meta.Tempo;
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.MockDataFactory;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Project;
-import org.catrobat.musicdroid.note.MockDataFactory;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
@@ -88,7 +88,7 @@ public class ProjectToMidiConverterTest extends TestCase {
 	}
 
 	private void assertTempoTrack(Project project, MidiTrack tempoTrack) {
-		assertEquals(1, tempoTrack.getEventCount());
+		assertEquals(2, tempoTrack.getEventCount());
 
 		Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
 		Tempo tempo = (Tempo) it.next();

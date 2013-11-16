@@ -28,6 +28,7 @@ import java.util.List;
 
 public class Project implements Serializable {
 
+	public static final int DEFAULT_BEATS_PER_MINUTE = 120;
 	private static final long serialVersionUID = 7396763540934053008L;
 
 	private String name;
@@ -37,7 +38,7 @@ public class Project implements Serializable {
 	public Project(String name) {
 		this.name = name;
 		this.tracks = new LinkedList<Track>();
-		this.beatsPerMinute = 60;
+		this.beatsPerMinute = DEFAULT_BEATS_PER_MINUTE;
 	}
 
 	public Project(String name, int beatsPerMinute) {

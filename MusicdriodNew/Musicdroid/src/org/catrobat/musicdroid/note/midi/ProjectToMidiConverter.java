@@ -24,24 +24,30 @@ package org.catrobat.musicdroid.note.midi;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
+import com.leff.midi.event.ChannelEvent;
+import com.leff.midi.event.ProgramChange;
+import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.TimeSignature;
 
 import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.Track;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectToMidiConverter {
 
 	private static final int MAX_CHANNEL = 16;
 
-	private TrackConverter trackConverter;
+	private NoteEventToMidiEventConverter eventConverter;
 	private ArrayList<Instrument> usedChannels;
 
 	public ProjectToMidiConverter() {
-		trackConverter = new TrackConverter();
+		eventConverter = new NoteEventToMidiEventConverter();
 		usedChannels = new ArrayList<Instrument>();
 	}
 
@@ -54,14 +60,14 @@ public class ProjectToMidiConverter {
 	protected MidiFile convertProject(Project project) throws MidiException {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
-		MidiTrack tempoTrack = trackConverter.createTempoTrack(project.getBeatsPerMinute());
+		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
 		tracks.add(tempoTrack);
 
 		for (int i = 0; i < project.size(); i++) {
 			Track track = project.getTrack(i);
 			int channel = addInstrumentAndGetChannel(track.getInstrument());
 
-			MidiTrack noteTrack = trackConverter.createNoteTrack(track, channel);
+			MidiTrack noteTrack = createNoteTrack(track, channel);
 
 			tracks.add(noteTrack);
 		}
@@ -79,5 +85,39 @@ public class ProjectToMidiConverter {
 
 			return usedChannels.indexOf(instrument) + 1;
 		}
+	}
+
+	protected MidiTrack createTempoTrack(int beatsPerMinute) {
+		MidiTrack tempoTrack = new MidiTrack();
+
+		Tempo tempo = new Tempo();
+		tempo.setBpm(beatsPerMinute);
+
+		tempoTrack.insertEvent(tempo);
+
+		TimeSignature timeSignature = new TimeSignature();
+		timeSignature.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+
+		tempoTrack.insertEvent(timeSignature);
+
+		return tempoTrack;
+	}
+
+	protected MidiTrack createNoteTrack(Track track, int channel) throws MidiException {
+		MidiTrack noteTrack = new MidiTrack();
+
+		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());
+		noteTrack.insertEvent(program);
+
+		for (long tick : track.getSortedTicks()) {
+			List<NoteEvent> noteEventList = track.getNoteEventsForTick(tick);
+
+			for (NoteEvent noteEvent : noteEventList) {
+				ChannelEvent channelEvent = eventConverter.convertNoteEvent(tick, noteEvent, channel);
+				noteTrack.insertEvent(channelEvent);
+			}
+		}
+
+		return noteTrack;
 	}
 }
