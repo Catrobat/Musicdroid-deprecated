@@ -20,23 +20,24 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid;
 
-import android.content.Context;
+import android.app.Activity;
+import android.os.Bundle;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+import org.catrobat.musicdroid.note.draw.NoteSheetView;
 
-public class BreakSymbol extends AbstractSymbol {
-
-	public BreakSymbol(NoteLength[] noteLengths) {
-		super(noteLengths);
-	}
+/**
+ * @author musicdroid
+ * 
+ */
+public class NoteSheetActivity extends Activity {
 
 	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context) {
-		// TODO Auto-generated method stub
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
+		NoteSheetView noteSheetView = new NoteSheetView(this);
+		setContentView(noteSheetView);
 	}
 }

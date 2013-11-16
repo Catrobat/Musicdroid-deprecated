@@ -20,52 +20,24 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.tools;
 
-import android.content.Context;
-
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public abstract class AbstractSymbol {
+/**
+ * @author musicdroid
+ * 
+ */
+public class NoteSheetTools {
 
-	protected NoteLength[] noteLengths;
+	private NoteSheetCanvas noteSheetCanvas;
 
-	public AbstractSymbol(NoteLength[] noteLengths) {
-		this.noteLengths = noteLengths;
+	public NoteSheetCanvas getNoteSheetCanvas() {
+		return noteSheetCanvas;
 	}
 
-	public NoteLength[] getNoteLengths() {
-		return noteLengths;
+	public void setNoteSheetCanvas(NoteSheetCanvas noteSheetCanvas) {
+		this.noteSheetCanvas = noteSheetCanvas;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof AbstractSymbol)) {
-			return false;
-		}
-
-		AbstractSymbol abstractSymbol = (AbstractSymbol) obj;
-		NoteLength[] otherNoteLengths = abstractSymbol.getNoteLengths();
-
-		if (otherNoteLengths.length != noteLengths.length) {
-			return false;
-		}
-
-		for (int i = 0; i < noteLengths.length; i++) {
-			if (noteLengths[i] != otherNoteLengths[i]) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
-	}
-
-	public abstract void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context);
 }

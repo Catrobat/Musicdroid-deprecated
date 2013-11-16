@@ -20,23 +20,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.tools;
 
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+public class PictureTools {
+	public static Rect calculateProportionalPictureContourRect(Bitmap originalPicture, int height, int startXPosition,
+			int yCenterPosition) {
+		int keyPictureWidth = originalPicture.getWidth() * height / originalPicture.getHeight();
 
-public class BreakSymbol extends AbstractSymbol {
+		Point leftUpperOfRect = new Point(startXPosition, yCenterPosition - height / 2);
+		Point rightBottomOfRect = new Point(startXPosition + keyPictureWidth, yCenterPosition + height / 2);
 
-	public BreakSymbol(NoteLength[] noteLengths) {
-		super(noteLengths);
-	}
-
-	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context) {
-		// TODO Auto-generated method stub
-
+		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y, rightBottomOfRect.x, rightBottomOfRect.y);
 	}
 }

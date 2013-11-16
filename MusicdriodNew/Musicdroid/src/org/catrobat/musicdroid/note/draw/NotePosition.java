@@ -20,23 +20,31 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
-
-import android.content.Context;
+package org.catrobat.musicdroid.note.draw;
 
 import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+import org.catrobat.musicdroid.note.NoteName;
 
-public class BreakSymbol extends AbstractSymbol {
+/**
+ * @author musicdroid
+ * 
+ */
+public class NotePosition {
 
-	public BreakSymbol(NoteLength[] noteLengths) {
-		super(noteLengths);
+	public NotePosition() {
+
 	}
 
-	@Override
-	public void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context) {
-		// TODO Auto-generated method stub
+	public static int getToneDistanceFromToneToMiddleLineInHalfLineDistances(Key key, NoteName tone) {
+		NoteName middleNote;
+		if (key == Key.VIOLIN) {
+			middleNote = NoteName.B3;
+		} else if (key == Key.BASS) {
+			middleNote = NoteName.D3;
+		} else {
+			throw new UnsupportedOperationException();
+		}
 
+		return NoteName.calculateDistanceInHalfNotelineDistances(tone, middleNote);
 	}
 }

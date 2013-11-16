@@ -20,52 +20,40 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.note.draw;
 
 import android.content.Context;
 
 import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
+import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public abstract class AbstractSymbol {
+import java.util.List;
 
-	protected NoteLength[] noteLengths;
+public class TrackDrawer {
+	private List<AbstractSymbol> allSymbolsForTrack;
+	private Key key;
 
-	public AbstractSymbol(NoteLength[] noteLengths) {
-		this.noteLengths = noteLengths;
+	//private TacktNaming tactNaming;
+	//int usedSixteenthOfCurrentTact;
+	//int maximumSixteenthOfTact;
+
+	public TrackDrawer(Track track) {
+		TrackToSymbolsConverter converter = new TrackToSymbolsConverter();
+		this.allSymbolsForTrack = converter.convertTrack(track);
+		this.key = Key.VIOLIN;
+		//this.tactNaming = track.getNaming();
 	}
 
-	public NoteLength[] getNoteLengths() {
-		return noteLengths;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof AbstractSymbol)) {
-			return false;
+	public void drawTrack(NoteSheetCanvas noteSheetCanvas, Context context) {
+		for (AbstractSymbol symbol : allSymbolsForTrack) {
+			drawWohleSymbol(symbol, noteSheetCanvas, context);
 		}
-
-		AbstractSymbol abstractSymbol = (AbstractSymbol) obj;
-		NoteLength[] otherNoteLengths = abstractSymbol.getNoteLengths();
-
-		if (otherNoteLengths.length != noteLengths.length) {
-			return false;
-		}
-
-		for (int i = 0; i < noteLengths.length; i++) {
-			if (noteLengths[i] != otherNoteLengths[i]) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
+	private void drawWohleSymbol(AbstractSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		symbol.draw(noteSheetCanvas, key, context);
 	}
-
-	public abstract void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context);
 }

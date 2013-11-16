@@ -89,7 +89,9 @@
   <string name="preferences_display_bpm_summary">Switch it on/off, blinking Light, clicking Sound or both</string>
   <string name="preferences_bpm_title">Metronom Settings</string>
   <string name="preferences_bpm_summary">Set Beats per Minute. Switch it on/off, blinking Light, clicking Sound or both</string>
-  
+  <string name="preferences_draw_notes_title">Settings for drawing notes</string>
+  <string name="preferences_draw_notes_bass_key">Draw notes in bass key</string>
+  <string name="preferences_draw_notes_bass_key_summary">Do you want to see the notes in bass key?</string>
   
   <string name="help_menu_new_recording">Click me if you want to record yourself</string>
   <string name="help_menu_new_piano">Click me if you want to play the piano and add it to your song</string>
