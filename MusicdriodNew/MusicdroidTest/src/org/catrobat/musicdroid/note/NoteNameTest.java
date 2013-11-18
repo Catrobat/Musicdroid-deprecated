@@ -134,4 +134,11 @@ public class NoteNameTest extends TestCase {
 
 		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 0);
 	}
+
+	public void testCalculateDistanceInHalfNotelineDistances3() {
+		NoteName n2 = NoteName.B3;
+		NoteName n1 = NoteName.D3;
+
+		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 5);
+	}
 }

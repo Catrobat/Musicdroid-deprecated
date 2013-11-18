@@ -111,4 +111,52 @@ public class NoteSymbolTest extends TestCase {
 
 		assertFalse(noteSymbol.equals(""));
 	}
+
+	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER };
+		NoteName[] noteNames = { NoteName.C1 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
+	}
+
+	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine1() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER };
+		NoteName[] noteNames = { NoteName.C1, NoteName.B3 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
+	}
+
+	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine2() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER };
+		NoteName[] noteNames = { NoteName.B3, NoteName.C3 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertEquals(1, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
+	}
+
+	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine3() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER };
+		NoteName[] noteNames = { NoteName.C2, NoteName.A3 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
+	}
+
+	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine4() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.HALF };
+		NoteName[] noteNames = { NoteName.C2, NoteName.A3, NoteName.C3, NoteName.A4 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
+	}
+
+	public void testIsSteamUp() {
+		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.HALF };
+		NoteName[] noteNames = { NoteName.C2, NoteName.A3, NoteName.C3, NoteName.A4 };
+		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+
+		assertTrue(noteSymbol.isStemUp());
+	}
 }
