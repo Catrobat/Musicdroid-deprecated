@@ -79,18 +79,29 @@ public class NoteSheetView extends View {
 		long tick = 0;
 		Track track = new Track();
 		//		track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.F4S, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D4, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C4, true));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, true));
 		tick += NoteLength.WHOLE.getTickDuration() + NoteLength.QUARTER.getTickDuration();
 		//		track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.F4S, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D4, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C4, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, false));
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D3, true));
-		tick += NoteLength.HALF.getTickDuration();
+		tick += NoteLength.HALF.getTickDuration() / 5;
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D3, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D3, true));
+		tick += NoteLength.SIXTEENTH.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D3, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C4, true));
+		tick += NoteLength.QUARTER.getTickDuration() + NoteLength.SIXTEENTH.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C4, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.G3, true));
+		tick += NoteLength.WHOLE.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.G3, false));
 
 		trackDrawer = new TrackDrawer(track);
 		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;

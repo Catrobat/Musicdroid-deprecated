@@ -167,7 +167,7 @@ public class NoteSymbol extends AbstractSymbol {
 	private void drawNotesForOnePosition(NoteSheetCanvas noteSheetCanvas, Key key, Context context,
 			NoteLength noteLength) {
 		List<Integer> yPositionsForCrosses = new LinkedList<Integer>();
-
+		boolean isStemUpdirected = this.isStemUp();
 		for (int noteIndex = 0; noteIndex < this.getNoteNames().length; noteIndex++) {
 			if (this.getNoteNames()[noteIndex].isSigned()) {
 				yPositionsForCrosses.add(toneDistancesToMiddleLineInHalflineDistances[noteIndex]);
@@ -180,17 +180,17 @@ public class NoteSymbol extends AbstractSymbol {
 
 		if (noteLength == NoteLength.WHOLE || noteLength == NoteLength.HALF) {
 			noteSurroundingRects = NoteBodyDrawer.drawBody(noteSheetCanvas,
-					toneDistancesToMiddleLineInHalflineDistances, false);
+					toneDistancesToMiddleLineInHalflineDistances, false, isStemUpdirected);
 		} else {
 			noteSurroundingRects = NoteBodyDrawer.drawBody(noteSheetCanvas,
-					toneDistancesToMiddleLineInHalflineDistances, true);
+					toneDistancesToMiddleLineInHalflineDistances, true, isStemUpdirected);
 		}
 
 		drawHelpLines(noteSheetCanvas);
 
 		Point startPointOfNoteStem = new Point();
 		Point endPointOfNoteStem = new Point();
-		boolean isStemUpdirected = this.isStemUp();
+
 		if (isStemUpdirected) {
 			startPointOfNoteStem.y = (int) Math
 					.round((noteSurroundingRects[0].bottom + noteSurroundingRects[0].top) / 2.0);
@@ -203,7 +203,7 @@ public class NoteSymbol extends AbstractSymbol {
 					.round((noteSurroundingRects[0].bottom + noteSurroundingRects[0].top) / 2.0);
 		}
 
-		if (noteLength != NoteLength.WHOLE) {
+		if (NoteSymbol.isSteamNeeded(noteLength)) {
 			if (isStemUpdirected) {
 				startPointOfNoteStem.x = (int) noteSurroundingRects[0].right;
 				endPointOfNoteStem.x = (int) noteSurroundingRects[0].right;

@@ -32,7 +32,7 @@ import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class NoteBodyDrawer {
 	public static RectF[] drawBody(NoteSheetCanvas noteSheetCanvas, int[] toneDistanceFromToneToMiddleLineInHalfTones,
-			boolean isFilled) {
+			boolean isFilled, boolean isStemUp) {
 
 		int lineHeight = noteSheetCanvas.getDistanceBetweenNoteLines();
 		int noteHeigth = lineHeight / 2;
@@ -56,6 +56,21 @@ public class NoteBodyDrawer {
 			int top = centerPointOfActualNote.y - noteHeigth;
 			int right = centerPointOfActualNote.x + noteWidth;
 			int bottom = centerPointOfActualNote.y + noteHeigth;
+
+			if (distanceIndex > 0) {
+				int differenceBetweenNotesInHalfTones = Math
+						.abs(toneDistanceFromToneToMiddleLineInHalfTones[distanceIndex - 1]
+								- toneDistanceFromToneToMiddleLineInHalfTones[distanceIndex]);
+				if (differenceBetweenNotesInHalfTones == 1) {
+					if (isStemUp) {
+						right += 2 * noteWidth;
+						left += 2 * noteWidth;
+					} else {
+						left -= 2 * noteWidth;
+						right -= 2 * noteWidth;
+					}
+				}
+			}
 
 			RectF rect = new RectF(left, top, right, bottom);
 
