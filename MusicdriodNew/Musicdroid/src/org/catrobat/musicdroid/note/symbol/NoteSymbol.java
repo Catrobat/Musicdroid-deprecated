@@ -29,7 +29,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -53,6 +55,8 @@ public class NoteSymbol extends AbstractSymbol {
 	protected NoteName[] noteNames;
 	protected RectF[] noteSurroundingRects;
 	protected int[] toneDistancesToMiddleLineInHalflineDistances;
+	protected PointF startPointForBogen;
+	protected PointF endPointForBogen;
 
 	public NoteSymbol(NoteLength[] noteLengths, NoteName[] noteNames) {
 		super(noteLengths);
@@ -125,6 +129,39 @@ public class NoteSymbol extends AbstractSymbol {
 		for (NoteLength noteLength : this.getNoteLengths()) {
 			drawNotesForOnePosition(noteSheetCanvas, key, context, noteLength);
 		}
+
+		if (this.isBogenNeeded()) {
+			drawBogen(noteSheetCanvas);
+		}
+	}
+
+	private void drawBogen(NoteSheetCanvas noteSheetCanvas) {
+		float centerX = this.startPointForBogen.x + ((this.endPointForBogen.x - this.startPointForBogen.x) / 2);
+		float centerY = this.startPointForBogen.y + ((this.endPointForBogen.y - this.startPointForBogen.y) / 2);
+
+		double xLen = (this.endPointForBogen.x - this.startPointForBogen.x);
+		double yLen = (this.endPointForBogen.y - this.startPointForBogen.y);
+		float radius = (float) (Math.sqrt(xLen * xLen + yLen * yLen) / 2);
+
+		RectF oval = new RectF(centerX - radius, centerY - radius / 2, centerX + radius, centerY + radius / 2);
+
+		double radStartAngle = 0;
+		if (this.isStemUp()) {
+			radStartAngle = Math.atan2(this.endPointForBogen.y - centerY, this.endPointForBogen.x - centerX);
+		} else {
+			radStartAngle = Math.atan2(this.startPointForBogen.y - centerY, this.startPointForBogen.x - centerX);
+		}
+		float startAngle = (float) Math.toDegrees(radStartAngle);
+
+		Path p = new Path();
+		p.addArc(oval, startAngle, 180);
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Style.STROKE);
+		paint.setStrokeWidth(4);
+		noteSheetCanvas.getCanvas().drawArc(oval, startAngle, 180, false, paint);
+
 	}
 
 	private void drawNotesForOnePosition(NoteSheetCanvas noteSheetCanvas, Key key, Context context,
@@ -166,19 +203,50 @@ public class NoteSymbol extends AbstractSymbol {
 					.round((noteSurroundingRects[0].bottom + noteSurroundingRects[0].top) / 2.0);
 		}
 
-		//TODO: notenhals richtig zeichnen
-		if (isStemUpdirected) {
-			startPointOfNoteStem.x = (int) noteSurroundingRects[0].right;
-			endPointOfNoteStem.x = (int) noteSurroundingRects[0].right;
-		} else {
+		if (noteLength != NoteLength.WHOLE) {
+			if (isStemUpdirected) {
+				startPointOfNoteStem.x = (int) noteSurroundingRects[0].right;
+				endPointOfNoteStem.x = (int) noteSurroundingRects[0].right;
+			} else {
 
-			startPointOfNoteStem.x = (int) noteSurroundingRects[0].left;
-			endPointOfNoteStem.x = (int) noteSurroundingRects[0].left;
+				startPointOfNoteStem.x = (int) noteSurroundingRects[0].left;
+				endPointOfNoteStem.x = (int) noteSurroundingRects[0].left;
+			}
+
+			NoteStemDrawer.drawStem(noteSheetCanvas, noteLength, startPointOfNoteStem, endPointOfNoteStem,
+					isStemUpdirected);
 		}
 
-		NoteStemDrawer
-				.drawStem(noteSheetCanvas, noteLength, startPointOfNoteStem, endPointOfNoteStem, isStemUpdirected);
+		if (this.isBogenNeeded()) {
+			if (this.startPointForBogen == null) {
+				float xPosition = noteSurroundingRects[0].left;
+				float yPosition = 0;
+				if (this.isStemUp()) {
+					yPosition = noteSurroundingRects[0].bottom;
+				} else {
+					yPosition = noteSurroundingRects[noteSurroundingRects.length - 1].top;
+				}
+				this.startPointForBogen = new PointF(xPosition, yPosition);
+			} else {
+				float xPosition = noteSurroundingRects[0].right;
+				float yPosition = 0;
+				if (this.isStemUp()) {
+					yPosition = noteSurroundingRects[0].bottom;
+				} else {
+					yPosition = noteSurroundingRects[noteSurroundingRects.length - 1].top;
+				}
+				this.endPointForBogen = new PointF(xPosition, yPosition);
+			}
+		}
 
+	}
+
+	private boolean isBogenNeeded() {
+		if (this.getNoteLengths().length > 1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void drawHelpLines(NoteSheetCanvas noteSheetCanvas) {

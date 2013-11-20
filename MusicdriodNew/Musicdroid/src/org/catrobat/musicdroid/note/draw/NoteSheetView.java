@@ -81,12 +81,12 @@ public class NoteSheetView extends View {
 		//		track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, true));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F4S, true));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, true));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.B2, true));
-		tick += NoteLength.EIGHT.getTickDuration();
+		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, true));
+		tick += NoteLength.WHOLE.getTickDuration() + NoteLength.QUARTER.getTickDuration();
 		//		track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F4S, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.B2, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.A3, false));
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D3, true));
 		tick += NoteLength.HALF.getTickDuration();
