@@ -52,7 +52,7 @@ public class PianoKeyOctave {
 		this.octaveNumber = octaveNumber;
 		blackPianoKeys = new PianoKey[NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE];
 		whitePianoKeys = new PianoKey[NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE];
-		octaveStartNote = NoteName.C1;
+		octaveStartNote = NoteName.C3;
 		this.canvas = canvas;
 		setSizeOfKeys();
 		nextXPositionForBlackButton = widthOfBlackKey * 3 / 2;
