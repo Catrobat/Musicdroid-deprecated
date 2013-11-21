@@ -24,8 +24,13 @@ package org.catrobat.musicdroid;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.piano.PianoView;
 
 /**
  * @author musicdroid
@@ -33,11 +38,49 @@ import org.catrobat.musicdroid.note.draw.NoteSheetView;
  */
 public class NoteSheetActivity extends Activity {
 
+	private Track track;
+	private int tick;
+	private NoteSheetView noteSheetView;
+	private PianoView pianoView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.track = new Track();
+		this.tick = 0;
+		LinearLayout linearLayout = new LinearLayout(this);
+		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT,
+				1.0f);
 
-		NoteSheetView noteSheetView = new NoteSheetView(this);
-		setContentView(noteSheetView);
+		noteSheetView = new NoteSheetView(this);
+		pianoView = new PianoView(this);
+		noteSheetView.setLayoutParams(layoutParams);
+		pianoView.setLayoutParams(layoutParams);
+		linearLayout.addView(noteSheetView);
+		linearLayout.addView(pianoView);
+		linearLayout.setOrientation(1);
+		this.setContentView(linearLayout);
+
+	}
+
+	public void drawTrack() {
+		noteSheetView.setTrack(track);
+		noteSheetView.invalidate();
+	}
+
+	public Track getTrack() {
+		return track;
+	}
+
+	public void setTrack(Track track) {
+		this.track = track;
+	}
+
+	public int getTick() {
+		return tick;
+	}
+
+	public void incrementTick() {
+		this.tick += NoteLength.QUARTER.getTickDuration();
 	}
 }

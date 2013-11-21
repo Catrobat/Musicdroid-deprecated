@@ -33,6 +33,8 @@ public enum NoteName {
 	private int midi;
 	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
 	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
+	public final static int[] FS_OR_CS_MODULOS = { 1, 6 };
+	public final static int[] DS_OR_AS_MODULOS = { 3, 10 };
 
 	private NoteName(int midi) {
 		this.midi = midi;
@@ -119,5 +121,40 @@ public enum NoteName {
 			}
 		}
 		return (isDownGoing ? calculatedDistance : calculatedDistance * (-1));
+	}
+
+	public boolean isBlackKeyWithNoDirectLeftNeighbour() {
+		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		for (int fs_cs_index : FS_OR_CS_MODULOS) {
+			if (modValue == fs_cs_index) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isBlackKeyWithNoDirectRightNeighbour() {
+		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		for (int ds_as_index : DS_OR_AS_MODULOS) {
+			if (modValue == ds_as_index) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static NoteName getNextWhiteKeyNoteName(NoteName noteName) {
+		noteName = noteName.next();
+		if (noteName.isSigned()) {
+			noteName = noteName.next();
+		}
+		return noteName;
+	}
+
+	public static NoteName getNextBlackKeyNoteName(NoteName noteName) {
+		do {
+			noteName = noteName.next();
+		} while (!noteName.isSigned());
+		return noteName;
 	}
 }
