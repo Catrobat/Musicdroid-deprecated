@@ -50,13 +50,13 @@ public class PianoKeyOctave {
 	public PianoKeyOctave(PianoOctaveView pianoView, int octaveNumber, Canvas canvas) {
 		this.pianoView = pianoView;
 		this.octaveNumber = octaveNumber;
-		blackPianoKeys = new PianoKey[NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE];
-		whitePianoKeys = new PianoKey[NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE];
-		octaveStartNote = NoteName.C3;
+		this.blackPianoKeys = new PianoKey[NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE];
+		this.whitePianoKeys = new PianoKey[NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE];
+		this.octaveStartNote = NoteName.getFirstNoteOfOctave(octaveNumber);
 		this.canvas = canvas;
 		setSizeOfKeys();
-		nextXPositionForBlackButton = widthOfBlackKey * 3 / 2;
-		nextXPositionForWhiteButton = 0;
+		this.nextXPositionForBlackButton = widthOfBlackKey * 3 / 2;
+		this.nextXPositionForWhiteButton = 0;
 		initializePianoKeys();
 
 	}

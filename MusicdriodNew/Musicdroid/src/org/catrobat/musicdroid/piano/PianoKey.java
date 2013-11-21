@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.piano;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -49,15 +50,19 @@ public class PianoKey extends Button {
 		this.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
-				NoteSheetActivity nsa = (NoteSheetActivity) view.getContext();
+				NoteSheetActivity noteSheetActivity = (NoteSheetActivity) view.getContext();
 				if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-					nsa.getTrack().addNoteEvent(nsa.getTick(), new NoteEvent(getNoteName(), true));
-					System.out.println("Touch down");
+					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
+							new NoteEvent(getNoteName(), true));
+					setText(PianoKey.this.noteName.toString());
+					setTextColor(Color.BLUE);
 				} else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-					System.out.println("Touch up");
-					nsa.incrementTick();
-					nsa.getTrack().addNoteEvent(nsa.getTick(), new NoteEvent(getNoteName(), false));
-					nsa.drawTrack();
+					noteSheetActivity.incrementTick();
+					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
+							new NoteEvent(getNoteName(), false));
+					noteSheetActivity.drawTrack();
+					setText("");
+					setTextColor(Color.BLUE);
 				}
 				return true;
 			}

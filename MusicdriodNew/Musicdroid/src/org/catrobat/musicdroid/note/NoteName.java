@@ -28,7 +28,8 @@ public enum NoteName {
 			50), D2S(51), E2(52), F2(53), F2S(54), G2(55), G2S(56), A2(57), A2S(58), B2(59), C3(60), C3S(61), D3(62), D3S(
 			63), E3(64), F3(65), F3S(66), G3(67), G3S(68), A3(69), A3S(70), B3(71), C4(72), C4S(73), D4(74), D4S(75), E4(
 			76), F4(77), F4S(78), G4(79), G4S(80), A4(81), A4S(82), B4(83), C5(84), C5S(85), D5(86), D5S(87), E5(88), F5(
-			89), F5S(90), G5(91), G5S(92), A5(93), A5S(94), B5(95);
+			89), F5S(90), G5(91), G5S(92), A5(93), A5S(94), B5(95), C6(96), C6S(97), D6(98), D6S(99), E6(100), F6(101), F6S(
+			102), G6(103), G6S(104), A6(105), A6S(106), B6(107);
 
 	private int midi;
 	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
@@ -156,5 +157,13 @@ public enum NoteName {
 			noteName = noteName.next();
 		} while (!noteName.isSigned());
 		return noteName;
+	}
+
+	public static NoteName getFirstNoteOfOctave(int octave) {
+		int startNote = 36;
+		for (int octaveCount = 1; octaveCount < octave; octaveCount++) {
+			startNote += 12;
+		}
+		return getNoteNameFromMidiValue(startNote);
 	}
 }

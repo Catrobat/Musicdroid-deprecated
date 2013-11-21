@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.piano;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -32,16 +33,72 @@ import android.widget.LinearLayout;
  */
 public class PianoView extends LinearLayout {
 
+	private int activeOctave = 3;
+	private PianoOctaveView pianoView;
+	private Button buttonLeft;
+	private Button buttonRight;
+	private LayoutParams layoutParams;
+
 	public PianoView(Context context) {
 		super(context);
-		LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f);
-		Button buttonLeft = new Button(context);
-		PianoOctaveView pianoView = new PianoOctaveView(context);
-		Button buttonRight = new Button(context);
-		pianoView.setLayoutParams(lp);
+		this.layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f);
+		this.buttonLeft = new Button(context);
+		this.pianoView = new PianoOctaveView(context, activeOctave);
+		this.buttonRight = new Button(context);
+		pianoView.setLayoutParams(layoutParams);
 		this.addView(buttonLeft);
 		this.addView(pianoView);
 		this.addView(buttonRight);
+
+		this.buttonLeft.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				incrementOctave();
+				removeAllViews();
+				addView(buttonLeft);
+				pianoView = new PianoOctaveView(getContext(), activeOctave);
+				pianoView.setLayoutParams(layoutParams);
+				addView(pianoView);
+				addView(buttonRight);
+			}
+
+		});
+
+		this.buttonRight.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				decrementOctave();
+				removeAllViews();
+				addView(buttonLeft);
+				pianoView = new PianoOctaveView(getContext(), activeOctave);
+				pianoView.setLayoutParams(layoutParams);
+				addView(pianoView);
+				addView(buttonRight);
+			}
+
+		});
+	}
+
+	public void incrementOctave() {
+		if (activeOctave > 1) {
+			if (--activeOctave == 1) {
+				this.buttonLeft.setClickable(false);
+			} else if (activeOctave == 4) {
+				this.buttonRight.setClickable(true);
+			}
+		}
+	}
+
+	public void decrementOctave() {
+		if (activeOctave < 5) {
+			if (++activeOctave == 5) {
+				this.buttonRight.setClickable(false);
+			} else if (activeOctave == 2) {
+				this.buttonLeft.setClickable(true);
+			}
+		}
 	}
 
 }

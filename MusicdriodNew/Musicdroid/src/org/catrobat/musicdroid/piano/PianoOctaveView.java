@@ -33,15 +33,13 @@ import android.widget.RelativeLayout;
  */
 public class PianoOctaveView extends RelativeLayout {
 
-	private static final int MAIN_OCTAVE = 3;
-
 	private PianoKeyOctave pianoKeyOctave;
 	private int activeOctave;
 
-	public PianoOctaveView(Context context) {
+	public PianoOctaveView(Context context, int activeOctave) {
 		super(context);
 		this.setWillNotDraw(false);
-		this.activeOctave = MAIN_OCTAVE;
+		this.activeOctave = activeOctave;
 	}
 
 	@SuppressLint("DrawAllocation")
