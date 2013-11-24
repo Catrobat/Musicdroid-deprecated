@@ -49,9 +49,9 @@ public class NoteSheetActivity extends Activity {
 		this.track = new Track();
 		this.tick = 0;
 		LinearLayout linearLayout = new LinearLayout(this);
-		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT,
+		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
-
+		LayoutParams layoutParams1 = new LinearLayout.LayoutParams(2000, LayoutParams.FILL_PARENT, 1.0f);
 		noteSheetView = new NoteSheetView(this);
 		pianoView = new PianoView(this);
 		noteSheetView.setLayoutParams(layoutParams);
@@ -59,6 +59,7 @@ public class NoteSheetActivity extends Activity {
 		linearLayout.addView(noteSheetView);
 		linearLayout.addView(pianoView);
 		linearLayout.setOrientation(1);
+
 		this.setContentView(linearLayout);
 
 	}

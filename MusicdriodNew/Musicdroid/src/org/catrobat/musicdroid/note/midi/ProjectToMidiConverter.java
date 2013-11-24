@@ -103,7 +103,7 @@ public class ProjectToMidiConverter {
 		return tempoTrack;
 	}
 
-	protected MidiTrack createNoteTrack(Track track, int channel) throws MidiException {
+	public MidiTrack createNoteTrack(Track track, int channel) throws MidiException {
 		MidiTrack noteTrack = new MidiTrack();
 
 		ProgramChange program = new ProgramChange(0, channel, track.getInstrument().getProgram());

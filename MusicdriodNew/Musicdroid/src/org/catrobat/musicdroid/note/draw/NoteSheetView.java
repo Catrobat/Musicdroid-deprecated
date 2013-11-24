@@ -31,7 +31,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
-import android.view.View;
+import android.widget.ScrollView;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.note.Key;
@@ -44,7 +44,7 @@ import org.catrobat.musicdroid.tools.PictureTools;
  * @author musicdroid
  * 
  */
-public class NoteSheetView extends View {
+public class NoteSheetView extends ScrollView {
 
 	private static final int BOLD_BAR_WIDTH = 5;
 	private static final int THIN_BAR_WIDTH = 2;
@@ -70,7 +70,6 @@ public class NoteSheetView extends View {
 		this.context = context;
 		paint = new Paint();
 		track = new Track();
-
 		noteSheetTools = new NoteSheetTools();
 
 		/*
@@ -113,7 +112,6 @@ public class NoteSheetView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		System.out.println("LALALALALALA");
 		noteSheetTools.setNoteSheetCanvas(new NoteSheetCanvas(canvas));
 
 		NoteSheetCanvas noteSheetCanvas = noteSheetTools.getNoteSheetCanvas();
