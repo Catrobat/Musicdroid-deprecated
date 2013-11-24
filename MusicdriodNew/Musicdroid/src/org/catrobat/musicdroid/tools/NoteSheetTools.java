@@ -20,8 +20,24 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.tools;
 
-public enum Key {
-	BASS, VIOLIN;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+
+/**
+ * @author musicdroid
+ * 
+ */
+public class NoteSheetTools {
+
+	private NoteSheetCanvas noteSheetCanvas;
+
+	public NoteSheetCanvas getNoteSheetCanvas() {
+		return noteSheetCanvas;
+	}
+
+	public void setNoteSheetCanvas(NoteSheetCanvas noteSheetCanvas) {
+		this.noteSheetCanvas = noteSheetCanvas;
+	}
+
 }

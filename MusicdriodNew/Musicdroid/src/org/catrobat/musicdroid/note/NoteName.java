@@ -45,8 +45,9 @@ public enum NoteName {
 	public NoteName next() {
 		int index = this.ordinal() + 1;
 
-		if (index >= values().length)
+		if (index >= values().length) {
 			index--;
+		}
 
 		return values()[index];
 	}
@@ -54,8 +55,9 @@ public enum NoteName {
 	public NoteName previous() {
 		int index = this.ordinal() - 1;
 
-		if (index < 0)
+		if (index < 0) {
 			index++;
+		}
 
 		return values()[index];
 	}
@@ -71,6 +73,51 @@ public enum NoteName {
 	}
 
 	public static int calculateDistance(NoteName name1, NoteName name2) {
-		return name1.midi - name2.midi;
+		return name2.midi - name1.midi;
+	}
+
+	public static NoteName getNoteNameFromMidiValue(int midiValue) {
+		NoteName[] noteNames = NoteName.values();
+
+		for (int i = 0; i < noteNames.length; i++) {
+			if (noteNames[i].getMidi() == midiValue) {
+				return noteNames[i];
+			}
+		}
+
+		return C3;
+	}
+
+	public static int calculateDistanceInHalfNotelineDistances(NoteName name1, NoteName name2) {
+		int distance = calculateDistance(name1, name2);
+
+		boolean isDownGoing = distance > 0;
+
+		NoteName smallNote;
+		NoteName largeNote;
+
+		if (isDownGoing) {
+			smallNote = name1;
+			largeNote = name2;
+		} else {
+			smallNote = name2;
+			largeNote = name1;
+		}
+		int calculatedDistance = 0;
+		if (smallNote.getMidi() != largeNote.getMidi()) {
+
+			if (smallNote.isSigned()) {
+				calculatedDistance = 1;
+			} else if (largeNote.isSigned()) {
+				calculatedDistance = -1;
+			}
+			for (; smallNote.getMidi() != largeNote.getMidi(); smallNote = smallNote.next()) {
+
+				if (!smallNote.isSigned()) {
+					calculatedDistance++;
+				}
+			}
+		}
+		return (isDownGoing ? calculatedDistance : calculatedDistance * (-1));
 	}
 }

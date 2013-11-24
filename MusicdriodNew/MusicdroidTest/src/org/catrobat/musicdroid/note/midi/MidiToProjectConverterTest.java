@@ -20,8 +20,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.midi;
 
-public enum Key {
-	BASS, VIOLIN;
+import com.leff.midi.MidiFile;
+
+import junit.framework.TestCase;
+
+import org.catrobat.musicdroid.note.MockDataFactory;
+import org.catrobat.musicdroid.note.Project;
+
+public class MidiToProjectConverterTest extends TestCase {
+
+	private static final String PROJECT_NAME = "TestMidi";
+
+	public void testConvertMidi() throws MidiException {
+		ProjectToMidiConverter projectConverter = new ProjectToMidiConverter();
+		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
+		Project expectedProject = MockDataFactory.createProject();
+		MidiFile midi = projectConverter.convertProject(expectedProject);
+
+		Project actualProject = midiConverter.convertMidi(midi, PROJECT_NAME);
+
+		assertEquals(expectedProject, actualProject);
+	}
 }

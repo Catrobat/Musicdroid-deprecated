@@ -49,6 +49,15 @@
     </PreferenceCategory>
     
     <PreferenceCategory 
+        android:title="@string/preferences_draw_notes_title">
+        <CheckBoxPreference
+            android:summary="@string/preferences_draw_notes_bass_key_summary"
+            android:title="@string/preferences_draw_notes_bass_key"
+            android:defaultValue="true"
+            android:key="preferences_draw_notes_bass_key"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
         android:title="@string/preferences_category_sound_title">
         <Preference
             android:summary="@string/preferences_set_bpm_summary"

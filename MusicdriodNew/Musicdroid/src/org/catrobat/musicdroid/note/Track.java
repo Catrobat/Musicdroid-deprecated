@@ -23,59 +23,62 @@
 package org.catrobat.musicdroid.note;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Track implements Serializable {
 
 	private static final long serialVersionUID = 7483021689872527955L;
 
-	// TODO fw Instrument
-	private Key key;
-	private Tact tact;
-	private int beatsPerMinute;
-	private List<Symbol> symbols;
+	private Instrument instrument;
+	private HashMap<Long, List<NoteEvent>> events;
 
 	public Track() {
-		this.symbols = new ArrayList<Symbol>();
-		this.key = Key.VIOLIN;
-		this.tact = new Tact();
-		this.beatsPerMinute = 60;
+		this.events = new HashMap<Long, List<NoteEvent>>();
+		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
 	}
 
-	public Track(Key key, Tact tact, int beatsPerMinute) {
-		this.symbols = new ArrayList<Symbol>();
-		this.key = key;
-		this.tact = tact;
-		this.beatsPerMinute = beatsPerMinute;
+	public Track(Instrument instrument) {
+		this.events = new HashMap<Long, List<NoteEvent>>();
+		this.instrument = instrument;
 	}
 
-	public Key getKey() {
-		return key;
+	public Instrument getInstrument() {
+		return instrument;
 	}
 
-	public Tact getTact() {
-		return tact;
+	public void addNoteEvent(long tick, NoteEvent noteEvent) {
+		List<NoteEvent> noteEventList = null;
+
+		if (events.containsKey(tick)) {
+			noteEventList = events.get(tick);
+		} else {
+			noteEventList = new LinkedList<NoteEvent>();
+			events.put(tick, noteEventList);
+		}
+
+		noteEventList.add(noteEvent);
 	}
 
-	public int getBeatsPerMinute() {
-		return beatsPerMinute;
+	public List<NoteEvent> getNoteEventsForTick(long tick) {
+		return events.get(tick);
 	}
 
-	public void addSymbol(Symbol symbol) {
-		symbols.add(symbol);
-	}
-
-	public void removeSymbol(Symbol symbol) {
-		symbols.remove(symbol);
-	}
-
-	public Symbol getSymbol(int location) {
-		return symbols.get(location);
+	public Set<Long> getSortedTicks() {
+		return new TreeSet<Long>(events.keySet());
 	}
 
 	public int size() {
-		return symbols.size();
+		int size = 0;
+
+		for (List<NoteEvent> noteEventList : events.values()) {
+			size += noteEventList.size();
+		}
+
+		return size;
 	}
 
 	@Override
@@ -86,11 +89,19 @@ public class Track implements Serializable {
 
 		Track track = (Track) obj;
 
-		if ((key.equals(track.getKey()))
-				&& (tact.equals(track.getTact()) && (beatsPerMinute == track.getBeatsPerMinute()))
-				&& (size() == track.size())) {
-			for (int i = 0; i < size(); i++) {
-				if (!getSymbol(i).equals(track.getSymbol(i))) {
+		if (track.getInstrument() != getInstrument()) {
+			return false;
+		}
+
+		Set<Long> ownTrackTicks = getSortedTicks();
+		Set<Long> otherTrackTicks = track.getSortedTicks();
+
+		if (otherTrackTicks.equals(ownTrackTicks)) {
+			for (long tick : ownTrackTicks) {
+				List<NoteEvent> ownNoteEventList = getNoteEventsForTick(tick);
+				List<NoteEvent> otherNoteEventList = track.getNoteEventsForTick(tick);
+
+				if (false == ownNoteEventList.equals(otherNoteEventList)) {
 					return false;
 				}
 			}
@@ -103,6 +114,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] key=" + key + " symbolCount=" + size() + " beatsPerMinute=" + beatsPerMinute;
+		return "[Track] instrument= " + instrument + " size: " + size();
 	}
 }

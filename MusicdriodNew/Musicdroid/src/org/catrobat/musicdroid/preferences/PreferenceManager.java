@@ -37,6 +37,8 @@ public class PreferenceManager {
 	public static final String PLAY_PLAYBACK_KEY = "play_playback";
 	public static final int ADD_AT_CURRENT_POSITION_DEFAULT_VALUE = 0;
 	public static final String ADD_AT_CURRENT_POSITION_KEY = "add_at_current_position";
+	public static final int DRAW_NOTES_BASS_DEFAULT_VALUE = 0;
+	public static final String DRAW_NOTES_BASS_KEY = "draw_notes_bass_key";
 
 	private HashMap<String, Integer> preferences = null;
 	private static PreferenceManager instance = null;
@@ -62,6 +64,7 @@ public class PreferenceManager {
 		preferences.put(METRONOM_BPM_KEY, METRONOM_BPM_DEFAULT_VALUE);
 		preferences.put(PLAY_PLAYBACK_KEY, PLAY_PLAYBACK_DEFAULT_VALUE);
 		preferences.put(ADD_AT_CURRENT_POSITION_KEY, ADD_AT_CURRENT_POSITION_DEFAULT_VALUE);
+		preferences.put(DRAW_NOTES_BASS_KEY, DRAW_NOTES_BASS_DEFAULT_VALUE);
 	}
 
 	public void setPreference(String key, int value) {
