@@ -22,6 +22,63 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
+import java.util.LinkedList;
+
 public enum NoteLength {
-	WHOLE, HALF, QUARTER, EIGHT, SIXTEENTH;
+	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
+
+	// http://stackoverflow.com/questions/2467995/actual-note-duration-from-midi-duration
+	protected static final double DEFAULT_DURATION = 384 / 48 * 60;
+	protected static final NoteLength SMALLEST_NOTE_LENGTH = SIXTEENTH;
+
+	private double length;
+	private long tickDuration;
+
+	private NoteLength(double length) {
+		this.length = length;
+		this.tickDuration = Math.round(DEFAULT_DURATION * this.length);
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public long getTickDuration() {
+		return tickDuration;
+	}
+
+	public static NoteLength[] getNoteLengthsFromTickDuration(long duration) {
+		NoteLength[] allNoteLengths = NoteLength.values();
+		LinkedList<NoteLength> noteLengthsList = new LinkedList<NoteLength>();
+
+		while (duration > 0) {
+			for (int i = 0; i < allNoteLengths.length; i++) {
+				long ticks = allNoteLengths[i].getTickDuration();
+
+				if (ticks <= duration) {
+					duration = duration - ticks;
+					noteLengthsList.add(allNoteLengths[i]);
+					i--;
+				}
+			}
+
+			if (duration < SMALLEST_NOTE_LENGTH.getTickDuration()) {
+				duration = 0;
+			}
+		}
+
+		NoteLength[] noteLengths = new NoteLength[noteLengthsList.size()];
+
+		return noteLengthsList.toArray(noteLengths);
+	}
+
+	public static long getTickDurationFromNoteLengths(NoteLength[] noteLengths) {
+		long duration = 0;
+
+		for (NoteLength noteLength : noteLengths) {
+			duration += noteLength.getTickDuration();
+		}
+
+		return duration;
+	}
 }

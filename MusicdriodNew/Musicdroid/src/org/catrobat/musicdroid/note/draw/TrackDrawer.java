@@ -22,29 +22,38 @@
  */
 package org.catrobat.musicdroid.note.draw;
 
+import android.content.Context;
+
 import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
+import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
+import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-/**
- * @author musicdroid
- * 
- */
-public class NotePosition {
+import java.util.List;
 
-	public NotePosition() {
+public class TrackDrawer {
+	private List<AbstractSymbol> allSymbolsForTrack;
+	private Key key;
 
+	//private TacktNaming tactNaming;
+	//int usedSixteenthOfCurrentTact;
+	//int maximumSixteenthOfTact;
+
+	public TrackDrawer(Track track) {
+		TrackToSymbolsConverter converter = new TrackToSymbolsConverter();
+		this.allSymbolsForTrack = converter.convertTrack(track);
+		this.key = Key.VIOLIN;
+		//this.tactNaming = track.getNaming();
 	}
 
-	public static int getToneDistanceFromToneToMiddleLineInHalfLineDistances(Key key, NoteName tone) {
-		NoteName middleNote;
-		if (key == Key.VIOLIN) {
-			middleNote = NoteName.B3;
-		} else if (key == Key.BASS) {
-			middleNote = NoteName.D3;
-		} else {
-			throw new UnsupportedOperationException();
+	public void drawTrack(NoteSheetCanvas noteSheetCanvas, Context context) {
+		for (AbstractSymbol symbol : allSymbolsForTrack) {
+			drawWohleSymbol(symbol, noteSheetCanvas, context);
 		}
+	}
 
-		return NoteName.calculateDistanceInHalfNotelineDistances(tone, middleNote);
+	private void drawWohleSymbol(AbstractSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		symbol.draw(noteSheetCanvas, key, context);
 	}
 }

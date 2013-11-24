@@ -26,8 +26,15 @@ import junit.framework.TestCase;
 
 public class ProjectTest extends TestCase {
 
+	public void testGetName() {
+		String name = "Project";
+		Project project = new Project(name);
+
+		assertEquals(name, project.getName());
+	}
+
 	public void testAddTrack() {
-		Project project = new Project();
+		Project project = new Project("Project");
 
 		project.addTrack(new Track());
 
@@ -35,7 +42,7 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testGetTrack() {
-		Project project = new Project();
+		Project project = new Project("Project");
 		Track track = new Track();
 
 		project.addTrack(track);
@@ -44,7 +51,7 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testRemoveTrack() {
-		Project project = new Project();
+		Project project = new Project("Project");
 
 		Track track = new Track();
 		project.addTrack(track);
@@ -54,49 +61,64 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testEquals1() {
-		Project project1 = new Project();
-		project1.addTrack(new Track());
-
-		Project project2 = new Project();
-		project2.addTrack(new Track());
+		Project project1 = new Project("Project");
+		Project project2 = new Project("Project");
 
 		assertTrue(project1.equals(project2));
 	}
 
 	public void testEquals2() {
-		Project project1 = new Project();
-		project1.addTrack(new Track());
-
-		Project project2 = new Project();
-		project2.addTrack(new Track(Key.BASS, new Tact(), 105));
+		Project project1 = new Project("Project1");
+		Project project2 = new Project("Project2");
 
 		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals3() {
-		Project project1 = new Project();
+		Project project1 = new Project("Project");
 		project1.addTrack(new Track());
 
-		Project project2 = new Project();
+		Project project2 = new Project("Project");
+		project2.addTrack(new Track());
+
+		assertTrue(project1.equals(project2));
+	}
+
+	public void testEquals4() {
+		Project project1 = new Project("Project");
+		project1.addTrack(new Track());
+
+		Project project2 = new Project("Project");
+		project2.addTrack(new Track(Instrument.APPLAUSE));
 
 		assertFalse(project1.equals(project2));
 	}
 
-	public void testEquals4() {
-		Project project = new Project();
+	public void testEquals5() {
+		Project project1 = new Project("Project");
+		project1.addTrack(new Track());
+
+		Project project2 = new Project("Project");
+
+		assertFalse(project1.equals(project2));
+	}
+
+	public void testEquals6() {
+		Project project = new Project("Project");
 
 		assertFalse(project.equals(null));
 	}
 
-	public void testEquals5() {
-		Project project = new Project();
+	public void testEquals7() {
+		Project project = new Project("Project");
 
 		assertFalse(project.equals(""));
 	}
 
 	public void testToString() {
-		Project project = new Project();
+		Project project = new Project("Project");
 
-		assertEquals("[Project] trackCount=" + project.size(), project.toString());
+		assertEquals("[Project] name=" + project.getName() + " beatsPerMinute=" + project.getBeatsPerMinute()
+				+ " trackCount=" + project.size(), project.toString());
 	}
 }

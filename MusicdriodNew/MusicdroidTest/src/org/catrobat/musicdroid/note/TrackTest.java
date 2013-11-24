@@ -27,72 +27,83 @@ import junit.framework.TestCase;
 public class TrackTest extends TestCase {
 
 	public void testTrack1() {
-		Tact tact = new Tact();
 		Track track = new Track();
 
-		assertEquals(tact.getBeatsPerTact(), track.getTact().getBeatsPerTact());
-		assertEquals(tact.getNoteLength(), track.getTact().getNoteLength());
-		assertEquals(Key.VIOLIN, track.getKey());
+		assertEquals(Instrument.ACOUSTIC_GRAND_PIANO, track.getInstrument());
 	}
 
 	public void testTrack2() {
-		Tact tact = new Tact(3, NoteLength.QUARTER);
-		Track track = new Track(Key.BASS, tact, 60);
+		Instrument instrument = Instrument.ACCORDION;
+		Track track = new Track(instrument);
 
-		assertEquals(tact, track.getTact());
-		assertEquals(Key.BASS, track.getKey());
+		assertEquals(instrument, track.getInstrument());
 	}
 
-	public void testAddSymbol() {
+	public void testAddNoteEventl() {
 		Track track = new Track();
 
-		track.addSymbol(new Note(NoteName.C1, NoteLength.QUARTER));
+		long tick = 0;
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		track.addNoteEvent(tick, noteEvent);
 
-		assertEquals(1, track.size());
-	}
-
-	public void testRemoveSymbol() {
-		Track track = new Track();
-
-		Symbol symbol = new Note(NoteName.C1, NoteLength.QUARTER);
-		track.addSymbol(symbol);
-		track.removeSymbol(symbol);
-
-		assertEquals(0, track.size());
+		assertEquals(1, track.getSortedTicks().size());
+		assertEquals(1, track.getNoteEventsForTick(0).size());
 	}
 
 	public void testGetSymbol() {
 		Track track = new Track();
 
-		Symbol symbol = new Break(NoteLength.QUARTER);
-		track.addSymbol(symbol);
+		long tick = 0;
+		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		track.addNoteEvent(tick, noteEvent);
 
-		assertEquals(symbol, track.getSymbol(0));
+		assertEquals(noteEvent, track.getNoteEventsForTick(tick).get(0));
+	}
+
+	public void testSize1() {
+		Track track = new Track();
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+
+		assertEquals(1, track.size());
+	}
+
+	public void testSize2() {
+		Track track = new Track();
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(64, new NoteEvent(NoteName.C1, true));
+
+		assertEquals(3, track.size());
 	}
 
 	public void testEquals1() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
+		long tick2 = 0;
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.HALF));
+		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C1, true));
 
 		assertTrue(track1.equals(track2));
 	}
 
 	public void testEquals2() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
+		long tick2 = 0;
 		Track track2 = new Track();
-		track2.addSymbol(new Break(NoteLength.WHOLE));
+		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C2, true));
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals3() {
+		long tick1 = 0;
 		Track track1 = new Track();
-		track1.addSymbol(new Break(NoteLength.HALF));
+		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
 
 		Track track2 = new Track();
 
@@ -100,44 +111,28 @@ public class TrackTest extends TestCase {
 	}
 
 	public void testEquals4() {
-		Track track1 = new Track(Key.BASS, new Tact(), 60);
+		Track track1 = new Track(Instrument.ACCORDION);
 		Track track2 = new Track();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals5() {
-		Track track1 = new Track(Key.VIOLIN, new Tact(), 20);
-		Track track2 = new Track();
-
-		assertFalse(track1.equals(track2));
-	}
-
-	public void testEquals6() {
-		Track track1 = new Track(Key.VIOLIN, new Tact(12, NoteLength.SIXTEENTH), 60);
-		Track track2 = new Track();
-
-		assertFalse(track1.equals(track2));
-	}
-
-	public void testEquals7() {
 		Track track = new Track();
 
 		assertFalse(track.equals(null));
 	}
 
-	public void testEquals8() {
+	public void testEquals6() {
 		Track track = new Track();
 
 		assertFalse(track.equals(""));
 	}
 
 	public void testToString() {
-		Key key = Key.BASS;
-		Track track = new Track(key, new Tact(), 60);
+		Instrument instrument = Instrument.ACOUSTIC_GRAND_PIANO;
+		Track track = new Track(instrument);
 
-		assertEquals(
-				"[Track] key=" + key + " symbolCount=" + track.size() + " beatsPerMinute=" + track.getBeatsPerMinute(),
-				track.toString());
+		assertEquals("[Track] instrument= " + instrument + " size: " + 0, track.toString());
 	}
 }

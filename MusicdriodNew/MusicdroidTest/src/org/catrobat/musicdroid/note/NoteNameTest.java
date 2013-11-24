@@ -63,15 +63,15 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testCalculateDistance1() {
-		NoteName c1 = NoteName.C1;
-		NoteName c1s = NoteName.C1S;
+		NoteName c1 = NoteName.C1S;
+		NoteName c1s = NoteName.C1;
 
 		assertEquals(-1, NoteName.calculateDistance(c1, c1s));
 	}
 
 	public void testCalculateDistance2() {
-		NoteName c1 = NoteName.C1;
-		NoteName c1s = NoteName.C1S;
+		NoteName c1 = NoteName.C1S;
+		NoteName c1s = NoteName.C1;
 
 		assertEquals(1, NoteName.calculateDistance(c1s, c1));
 	}
@@ -92,5 +92,53 @@ public class NoteNameTest extends TestCase {
 		NoteName c1s = NoteName.C1S;
 
 		assertTrue(c1s.isSigned());
+	}
+
+	public void testGetNoteNameFromMidiValue1() {
+		NoteName expectedNoteName = NoteName.C1;
+		int midiValue = expectedNoteName.getMidi();
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testGetNoteNameFromMidiValue2() {
+		NoteName expectedNoteName = NoteName.B5;
+		int midiValue = expectedNoteName.getMidi();
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testGetNoteNameFromMidiValue3() {
+		NoteName expectedNoteName = NoteName.C3;
+		int midiValue = expectedNoteName.getMidi();
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testCalculateDistanceInHalfNotelineDistances1() {
+		NoteName n1 = NoteName.D1;
+		NoteName n2 = NoteName.C1S;
+
+		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), -1);
+	}
+
+	public void testCalculateDistanceInHalfNotelineDistances2() {
+		NoteName n1 = NoteName.C1;
+		NoteName n2 = NoteName.C1S;
+
+		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 0);
+	}
+
+	public void testCalculateDistanceInHalfNotelineDistances3() {
+		NoteName n2 = NoteName.B3;
+		NoteName n1 = NoteName.D3;
+
+		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 5);
 	}
 }

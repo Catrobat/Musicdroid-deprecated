@@ -64,5 +64,10 @@
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="org.catrobat.musicdroid.NoteSheetActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 </manifest>

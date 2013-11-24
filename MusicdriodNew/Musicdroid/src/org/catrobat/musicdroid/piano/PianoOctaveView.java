@@ -20,52 +20,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.piano;
 
-import java.io.Serializable;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.widget.RelativeLayout;
 
-public class Note extends Symbol implements Serializable {
+/**
+ * @author Bianca TEUFL
+ * 
+ */
+public class PianoOctaveView extends RelativeLayout {
 
-	private static final long serialVersionUID = 2238272682118731619L;
+	private PianoKeyOctave pianoKeyOctave;
+	private int activeOctave;
 
-	private NoteName name;
-
-	public Note(NoteName name, NoteLength length) {
-		super(length);
-		this.name = name;
+	public PianoOctaveView(Context context, int activeOctave) {
+		super(context);
+		this.setWillNotDraw(false);
+		this.activeOctave = activeOctave;
 	}
 
-	public NoteName getNoteName() {
-		return name;
-	}
-
-	public Note halfToneUp() {
-		Note newNote = new Note(name.next(), noteLength);
-		return newNote;
-	}
-
-	public Note halfToneDown() {
-		Note newNote = new Note(name.previous(), noteLength);
-		return newNote;
-	}
-
+	@SuppressLint("DrawAllocation")
 	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Note)) {
-			return false;
-		}
-
-		Note note = (Note) obj;
-
-		if (super.equals(obj)) {
-			return name.equals(note.getNoteName());
-		}
-
-		return false;
+	protected void onDraw(Canvas canvas) {
+		this.pianoKeyOctave = new PianoKeyOctave(this, activeOctave, canvas);
+		this.setWillNotDraw(true);
 	}
 
-	@Override
-	public String toString() {
-		return "[Note] noteLength=" + noteLength + " name=" + name;
-	}
 }

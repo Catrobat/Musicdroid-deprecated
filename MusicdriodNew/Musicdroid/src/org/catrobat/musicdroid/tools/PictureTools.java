@@ -20,8 +20,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.tools;
 
-public enum Key {
-	BASS, VIOLIN;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
+
+public class PictureTools {
+	public static Rect calculateProportionalPictureContourRect(Bitmap originalPicture, int height, int startXPosition,
+			int yCenterPosition) {
+		int keyPictureWidth = originalPicture.getWidth() * height / originalPicture.getHeight();
+
+		Point leftUpperOfRect = new Point(startXPosition, yCenterPosition - height / 2);
+		Point rightBottomOfRect = new Point(startXPosition + keyPictureWidth, yCenterPosition + height / 2);
+
+		return new Rect(leftUpperOfRect.x, leftUpperOfRect.y, rightBottomOfRect.x, rightBottomOfRect.y);
+	}
 }

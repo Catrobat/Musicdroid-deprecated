@@ -22,6 +22,34 @@
  */
 package org.catrobat.musicdroid.note;
 
-public enum Key {
-	BASS, VIOLIN;
+import junit.framework.TestCase;
+
+public class InstrumentTest extends TestCase {
+
+	public void testGetInstrumentFromProgram1() {
+		int program = 0;
+		Instrument expectedInstrument = Instrument.ACOUSTIC_GRAND_PIANO;
+
+		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
+
+		assertEquals(actualInstrument, expectedInstrument);
+	}
+
+	public void testGetInstrumentFromProgram2() {
+		int program = 127;
+		Instrument expectedInstrument = Instrument.GUNSHOT;
+
+		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
+
+		assertEquals(actualInstrument, expectedInstrument);
+	}
+
+	public void testGetInstrumentFromProgram3() {
+		int program = 128;
+		Instrument expectedInstrument = Instrument.ACOUSTIC_GRAND_PIANO;
+
+		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
+
+		assertEquals(actualInstrument, expectedInstrument);
+	}
 }
