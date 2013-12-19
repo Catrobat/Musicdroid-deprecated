@@ -91,6 +91,10 @@ public enum Octave {
 		return noteNames[0];
 	}
 	
+	public NoteName[] getNoteNames() {
+		return noteNames;
+	}
+	
 	public Octave next() {
 		int index = this.ordinal() + 1;
 

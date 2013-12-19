@@ -39,6 +39,32 @@ public class NoteNameTest extends TestCase {
 		}
 	}
 
+	public void testNext1() {
+		NoteName b0 = NoteName.B0;
+		NoteName c1 = NoteName.C1;
+
+		assertEquals(c1, b0.next());
+	}
+
+	public void testNext2() {
+		NoteName c8 = NoteName.C8;
+
+		assertEquals(c8, c8.next());
+	}
+
+	public void testPrevious1() {
+		NoteName c1 = NoteName.C1;
+		NoteName b0 = NoteName.B0;
+
+		assertEquals(b0, c1.previous());
+	}
+
+	public void testPrevious2() {
+		NoteName a0 = NoteName.A0;
+
+		assertEquals(a0, a0.previous());
+	}
+
 	public void testIsSigned1() {
 		NoteName c1 = NoteName.C1;
 
@@ -94,6 +120,14 @@ public class NoteNameTest extends TestCase {
 		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
+
+		assertEquals(actualNoteName, expectedNoteName);
+	}
+
+	public void testGetNoteNameFromMidiValue4() {
+		NoteName expectedNoteName = NoteName.C4;
+
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(1337);
 
 		assertEquals(actualNoteName, expectedNoteName);
 	}

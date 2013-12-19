@@ -76,8 +76,8 @@ public class NoteSymbolTest extends TestCase {
 	}
 
 	public void testToString() {
-		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
+		NoteSymbol noteSymbol = new NoteSymbol();
 
-		assertEquals("[BreakSymbol] noteLength: " + breakSymbol.getNoteLength(), breakSymbol.toString());
+		assertEquals("[NoteSymbol] size: " + noteSymbol.size(), noteSymbol.toString());
 	}
 }

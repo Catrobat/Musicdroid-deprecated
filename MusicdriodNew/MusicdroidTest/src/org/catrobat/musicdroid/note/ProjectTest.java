@@ -33,6 +33,14 @@ public class ProjectTest extends TestCase {
 		assertEquals(name, project.getName());
 	}
 
+	public void testGetBeatsPerMinute() {
+		String name = "Project";
+		int beatsPerMinute = 80;
+		Project project = new Project(name, beatsPerMinute);
+
+		assertEquals(beatsPerMinute, project.getBeatsPerMinute());
+	}
+
 	public void testAddTrack() {
 		Project project = new Project("Project");
 
