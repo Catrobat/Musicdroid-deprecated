@@ -32,7 +32,6 @@ import org.catrobat.musicdroid.note.NoteName;
 public class NotePosition {
 
 	public NotePosition() {
-
 	}
 
 	public static int getToneDistanceFromToneToMiddleLineInHalfLineDistances(Key key, NoteName tone) {
@@ -45,6 +44,6 @@ public class NotePosition {
 			throw new UnsupportedOperationException();
 		}
 
-		return NoteName.calculateDistanceInHalfNotelineDistances(tone, middleNote);
+		return NoteName.calculateDistanceCountingNoneSignedNotesOnly(tone, middleNote);
 	}
 }

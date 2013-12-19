@@ -22,63 +22,44 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.note;
 
-import java.util.LinkedList;
-
 public enum NoteLength {
-	WHOLE(4f), HALF(2f), QUARTER(1f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
+	WHOLE_DOT(4f + 2f),
+	WHOLE(4f),
+	HALF_DOT(2f + 1f),
+	HALF(2f),
+	QUARTER_DOT(1f + 1 / 2f),
+	QUARTER(1f),
+	EIGHT_DOT(1 / 2f + 1 / 4f),
+	EIGHT(1 / 2f),
+	SIXTEENTH(1 / 4f);
 
-	// http://stackoverflow.com/questions/2467995/actual-note-duration-from-midi-duration
 	protected static final double DEFAULT_DURATION = 384 / 48 * 60;
 	protected static final NoteLength SMALLEST_NOTE_LENGTH = SIXTEENTH;
 
-	private double length;
 	private long tickDuration;
 
 	private NoteLength(double length) {
-		this.length = length;
-		this.tickDuration = Math.round(DEFAULT_DURATION * this.length);
-	}
-
-	public double getLength() {
-		return length;
+		this.tickDuration = Math.round(DEFAULT_DURATION * length);
 	}
 
 	public long getTickDuration() {
 		return tickDuration;
 	}
 
-	public static NoteLength[] getNoteLengthsFromTickDuration(long duration) {
+	public static NoteLength getNoteLengthFromTickDuration(long duration) {
+		NoteLength noteLength = SMALLEST_NOTE_LENGTH;
 		NoteLength[] allNoteLengths = NoteLength.values();
-		LinkedList<NoteLength> noteLengthsList = new LinkedList<NoteLength>();
 
-		while (duration > 0) {
-			for (int i = 0; i < allNoteLengths.length; i++) {
-				long ticks = allNoteLengths[i].getTickDuration();
+		for (int i = (allNoteLengths.length - 1); i >= 0; i--) {
+			long difference = duration - allNoteLengths[i].getTickDuration();
 
-				if (ticks <= duration) {
-					duration = duration - ticks;
-					noteLengthsList.add(allNoteLengths[i]);
-					i--;
-				}
+			if (difference < 0) {
+				break;
 			}
 
-			if (duration < SMALLEST_NOTE_LENGTH.getTickDuration()) {
-				duration = 0;
-			}
+			noteLength = allNoteLengths[i];
 		}
 
-		NoteLength[] noteLengths = new NoteLength[noteLengthsList.size()];
-
-		return noteLengthsList.toArray(noteLengths);
-	}
-
-	public static long getTickDurationFromNoteLengths(NoteLength[] noteLengths) {
-		long duration = 0;
-
-		for (NoteLength noteLength : noteLengths) {
-			duration += noteLength.getTickDuration();
-		}
-
-		return duration;
+		return noteLength;
 	}
 }

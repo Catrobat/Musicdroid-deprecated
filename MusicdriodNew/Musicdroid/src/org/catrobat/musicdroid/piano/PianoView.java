@@ -27,13 +27,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.catrobat.musicdroid.note.Octave;
+
 /**
  * @author musicdroid
  * 
  */
 public class PianoView extends LinearLayout {
 
-	private int activeOctave = 3;
+	private Octave activeOctave = Octave.ONE_LINE_OCTAVE;
 	private PianoOctaveView pianoView;
 	private Button buttonLeft;
 	private Button buttonRight;
@@ -82,23 +84,25 @@ public class PianoView extends LinearLayout {
 	}
 
 	public void incrementOctave() {
-		if (activeOctave > 1) {
-			if (--activeOctave == 1) {
-				this.buttonLeft.setClickable(false);
-			} else if (activeOctave == 4) {
-				this.buttonRight.setClickable(true);
-			}
+		Octave oldOctave = activeOctave;
+		activeOctave = activeOctave.next();
+
+		if (activeOctave == oldOctave) {
+			buttonRight.setClickable(false);
 		}
+
+		buttonLeft.setClickable(true);
 	}
 
 	public void decrementOctave() {
-		if (activeOctave < 5) {
-			if (++activeOctave == 5) {
-				this.buttonRight.setClickable(false);
-			} else if (activeOctave == 2) {
-				this.buttonLeft.setClickable(true);
-			}
+		Octave oldOctave = activeOctave;
+		activeOctave = activeOctave.previous();
+
+		if (activeOctave == oldOctave) {
+			buttonLeft.setClickable(false);
 		}
+
+		buttonRight.setClickable(true);
 	}
 
 }

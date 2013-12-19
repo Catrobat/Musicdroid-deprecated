@@ -23,22 +23,35 @@
 package org.catrobat.musicdroid.note;
 
 public enum NoteName {
-	// C3 = c'(http://img.docstoccdn.com/thumb/orig/28179105.png)
-	C1(36), C1S(37), D1(38), D1S(39), E1(40), F1(41), F1S(42), G1(43), G1S(44), A1(45), A1S(46), B1(47), C2(48), C2S(49), D2(
-			50), D2S(51), E2(52), F2(53), F2S(54), G2(55), G2S(56), A2(57), A2S(58), B2(59), C3(60), C3S(61), D3(62), D3S(
-			63), E3(64), F3(65), F3S(66), G3(67), G3S(68), A3(69), A3S(70), B3(71), C4(72), C4S(73), D4(74), D4S(75), E4(
-			76), F4(77), F4S(78), G4(79), G4S(80), A4(81), A4S(82), B4(83), C5(84), C5S(85), D5(86), D5S(87), E5(88), F5(
-			89), F5S(90), G5(91), G5S(92), A5(93), A5S(94), B5(95), C6(96), C6S(97), D6(98), D6S(99), E6(100), F6(101), F6S(
-			102), G6(103), G6S(104), A6(105), A6S(106), B6(107);
+	A0(21, false), A0S(22, true), B0(23, false), C1(24, false),
+	C1S(25, true), D1(26, false), D1S(27, true), E1(28, false),
+	F1(29, false), F1S(30, true), G1(31, false), G1S(32, true),
+	A1(33, false), A1S(34, true), B1(35, false), C2(36, false),
+	C2S(37, true), D2(38, false), D2S(39, true), E2(40, false),
+	F2(41, false), F2S(42, true), G2(43, false), G2S(44, true),
+	A2(45, false), A2S(46, true), B2(47, false), C3(48, false),
+	C3S(49, true), D3(50, false), D3S(51, true), E3(52, false),
+	F3(53, false), F3S(54, true), G3(55, false), G3S(56, true),
+	A3(57, false), A3S(58, true), B3(59, false), C4(60, false),
+	C4S(61, true), D4(62, false), D4S(63, true), E4(64, false),
+	F4(65, false), F4S(66, true), G4(67, false), G4S(68, true),
+	A4(69, false), A4S(70, true), B4(71, false), C5(72, false),
+	C5S(73, true), D5(74, false), D5S(75, true), E5(76, false),
+	F5(77, false), F5S(78, true), G5(79, false), G5S(80, true),
+	A5(81, false), A5S(82, true), B5(83, false), C6(84, false),
+	C6S(85, true), D6(86, false), D6S(87, true), E6(88, false),
+	F6(89, false), F6S(90, true), G6(91, false), G6S(92, true),
+	A6(93, false), A6S(94, true), B6(95, false), C7(96, false),
+	C7S(97, true), D7(98, false), D7S(99, true), E7(100, false),
+	F7(101, false), F7S(102, true), G7(103, false), G7S(104, true),
+	A7(105, false), A7S(106, true), B7(107, false), C8(108, false);
 
 	private int midi;
-	private final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
-	private final static int[] SIGNED_HALF_TONE_MODULOS = { 1, 3, 6, 8, 10 };
-	public final static int[] FS_OR_CS_MODULOS = { 1, 6 };
-	public final static int[] DS_OR_AS_MODULOS = { 3, 10 };
+	private boolean signed;
 
-	private NoteName(int midi) {
+	private NoteName(int midi, boolean signed) {
 		this.midi = midi;
+		this.signed = signed;
 	}
 
 	public int getMidi() {
@@ -66,17 +79,7 @@ public enum NoteName {
 	}
 
 	public boolean isSigned() {
-		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
-		for (int signedModValue : SIGNED_HALF_TONE_MODULOS) {
-			if (modValue == signedModValue) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static int calculateDistance(NoteName name1, NoteName name2) {
-		return name2.midi - name1.midi;
+		return signed;
 	}
 
 	public static NoteName getNoteNameFromMidiValue(int midiValue) {
@@ -88,44 +91,44 @@ public enum NoteName {
 			}
 		}
 
-		return C3;
+		return C4;
+	}
+	
+	public static int calculateDistance(NoteName name1, NoteName name2) {
+		return name2.midi - name1.midi;
 	}
 
-	public static int calculateDistanceInHalfNotelineDistances(NoteName name1, NoteName name2) {
-		int distance = calculateDistance(name1, name2);
-
-		boolean isDownGoing = distance > 0;
-
-		NoteName smallNote;
-		NoteName largeNote;
-
-		if (isDownGoing) {
-			smallNote = name1;
-			largeNote = name2;
-		} else {
-			smallNote = name2;
-			largeNote = name1;
+	public static int calculateDistanceCountingNoneSignedNotesOnly(NoteName noteName1, NoteName noteName2) {
+		int distance = 0;
+		boolean isDownGoing = calculateDistance(noteName1, noteName2) > 0;
+		
+		NoteName smallNoteName = isDownGoing ? noteName1 : noteName2;
+		NoteName largeNoteName = isDownGoing ? noteName2 : noteName1;
+		
+		if (smallNoteName.isSigned()) {
+			distance = 1;
+		} else if (largeNoteName.isSigned()) {
+			distance = -1;
 		}
-		int calculatedDistance = 0;
-		if (smallNote.getMidi() != largeNote.getMidi()) {
-
-			if (smallNote.isSigned()) {
-				calculatedDistance = 1;
-			} else if (largeNote.isSigned()) {
-				calculatedDistance = -1;
+		
+		while (smallNoteName.getMidi() != largeNoteName.getMidi()) {
+			if (!smallNoteName.isSigned()) {
+				distance++;
 			}
-			for (; smallNote.getMidi() != largeNote.getMidi(); smallNote = smallNote.next()) {
-
-				if (!smallNote.isSigned()) {
-					calculatedDistance++;
-				}
-			}
+			
+			smallNoteName = smallNoteName.next();
 		}
-		return (isDownGoing ? calculatedDistance : calculatedDistance * (-1));
+		
+		return (isDownGoing ? distance : distance * (-1));
 	}
 
+	// TODO fw
+	private final static int[] FS_OR_CS_MODULOS = { 1, 6 };
+	private final static int[] DS_OR_AS_MODULOS = { 3, 10 };
+	
+	// TODO fw
 	public boolean isBlackKeyWithNoDirectLeftNeighbour() {
-		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		int modValue = midi % Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
 		for (int fs_cs_index : FS_OR_CS_MODULOS) {
 			if (modValue == fs_cs_index) {
 				return true;
@@ -134,8 +137,9 @@ public enum NoteName {
 		return false;
 	}
 
+	// TODO fw
 	public boolean isBlackKeyWithNoDirectRightNeighbour() {
-		int modValue = midi % NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		int modValue = midi % Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
 		for (int ds_as_index : DS_OR_AS_MODULOS) {
 			if (modValue == ds_as_index) {
 				return true;
@@ -144,6 +148,7 @@ public enum NoteName {
 		return false;
 	}
 
+	// TODO fw
 	public static NoteName getNextWhiteKeyNoteName(NoteName noteName) {
 		noteName = noteName.next();
 		if (noteName.isSigned()) {
@@ -152,18 +157,11 @@ public enum NoteName {
 		return noteName;
 	}
 
+	// TODO fw
 	public static NoteName getNextBlackKeyNoteName(NoteName noteName) {
 		do {
 			noteName = noteName.next();
 		} while (!noteName.isSigned());
 		return noteName;
-	}
-
-	public static NoteName getFirstNoteOfOctave(int octave) {
-		int startNote = 36;
-		for (int octaveCount = 1; octaveCount < octave; octaveCount++) {
-			startNote += 12;
-		}
-		return getNoteNameFromMidiValue(startNote);
 	}
 }

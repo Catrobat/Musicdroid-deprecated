@@ -22,50 +22,46 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
-import android.content.Context;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+public class BoundNoteSymbol implements Symbol {
 
-public abstract class AbstractSymbol {
+	private List<NoteSymbol> noteSymbols;
 
-	protected NoteLength[] noteLengths;
-
-	public AbstractSymbol(NoteLength[] noteLengths) {
-		this.noteLengths = noteLengths;
+	public BoundNoteSymbol() {
+		noteSymbols = new LinkedList<NoteSymbol>();
 	}
 
-	public NoteLength[] getNoteLengths() {
-		return noteLengths;
+	public void addNoteSymbol(NoteSymbol noteSymbol) {
+		noteSymbols.add(noteSymbol);
+	}
+
+	public NoteSymbol getNoteSymbol(int location) {
+		return noteSymbols.get(location);
+	}
+
+	public int size() {
+		return noteSymbols.size();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof AbstractSymbol)) {
+		if ((obj == null) || !(obj instanceof BoundNoteSymbol)) {
 			return false;
 		}
 
-		AbstractSymbol abstractSymbol = (AbstractSymbol) obj;
-		NoteLength[] otherNoteLengths = abstractSymbol.getNoteLengths();
+		BoundNoteSymbol accordSymbol = (BoundNoteSymbol) obj;
 
-		if (otherNoteLengths.length != noteLengths.length) {
-			return false;
+		if (noteSymbols.equals(accordSymbol.noteSymbols)) {
+			return true;
 		}
 
-		for (int i = 0; i < noteLengths.length; i++) {
-			if (noteLengths[i] != otherNoteLengths[i]) {
-				return false;
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
+		return "[BoundNoteSymbol] size: " + size();
 	}
-
-	public abstract void draw(NoteSheetCanvas noteSheetCanvas, Key key, Context context);
 }

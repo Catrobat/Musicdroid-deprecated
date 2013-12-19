@@ -26,58 +26,57 @@ import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-/**
- * @author musicdroid
- * 
- */
 public class NoteEventListToSymbolConverter {
 
 	private long lastTick;
-	private boolean hasInsertedNoteBefore;
-	private List<NoteEvent> openNoteEvents;
+	private Map<NoteName, Long> openNotes;
+	private Symbol currentSymbol;
 
 	public NoteEventListToSymbolConverter() {
 		lastTick = 0;
-		hasInsertedNoteBefore = false;
-		openNoteEvents = new LinkedList<NoteEvent>();
+		openNotes = new HashMap<NoteName, Long>();
+		currentSymbol = null;
 	}
 
-	public List<AbstractSymbol> convertNoteEventList(long tick, List<NoteEvent> noteEventList) {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
-		List<NoteEvent> newOpenNoteEvents = new LinkedList<NoteEvent>();
-		long duration = tick - lastTick;
+	public List<Symbol> convertNoteEventList(long tick, List<NoteEvent> noteEventList) {
+		List<Symbol> symbols = new LinkedList<Symbol>();
 
 		for (NoteEvent noteEvent : noteEventList) {
+			NoteName noteName = noteEvent.getNoteName();
+
 			if (noteEvent.isNoteOn()) {
-				if ((lastTick != tick) && (hasInsertedNoteBefore)) {
-					NoteLength[] noteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
-					symbols.add(new BreakSymbol(noteLengths));
+				if (lastTick != tick) {
+					NoteLength noteLength = NoteLength.getNoteLengthFromTickDuration(tick - lastTick);
+					symbols.add(new BreakSymbol(noteLength));
 				}
 
-				newOpenNoteEvents.add(noteEvent);
-				hasInsertedNoteBefore = false;
-				lastTick = tick;
+				if (openNotes.isEmpty()) {
+					currentSymbol = new NoteSymbol();
+				}
+
+				openNotes.put(noteName, tick);
 			} else {
-				if (false == openNoteEvents.isEmpty()) {
-					NoteLength[] noteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
-					NoteName[] noteNames = new NoteName[openNoteEvents.size()];
+				long lastTickForNote = openNotes.get(noteName);
+				NoteLength noteLength = NoteLength.getNoteLengthFromTickDuration(tick - lastTickForNote);
 
-					for (int i = 0; i < noteNames.length; i++) {
-						noteNames[i] = openNoteEvents.get(i).getNoteName();
-					}
+				if (currentSymbol instanceof NoteSymbol) {
+					((NoteSymbol) currentSymbol).addNote(noteName, noteLength);
+				}
 
-					openNoteEvents.clear();
-					symbols.add(new NoteSymbol(noteLengths, noteNames));
-					hasInsertedNoteBefore = true;
-					lastTick = tick;
+				openNotes.remove(noteName);
+
+				if (false == symbols.contains(currentSymbol)) {
+					symbols.add(currentSymbol);
 				}
 			}
-		}
 
-		openNoteEvents = newOpenNoteEvents;
+			lastTick = tick;
+		}
 
 		return symbols;
 	}

@@ -22,9 +22,10 @@
  */
 package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
+import org.catrobat.musicdroid.note.symbol.BoundNoteSymbol;
 import org.catrobat.musicdroid.note.symbol.BreakSymbol;
 import org.catrobat.musicdroid.note.symbol.NoteSymbol;
+import org.catrobat.musicdroid.note.symbol.Symbol;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +78,8 @@ public class MockDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 
-		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT });
+		tick += NoteLength.QUARTER.getTickDuration();
+		tick += NoteLength.EIGHT.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
 
@@ -98,7 +100,8 @@ public class MockDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 
-		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT });
+		tick += NoteLength.QUARTER.getTickDuration();
+		tick += NoteLength.EIGHT.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
 
@@ -119,60 +122,34 @@ public class MockDataFactory {
 		long tick = 0;
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
 
 		tick += NoteLength.QUARTER.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
-
-		tick += NoteLength.EIGHT.getTickDuration();
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-
-		tick += NoteLength.WHOLE.getTickDuration();
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
-
-		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.WHOLE, NoteLength.EIGHT,
-				NoteLength.SIXTEENTH });
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-
-		tick += NoteLength.HALF.getTickDuration();
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-
-		tick += NoteLength.WHOLE.getTickDuration();
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, true));
 
 		tick += NoteLength.QUARTER.getTickDuration();
 
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, true));
-
-		tick += NoteLength.EIGHT.getTickDuration();
-
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
-
-		tick += NoteLength.WHOLE.getTickDuration();
-
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
-
-		tick += NoteLength.getTickDurationFromNoteLengths(new NoteLength[] { NoteLength.WHOLE, NoteLength.EIGHT,
-				NoteLength.SIXTEENTH });
-
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, false));
 
-		tick += NoteLength.HALF.getTickDuration();
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
 
-		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, true));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D2, true));
+
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
+
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.D2, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, true));
+
+		tick += NoteLength.QUARTER.getTickDuration();
+
+		track.addNoteEvent(tick, new NoteEvent(NoteName.B3, false));
 
 		return track;
 	}
@@ -195,7 +172,7 @@ public class MockDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 
-		tick += NoteLength.QUARTER.getTickDuration();
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, true));
@@ -208,52 +185,81 @@ public class MockDataFactory {
 		return track;
 	}
 
-	public static List<AbstractSymbol> createSymbolList1() {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
+	public static List<Symbol> createSymbolList1() {
+		List<Symbol> symbols = new LinkedList<Symbol>();
 
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1, NoteName.C2 }));
-
-		return symbols;
-	}
-
-	public static List<AbstractSymbol> createSymbolList2() {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
-
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1, NoteName.D1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT },
-				new NoteName[] { NoteName.E1 }));
+		NoteSymbol noteSymbol = new NoteSymbol();
+		noteSymbol.addNote(NoteName.C1, NoteLength.QUARTER);
+		noteSymbol.addNote(NoteName.C2, NoteLength.QUARTER);
+		symbols.add(noteSymbol);
 
 		return symbols;
 	}
 
-	public static List<AbstractSymbol> createSymbolList3() {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
+	public static List<Symbol> createSymbolList2() {
+		List<Symbol> symbols = new LinkedList<Symbol>();
 
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1, NoteName.D1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER, NoteLength.EIGHT },
-				new NoteName[] { NoteName.E1 }));
-		symbols.add(new BreakSymbol(new NoteLength[] { NoteLength.QUARTER }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1 }));
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
+		noteSymbol1.addNote(NoteName.D1, NoteLength.QUARTER);
+		symbols.add(noteSymbol1);
+
+		NoteSymbol noteSymbol2 = new NoteSymbol();
+		noteSymbol2.addNote(NoteName.E1, NoteLength.QUARTER_DOT);
+		symbols.add(noteSymbol2);
 
 		return symbols;
 	}
 
-	public static List<AbstractSymbol> createSymbolList4() {
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
+	public static List<Symbol> createSymbolList3() {
+		List<Symbol> symbols = new LinkedList<Symbol>();
 
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.EIGHT }, new NoteName[] { NoteName.D1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.WHOLE }, new NoteName[] { NoteName.C1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.WHOLE, NoteLength.EIGHT, NoteLength.SIXTEENTH },
-				new NoteName[] { NoteName.E1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.HALF }, new NoteName[] { NoteName.C1 }));
-		symbols.add(new BreakSymbol(new NoteLength[] { NoteLength.WHOLE }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.QUARTER }, new NoteName[] { NoteName.C1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.EIGHT }, new NoteName[] { NoteName.D1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.WHOLE }, new NoteName[] { NoteName.C1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.WHOLE, NoteLength.EIGHT, NoteLength.SIXTEENTH },
-				new NoteName[] { NoteName.E1 }));
-		symbols.add(new NoteSymbol(new NoteLength[] { NoteLength.HALF }, new NoteName[] { NoteName.C1 }));
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
+		noteSymbol1.addNote(NoteName.D1, NoteLength.QUARTER);
+		symbols.add(noteSymbol1);
+
+		NoteSymbol noteSymbol2 = new NoteSymbol();
+		noteSymbol2.addNote(NoteName.E1, NoteLength.QUARTER_DOT);
+		symbols.add(noteSymbol2);
+
+		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER);
+		symbols.add(breakSymbol1);
+
+		NoteSymbol noteSymbol3 = new NoteSymbol();
+		noteSymbol3.addNote(NoteName.C1, NoteLength.QUARTER);
+		symbols.add(noteSymbol3);
+
+		return symbols;
+	}
+
+	public static List<Symbol> createSymbolList4() {
+		List<Symbol> symbols = new LinkedList<Symbol>();
+
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
+		noteSymbol1.addNote(NoteName.D1, NoteLength.HALF);
+
+		NoteSymbol noteSymbol2 = new NoteSymbol();
+		noteSymbol2.addNote(NoteName.E1, NoteLength.QUARTER);
+		noteSymbol2.addNote(NoteName.F1, NoteLength.QUARTER);
+
+		BoundNoteSymbol boundNoteSymbol1 = new BoundNoteSymbol();
+		boundNoteSymbol1.addNoteSymbol(noteSymbol1);
+		boundNoteSymbol1.addNoteSymbol(noteSymbol2);
+		symbols.add(boundNoteSymbol1);
+
+		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER_DOT);
+		symbols.add(breakSymbol1);
+
+		NoteSymbol noteSymbol3 = new NoteSymbol();
+		noteSymbol3.addNote(NoteName.C2, NoteLength.QUARTER_DOT);
+		noteSymbol3.addNote(NoteName.D2, NoteLength.QUARTER_DOT);
+		symbols.add(noteSymbol3);
+
+		NoteSymbol noteSymbol4 = new NoteSymbol();
+		noteSymbol4.addNote(NoteName.B3, NoteLength.QUARTER);
+		symbols.add(noteSymbol4);
 
 		return symbols;
 	}

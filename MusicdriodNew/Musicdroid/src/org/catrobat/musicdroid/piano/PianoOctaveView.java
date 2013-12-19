@@ -27,6 +27,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.widget.RelativeLayout;
 
+import org.catrobat.musicdroid.note.Octave;
+
 /**
  * @author Bianca TEUFL
  * 
@@ -34,9 +36,9 @@ import android.widget.RelativeLayout;
 public class PianoOctaveView extends RelativeLayout {
 
 	private PianoKeyOctave pianoKeyOctave;
-	private int activeOctave;
+	private Octave activeOctave;
 
-	public PianoOctaveView(Context context, int activeOctave) {
+	public PianoOctaveView(Context context, Octave activeOctave) {
 		super(context);
 		this.setWillNotDraw(false);
 		this.activeOctave = activeOctave;

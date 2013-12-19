@@ -29,134 +29,55 @@ import org.catrobat.musicdroid.note.NoteName;
 
 public class NoteSymbolTest extends TestCase {
 
-	public void testNoteSymbol() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C1 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+	public void testAddNote() {
+		NoteSymbol noteSymbol = new NoteSymbol();
 
-		assertEquals(noteLengths, noteSymbol.getNoteLengths());
-		assertEquals(noteNames, noteSymbol.getNoteNames());
-	}
+		assertTrue(noteSymbol.size() == 0);
 
-	public void testToString() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.EIGHT };
-		NoteName[] noteNames = { NoteName.C1, NoteName.D1 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+		noteSymbol.addNote(NoteName.C1, NoteLength.QUARTER);
 
-		String expectedString = "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
-
-		assertEquals(expectedString, noteSymbol.toString());
+		assertTrue(noteSymbol.size() == 1);
 	}
 
 	public void testEquals1() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		NoteName[] noteNames1 = { NoteName.C1 };
-		NoteSymbol noteSymbol1 = new NoteSymbol(noteLengths1, noteNames1);
-
-		NoteLength[] noteLengths2 = { NoteLength.QUARTER };
-		NoteName[] noteNames2 = { NoteName.C1 };
-		NoteSymbol noteSymbol2 = new NoteSymbol(noteLengths2, noteNames2);
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		NoteSymbol noteSymbol2 = new NoteSymbol();
 
 		assertTrue(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals2() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		NoteName[] noteNames1 = { NoteName.C1 };
-		NoteSymbol noteSymbol1 = new NoteSymbol(noteLengths1, noteNames1);
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
+		NoteSymbol noteSymbol2 = new NoteSymbol();
+		noteSymbol2.addNote(NoteName.C1, NoteLength.QUARTER);
 
-		NoteLength[] noteLengths2 = { NoteLength.QUARTER, NoteLength.EIGHT };
-		NoteName[] noteNames2 = { NoteName.C1 };
-		NoteSymbol noteSymbol2 = new NoteSymbol(noteLengths2, noteNames2);
-
-		assertFalse(noteSymbol1.equals(noteSymbol2));
+		assertTrue(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals3() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		NoteName[] noteNames1 = { NoteName.C1 };
-		NoteSymbol noteSymbol1 = new NoteSymbol(noteLengths1, noteNames1);
-
-		NoteLength[] noteLengths2 = { NoteLength.QUARTER };
-		NoteName[] noteNames2 = { NoteName.C1, NoteName.D1 };
-		NoteSymbol noteSymbol2 = new NoteSymbol(noteLengths2, noteNames2);
+		NoteSymbol noteSymbol1 = new NoteSymbol();
+		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
+		NoteSymbol noteSymbol2 = new NoteSymbol();
 
 		assertFalse(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals4() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		NoteName[] noteNames1 = { NoteName.C1 };
-		NoteSymbol noteSymbol1 = new NoteSymbol(noteLengths1, noteNames1);
-
-		NoteLength[] noteLengths2 = { NoteLength.QUARTER, NoteLength.EIGHT };
-		NoteName[] noteNames2 = { NoteName.C1, NoteName.D1 };
-		NoteSymbol noteSymbol2 = new NoteSymbol(noteLengths2, noteNames2);
-
-		assertFalse(noteSymbol1.equals(noteSymbol2));
-	}
-
-	public void testEquals5() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C1 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+		NoteSymbol noteSymbol = new NoteSymbol();
 
 		assertFalse(noteSymbol.equals(null));
 	}
 
-	public void testEquals6() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C1 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+	public void testEquals5() {
+		NoteSymbol noteSymbol = new NoteSymbol();
 
 		assertFalse(noteSymbol.equals(""));
 	}
 
-	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C1 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
+	public void testToString() {
+		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
 
-		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
-	}
-
-	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine1() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C1, NoteName.B3 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
-
-		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
-	}
-
-	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine2() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.B3, NoteName.C3 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
-
-		assertEquals(1, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
-	}
-
-	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine3() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		NoteName[] noteNames = { NoteName.C2, NoteName.A3 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
-
-		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
-	}
-
-	public void testGetIndexForNoteWithBiggestDistanceToMiddleLine4() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.HALF };
-		NoteName[] noteNames = { NoteName.C2, NoteName.A3, NoteName.C3, NoteName.A4 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
-
-		assertEquals(0, noteSymbol.getIndexForNoteWithBiggestDistanceToMiddleLine());
-	}
-
-	public void testIsSteamUp() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.HALF };
-		NoteName[] noteNames = { NoteName.C2, NoteName.A3, NoteName.C3, NoteName.A4 };
-		NoteSymbol noteSymbol = new NoteSymbol(noteLengths, noteNames);
-
-		assertTrue(noteSymbol.isStemUp());
+		assertEquals("[BreakSymbol] noteLength: " + breakSymbol.getNoteLength(), breakSymbol.toString());
 	}
 }

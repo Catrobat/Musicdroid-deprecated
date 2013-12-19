@@ -28,53 +28,42 @@ import org.catrobat.musicdroid.note.NoteLength;
 
 public class BreakSymbolTest extends TestCase {
 
-	public void testNoteSymbol() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol = new BreakSymbol(noteLengths);
+	public void testBreakSymbol() {
+		NoteLength noteLength = NoteLength.QUARTER_DOT;
+		BreakSymbol breakSymbol = new BreakSymbol(noteLength);
 
-		assertEquals(noteLengths, breakSymbol.getNoteLengths());
-	}
-
-	public void testToString() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER, NoteLength.EIGHT };
-		BreakSymbol breakSymbol = new BreakSymbol(noteLengths);
-
-		String expectedString = "[AbstractSymbol] duration= " + NoteLength.getTickDurationFromNoteLengths(noteLengths);
-
-		assertEquals(expectedString, breakSymbol.toString());
+		assertEquals(noteLength, breakSymbol.getNoteLength());
 	}
 
 	public void testEquals1() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol1 = new BreakSymbol(noteLengths1);
-
-		NoteLength[] noteLengths2 = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol2 = new BreakSymbol(noteLengths2);
+		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol2 = new BreakSymbol(NoteLength.QUARTER);
 
 		assertTrue(breakSymbol1.equals(breakSymbol2));
 	}
 
 	public void testEquals2() {
-		NoteLength[] noteLengths1 = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol1 = new BreakSymbol(noteLengths1);
-
-		NoteLength[] noteLengths2 = { NoteLength.EIGHT, NoteLength.SIXTEENTH };
-		BreakSymbol breakSymbol2 = new BreakSymbol(noteLengths2);
+		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol2 = new BreakSymbol(NoteLength.EIGHT);
 
 		assertFalse(breakSymbol1.equals(breakSymbol2));
 	}
 
 	public void testEquals3() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol = new BreakSymbol(noteLengths);
+		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
 
 		assertFalse(breakSymbol.equals(null));
 	}
 
 	public void testEquals4() {
-		NoteLength[] noteLengths = { NoteLength.QUARTER };
-		BreakSymbol breakSymbol = new BreakSymbol(noteLengths);
+		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
 
 		assertFalse(breakSymbol.equals(""));
+	}
+
+	public void testToString() {
+		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
+
+		assertEquals("[BreakSymbol] noteLength: " + breakSymbol.getNoteLength(), breakSymbol.toString());
 	}
 }

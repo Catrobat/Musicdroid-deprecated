@@ -26,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.Octave;
 
 /**
  * @author Bianca TEUFL
@@ -43,16 +44,16 @@ public class PianoKeyOctave {
 	private int nextXPositionForBlackButton;
 	private PianoKey[] blackPianoKeys;
 	private PianoKey[] whitePianoKeys;
-	private int octaveNumber;
+	private Octave octave;
 	private PianoOctaveView pianoView;
 	private Canvas canvas;
 
-	public PianoKeyOctave(PianoOctaveView pianoView, int octaveNumber, Canvas canvas) {
+	public PianoKeyOctave(PianoOctaveView pianoView, Octave octave, Canvas canvas) {
 		this.pianoView = pianoView;
-		this.octaveNumber = octaveNumber;
+		this.octave = octave;
 		this.blackPianoKeys = new PianoKey[NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE];
 		this.whitePianoKeys = new PianoKey[NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE];
-		this.octaveStartNote = NoteName.getFirstNoteOfOctave(octaveNumber);
+		this.octaveStartNote = octave.getFirstNoteNameOfOctave();
 		this.canvas = canvas;
 		setSizeOfKeys();
 		this.nextXPositionForBlackButton = widthOfBlackKey * 3 / 2;
@@ -94,12 +95,8 @@ public class PianoKeyOctave {
 
 	}
 
-	public int getOctaveNumber() {
-		return octaveNumber;
-	}
-
-	public void setOctaveNumber(int octaveNumber) {
-		this.octaveNumber = octaveNumber;
+	public Octave getOctave() {
+		return octave;
 	}
 
 	public int getWidthOfWhiteKey() {

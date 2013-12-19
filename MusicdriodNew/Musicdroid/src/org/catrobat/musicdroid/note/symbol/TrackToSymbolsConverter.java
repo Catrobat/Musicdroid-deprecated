@@ -29,9 +29,9 @@ import java.util.List;
 
 public class TrackToSymbolsConverter {
 
-	public List<AbstractSymbol> convertTrack(Track track) {
+	public List<Symbol> convertTrack(Track track) {
 		NoteEventListToSymbolConverter noteEventListConverter = new NoteEventListToSymbolConverter();
-		List<AbstractSymbol> symbols = new LinkedList<AbstractSymbol>();
+		List<Symbol> symbols = new LinkedList<Symbol>();
 
 		for (long tick : track.getSortedTicks()) {
 			symbols.addAll(noteEventListConverter.convertNoteEventList(tick, track.getNoteEventsForTick(tick)));

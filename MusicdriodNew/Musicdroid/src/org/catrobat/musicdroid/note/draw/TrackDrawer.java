@@ -26,14 +26,14 @@ import android.content.Context;
 
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Track;
-import org.catrobat.musicdroid.note.symbol.AbstractSymbol;
+import org.catrobat.musicdroid.note.symbol.Symbol;
 import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 import java.util.List;
 
 public class TrackDrawer {
-	private List<AbstractSymbol> allSymbolsForTrack;
+	private List<Symbol> allSymbolsForTrack;
 	private Key key;
 
 	//private TacktNaming tactNaming;
@@ -48,12 +48,13 @@ public class TrackDrawer {
 	}
 
 	public void drawTrack(NoteSheetCanvas noteSheetCanvas, Context context) {
-		for (AbstractSymbol symbol : allSymbolsForTrack) {
+		for (Symbol symbol : allSymbolsForTrack) {
 			drawWohleSymbol(symbol, noteSheetCanvas, context);
 		}
 	}
 
-	private void drawWohleSymbol(AbstractSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
-		symbol.draw(noteSheetCanvas, key, context);
+	private void drawWohleSymbol(Symbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		// TODO fw cry
+		//symbol.draw(noteSheetCanvas, key, context);
 	}
 }
