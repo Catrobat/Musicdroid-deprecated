@@ -24,7 +24,8 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.MockDataFactory;
+import org.catrobat.musicdroid.note.testutil.SymbolListTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.TrackTestDataFactory;
 
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class TrackToSymbolsConverterTest extends TestCase {
 	public void testConvertTrack1() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
 
-		List<Symbol> expectedSymbols = MockDataFactory.createSymbolList1();
-		List<Symbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack1());
+		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSimpleSymbolList();
+		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createSimpleTrack());
 
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);
@@ -43,18 +44,8 @@ public class TrackToSymbolsConverterTest extends TestCase {
 	public void testConvertTrack2() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
 
-		List<Symbol> expectedSymbols = MockDataFactory.createSymbolList2();
-		List<Symbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack2());
-
-		assertEquals(expectedSymbols.size(), actualSymbols.size());
-		assertEquals(expectedSymbols, actualSymbols);
-	}
-
-	public void testConvertTrack3() {
-		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-
-		List<Symbol> expectedSymbols = MockDataFactory.createSymbolList3();
-		List<Symbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack3());
+		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSymbolListWithBreak();
+		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createTrackWithBreak());
 
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);

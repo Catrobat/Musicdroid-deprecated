@@ -26,75 +26,9 @@ import junit.framework.TestCase;
 
 public class NoteLengthTest extends TestCase {
 
-	private static final float SIXTEENTH_DURATION = 1 / 4f;
-	private static final float EIGHT_DURATION = 1 / 2f;
-	private static final float EIGHT_DOT_DURATION = EIGHT_DURATION + SIXTEENTH_DURATION;
-	private static final float QUARTER_DURATION = 1f;
-	private static final float QUARTER_DOT_DURATION = QUARTER_DURATION + EIGHT_DURATION;
-	private static final float HALF_DURATION = 2f;
-	private static final float HALF_DOT_DURATION = HALF_DURATION + QUARTER_DURATION;
-	private static final float WHOLE_DURATION = 4f;
-	private static final float WHOLE_DOT_DURATION = WHOLE_DURATION + HALF_DURATION;
-
 	public void testCalculateDuration1() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * SIXTEENTH_DURATION);
-		long actual = NoteLength.SIXTEENTH.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration2() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * EIGHT_DURATION);
-		long actual = NoteLength.EIGHT.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration3() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * EIGHT_DOT_DURATION);
-		long actual = NoteLength.EIGHT_DOT.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration4() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * QUARTER_DURATION);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * 1f);
 		long actual = NoteLength.QUARTER.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration5() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * QUARTER_DOT_DURATION);
-		long actual = NoteLength.QUARTER_DOT.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration6() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * HALF_DURATION);
-		long actual = NoteLength.HALF.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration7() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * HALF_DOT_DURATION);
-		long actual = NoteLength.HALF_DOT.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration8() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * WHOLE_DURATION);
-		long actual = NoteLength.WHOLE.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration9() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * WHOLE_DOT_DURATION);
-		long actual = NoteLength.WHOLE_DOT.getTickDuration();
 
 		assertEquals(expected, actual);
 	}
@@ -110,7 +44,8 @@ public class NoteLengthTest extends TestCase {
 
 	public void testGetNoteLengthFromTick2() {
 		NoteLength expectedNoteLength = NoteLength.WHOLE_DOT;
-		long tick = expectedNoteLength.getTickDuration() + 1000;
+		long tick = expectedNoteLength.getTickDuration();
+		tick += 1;
 
 		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
 
@@ -119,7 +54,8 @@ public class NoteLengthTest extends TestCase {
 
 	public void testGetNoteLengthFromTick3() {
 		NoteLength expectedNoteLength = NoteLength.QUARTER;
-		long tick = NoteLength.QUARTER_DOT.getTickDuration() - 1;
+		long tick = NoteLength.QUARTER_DOT.getTickDuration();
+		tick -= 1;
 
 		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
 
@@ -128,7 +64,8 @@ public class NoteLengthTest extends TestCase {
 
 	public void testGetNoteLengthFromTick4() {
 		NoteLength expectedNoteLength = NoteLength.QUARTER;
-		long tick = expectedNoteLength.getTickDuration() + 1;
+		long tick = expectedNoteLength.getTickDuration();
+		tick += 1;
 
 		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
 

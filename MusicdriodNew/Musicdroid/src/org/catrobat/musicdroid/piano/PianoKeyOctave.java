@@ -33,6 +33,8 @@ import org.catrobat.musicdroid.note.Octave;
  * 
  */
 public class PianoKeyOctave {
+	private final static int[] FS_OR_CS_MODULOS = { 1, 6 };
+	private final static int[] DS_OR_AS_MODULOS = { 3, 10 };
 	private static final int NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE = 7;
 	private static final int NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE = 5;
 	private NoteName octaveStartNote;
@@ -68,17 +70,17 @@ public class PianoKeyOctave {
 		for (int whiteKeyIndex = 0; whiteKeyIndex < NUMBER_OF_WHITE_PIANO_KEYS_PER_OCTAVE; whiteKeyIndex++) {
 			whitePianoKeys[whiteKeyIndex] = new PianoKey(pianoView.getContext(), actualNoteName, widthOfWhiteKey,
 					heightOfWhiteKey, getNextXPositionForWhiteButton());
-			actualNoteName = NoteName.getNextWhiteKeyNoteName(actualNoteName);
+			actualNoteName = getNextWhiteKeyNoteName(actualNoteName);
 			pianoView.addView(whitePianoKeys[whiteKeyIndex]);
 		}
 
 		actualNoteName = octaveStartNote;
-		actualNoteName = NoteName.getNextBlackKeyNoteName(actualNoteName);
+		actualNoteName = getNextBlackKeyNoteName(actualNoteName);
 
 		for (int blackKeyIndex = 0; blackKeyIndex < NUMBER_OF_BLACK_PIANO_KEYS_PER_OCTAVE; blackKeyIndex++) {
 			blackPianoKeys[blackKeyIndex] = new PianoKey(pianoView.getContext(), actualNoteName, widthOfBlackKey,
 					heightOfBlackKey, getNextXPositionForBlackButton(actualNoteName));
-			actualNoteName = NoteName.getNextBlackKeyNoteName(actualNoteName);
+			actualNoteName = getNextBlackKeyNoteName(actualNoteName);
 			blackPianoKeys[blackKeyIndex].setBackgroundColor(Color.BLACK);
 			pianoView.addView(blackPianoKeys[blackKeyIndex]);
 		}
@@ -140,9 +142,44 @@ public class PianoKeyOctave {
 	public int getNextXPositionForBlackButton(NoteName actuelNote) {
 		int returnValue = nextXPositionForBlackButton;
 		nextXPositionForBlackButton += 2 * widthOfBlackKey;
-		if (actuelNote.isBlackKeyWithNoDirectRightNeighbour()) {
+		if (isBlackKeyWithNoDirectRightNeighbour(actuelNote)) {
 			nextXPositionForBlackButton += 2 * widthOfBlackKey;
 		}
 		return returnValue;
+	}
+
+	public static boolean isBlackKeyWithNoDirectLeftNeighbour(NoteName noteName) {
+		int modValue = noteName.getMidi() % Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		for (int fs_cs_index : FS_OR_CS_MODULOS) {
+			if (modValue == fs_cs_index) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean isBlackKeyWithNoDirectRightNeighbour(NoteName noteName) {
+		int modValue = noteName.getMidi() % Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE;
+		for (int ds_as_index : DS_OR_AS_MODULOS) {
+			if (modValue == ds_as_index) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static NoteName getNextWhiteKeyNoteName(NoteName noteName) {
+		noteName = noteName.next();
+		if (noteName.isSigned()) {
+			noteName = noteName.next();
+		}
+		return noteName;
+	}
+
+	public static NoteName getNextBlackKeyNoteName(NoteName noteName) {
+		do {
+			noteName = noteName.next();
+		} while (!noteName.isSigned());
+		return noteName;
 	}
 }

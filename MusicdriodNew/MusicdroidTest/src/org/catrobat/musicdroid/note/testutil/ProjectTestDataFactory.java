@@ -20,34 +20,31 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.testutil;
 
-import junit.framework.TestCase;
+import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Track;
 
-public class InstrumentTest extends TestCase {
+public class ProjectTestDataFactory {
 
-	public void testGetInstrumentFromProgram1() {
-		Instrument expectedInstrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
+	public static Project createProject() {
+		return createProject(Project.DEFAULT_NAME);
 	}
 
-	public void testGetInstrumentFromProgram2() {
-		Instrument expectedInstrument = Instrument.LEAD_5_CHARANG;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
+	public static Project createProject(String name) {
+		return new Project(name, Project.DEFAULT_BEATS_PER_MINUTE, Project.DEFAULT_KEY);
 	}
 
-	public void testGetInstrumentFromProgram3() {
-		Instrument expectedInstrument = Instrument.GUNSHOT;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
-	}
+	public static Project createProjectWithSemiComplexTracks() {
+		Project project = new Project(Project.DEFAULT_NAME, Project.DEFAULT_BEATS_PER_MINUTE, Key.VIOLIN);
+		Track track1 = TrackTestDataFactory.createSemiComplexTrack(Instrument.GUNSHOT);
+		Track track2 = TrackTestDataFactory.createSemiComplexTrack(Instrument.WHISTLE);
 
-	public void testGetInstrumentFromProgram4() {
-		assertGetInstrumentFromProgram(128, Instrument.ACOUSTIC_GRAND_PIANO);
-	}
+		project.addTrack(track1);
+		project.addTrack(track2);
 
-	private void assertGetInstrumentFromProgram(int program, Instrument expectedInstrument) {
-		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
-
-		assertEquals(expectedInstrument, actualInstrument);
+		return project;
 	}
 }

@@ -24,64 +24,55 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.testutil.NoteEventTestDataFactory;
+
 public class NoteEventTest extends TestCase {
 
-	public void testNoteEvent() {
-		NoteName noteName = NoteName.C1;
-		boolean noteOn = false;
-
-		NoteEvent noteEvent = new NoteEvent(noteName, noteOn);
-
-		assertEquals(noteName, noteEvent.getNoteName());
-		assertEquals(noteOn, noteEvent.isNoteOn());
-	}
-
 	public void testEquals1() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent1 = NoteEventTestDataFactory.createNoteEvent();
+		NoteEvent noteEvent2 = NoteEventTestDataFactory.createNoteEvent();
 
 		assertTrue(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals2() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, true);
+		NoteEvent noteEvent1 = NoteEventTestDataFactory.createNoteEvent(NoteName.C1);
+		NoteEvent noteEvent2 = NoteEventTestDataFactory.createNoteEvent(NoteName.C2);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals3() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, true);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C1, false);
+		NoteName noteName = NoteName.C1;
+		NoteEvent noteEvent1 = NoteEventTestDataFactory.createNoteEvent(noteName, true);
+		NoteEvent noteEvent2 = NoteEventTestDataFactory.createNoteEvent(noteName, false);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals4() {
-		NoteEvent noteEvent1 = new NoteEvent(NoteName.C1, false);
-		NoteEvent noteEvent2 = new NoteEvent(NoteName.C2, true);
+		NoteEvent noteEvent1 = NoteEventTestDataFactory.createNoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent2 = NoteEventTestDataFactory.createNoteEvent(NoteName.C2, false);
 
 		assertFalse(noteEvent1.equals(noteEvent2));
 	}
 
 	public void testEquals5() {
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
 
 		assertFalse(noteEvent.equals(null));
 	}
 
 	public void testEquals6() {
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
 
 		assertFalse(noteEvent.equals(""));
 	}
 
 	public void testToString() {
-		NoteName noteName = NoteName.C1;
-		boolean noteOn = false;
+		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
 
-		NoteEvent noteEvent = new NoteEvent(noteName, noteOn);
-
-		assertEquals("[NoteEvent] noteName= " + noteName + " noteOn=" + noteOn, noteEvent.toString());
+		assertEquals("[NoteEvent] noteName= " + NoteName.DEFAULT_NOTE_NAME + " noteOn=" + NoteEvent.DEFAULT_NOTE_ON,
+				noteEvent.toString());
 	}
 }

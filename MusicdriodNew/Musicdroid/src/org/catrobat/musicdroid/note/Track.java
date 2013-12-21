@@ -31,6 +31,7 @@ import java.util.TreeSet;
 
 public class Track implements Serializable {
 
+	public static final Instrument DEFAULT_INSTRUMENT = Instrument.ACOUSTIC_GRAND_PIANO;
 	private static final long serialVersionUID = 7483021689872527955L;
 
 	private Instrument instrument;
@@ -38,7 +39,7 @@ public class Track implements Serializable {
 
 	public Track() {
 		this.events = new HashMap<Long, List<NoteEvent>>();
-		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
+		this.instrument = DEFAULT_INSTRUMENT;
 	}
 
 	public Track(Instrument instrument) {

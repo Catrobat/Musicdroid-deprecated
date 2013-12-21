@@ -24,43 +24,45 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.testutil.ProjectTestDataFactory;
+
 public class ProjectTest extends TestCase {
 
 	public void testGetName() {
-		String name = "Project";
-		Project project = new Project(name);
+		Project project = ProjectTestDataFactory.createProject();
 
-		assertEquals(name, project.getName());
+		assertEquals(Project.DEFAULT_NAME, project.getName());
 	}
 
 	public void testGetBeatsPerMinute() {
-		String name = "Project";
-		int beatsPerMinute = 80;
-		Project project = new Project(name, beatsPerMinute);
+		Project project = ProjectTestDataFactory.createProject();
 
-		assertEquals(beatsPerMinute, project.getBeatsPerMinute());
+		assertEquals(Project.DEFAULT_BEATS_PER_MINUTE, project.getBeatsPerMinute());
+	}
+
+	public void testGetKey() {
+		Project project = ProjectTestDataFactory.createProject();
+
+		assertEquals(Project.DEFAULT_KEY, project.getKey());
 	}
 
 	public void testAddTrack() {
-		Project project = new Project("Project");
-
+		Project project = ProjectTestDataFactory.createProject();
 		project.addTrack(new Track());
 
 		assertEquals(1, project.size());
 	}
 
 	public void testGetTrack() {
-		Project project = new Project("Project");
+		Project project = ProjectTestDataFactory.createProject();
 		Track track = new Track();
-
 		project.addTrack(track);
 
 		assertEquals(track, project.getTrack(0));
 	}
 
 	public void testRemoveTrack() {
-		Project project = new Project("Project");
-
+		Project project = ProjectTestDataFactory.createProject();
 		Track track = new Track();
 		project.addTrack(track);
 		project.removeTrack(track);
@@ -69,64 +71,61 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testEquals1() {
-		Project project1 = new Project("Project");
-		Project project2 = new Project("Project");
+		Project project1 = ProjectTestDataFactory.createProject();
+		Project project2 = ProjectTestDataFactory.createProject();
 
 		assertTrue(project1.equals(project2));
 	}
 
 	public void testEquals2() {
-		Project project1 = new Project("Project1");
-		Project project2 = new Project("Project2");
+		Project project1 = ProjectTestDataFactory.createProject("A Name");
+		Project project2 = ProjectTestDataFactory.createProject("A Different Name");
 
 		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals3() {
-		Project project1 = new Project("Project");
+		Project project1 = ProjectTestDataFactory.createProject();
 		project1.addTrack(new Track());
-
-		Project project2 = new Project("Project");
+		Project project2 = ProjectTestDataFactory.createProject();
 		project2.addTrack(new Track());
 
 		assertTrue(project1.equals(project2));
 	}
 
 	public void testEquals4() {
-		Project project1 = new Project("Project");
+		Project project1 = ProjectTestDataFactory.createProject();
 		project1.addTrack(new Track());
-
-		Project project2 = new Project("Project");
+		Project project2 = ProjectTestDataFactory.createProject();
 		project2.addTrack(new Track(Instrument.APPLAUSE));
 
 		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals5() {
-		Project project1 = new Project("Project");
+		Project project1 = ProjectTestDataFactory.createProject();
 		project1.addTrack(new Track());
-
-		Project project2 = new Project("Project");
+		Project project2 = ProjectTestDataFactory.createProject();
 
 		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals6() {
-		Project project = new Project("Project");
+		Project project = ProjectTestDataFactory.createProject();
 
 		assertFalse(project.equals(null));
 	}
 
 	public void testEquals7() {
-		Project project = new Project("Project");
+		Project project = ProjectTestDataFactory.createProject();
 
 		assertFalse(project.equals(""));
 	}
 
 	public void testToString() {
-		Project project = new Project("Project");
+		Project project = ProjectTestDataFactory.createProject();
 
-		assertEquals("[Project] name=" + project.getName() + " beatsPerMinute=" + project.getBeatsPerMinute()
-				+ " trackCount=" + project.size(), project.toString());
+		assertEquals("[Project] name=" + project.getName() + " beatsPerMinute=" + project.getBeatsPerMinute() + " key="
+				+ project.getKey() + " trackCount=" + project.size(), project.toString());
 	}
 }

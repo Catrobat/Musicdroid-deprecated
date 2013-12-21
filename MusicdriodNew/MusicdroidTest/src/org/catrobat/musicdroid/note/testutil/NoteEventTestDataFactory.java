@@ -20,34 +20,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.testutil;
 
-import junit.framework.TestCase;
+import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.NoteName;
 
-public class InstrumentTest extends TestCase {
+public class NoteEventTestDataFactory {
 
-	public void testGetInstrumentFromProgram1() {
-		Instrument expectedInstrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
+	public static NoteEvent createNoteEvent() {
+		return createNoteEvent(NoteName.DEFAULT_NOTE_NAME, NoteEvent.DEFAULT_NOTE_ON);
 	}
 
-	public void testGetInstrumentFromProgram2() {
-		Instrument expectedInstrument = Instrument.LEAD_5_CHARANG;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
+	public static NoteEvent createNoteEvent(NoteName noteName) {
+		return createNoteEvent(noteName, NoteEvent.DEFAULT_NOTE_ON);
 	}
 
-	public void testGetInstrumentFromProgram3() {
-		Instrument expectedInstrument = Instrument.GUNSHOT;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
-	}
-
-	public void testGetInstrumentFromProgram4() {
-		assertGetInstrumentFromProgram(128, Instrument.ACOUSTIC_GRAND_PIANO);
-	}
-
-	private void assertGetInstrumentFromProgram(int program, Instrument expectedInstrument) {
-		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
-
-		assertEquals(expectedInstrument, actualInstrument);
+	public static NoteEvent createNoteEvent(NoteName noteName, boolean noteOn) {
+		return new NoteEvent(noteName, noteOn);
 	}
 }

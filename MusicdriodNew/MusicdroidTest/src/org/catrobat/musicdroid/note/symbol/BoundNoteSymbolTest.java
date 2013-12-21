@@ -28,12 +28,9 @@ public class BoundNoteSymbolTest extends TestCase {
 
 	public void testAddNoteSymbol() {
 		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
-
-		assertTrue(boundNoteSymbol.size() == 0);
-
 		boundNoteSymbol.addNoteSymbol(new NoteSymbol());
 
-		assertTrue(boundNoteSymbol.size() == 1);
+		assertEquals(1, boundNoteSymbol.size());
 	}
 
 	public void testGetNoteSymbol() {

@@ -24,6 +24,8 @@ package org.catrobat.musicdroid.note;
 
 public class NoteEvent {
 
+	public static final boolean DEFAULT_NOTE_ON = true;
+
 	private NoteName noteName;
 	private boolean noteOn;
 
