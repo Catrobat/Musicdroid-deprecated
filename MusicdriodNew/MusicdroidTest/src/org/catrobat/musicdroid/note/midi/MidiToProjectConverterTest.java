@@ -46,4 +46,48 @@ public class MidiToProjectConverterTest extends TestCase {
 	public void testReadFileAndConvertMidi() {
 		assertTrue(MidiFileTestDataFactory.createAndReadMidiFile());
 	}
+
+	public void testValidateMidiFile1() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFile();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile2() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithEmptyTrack();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile3() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingTempoEvent();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile4() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingSomeTextEvent();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
 }

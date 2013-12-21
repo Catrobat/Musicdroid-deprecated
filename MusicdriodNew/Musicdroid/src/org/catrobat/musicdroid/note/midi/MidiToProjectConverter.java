@@ -58,17 +58,14 @@ public class MidiToProjectConverter {
 	public Project readFileAndConvertMidi(File file) throws MidiException, FileNotFoundException, IOException {
 		MidiFile midi = new MidiFile(file);
 
-		if (false == midiFileHasLegalFormat(midi)) {
-			throw new MidiException("Unsupported MIDI!");
-		}
+		validateMidiFile(midi);
 
 		return convertMidi(midi, file.getName());
 	}
 
-	// TODO fw code coverage
-	private boolean midiFileHasLegalFormat(MidiFile midi) {
-		if (midi.getTrackCount() > 0) {
-			MidiTrack tempoTrack = midi.getTracks().get(0);
+	protected void validateMidiFile(MidiFile midiFile) throws MidiException {
+		if (midiFile.getTrackCount() > 0) {
+			MidiTrack tempoTrack = midiFile.getTracks().get(0);
 
 			Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
 
@@ -79,13 +76,13 @@ public class MidiToProjectConverter {
 					Text text = (Text) event;
 
 					if (text.getText().equals(ProjectToMidiConverter.MUSICDROID_MIDI_FILE_IDENTIFIER)) {
-						return true;
+						return;
 					}
 				}
 			}
 		}
 
-		return false;
+		throw new MidiException("Unsupported MIDI!");
 	}
 
 	protected Project convertMidi(MidiFile midi, String name) {

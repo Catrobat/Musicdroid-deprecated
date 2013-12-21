@@ -22,6 +22,11 @@
  */
 package org.catrobat.musicdroid.note.midi.testutil;
 
+import com.leff.midi.MidiFile;
+import com.leff.midi.MidiTrack;
+import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.Text;
+
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.midi.MidiException;
 import org.catrobat.musicdroid.note.midi.MidiToProjectConverter;
@@ -70,5 +75,34 @@ public class MidiFileTestDataFactory {
 			File file = new File(project.getName() + ".midi");
 			file.delete();
 		}
+	}
+
+	public static MidiFile createMidiFile() {
+		return new MidiFile();
+	}
+
+	public static MidiFile createMidiFileWithEmptyTrack() {
+		MidiFile midiFile = createMidiFile();
+		midiFile.addTrack(new MidiTrack());
+
+		return midiFile;
+	}
+
+	public static MidiFile createMidiFileWithTrackContainingTempoEvent() {
+		MidiFile midiFile = createMidiFile();
+		MidiTrack midiTrack = new MidiTrack();
+		midiTrack.insertEvent(new Tempo());
+		midiFile.addTrack(midiTrack);
+
+		return midiFile;
+	}
+
+	public static MidiFile createMidiFileWithTrackContainingSomeTextEvent() {
+		MidiFile midiFile = createMidiFile();
+		MidiTrack midiTrack = new MidiTrack();
+		midiTrack.insertEvent(new Text(0, 0, "Some text that does not matter"));
+		midiFile.addTrack(midiTrack);
+
+		return midiFile;
 	}
 }
