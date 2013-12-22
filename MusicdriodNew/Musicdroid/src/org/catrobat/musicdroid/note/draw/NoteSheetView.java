@@ -61,47 +61,16 @@ public class NoteSheetView extends ScrollView {
 	private int distanceBetweenLines;
 	private int halfBarHeight;
 	private NoteSheetTools noteSheetTools;
-	private Context context;
 	private int xPositionOfNextSheetElement;
 	private TrackDrawer trackDrawer;
 
 	public NoteSheetView(Context context) {
 		super(context);
-		this.context = context;
 		paint = new Paint();
 		track = new Track();
 		noteSheetTools = new NoteSheetTools();
-
-		/*
-		 * long tick = 0;
-		 * //Track track = new Track();
-		 * // track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, true));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D4, true));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.C4, true));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.A3, true));
-		 * tick += NoteLength.WHOLE.getTickDuration() + NoteLength.QUARTER.getTickDuration();
-		 * // track.addNoteEvent(tick, new NoteEvent(NoteName.C5S, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D4, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.C4, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.A3, false));
-		 * 
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D3, true));
-		 * tick += NoteLength.HALF.getTickDuration() / 5;
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D3, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.A3, true));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D3, true));
-		 * tick += NoteLength.SIXTEENTH.getTickDuration();
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.A3, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.D3, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.C4, true));
-		 * tick += NoteLength.QUARTER.getTickDuration() + NoteLength.SIXTEENTH.getTickDuration();
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.C4, false));
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.G3, true));
-		 * tick += NoteLength.WHOLE.getTickDuration();
-		 * track.addNoteEvent(tick, new NoteEvent(NoteName.G3, false));
-		 */
 		trackDrawer = new TrackDrawer();
-		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
+		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
 
 	public void setTrack(Track track) {
@@ -134,7 +103,7 @@ public class NoteSheetView extends ScrollView {
 		drawKey();
 		drawTactUnit();
 		drawBeats();
-		trackDrawer.drawTrack(track, noteSheetTools.getNoteSheetCanvas(), context);
+		trackDrawer.drawTrack(track, noteSheetTools.getNoteSheetCanvas(), getContext());
 	}
 
 	private void drawLines() {
@@ -180,7 +149,7 @@ public class NoteSheetView extends ScrollView {
 	}
 
 	private void drawKey() {
-		Resources res = context.getResources();
+		Resources res = getContext().getResources();
 		Bitmap keyPicture;
 		//TODO AUS SETTINGS AUSlesen
 		Key key = Key.VIOLIN;
@@ -200,7 +169,7 @@ public class NoteSheetView extends ScrollView {
 	}
 
 	private void drawTactUnit() {
-		Resources res = context.getResources();
+		Resources res = getContext().getResources();
 		Bitmap tactPicture;
 
 		// TODO: Tact has to be checked here
@@ -216,6 +185,7 @@ public class NoteSheetView extends ScrollView {
 	}
 
 	private void drawBeats() {
+		// TODO
 	}
 
 	private void setXPositionOfNextSheetElement(int newPosition) {

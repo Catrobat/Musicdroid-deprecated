@@ -83,4 +83,56 @@ public class NoteLengthTest extends TestCase {
 	public void testHasStem3() {
 		assertTrue(NoteLength.QUARTER.hasStem());
 	}
+
+	public void testHasDot1() {
+		assertFalse(NoteLength.QUARTER.hasDot());
+	}
+
+	public void testHasDot2() {
+		assertTrue(NoteLength.WHOLE_DOT.hasDot());
+	}
+
+	public void testHasDot3() {
+		assertTrue(NoteLength.HALF_DOT.hasDot());
+	}
+
+	public void testHasDot4() {
+		assertTrue(NoteLength.QUARTER_DOT.hasDot());
+	}
+
+	public void testHasDot5() {
+		assertTrue(NoteLength.EIGHT_DOT.hasDot());
+	}
+
+	public void testHasFlag1() {
+		assertFalse(NoteLength.QUARTER.hasFlag());
+	}
+
+	public void testHasFlag2() {
+		assertTrue(NoteLength.EIGHT.hasFlag());
+	}
+
+	public void testHasFlag3() {
+		assertTrue(NoteLength.EIGHT_DOT.hasFlag());
+	}
+
+	public void testHasFlag4() {
+		assertTrue(NoteLength.SIXTEENTH.hasFlag());
+	}
+
+	public void testGetAmountOfFlags1() {
+		assertEquals(2, NoteLength.SIXTEENTH.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags2() {
+		assertEquals(1, NoteLength.EIGHT.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags3() {
+		assertEquals(1, NoteLength.EIGHT_DOT.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags4() {
+		assertEquals(0, NoteLength.QUARTER.getAmountOfFlags());
+	}
 }

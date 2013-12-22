@@ -31,6 +31,7 @@ import android.graphics.RectF;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class NoteBodyDrawer {
+
 	public static RectF[] drawBody(NoteSheetCanvas noteSheetCanvas, int[] toneDistanceFromToneToMiddleLineInHalfTones,
 			boolean isFilled, boolean isStemUp) {
 

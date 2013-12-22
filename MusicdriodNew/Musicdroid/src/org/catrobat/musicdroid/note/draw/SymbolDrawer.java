@@ -45,14 +45,14 @@ public class SymbolDrawer {
 	}
 
 	private void drawBreakSymbol(BreakSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
-		// TODO
+		// TODO das Dream Team Eli und Flo :D
 	}
 
 	private void drawNoteSymbol(NoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
-		// TODO
+		// TODO das Dream Team Eli und Flo :D
 	}
 
 	private void drawBoundNoteSymbol(BoundNoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
-		// TODO
+		// TODO das Dream Team Eli und Flo :D
 	}
 }

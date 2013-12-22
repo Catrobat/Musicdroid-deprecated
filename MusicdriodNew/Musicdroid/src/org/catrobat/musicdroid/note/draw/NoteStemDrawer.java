@@ -57,7 +57,7 @@ public class NoteStemDrawer {
 		noteSheetCanvas.getCanvas().drawLine(startPointOfNoteStem.x, startPointOfNoteStem.y, endPointOfNoteStem.x,
 				endPointOfNoteStem.y, paint);
 
-		if (noteLength == NoteLength.EIGHT || noteLength == NoteLength.SIXTEENTH) {
+		if (noteLength.hasFlag()) {
 			drawCurvyStem(noteSheetCanvas, isUpdirectedStem, endPointOfNoteStem, paint, noteLength);
 		}
 	}

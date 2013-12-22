@@ -23,13 +23,8 @@
 package org.catrobat.musicdroid.note;
 
 public enum NoteLength {
-	WHOLE_DOT(4f + 2f),
-	WHOLE(4f), HALF_DOT(2f + 1f),
-	HALF(2f), QUARTER_DOT(1f + 1 / 2f),
-	QUARTER(1f),
-	EIGHT_DOT(1 / 2f + 1 / 4f),
-	EIGHT(1 / 2f),
-	SIXTEENTH(1 / 4f);
+	WHOLE_DOT(4f + 2f), WHOLE(4f), HALF_DOT(2f + 1f), HALF(2f), QUARTER_DOT(1f + 1 / 2f), QUARTER(1f), EIGHT_DOT(
+			1 / 2f + 1 / 4f), EIGHT(1 / 2f), SIXTEENTH(1 / 4f);
 
 	protected static final double DEFAULT_DURATION = 384 / 48 * 60;
 	protected static final NoteLength SMALLEST_NOTE_LENGTH = SIXTEENTH;
@@ -50,6 +45,24 @@ public enum NoteLength {
 		}
 
 		return true;
+	}
+
+	public boolean hasFlag() {
+		return ((this == EIGHT) || (this == EIGHT_DOT) || (this == SIXTEENTH));
+	}
+
+	public int getAmountOfFlags() {
+		if (this == SIXTEENTH) {
+			return 2;
+		} else if ((this == EIGHT) || (this == EIGHT_DOT)) {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	public boolean hasDot() {
+		return (this == WHOLE_DOT) || (this == HALF_DOT) || (this == QUARTER_DOT) || (this == EIGHT_DOT);
 	}
 
 	public static NoteLength getNoteLengthFromTickDuration(long duration) {

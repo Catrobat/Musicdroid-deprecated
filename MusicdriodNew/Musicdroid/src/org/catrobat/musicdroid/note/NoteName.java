@@ -110,4 +110,8 @@ public enum NoteName {
 
 		return (isDownGoing ? distance : distance * (-1));
 	}
+
+	public static int calculateDistanceToMiddleLineCountingSignedNotesOnly(Key key, NoteName noteName) {
+		return calculateDistanceCountingNoneSignedNotesOnly(key.getNoteNameOnMiddleLine(), noteName);
+	}
 }
