@@ -24,10 +24,8 @@ package org.catrobat.musicdroid.note;
 
 public enum NoteLength {
 	WHOLE_DOT(4f + 2f),
-	WHOLE(4f),
-	HALF_DOT(2f + 1f),
-	HALF(2f),
-	QUARTER_DOT(1f + 1 / 2f),
+	WHOLE(4f), HALF_DOT(2f + 1f),
+	HALF(2f), QUARTER_DOT(1f + 1 / 2f),
 	QUARTER(1f),
 	EIGHT_DOT(1 / 2f + 1 / 4f),
 	EIGHT(1 / 2f),
@@ -44,6 +42,14 @@ public enum NoteLength {
 
 	public long getTickDuration() {
 		return tickDuration;
+	}
+
+	public boolean hasStem() {
+		if ((this == WHOLE) || (this == WHOLE_DOT)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static NoteLength getNoteLengthFromTickDuration(long duration) {

@@ -71,4 +71,16 @@ public class NoteLengthTest extends TestCase {
 
 		assertEquals(expectedNoteLength, actualNoteLength);
 	}
+
+	public void testHasStem1() {
+		assertFalse(NoteLength.WHOLE.hasStem());
+	}
+
+	public void testHasStem2() {
+		assertFalse(NoteLength.WHOLE_DOT.hasStem());
+	}
+
+	public void testHasStem3() {
+		assertTrue(NoteLength.QUARTER.hasStem());
+	}
 }

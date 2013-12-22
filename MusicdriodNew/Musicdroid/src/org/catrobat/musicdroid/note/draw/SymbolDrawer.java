@@ -24,19 +24,35 @@ package org.catrobat.musicdroid.note.draw;
 
 import android.content.Context;
 
-import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.symbol.BoundNoteSymbol;
+import org.catrobat.musicdroid.note.symbol.BreakSymbol;
+import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 import org.catrobat.musicdroid.note.symbol.Symbol;
-import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
 import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
-public class TrackDrawer {
+public class SymbolDrawer {
 
-	public void drawTrack(Track track, NoteSheetCanvas noteSheetCanvas, Context context) {
-		TrackToSymbolsConverter converter = new TrackToSymbolsConverter();
-		SymbolDrawer symbolDrawer = new SymbolDrawer();
-
-		for (Symbol symbol : converter.convertTrack(track)) {
-			symbolDrawer.drawSymbol(symbol, noteSheetCanvas, context);
+	public void drawSymbol(Symbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		if (symbol instanceof BreakSymbol) {
+			drawBreakSymbol((BreakSymbol) symbol, noteSheetCanvas, context);
+		} else if (symbol instanceof NoteSymbol) {
+			drawNoteSymbol((NoteSymbol) symbol, noteSheetCanvas, context);
+		} else if (symbol instanceof BoundNoteSymbol) {
+			drawBoundNoteSymbol((BoundNoteSymbol) symbol, noteSheetCanvas, context);
+		} else {
+			throw new IllegalArgumentException();
 		}
+	}
+
+	private void drawBreakSymbol(BreakSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		// TODO
+	}
+
+	private void drawNoteSymbol(NoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		// TODO
+	}
+
+	private void drawBoundNoteSymbol(BoundNoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
+		// TODO
 	}
 }

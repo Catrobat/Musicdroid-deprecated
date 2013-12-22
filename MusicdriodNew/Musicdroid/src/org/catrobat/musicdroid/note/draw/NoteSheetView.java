@@ -100,13 +100,12 @@ public class NoteSheetView extends ScrollView {
 		 * tick += NoteLength.WHOLE.getTickDuration();
 		 * track.addNoteEvent(tick, new NoteEvent(NoteName.G3, false));
 		 */
-		trackDrawer = new TrackDrawer(track);
+		trackDrawer = new TrackDrawer();
 		this.xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
 
 	public void setTrack(Track track) {
 		this.track = track;
-		this.trackDrawer = new TrackDrawer(track);
 	}
 
 	@Override
@@ -135,7 +134,7 @@ public class NoteSheetView extends ScrollView {
 		drawKey();
 		drawTactUnit();
 		drawBeats();
-		trackDrawer.drawTrack(noteSheetTools.getNoteSheetCanvas(), context);
+		trackDrawer.drawTrack(track, noteSheetTools.getNoteSheetCanvas(), context);
 	}
 
 	private void drawLines() {

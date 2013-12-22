@@ -23,5 +23,15 @@
 package org.catrobat.musicdroid.note;
 
 public enum Key {
-	BASS, VIOLIN;
+	BASS(NoteName.D3), VIOLIN(NoteName.B4);
+
+	private NoteName noteNameOnMiddleLine;
+
+	private Key(NoteName noteNameOnMiddleLine) {
+		this.noteNameOnMiddleLine = noteNameOnMiddleLine;
+	}
+
+	public NoteName getNoteNameOnMiddleLine() {
+		return noteNameOnMiddleLine;
+	}
 }

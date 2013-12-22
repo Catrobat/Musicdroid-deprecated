@@ -87,13 +87,9 @@ public enum NoteName {
 		return DEFAULT_NOTE_NAME;
 	}
 
-	public static int calculateDistance(NoteName name1, NoteName name2) {
-		return name2.midi - name1.midi;
-	}
-
 	public static int calculateDistanceCountingNoneSignedNotesOnly(NoteName noteName1, NoteName noteName2) {
 		int distance = 0;
-		boolean isDownGoing = calculateDistance(noteName1, noteName2) > 0;
+		boolean isDownGoing = (noteName2.midi - noteName1.midi) > 0;
 
 		NoteName smallNoteName = isDownGoing ? noteName1 : noteName2;
 		NoteName largeNoteName = isDownGoing ? noteName2 : noteName1;

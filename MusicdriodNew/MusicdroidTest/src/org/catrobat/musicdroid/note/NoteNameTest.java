@@ -77,26 +77,6 @@ public class NoteNameTest extends TestCase {
 		assertTrue(c1s.isSigned());
 	}
 
-	public void testCalculateDistance1() {
-		NoteName c1 = NoteName.C1S;
-		NoteName c1s = NoteName.C1;
-
-		assertEquals(-1, NoteName.calculateDistance(c1, c1s));
-	}
-
-	public void testCalculateDistance2() {
-		NoteName c1 = NoteName.C1S;
-		NoteName c1s = NoteName.C1;
-
-		assertEquals(1, NoteName.calculateDistance(c1s, c1));
-	}
-
-	public void testCalculateDistance3() {
-		NoteName c1 = NoteName.C1;
-
-		assertEquals(0, NoteName.calculateDistance(c1, c1));
-	}
-
 	public void testGetNoteNameFromMidiValue1() {
 		NoteName expectedNoteName = NoteName.A0;
 		int midiValue = expectedNoteName.getMidi();
