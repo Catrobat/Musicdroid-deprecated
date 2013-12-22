@@ -29,7 +29,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class NoteStemDrawer {
 	private static final double LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES = 3.5;

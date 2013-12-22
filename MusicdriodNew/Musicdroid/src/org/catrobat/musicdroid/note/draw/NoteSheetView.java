@@ -36,8 +36,6 @@ import android.widget.ScrollView;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Track;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
-import org.catrobat.musicdroid.tools.NoteSheetTools;
 import org.catrobat.musicdroid.tools.PictureTools;
 
 /**
@@ -60,15 +58,14 @@ public class NoteSheetView extends ScrollView {
 	private int yCenter;
 	private int distanceBetweenLines;
 	private int halfBarHeight;
-	private NoteSheetTools noteSheetTools;
 	private int xPositionOfNextSheetElement;
+	private NoteSheetCanvas noteSheetCanvas;
 	private TrackDrawer trackDrawer;
 
 	public NoteSheetView(Context context) {
 		super(context);
 		paint = new Paint();
 		track = new Track();
-		noteSheetTools = new NoteSheetTools();
 		trackDrawer = new TrackDrawer();
 		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
@@ -80,40 +77,34 @@ public class NoteSheetView extends ScrollView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		noteSheetTools.setNoteSheetCanvas(new NoteSheetCanvas(canvas));
-
-		NoteSheetCanvas noteSheetCanvas = noteSheetTools.getNoteSheetCanvas();
-
+		noteSheetCanvas = new NoteSheetCanvas(canvas);
 		xEndPositionOfLine = noteSheetCanvas.getCanvas().getWidth() - NOTE_SHEET_PADDING;
-		this.yCenter = noteSheetCanvas.getYPositionOfCenterLine();
-		this.xStartPositionOfLine = NOTE_SHEET_PADDING;
-		this.distanceBetweenLines = noteSheetCanvas.getDistanceBetweenNoteLines();
-		this.halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS * distanceBetweenLines;
+		yCenter = noteSheetCanvas.getYPositionOfCenterLine();
+		xStartPositionOfLine = NOTE_SHEET_PADDING;
+		distanceBetweenLines = noteSheetCanvas.getDistanceBetweenNoteLines();
+		halfBarHeight = NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS * distanceBetweenLines;
 		paint.setColor(Color.BLACK);
 
 		drawSheetElements();
 
-		this.setXPositionOfNextSheetElement(NOTE_SHEET_PADDING);
+		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	};
 
 	private void drawSheetElements() {
-
 		drawLines();
 		drawLineEndBars();
 		drawKey();
 		drawTactUnit();
 		drawBeats();
-		trackDrawer.drawTrack(track, noteSheetTools.getNoteSheetCanvas(), getContext());
+		drawTrack();
 	}
 
 	private void drawLines() {
-
 		for (int lineDistanceFromCenterLine = -NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine <= NUMBER_LINES_FROM_CENTER_LINE_IN_BOTH_DIRECTIONS; lineDistanceFromCenterLine++) {
 			int actualLinePosition = yCenter + lineDistanceFromCenterLine * distanceBetweenLines;
-			noteSheetTools.getNoteSheetCanvas().getCanvas()
-					.drawLine(xStartPositionOfLine, actualLinePosition, xEndPositionOfLine, actualLinePosition, paint);
+			noteSheetCanvas.getCanvas().drawLine(xStartPositionOfLine, actualLinePosition, xEndPositionOfLine,
+					actualLinePosition, paint);
 		}
-
 	}
 
 	private void drawLineEndBars() {
@@ -130,22 +121,22 @@ public class NoteSheetView extends ScrollView {
 	private void drawEndBar() {
 		int leftPositionOfEndBar = xEndPositionOfLine - BOLD_BAR_WIDTH;
 		drawBoldBar(leftPositionOfEndBar);
-		noteSheetTools.getNoteSheetCanvas().setEndXPositionNotes(leftPositionOfEndBar);
+		noteSheetCanvas.setEndXPositionNotes(leftPositionOfEndBar);
 	}
 
 	private void drawThinBar(int xBarStartPosition) {
 		int xEndThinBar = xBarStartPosition + THIN_BAR_WIDTH;
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight, xEndThinBar, yCenter + halfBarHeight);
 
-		noteSheetTools.getNoteSheetCanvas().getCanvas().drawRect(boldBar, paint);
-		this.setXPositionOfNextSheetElement(xEndThinBar);
+		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
+		xPositionOfNextSheetElement = xEndThinBar;
 	}
 
 	private void drawBoldBar(int xBarStartPosition) {
 		Rect boldBar = new Rect(xBarStartPosition, yCenter - halfBarHeight, xBarStartPosition + BOLD_BAR_WIDTH, yCenter
 				+ halfBarHeight);
 
-		noteSheetTools.getNoteSheetCanvas().getCanvas().drawRect(boldBar, paint);
+		noteSheetCanvas.getCanvas().drawRect(boldBar, paint);
 	}
 
 	private void drawKey() {
@@ -162,10 +153,10 @@ public class NoteSheetView extends ScrollView {
 		int keyPictureHeight = distanceBetweenLines * HEIGHT_OF_KEY_IN_LINE_SPACES;
 
 		Rect rect = PictureTools.calculateProportionalPictureContourRect(keyPicture, keyPictureHeight,
-				this.xPositionOfNextSheetElement, yCenter);
+				xPositionOfNextSheetElement, yCenter);
 
-		noteSheetTools.getNoteSheetCanvas().getCanvas().drawBitmap(keyPicture, null, rect, null);
-		this.setXPositionOfNextSheetElement(rect.right);
+		noteSheetCanvas.getCanvas().drawBitmap(keyPicture, null, rect, null);
+		xPositionOfNextSheetElement = rect.right;
 	}
 
 	private void drawTactUnit() {
@@ -178,18 +169,17 @@ public class NoteSheetView extends ScrollView {
 		int tactPictureHeight = distanceBetweenLines * 4;
 
 		Rect rect = PictureTools.calculateProportionalPictureContourRect(tactPicture, tactPictureHeight,
-				this.xPositionOfNextSheetElement, yCenter);
+				xPositionOfNextSheetElement, yCenter);
 
-		noteSheetTools.getNoteSheetCanvas().getCanvas().drawBitmap(tactPicture, null, rect, null);
-		noteSheetTools.getNoteSheetCanvas().setStartXPositionNotes(rect.right);
+		noteSheetCanvas.getCanvas().drawBitmap(tactPicture, null, rect, null);
+		noteSheetCanvas.setStartXPositionNotes(rect.right);
 	}
 
 	private void drawBeats() {
 		// TODO
 	}
 
-	private void setXPositionOfNextSheetElement(int newPosition) {
-		this.xPositionOfNextSheetElement = newPosition;
+	private void drawTrack() {
+		trackDrawer.drawTrack(track, noteSheetCanvas, getContext());
 	}
-
 }

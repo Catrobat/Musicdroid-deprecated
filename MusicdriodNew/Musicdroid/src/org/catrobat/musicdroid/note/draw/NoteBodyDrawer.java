@@ -28,7 +28,6 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.RectF;
 
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class NoteBodyDrawer {
 

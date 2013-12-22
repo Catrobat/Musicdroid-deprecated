@@ -28,7 +28,6 @@ import org.catrobat.musicdroid.note.symbol.BoundNoteSymbol;
 import org.catrobat.musicdroid.note.symbol.BreakSymbol;
 import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 import org.catrobat.musicdroid.note.symbol.Symbol;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class SymbolDrawer {
 

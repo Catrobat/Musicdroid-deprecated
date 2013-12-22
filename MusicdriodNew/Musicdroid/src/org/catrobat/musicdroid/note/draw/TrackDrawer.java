@@ -27,7 +27,6 @@ import android.content.Context;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.note.symbol.Symbol;
 import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
 
 public class TrackDrawer {
 
