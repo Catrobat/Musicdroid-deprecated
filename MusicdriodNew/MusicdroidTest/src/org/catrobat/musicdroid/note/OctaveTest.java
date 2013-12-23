@@ -27,49 +27,6 @@ import junit.framework.TestCase;
 import java.util.Arrays;
 
 public class OctaveTest extends TestCase {
-
-	private static final Octave[] ALL_OCTAVES = new Octave[] {
-		Octave.SUB_CONTRA_OCTAVE, Octave.CONTRA_OCTAVE,
-		Octave.GREAT_OCTAVE, Octave.SMALL_OCTAVE,
-		Octave.ONE_LINE_OCTAVE, Octave.TWO_LINE_OCTAVE,
-		Octave.THREE_LINE_OCTAVE, Octave.FOUR_LINE_OCTAVE,
-		Octave.FIVE_LINE_OCTAVE};
-	
-	public void testGetFirstNoteNameOfOctave() {
-		assertEquals(NoteName.C1, Octave.CONTRA_OCTAVE.getFirstNoteNameOfOctave());
-	}
-	
-	public void testNext1() {
-		Octave octave = Octave.SUB_CONTRA_OCTAVE;
-		
-		for (int i = 0; i < ALL_OCTAVES.length; i++) {
-			assertEquals(ALL_OCTAVES[i], octave);
-			
-			octave = octave.next();
-		}
-	}
-	
-	public void testNext2() {
-		Octave octave = Octave.FIVE_LINE_OCTAVE;
-		
-		assertEquals(octave, octave.next());
-	}
-	
-	public void testPrevious1() {
-		Octave octave = Octave.FIVE_LINE_OCTAVE;
-		
-		for (int i = ALL_OCTAVES.length - 1; i > -1; i--) {
-			assertEquals(ALL_OCTAVES[i], octave);
-			
-			octave = octave.previous();
-		}
-	}
-	
-	public void testPrevious2() {
-		Octave octave = Octave.SUB_CONTRA_OCTAVE;
-		
-		assertEquals(octave, octave.previous());
-	}
 	
 	public void testGetNoteNames() {
 		NoteName[] noteNames = new NoteName[] {

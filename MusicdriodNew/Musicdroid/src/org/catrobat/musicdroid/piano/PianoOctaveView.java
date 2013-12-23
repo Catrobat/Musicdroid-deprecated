@@ -27,28 +27,82 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.widget.RelativeLayout;
 
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Octave;
 
 /**
  * @author Bianca TEUFL
  * 
  */
+@SuppressLint("ViewConstructor")
 public class PianoOctaveView extends RelativeLayout {
 
-	private PianoKeyOctave pianoKeyOctave;
-	private Octave activeOctave;
+	private int widthOfWhiteKey;
+	private int widthOfBlackKey;
+	private int heightOfWhiteKey;
+	private int heightOfBlackKey;
 
-	public PianoOctaveView(Context context, Octave activeOctave) {
+	private Octave octave;
+
+	public PianoOctaveView(Context context, Octave octave) {
 		super(context);
-		this.setWillNotDraw(false);
-		this.activeOctave = activeOctave;
+		this.octave = octave;
+		setWillNotDraw(false);
 	}
 
-	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
-		this.pianoKeyOctave = new PianoKeyOctave(this, activeOctave, canvas);
-		this.setWillNotDraw(true);
+		createPianoKeys(canvas.getWidth(), canvas.getHeight());
+		setWillNotDraw(true);
 	}
 
+	private void createPianoKeys(int width, int height) {
+		setSizeOfKeys(width, height);
+		createWhitePianoKeys();
+		createBlackPianoKeys();
+	}
+
+	private void setSizeOfKeys(int width, int height) {
+		widthOfWhiteKey = width / Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_UNSIGNED;
+		heightOfWhiteKey = height;
+		widthOfBlackKey = widthOfWhiteKey / 2;
+		heightOfBlackKey = heightOfWhiteKey / 2;
+	}
+
+	private void createWhitePianoKeys() {
+		NoteName[] noteNames = octave.getNoteNames();
+		int nextWhiteButtonPosition = 0;
+
+		for (int i = 0; i < noteNames.length; i++) {
+			NoteName noteName = noteNames[i];
+
+			if (false == noteName.isSigned()) {
+				PianoKey pianoKey = new PianoKey(getContext(), noteName, widthOfWhiteKey, heightOfWhiteKey,
+						nextWhiteButtonPosition, false);
+				nextWhiteButtonPosition += widthOfWhiteKey;
+				addView(pianoKey);
+			}
+		}
+	}
+
+	private void createBlackPianoKeys() {
+		NoteName[] noteNames = octave.getNoteNames();
+		int nextBlackButtonPosition = widthOfBlackKey * 3 / 2;
+		int indexWithNoBlackPianoKey = 4;
+
+		for (int i = 0; i < noteNames.length; i++) {
+			NoteName noteName = noteNames[i];
+
+			if (noteName.isSigned()) {
+				PianoKey pianoKey = new PianoKey(getContext(), noteName, widthOfBlackKey, heightOfBlackKey,
+						nextBlackButtonPosition, true);
+				nextBlackButtonPosition += 2 * widthOfBlackKey;
+				addView(pianoKey);
+			}
+
+			if (i == indexWithNoBlackPianoKey) {
+				nextBlackButtonPosition += 2 * widthOfBlackKey;
+			}
+		}
+	}
 }

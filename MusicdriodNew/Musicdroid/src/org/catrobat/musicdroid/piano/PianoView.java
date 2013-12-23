@@ -35,33 +35,40 @@ import org.catrobat.musicdroid.note.Octave;
  */
 public class PianoView extends LinearLayout {
 
-	private Octave activeOctave = Octave.ONE_LINE_OCTAVE;
-	private PianoOctaveView pianoView;
+	private static final Octave[] SUPPORTED_OCTAVES = new Octave[] { Octave.SMALL_OCTAVE, Octave.ONE_LINE_OCTAVE,
+			Octave.TWO_LINE_OCTAVE };
+
+	private int activeOctaveIndex;
+	private PianoOctaveView pianoOctaveView;
 	private Button buttonLeft;
 	private Button buttonRight;
 	private LayoutParams layoutParams;
 
 	public PianoView(Context context) {
 		super(context);
-		this.layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f);
-		this.buttonLeft = new Button(context);
-		this.pianoView = new PianoOctaveView(context, activeOctave);
-		this.buttonRight = new Button(context);
-		pianoView.setLayoutParams(layoutParams);
-		this.addView(buttonLeft);
-		this.addView(pianoView);
-		this.addView(buttonRight);
+		activeOctaveIndex = 1;
+		initComponents();
+	}
 
-		this.buttonLeft.setOnClickListener(new OnClickListener() {
+	private void initComponents() {
+		layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f);
+		buttonLeft = new Button(getContext());
+		buttonRight = new Button(getContext());
+		pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
+		pianoOctaveView.setLayoutParams(layoutParams);
+
+		buttonLeft.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				incrementOctave();
+				decrementOctave();
 				removeAllViews();
+
+				pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
+				pianoOctaveView.setLayoutParams(layoutParams);
+
 				addView(buttonLeft);
-				pianoView = new PianoOctaveView(getContext(), activeOctave);
-				pianoView.setLayoutParams(layoutParams);
-				addView(pianoView);
+				addView(pianoOctaveView);
 				addView(buttonRight);
 			}
 
@@ -71,37 +78,45 @@ public class PianoView extends LinearLayout {
 
 			@Override
 			public void onClick(View v) {
-				decrementOctave();
+				incrementOctave();
 				removeAllViews();
+
+				pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
+				pianoOctaveView.setLayoutParams(layoutParams);
+
 				addView(buttonLeft);
-				pianoView = new PianoOctaveView(getContext(), activeOctave);
-				pianoView.setLayoutParams(layoutParams);
-				addView(pianoView);
+				addView(pianoOctaveView);
 				addView(buttonRight);
 			}
 
 		});
+
+		addView(buttonLeft);
+		addView(pianoOctaveView);
+		addView(buttonRight);
 	}
 
 	public void incrementOctave() {
-		Octave oldOctave = activeOctave;
-		activeOctave = activeOctave.next();
+		int newOctaveIndex = activeOctaveIndex + 1;
 
-		if (activeOctave == oldOctave) {
+		if (newOctaveIndex == SUPPORTED_OCTAVES.length) {
 			buttonRight.setClickable(false);
+			return;
 		}
 
+		activeOctaveIndex = newOctaveIndex;
 		buttonLeft.setClickable(true);
 	}
 
 	public void decrementOctave() {
-		Octave oldOctave = activeOctave;
-		activeOctave = activeOctave.previous();
+		int newOctaveIndex = activeOctaveIndex - 1;
 
-		if (activeOctave == oldOctave) {
+		if (newOctaveIndex < 0) {
 			buttonLeft.setClickable(false);
+			return;
 		}
 
+		activeOctaveIndex = newOctaveIndex;
 		buttonRight.setClickable(true);
 	}
 

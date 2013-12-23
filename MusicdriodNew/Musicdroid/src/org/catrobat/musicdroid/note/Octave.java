@@ -80,6 +80,8 @@ public enum Octave {
 			NoteName.C8});
 	
 	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
+	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_SIGNED = 5;
+	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_UNSIGNED = 7;
 	
 	private NoteName[] noteNames;
 	
@@ -87,31 +89,7 @@ public enum Octave {
 		this.noteNames = noteNames;
 	}
 	
-	public NoteName getFirstNoteNameOfOctave() {
-		return noteNames[0];
-	}
-	
 	public NoteName[] getNoteNames() {
 		return noteNames;
-	}
-	
-	public Octave next() {
-		int index = this.ordinal() + 1;
-
-		if (index >= values().length) {
-			index--;
-		}
-
-		return values()[index];
-	}
-
-	public Octave previous() {
-		int index = this.ordinal() - 1;
-
-		if (index < 0) {
-			index++;
-		}
-
-		return values()[index];
 	}
 }

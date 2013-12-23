@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
+import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.note.draw.NoteSheetView;
@@ -51,7 +52,6 @@ public class NoteSheetActivity extends Activity {
 		LinearLayout linearLayout = new LinearLayout(this);
 		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
-		LayoutParams layoutParams1 = new LinearLayout.LayoutParams(2000, LayoutParams.FILL_PARENT, 1.0f);
 		noteSheetView = new NoteSheetView(this);
 		pianoView = new PianoView(this);
 		noteSheetView.setLayoutParams(layoutParams);
@@ -61,27 +61,28 @@ public class NoteSheetActivity extends Activity {
 		linearLayout.setOrientation(1);
 
 		this.setContentView(linearLayout);
-
 	}
 
-	public void drawTrack() {
+	public void addNoteEventToTrackAndRedraw(NoteEvent noteEvent) {
+		if (false == noteEvent.isNoteOn()) {
+			incrementTick();
+		}
+
+		track.addNoteEvent(tick, noteEvent);
+
+		drawTrack();
+	}
+
+	private void drawTrack() {
 		noteSheetView.setTrack(track);
 		noteSheetView.invalidate();
-	}
-
-	public Track getTrack() {
-		return track;
 	}
 
 	public void setTrack(Track track) {
 		this.track = track;
 	}
 
-	public int getTick() {
-		return tick;
-	}
-
-	public void incrementTick() {
-		this.tick += NoteLength.QUARTER.getTickDuration();
+	private void incrementTick() {
+		tick += NoteLength.QUARTER.getTickDuration();
 	}
 }

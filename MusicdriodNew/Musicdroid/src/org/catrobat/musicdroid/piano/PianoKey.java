@@ -22,6 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.piano;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -37,43 +38,61 @@ import org.catrobat.musicdroid.note.NoteName;
  * @author Bianca TEUFL
  * 
  */
+@SuppressLint("ViewConstructor")
 public class PianoKey extends Button {
 
-	protected NoteName noteName;
+	protected final NoteName noteName;
 
-	public PianoKey(Context context, NoteName noteName, int width, int height, int xPosition) {
+	public PianoKey(Context context, NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
 		super(context);
 		this.noteName = noteName;
-		this.setLayoutParams(new LayoutParams(width, height));
-		this.setX(xPosition);
+		initComponents(width, height, xPosition, isBlackKey);
+	}
 
-		this.setOnTouchListener(new OnTouchListener() {
+	private void initComponents(int width, int height, int xPosition, boolean isBlackKey) {
+		setLayoutParams(new LayoutParams(width, height));
+		setX(xPosition);
+
+		if (isBlackKey) {
+			setBackgroundColor(Color.BLACK);
+		}
+
+		setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
-				NoteSheetActivity noteSheetActivity = (NoteSheetActivity) view.getContext();
-				if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
-							new NoteEvent(getNoteName(), true));
-					setText(PianoKey.this.noteName.toString());
-					setTextColor(Color.BLUE);
-				} else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-					noteSheetActivity.incrementTick();
-					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
-							new NoteEvent(getNoteName(), false));
-					noteSheetActivity.drawTrack();
-					setText("");
-					setTextColor(Color.BLUE);
+
+				if (isDownActionEvent(event)) {
+					addKeyPress(new NoteEvent(noteName, true));
+				} else if (isUpActionEvent(event)) {
+					addKeyPress(new NoteEvent(noteName, false));
 				}
+
 				return true;
+			}
+
+			private boolean isDownActionEvent(MotionEvent event) {
+				return (event.getAction() == android.view.MotionEvent.ACTION_DOWN);
+			}
+
+			private boolean isUpActionEvent(MotionEvent event) {
+				return (event.getAction() == android.view.MotionEvent.ACTION_UP);
 			}
 		});
 	}
 
-	public NoteName getNoteName() {
-		return noteName;
+	private void addKeyPress(NoteEvent noteEvent) {
+		NoteSheetActivity noteSheetActivity = (NoteSheetActivity) getContext();
+		noteSheetActivity.addNoteEventToTrackAndRedraw(noteEvent);
+
+		if (noteEvent.isNoteOn()) {
+			setPianoKeyText(noteName.toString());
+		} else {
+			setPianoKeyText("");
+		}
 	}
 
-	public void setNoteName(NoteName noteName) {
-		this.noteName = noteName;
+	private void setPianoKeyText(String text) {
+		setText(text);
+		setTextColor(Color.BLUE);
 	}
 }
