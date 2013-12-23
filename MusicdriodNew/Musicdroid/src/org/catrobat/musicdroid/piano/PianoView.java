@@ -42,7 +42,6 @@ public class PianoView extends LinearLayout {
 	private PianoOctaveView pianoOctaveView;
 	private Button buttonLeft;
 	private Button buttonRight;
-	private LayoutParams layoutParams;
 
 	public PianoView(Context context) {
 		super(context);
@@ -51,45 +50,31 @@ public class PianoView extends LinearLayout {
 	}
 
 	private void initComponents() {
-		layoutParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f);
-		buttonLeft = new Button(getContext());
-		buttonRight = new Button(getContext());
-		pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
-		pianoOctaveView.setLayoutParams(layoutParams);
+		removeAllViews();
 
+		buttonLeft = new Button(getContext());
 		buttonLeft.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				decrementOctave();
-				removeAllViews();
-
-				pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
-				pianoOctaveView.setLayoutParams(layoutParams);
-
-				addView(buttonLeft);
-				addView(pianoOctaveView);
-				addView(buttonRight);
+				initComponents();
 			}
 
 		});
 
-		this.buttonRight.setOnClickListener(new OnClickListener() {
+		buttonRight = new Button(getContext());
+		buttonRight.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				incrementOctave();
-				removeAllViews();
-
-				pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
-				pianoOctaveView.setLayoutParams(layoutParams);
-
-				addView(buttonLeft);
-				addView(pianoOctaveView);
-				addView(buttonRight);
+				initComponents();
 			}
 
 		});
+
+		pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
 
 		addView(buttonLeft);
 		addView(pianoOctaveView);
@@ -119,5 +104,4 @@ public class PianoView extends LinearLayout {
 		activeOctaveIndex = newOctaveIndex;
 		buttonRight.setClickable(true);
 	}
-
 }

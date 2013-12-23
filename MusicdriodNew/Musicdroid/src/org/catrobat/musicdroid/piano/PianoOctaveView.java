@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.piano;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import org.catrobat.musicdroid.note.NoteName;
@@ -47,6 +48,11 @@ public class PianoOctaveView extends RelativeLayout {
 	public PianoOctaveView(Context context, Octave octave) {
 		super(context);
 		this.octave = octave;
+		initComponents();
+	}
+
+	private void initComponents() {
+		setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f));
 		setWillNotDraw(false);
 	}
 
@@ -96,12 +102,12 @@ public class PianoOctaveView extends RelativeLayout {
 			if (noteName.isSigned()) {
 				PianoKey pianoKey = new PianoKey(getContext(), noteName, widthOfBlackKey, heightOfBlackKey,
 						nextBlackButtonPosition, true);
-				nextBlackButtonPosition += 2 * widthOfBlackKey;
+				nextBlackButtonPosition += widthOfWhiteKey;
 				addView(pianoKey);
 			}
 
 			if (i == indexWithNoBlackPianoKey) {
-				nextBlackButtonPosition += 2 * widthOfBlackKey;
+				nextBlackButtonPosition += widthOfWhiteKey;
 			}
 		}
 	}

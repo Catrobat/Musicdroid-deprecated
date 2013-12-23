@@ -41,15 +41,12 @@ import org.catrobat.musicdroid.note.NoteName;
 @SuppressLint("ViewConstructor")
 public class PianoKey extends Button {
 
-	protected final NoteName noteName;
-
 	public PianoKey(Context context, NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
 		super(context);
-		this.noteName = noteName;
-		initComponents(width, height, xPosition, isBlackKey);
+		initComponents(noteName, width, height, xPosition, isBlackKey);
 	}
 
-	private void initComponents(int width, int height, int xPosition, boolean isBlackKey) {
+	private void initComponents(final NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
 		setLayoutParams(new LayoutParams(width, height));
 		setX(xPosition);
 
@@ -83,16 +80,16 @@ public class PianoKey extends Button {
 	private void addKeyPress(NoteEvent noteEvent) {
 		NoteSheetActivity noteSheetActivity = (NoteSheetActivity) getContext();
 		noteSheetActivity.addNoteEventToTrackAndRedraw(noteEvent);
-
-		if (noteEvent.isNoteOn()) {
-			setPianoKeyText(noteName.toString());
-		} else {
-			setPianoKeyText("");
-		}
+		setPianoKeyText(noteEvent);
 	}
 
-	private void setPianoKeyText(String text) {
-		setText(text);
+	private void setPianoKeyText(NoteEvent noteEvent) {
+		if (noteEvent.isNoteOn()) {
+			setText(noteEvent.getNoteName().toString());
+		} else {
+			setText("");
+		}
+
 		setTextColor(Color.BLUE);
 	}
 }
