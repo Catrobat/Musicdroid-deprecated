@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SymbolListTestDataFactory {
+
 	public static List<Symbol> createSimpleSymbolList() {
 		List<Symbol> symbols = new LinkedList<Symbol>();
 

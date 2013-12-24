@@ -47,7 +47,6 @@ public class ProjectToMidiConverterTest extends TestCase {
 
 	public void testAddInstrumentAndGetChannel1() throws MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-
 		int[] expectedChannels = { 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACCORDION, Instrument.ACOUSTIC_BASS,
 				Instrument.ACOUSTIC_BASS, Instrument.ACOUSTIC_GRAND_PIANO, Instrument.AGOGO_BELLS, Instrument.APPLAUSE,

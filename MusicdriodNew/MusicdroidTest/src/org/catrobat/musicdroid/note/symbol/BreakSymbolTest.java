@@ -25,45 +25,47 @@ package org.catrobat.musicdroid.note.symbol;
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.symbol.testutil.BreakSymbolTestDataFactory;
 
 public class BreakSymbolTest extends TestCase {
 
 	public void testBreakSymbol() {
 		NoteLength noteLength = NoteLength.QUARTER_DOT;
-		BreakSymbol breakSymbol = new BreakSymbol(noteLength);
+		BreakSymbol breakSymbol = BreakSymbolTestDataFactory.createBreakSymbol(noteLength);
 
 		assertEquals(noteLength, breakSymbol.getNoteLength());
 	}
 
 	public void testEquals1() {
-		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER);
-		BreakSymbol breakSymbol2 = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol1 = BreakSymbolTestDataFactory.createBreakSymbol();
+		BreakSymbol breakSymbol2 = BreakSymbolTestDataFactory.createBreakSymbol();
 
 		assertTrue(breakSymbol1.equals(breakSymbol2));
 	}
 
 	public void testEquals2() {
-		BreakSymbol breakSymbol1 = new BreakSymbol(NoteLength.QUARTER);
-		BreakSymbol breakSymbol2 = new BreakSymbol(NoteLength.EIGHT);
+		BreakSymbol breakSymbol1 = BreakSymbolTestDataFactory.createBreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol2 = BreakSymbolTestDataFactory.createBreakSymbol(NoteLength.EIGHT);
 
 		assertFalse(breakSymbol1.equals(breakSymbol2));
 	}
 
 	public void testEquals3() {
-		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol = BreakSymbolTestDataFactory.createBreakSymbol();
 
 		assertFalse(breakSymbol.equals(null));
 	}
 
 	public void testEquals4() {
-		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol = BreakSymbolTestDataFactory.createBreakSymbol();
 
 		assertFalse(breakSymbol.equals(""));
 	}
 
 	public void testToString() {
-		BreakSymbol breakSymbol = new BreakSymbol(NoteLength.QUARTER);
+		BreakSymbol breakSymbol = BreakSymbolTestDataFactory.createBreakSymbol();
+		String expectedString = "[BreakSymbol] noteLength: " + breakSymbol.getNoteLength();
 
-		assertEquals("[BreakSymbol] noteLength: " + breakSymbol.getNoteLength(), breakSymbol.toString());
+		assertEquals(expectedString, breakSymbol.toString());
 	}
 }

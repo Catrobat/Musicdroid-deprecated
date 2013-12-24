@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.note;
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.testutil.ProjectTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.TrackTestDataFactory;
 
 public class ProjectTest extends TestCase {
 
@@ -55,7 +56,7 @@ public class ProjectTest extends TestCase {
 
 	public void testGetTrack() {
 		Project project = ProjectTestDataFactory.createProject();
-		Track track = new Track();
+		Track track = TrackTestDataFactory.createTrack();
 		project.addTrack(track);
 
 		assertEquals(track, project.getTrack(0));
@@ -63,7 +64,7 @@ public class ProjectTest extends TestCase {
 
 	public void testRemoveTrack() {
 		Project project = ProjectTestDataFactory.createProject();
-		Track track = new Track();
+		Track track = TrackTestDataFactory.createTrack();
 		project.addTrack(track);
 		project.removeTrack(track);
 
@@ -85,26 +86,21 @@ public class ProjectTest extends TestCase {
 	}
 
 	public void testEquals3() {
-		Project project1 = ProjectTestDataFactory.createProject();
-		project1.addTrack(new Track());
-		Project project2 = ProjectTestDataFactory.createProject();
-		project2.addTrack(new Track());
+		Project project1 = ProjectTestDataFactory.createProjectWithTrack();
+		Project project2 = ProjectTestDataFactory.createProjectWithTrack();
 
 		assertTrue(project1.equals(project2));
 	}
 
 	public void testEquals4() {
-		Project project1 = ProjectTestDataFactory.createProject();
-		project1.addTrack(new Track());
-		Project project2 = ProjectTestDataFactory.createProject();
-		project2.addTrack(new Track(Instrument.APPLAUSE));
+		Project project1 = ProjectTestDataFactory.createProjectWithTrack();
+		Project project2 = ProjectTestDataFactory.createProjectWithTrack(Instrument.APPLAUSE);
 
 		assertFalse(project1.equals(project2));
 	}
 
 	public void testEquals5() {
-		Project project1 = ProjectTestDataFactory.createProject();
-		project1.addTrack(new Track());
+		Project project1 = ProjectTestDataFactory.createProjectWithTrack();
 		Project project2 = ProjectTestDataFactory.createProject();
 
 		assertFalse(project1.equals(project2));
@@ -124,8 +120,9 @@ public class ProjectTest extends TestCase {
 
 	public void testToString() {
 		Project project = ProjectTestDataFactory.createProject();
+		String expectedString = "[Project] name=" + project.getName() + " beatsPerMinute="
+				+ project.getBeatsPerMinute() + " key=" + project.getKey() + " trackCount=" + project.size();
 
-		assertEquals("[Project] name=" + project.getName() + " beatsPerMinute=" + project.getBeatsPerMinute() + " key="
-				+ project.getKey() + " trackCount=" + project.size(), project.toString());
+		assertEquals(expectedString, project.toString());
 	}
 }

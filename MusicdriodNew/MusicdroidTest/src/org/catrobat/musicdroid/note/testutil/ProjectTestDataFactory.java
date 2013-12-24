@@ -23,7 +23,6 @@
 package org.catrobat.musicdroid.note.testutil;
 
 import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.Track;
 
@@ -37,8 +36,24 @@ public class ProjectTestDataFactory {
 		return new Project(name, Project.DEFAULT_BEATS_PER_MINUTE, Project.DEFAULT_KEY);
 	}
 
+	public static Project createProjectWithTrack(Instrument instrument) {
+		Project project = createProject();
+		Track track = TrackTestDataFactory.createTrack(instrument);
+		project.addTrack(track);
+
+		return project;
+	}
+
+	public static Project createProjectWithTrack() {
+		Project project = createProject();
+		Track track = TrackTestDataFactory.createTrack();
+		project.addTrack(track);
+
+		return project;
+	}
+
 	public static Project createProjectWithSemiComplexTracks() {
-		Project project = new Project(Project.DEFAULT_NAME, Project.DEFAULT_BEATS_PER_MINUTE, Key.VIOLIN);
+		Project project = new Project(Project.DEFAULT_NAME, Project.DEFAULT_BEATS_PER_MINUTE, Project.DEFAULT_KEY);
 		Track track1 = TrackTestDataFactory.createSemiComplexTrack(Instrument.GUNSHOT);
 		Track track2 = TrackTestDataFactory.createSemiComplexTrack(Instrument.WHISTLE);
 

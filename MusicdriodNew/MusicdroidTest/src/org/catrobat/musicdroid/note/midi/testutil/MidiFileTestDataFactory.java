@@ -42,9 +42,7 @@ public class MidiFileTestDataFactory {
 		Project project = ProjectTestDataFactory.createProject();
 		try {
 			createAndWriteMidiFile(project);
-		} catch (IOException e) {
-			return false;
-		} catch (MidiException e) {
+		} catch (Exception e) {
 			return false;
 		} finally {
 			File file = new File(project.getName() + ".midi");
@@ -67,9 +65,7 @@ public class MidiFileTestDataFactory {
 			project = converter.readFileAndConvertMidi(new File(project.getName() + ".midi"));
 
 			return (project != null);
-		} catch (IOException e) {
-			return false;
-		} catch (MidiException e) {
+		} catch (Exception e) {
 			return false;
 		} finally {
 			File file = new File(project.getName() + ".midi");

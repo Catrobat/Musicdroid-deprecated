@@ -24,64 +24,62 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.symbol.testutil.BoundNoteSymbolTestDataFactory;
+import org.catrobat.musicdroid.note.symbol.testutil.NoteSymbolTestDataFactory;
+
 public class BoundNoteSymbolTest extends TestCase {
 
 	public void testAddNoteSymbol() {
-		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
-		boundNoteSymbol.addNoteSymbol(new NoteSymbol());
+		BoundNoteSymbol boundNoteSymbol = BoundNoteSymbolTestDataFactory.createBoundNoteSymbolWithNoteSymbol();
 
 		assertEquals(1, boundNoteSymbol.size());
 	}
 
 	public void testGetNoteSymbol() {
-		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
-		NoteSymbol noteSymbol = new NoteSymbol();
-
+		BoundNoteSymbol boundNoteSymbol = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbol();
 		boundNoteSymbol.addNoteSymbol(noteSymbol);
 
 		assertEquals(noteSymbol, boundNoteSymbol.getNoteSymbol(0));
 	}
 
 	public void testEquals1() {
-		BoundNoteSymbol boundNoteSymbol1 = new BoundNoteSymbol();
-		BoundNoteSymbol boundNoteSymbol2 = new BoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol1 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol2 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
 
 		assertTrue(boundNoteSymbol1.equals(boundNoteSymbol2));
 	}
 
 	public void testEquals2() {
-		NoteSymbol noteSymbol = new NoteSymbol();
-		BoundNoteSymbol boundNoteSymbol1 = new BoundNoteSymbol();
-		boundNoteSymbol1.addNoteSymbol(noteSymbol);
-		BoundNoteSymbol boundNoteSymbol2 = new BoundNoteSymbol();
-		boundNoteSymbol2.addNoteSymbol(noteSymbol);
+		BoundNoteSymbol boundNoteSymbol1 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbolWithNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol2 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbolWithNoteSymbol();
 
 		assertTrue(boundNoteSymbol1.equals(boundNoteSymbol2));
 	}
 
 	public void testEquals3() {
-		BoundNoteSymbol boundNoteSymbol1 = new BoundNoteSymbol();
-		boundNoteSymbol1.addNoteSymbol(new NoteSymbol());
-		BoundNoteSymbol boundNoteSymbol2 = new BoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol1 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbolWithNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol2 = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
 
 		assertFalse(boundNoteSymbol1.equals(boundNoteSymbol2));
 	}
 
 	public void testEquals4() {
-		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
 
 		assertFalse(boundNoteSymbol.equals(null));
 	}
 
 	public void testEquals5() {
-		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
 
 		assertFalse(boundNoteSymbol.equals(""));
 	}
 
 	public void testToString() {
-		BoundNoteSymbol boundNoteSymbol = new BoundNoteSymbol();
+		BoundNoteSymbol boundNoteSymbol = BoundNoteSymbolTestDataFactory.createBoundNoteSymbol();
+		String expectedString = "[BoundNoteSymbol] size: " + boundNoteSymbol.size();
 
-		assertEquals("[BoundNoteSymbol] size: " + boundNoteSymbol.size(), boundNoteSymbol.toString());
+		assertEquals(expectedString, boundNoteSymbol.toString());
 	}
 }

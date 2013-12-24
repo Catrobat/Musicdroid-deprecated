@@ -28,11 +28,11 @@ import org.catrobat.musicdroid.note.NoteName;
 public class NoteEventTestDataFactory {
 
 	public static NoteEvent createNoteEvent() {
-		return createNoteEvent(NoteName.DEFAULT_NOTE_NAME, NoteEvent.DEFAULT_NOTE_ON);
+		return createNoteEvent(NoteName.C4, true);
 	}
 
 	public static NoteEvent createNoteEvent(NoteName noteName) {
-		return createNoteEvent(noteName, NoteEvent.DEFAULT_NOTE_ON);
+		return createNoteEvent(noteName, true);
 	}
 
 	public static NoteEvent createNoteEvent(NoteName noteName, boolean noteOn) {

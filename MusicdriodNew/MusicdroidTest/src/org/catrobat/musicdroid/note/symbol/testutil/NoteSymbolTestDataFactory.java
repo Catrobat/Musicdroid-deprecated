@@ -20,43 +20,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.note.symbol.testutil;
 
-public class NoteEvent {
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 
-	private NoteName noteName;
-	private boolean noteOn;
+public class NoteSymbolTestDataFactory {
 
-	public NoteEvent(NoteName noteName, boolean noteOn) {
-		this.noteName = noteName;
-		this.noteOn = noteOn;
+	public static NoteSymbol createNoteSymbol() {
+		return new NoteSymbol();
 	}
 
-	public NoteName getNoteName() {
-		return noteName;
-	}
+	public static NoteSymbol createNoteSymbolWithNote() {
+		NoteSymbol noteSymbol = createNoteSymbol();
+		noteSymbol.addNote(NoteName.C4, NoteLength.QUARTER);
 
-	public boolean isNoteOn() {
-		return noteOn;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof NoteEvent)) {
-			return false;
-		}
-
-		NoteEvent noteEvent = (NoteEvent) obj;
-
-		if ((noteName.equals(noteEvent.getNoteName())) && (noteOn == noteEvent.isNoteOn())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[NoteEvent] noteName= " + noteName + " noteOn=" + noteOn;
+		return noteSymbol;
 	}
 }

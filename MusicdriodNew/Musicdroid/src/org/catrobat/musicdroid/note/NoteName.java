@@ -37,7 +37,7 @@ public enum NoteName {
 			false), D7S(99, true), E7(100, false), F7(101, false), F7S(102, true), G7(103, false), G7S(104, true), A7(
 			105, false), A7S(106, true), B7(107, false), C8(108, false);
 
-	public static final NoteName DEFAULT_NOTE_NAME = NoteName.C4;
+	private static final NoteName DEFAULT_NOTE_NAME = NoteName.C4;
 
 	private int midi;
 	private boolean signed;

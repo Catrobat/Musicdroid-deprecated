@@ -79,8 +79,6 @@ public enum Octave {
 	FIVE_LINE_OCTAVE(new NoteName[] {
 			NoteName.C8});
 	
-	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
-	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_SIGNED = 5;
 	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_UNSIGNED = 7;
 	
 	private NoteName[] noteNames;

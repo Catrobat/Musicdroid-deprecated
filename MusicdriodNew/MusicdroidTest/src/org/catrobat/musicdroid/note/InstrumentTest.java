@@ -42,12 +42,12 @@ public class InstrumentTest extends TestCase {
 	}
 
 	public void testGetInstrumentFromProgram4() {
-		assertGetInstrumentFromProgram(128, Instrument.ACOUSTIC_GRAND_PIANO);
+		int invalidProgram = 128;
+		assertGetInstrumentFromProgram(invalidProgram, Instrument.ACOUSTIC_GRAND_PIANO);
 	}
 
 	private void assertGetInstrumentFromProgram(int program, Instrument expectedInstrument) {
 		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
-
 		assertEquals(expectedInstrument, actualInstrument);
 	}
 }

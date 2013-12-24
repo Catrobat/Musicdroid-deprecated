@@ -30,25 +30,21 @@ import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.testutil.NoteEventTestDataFactory;
 
 public class NoteEventToMidiEventConverterTest extends TestCase {
 
 	public void testConvertNoteEvent1() {
 		NoteEventToMidiEventConverter noteEventConverter = new NoteEventToMidiEventConverter();
-		long tick = 0;
 		NoteName noteName = NoteName.C1;
-		NoteEvent noteEvent = new NoteEvent(noteName, true);
+		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent(noteName);
+		long tick = 0;
 		int channel = 3;
 		int velocity = 64;
 
-		ChannelEvent channelEvent = noteEventConverter.convertNoteEvent(tick, noteEvent, channel);
+		NoteOn noteOnEvent = (NoteOn) noteEventConverter.convertNoteEvent(tick, noteEvent, channel);
 
-		assertEquals(tick, channelEvent.getTick());
-		assertEquals(channel, channelEvent.getChannel());
-		assertTrue(channelEvent instanceof NoteOn);
-		NoteOn noteOnEvent = (NoteOn) channelEvent;
-		assertEquals(noteName.getMidi(), noteOnEvent.getNoteValue());
-		assertEquals(velocity, noteOnEvent.getVelocity());
+		assertNoteOnEvent(noteOnEvent, noteName, tick, channel, velocity);
 	}
 
 	public void testConvertNoteEvent2() {
@@ -59,13 +55,25 @@ public class NoteEventToMidiEventConverterTest extends TestCase {
 		int channel = 3;
 		int velocity = 0;
 
-		ChannelEvent channelEvent = noteEventConverter.convertNoteEvent(tick, noteEvent, channel);
+		NoteOff noteOffEvent = (NoteOff) noteEventConverter.convertNoteEvent(tick, noteEvent, channel);
 
+		assertNoteOffEvent(noteOffEvent, noteName, tick, channel, velocity);
+	}
+
+	private void assertChannelEvent(ChannelEvent channelEvent, long tick, int channel) {
 		assertEquals(tick, channelEvent.getTick());
 		assertEquals(channel, channelEvent.getChannel());
-		assertTrue(channelEvent instanceof NoteOff);
-		NoteOff noteOnEvent = (NoteOff) channelEvent;
+	}
+
+	private void assertNoteOnEvent(NoteOn noteOnEvent, NoteName noteName, long tick, int channel, int velocity) {
+		assertChannelEvent(noteOnEvent, tick, channel);
 		assertEquals(noteName.getMidi(), noteOnEvent.getNoteValue());
 		assertEquals(velocity, noteOnEvent.getVelocity());
+	}
+
+	private void assertNoteOffEvent(NoteOff noteOffEvent, NoteName noteName, long tick, int channel, int velocity) {
+		assertChannelEvent(noteOffEvent, tick, channel);
+		assertEquals(noteName.getMidi(), noteOffEvent.getNoteValue());
+		assertEquals(velocity, noteOffEvent.getVelocity());
 	}
 }

@@ -33,20 +33,21 @@ public class TrackToSymbolsConverterTest extends TestCase {
 
 	public void testConvertTrack1() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-
 		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSimpleSymbolList();
 		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createSimpleTrack());
 
-		assertEquals(expectedSymbols.size(), actualSymbols.size());
-		assertEquals(expectedSymbols, actualSymbols);
+		assertEqualsSymbolLists(expectedSymbols, actualSymbols);
 	}
 
 	public void testConvertTrack2() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-
 		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSymbolListWithBreak();
 		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createTrackWithBreak());
 
+		assertEqualsSymbolLists(expectedSymbols, actualSymbols);
+	}
+
+	private void assertEqualsSymbolLists(List<Symbol> expectedSymbols, List<Symbol> actualSymbols) {
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);
 	}

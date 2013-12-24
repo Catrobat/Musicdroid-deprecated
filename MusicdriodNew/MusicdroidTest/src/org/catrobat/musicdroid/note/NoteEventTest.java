@@ -71,8 +71,8 @@ public class NoteEventTest extends TestCase {
 
 	public void testToString() {
 		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
+		String expectedString = "[NoteEvent] noteName= " + noteEvent.getNoteName() + " noteOn=" + noteEvent.isNoteOn();
 
-		assertEquals("[NoteEvent] noteName= " + NoteName.DEFAULT_NOTE_NAME + " noteOn=" + NoteEvent.DEFAULT_NOTE_ON,
-				noteEvent.toString());
+		assertEquals(expectedString, noteEvent.toString());
 	}
 }

@@ -24,60 +24,53 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.NoteLength;
-import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.symbol.testutil.NoteSymbolTestDataFactory;
 
 public class NoteSymbolTest extends TestCase {
 
 	public void testAddNote() {
-		NoteSymbol noteSymbol = new NoteSymbol();
-
-		assertTrue(noteSymbol.size() == 0);
-
-		noteSymbol.addNote(NoteName.C1, NoteLength.QUARTER);
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote();
 
 		assertTrue(noteSymbol.size() == 1);
 	}
 
 	public void testEquals1() {
-		NoteSymbol noteSymbol1 = new NoteSymbol();
-		NoteSymbol noteSymbol2 = new NoteSymbol();
+		NoteSymbol noteSymbol1 = NoteSymbolTestDataFactory.createNoteSymbol();
+		NoteSymbol noteSymbol2 = NoteSymbolTestDataFactory.createNoteSymbol();
 
 		assertTrue(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals2() {
-		NoteSymbol noteSymbol1 = new NoteSymbol();
-		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
-		NoteSymbol noteSymbol2 = new NoteSymbol();
-		noteSymbol2.addNote(NoteName.C1, NoteLength.QUARTER);
+		NoteSymbol noteSymbol1 = NoteSymbolTestDataFactory.createNoteSymbolWithNote();
+		NoteSymbol noteSymbol2 = NoteSymbolTestDataFactory.createNoteSymbolWithNote();
 
 		assertTrue(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals3() {
-		NoteSymbol noteSymbol1 = new NoteSymbol();
-		noteSymbol1.addNote(NoteName.C1, NoteLength.QUARTER);
-		NoteSymbol noteSymbol2 = new NoteSymbol();
+		NoteSymbol noteSymbol1 = NoteSymbolTestDataFactory.createNoteSymbolWithNote();
+		NoteSymbol noteSymbol2 = NoteSymbolTestDataFactory.createNoteSymbol();
 
 		assertFalse(noteSymbol1.equals(noteSymbol2));
 	}
 
 	public void testEquals4() {
-		NoteSymbol noteSymbol = new NoteSymbol();
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbol();
 
 		assertFalse(noteSymbol.equals(null));
 	}
 
 	public void testEquals5() {
-		NoteSymbol noteSymbol = new NoteSymbol();
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbol();
 
 		assertFalse(noteSymbol.equals(""));
 	}
 
 	public void testToString() {
-		NoteSymbol noteSymbol = new NoteSymbol();
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbol();
+		String expectedString = "[NoteSymbol] size: " + noteSymbol.size();
 
-		assertEquals("[NoteSymbol] size: " + noteSymbol.size(), noteSymbol.toString());
+		assertEquals(expectedString, noteSymbol.toString());
 	}
 }

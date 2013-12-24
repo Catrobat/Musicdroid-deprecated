@@ -40,41 +40,41 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testNext1() {
-		NoteName b0 = NoteName.B0;
-		NoteName c1 = NoteName.C1;
+		NoteName noteName = NoteName.B0;
+		NoteName nextNoteName = NoteName.C1;
 
-		assertEquals(c1, b0.next());
+		assertEquals(nextNoteName, noteName.next());
 	}
 
 	public void testNext2() {
-		NoteName c8 = NoteName.C8;
+		NoteName lastNoteName = NoteName.C8;
 
-		assertEquals(c8, c8.next());
+		assertEquals(lastNoteName, lastNoteName.next());
 	}
 
 	public void testPrevious1() {
-		NoteName c1 = NoteName.C1;
-		NoteName b0 = NoteName.B0;
+		NoteName noteName = NoteName.C1;
+		NoteName previousNoteName = NoteName.B0;
 
-		assertEquals(b0, c1.previous());
+		assertEquals(previousNoteName, noteName.previous());
 	}
 
 	public void testPrevious2() {
-		NoteName a0 = NoteName.A0;
+		NoteName firstNoteName = NoteName.A0;
 
-		assertEquals(a0, a0.previous());
+		assertEquals(firstNoteName, firstNoteName.previous());
 	}
 
 	public void testIsSigned1() {
-		NoteName c1 = NoteName.C1;
+		NoteName noteName = NoteName.C1;
 
-		assertFalse(c1.isSigned());
+		assertFalse(noteName.isSigned());
 	}
 
 	public void testIsSigned2() {
-		NoteName c1s = NoteName.C1S;
+		NoteName noteName = NoteName.C1S;
 
-		assertTrue(c1s.isSigned());
+		assertTrue(noteName.isSigned());
 	}
 
 	public void testGetNoteNameFromMidiValue1() {
