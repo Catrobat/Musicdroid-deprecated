@@ -22,29 +22,34 @@
  */
 package org.catrobat.musicdroid.instruments;
 
-import android.app.Activity;
+import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 
-public abstract class Instrument extends Activity {
+public class TickThreadTest extends TestCase {
 
-	private TickThread tickThread;
-	private Track track;
+	// TODO fw yes i know that this test is garbage, but until TickThread is not a real Thread...
+	public void testGetNextTick1() {
+		TickThread tickThread = new TickThread();
+		NoteEvent noteEvent = new NoteEvent(NoteName.C4, false);
+		long tick = 0;
 
-	public Instrument() {
-		tickThread = new TickThread();
-		track = new Track();
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		tick += NoteLength.QUARTER.getTickDuration();
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		tick += NoteLength.QUARTER.getTickDuration();
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
 	}
 
-	public Track getTrack() {
-		return track;
-	}
+	public void testGetNextTick2() {
+		TickThread tickThread = new TickThread();
+		NoteEvent noteEvent = new NoteEvent(NoteName.C4, true);
+		long tick = 0;
 
-	public void addNoteEvent(NoteEvent noteEvent) {
-		track.addNoteEvent(tickThread.getNextTick(noteEvent), noteEvent);
-		doAfterAddNoteEvent(noteEvent);
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
 	}
-
-	protected abstract void doAfterAddNoteEvent(NoteEvent noteEvent);
 }

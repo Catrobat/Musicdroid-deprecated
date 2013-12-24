@@ -58,6 +58,6 @@ public class PianoActivity extends Instrument {
 
 	@Override
 	protected void doAfterAddNoteEvent(NoteEvent noteEvent) {
-		noteSheetView.redraw(track);
+		noteSheetView.redraw(getTrack());
 	}
 }

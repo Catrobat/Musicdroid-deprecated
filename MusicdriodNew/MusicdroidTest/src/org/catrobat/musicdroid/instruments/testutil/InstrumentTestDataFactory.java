@@ -20,31 +20,14 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.instruments;
+package org.catrobat.musicdroid.instruments.testutil;
 
-import android.app.Activity;
+import org.catrobat.musicdroid.instruments.Instrument;
+import org.catrobat.musicdroid.instruments.piano.PianoActivity;
 
-import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.Track;
+public class InstrumentTestDataFactory {
 
-public abstract class Instrument extends Activity {
-
-	private TickThread tickThread;
-	private Track track;
-
-	public Instrument() {
-		tickThread = new TickThread();
-		track = new Track();
+	public static Instrument createInstrument() {
+		return new PianoActivity();
 	}
-
-	public Track getTrack() {
-		return track;
-	}
-
-	public void addNoteEvent(NoteEvent noteEvent) {
-		track.addNoteEvent(tickThread.getNextTick(noteEvent), noteEvent);
-		doAfterAddNoteEvent(noteEvent);
-	}
-
-	protected abstract void doAfterAddNoteEvent(NoteEvent noteEvent);
 }

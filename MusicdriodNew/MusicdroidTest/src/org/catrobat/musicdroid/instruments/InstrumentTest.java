@@ -22,29 +22,19 @@
  */
 package org.catrobat.musicdroid.instruments;
 
-import android.app.Activity;
+import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.Track;
+public class InstrumentTest extends TestCase {
 
-public abstract class Instrument extends Activity {
-
-	private TickThread tickThread;
-	private Track track;
-
-	public Instrument() {
-		tickThread = new TickThread();
-		track = new Track();
-	}
-
-	public Track getTrack() {
-		return track;
-	}
-
-	public void addNoteEvent(NoteEvent noteEvent) {
-		track.addNoteEvent(tickThread.getNextTick(noteEvent), noteEvent);
-		doAfterAddNoteEvent(noteEvent);
-	}
-
-	protected abstract void doAfterAddNoteEvent(NoteEvent noteEvent);
+	// TODO fw make this work
+	/*
+	 * public void testAddNoteEvent() {
+	 * Instrument instrument = InstrumentTestDataFactory.createInstrument();
+	 * NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
+	 * 
+	 * instrument.addNoteEvent(noteEvent);
+	 * 
+	 * assertEquals(1, instrument.getTrack().size());
+	 * }
+	 */
 }
