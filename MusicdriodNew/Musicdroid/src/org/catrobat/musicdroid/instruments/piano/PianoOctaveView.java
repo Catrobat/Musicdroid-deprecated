@@ -20,10 +20,9 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.piano;
+package org.catrobat.musicdroid.instruments.piano;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,14 +44,14 @@ public class PianoOctaveView extends RelativeLayout {
 
 	private Octave octave;
 
-	public PianoOctaveView(Context context, Octave octave) {
-		super(context);
+	public PianoOctaveView(PianoActivity pianoActivity, Octave octave) {
+		super(pianoActivity);
 		this.octave = octave;
 		initComponents();
 	}
 
 	private void initComponents() {
-		setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f));
+		setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f));
 		setWillNotDraw(false);
 	}
 
@@ -83,7 +82,7 @@ public class PianoOctaveView extends RelativeLayout {
 			NoteName noteName = noteNames[i];
 
 			if (false == noteName.isSigned()) {
-				PianoKey pianoKey = new PianoKey(getContext(), noteName, widthOfWhiteKey, heightOfWhiteKey,
+				PianoKey pianoKey = createPianoKey(noteName, widthOfWhiteKey, heightOfWhiteKey,
 						nextWhiteButtonPosition, false);
 				nextWhiteButtonPosition += widthOfWhiteKey;
 				addView(pianoKey);
@@ -100,7 +99,7 @@ public class PianoOctaveView extends RelativeLayout {
 			NoteName noteName = noteNames[i];
 
 			if (noteName.isSigned()) {
-				PianoKey pianoKey = new PianoKey(getContext(), noteName, widthOfBlackKey, heightOfBlackKey,
+				PianoKey pianoKey = createPianoKey(noteName, widthOfBlackKey, heightOfBlackKey,
 						nextBlackButtonPosition, true);
 				nextBlackButtonPosition += widthOfWhiteKey;
 				addView(pianoKey);
@@ -110,5 +109,9 @@ public class PianoOctaveView extends RelativeLayout {
 				nextBlackButtonPosition += widthOfWhiteKey;
 			}
 		}
+	}
+
+	private PianoKey createPianoKey(NoteName noteName, int width, int height, int position, boolean isBlackKey) {
+		return new PianoKey((PianoActivity) getContext(), noteName, width, height, position, isBlackKey);
 	}
 }

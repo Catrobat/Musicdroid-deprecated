@@ -20,9 +20,9 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.piano;
+package org.catrobat.musicdroid.instruments.piano;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +33,7 @@ import org.catrobat.musicdroid.note.Octave;
  * @author musicdroid
  * 
  */
+@SuppressLint("ViewConstructor")
 public class PianoView extends LinearLayout {
 
 	private static final Octave[] SUPPORTED_OCTAVES = new Octave[] { Octave.SMALL_OCTAVE, Octave.ONE_LINE_OCTAVE,
@@ -43,8 +44,8 @@ public class PianoView extends LinearLayout {
 	private Button buttonLeft;
 	private Button buttonRight;
 
-	public PianoView(Context context) {
-		super(context);
+	public PianoView(PianoActivity pianoActivity) {
+		super(pianoActivity);
 		activeOctaveIndex = 1;
 		initComponents();
 	}
@@ -74,7 +75,7 @@ public class PianoView extends LinearLayout {
 
 		});
 
-		pianoOctaveView = new PianoOctaveView(getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
+		pianoOctaveView = new PianoOctaveView((PianoActivity) getContext(), SUPPORTED_OCTAVES[activeOctaveIndex]);
 
 		addView(buttonLeft);
 		addView(pianoOctaveView);

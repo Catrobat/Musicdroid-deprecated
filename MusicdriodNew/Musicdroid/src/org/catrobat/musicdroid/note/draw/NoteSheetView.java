@@ -70,8 +70,9 @@ public class NoteSheetView extends ScrollView {
 		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
 
-	public void setTrack(Track track) {
+	public void redraw(Track track) {
 		this.track = track;
+		invalidate();
 	}
 
 	@Override

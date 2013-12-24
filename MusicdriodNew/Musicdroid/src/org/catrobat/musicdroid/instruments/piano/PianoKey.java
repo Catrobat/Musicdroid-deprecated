@@ -20,17 +20,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.piano;
+package org.catrobat.musicdroid.instruments.piano;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout.LayoutParams;
 
-import org.catrobat.musicdroid.NoteSheetActivity;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 
@@ -41,8 +39,9 @@ import org.catrobat.musicdroid.note.NoteName;
 @SuppressLint("ViewConstructor")
 public class PianoKey extends Button {
 
-	public PianoKey(Context context, NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
-		super(context);
+	public PianoKey(PianoActivity pianoActivity, NoteName noteName, int width, int height, int xPosition,
+			boolean isBlackKey) {
+		super(pianoActivity);
 		initComponents(noteName, width, height, xPosition, isBlackKey);
 	}
 
@@ -78,8 +77,8 @@ public class PianoKey extends Button {
 	}
 
 	private void addKeyPress(NoteEvent noteEvent) {
-		NoteSheetActivity noteSheetActivity = (NoteSheetActivity) getContext();
-		noteSheetActivity.addNoteEventToTrackAndRedraw(noteEvent);
+		PianoActivity pianoActivity = (PianoActivity) getContext();
+		pianoActivity.addNoteEvent(noteEvent);
 		setPianoKeyText(noteEvent);
 	}
 
