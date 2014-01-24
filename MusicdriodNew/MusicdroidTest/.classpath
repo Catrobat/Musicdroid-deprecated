@@ -6,6 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="/Musicdroid/lib/android-midi-libv3-1-42.jar"/>
+	<classpathentry kind="lib" path="/home/musicdroid/workspace/musicdroid/MusicdriodNew/Musicdroid/libs/android-midi-libv3-1-42.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
