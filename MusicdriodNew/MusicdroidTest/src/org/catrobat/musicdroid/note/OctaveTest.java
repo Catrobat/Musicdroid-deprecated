@@ -36,7 +36,7 @@ public class OctaveTest extends TestCase {
 				NoteName.F1S, NoteName.G1,
 				NoteName.G1S, NoteName.A1,
 				NoteName.A1S, NoteName.B1};
-		Octave octave = Octave.CONTRA_OCTAVE;
+		Octave octave = Octave.createContraOctave();
 		
 		assertTrue(Arrays.equals(noteNames, octave.getNoteNames()));
 	}

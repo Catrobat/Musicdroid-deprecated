@@ -68,7 +68,7 @@ public class PianoOctaveView extends RelativeLayout {
 	}
 
 	private void setSizeOfKeys(int width, int height) {
-		widthOfWhiteKey = width / Octave.NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE_UNSIGNED;
+		widthOfWhiteKey = width / Octave.NUMBER_OF_UNSIGNED_HALF_TONE_STEPS_PER_OCTAVE;
 		heightOfWhiteKey = height;
 		widthOfBlackKey = widthOfWhiteKey / 2;
 		heightOfBlackKey = heightOfWhiteKey / 2;
