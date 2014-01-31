@@ -22,18 +22,17 @@
  */
 package org.catrobat.musicdroid.note;
 
+import java.util.Arrays;
+
 public class Octave {
 
+	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
 	public final static int NUMBER_OF_UNSIGNED_HALF_TONE_STEPS_PER_OCTAVE = 7;
 
 	private NoteName[] noteNames;
 
 	private Octave(NoteName[] noteNames) {
 		this.noteNames = noteNames;
-	}
-
-	private Octave(NoteName startNoteName) {
-		// TODO fw ... and add a test!
 	}
 
 	public NoteName[] getNoteNames() {
@@ -84,6 +83,19 @@ public class Octave {
 	}
 
 	public static Octave createCustomOctave(NoteName startNoteName) {
-		return new Octave(startNoteName);
+		NoteName currentNoteName = startNoteName;
+		NoteName[] noteNames = new NoteName[NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE];
+
+		for (int i = 0; i < noteNames.length; i++) {
+			noteNames[i] = currentNoteName;
+
+			if (currentNoteName == currentNoteName.next()) {
+				return new Octave(Arrays.copyOf(noteNames, i + 1));
+			}
+
+			currentNoteName = currentNoteName.next();
+		}
+
+		return new Octave(noteNames);
 	}
 }
