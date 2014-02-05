@@ -65,7 +65,7 @@ public class NoteSheetView extends ScrollView {
 	public NoteSheetView(Context context) {
 		super(context);
 		paint = new Paint();
-		track = new Track();
+		track = new Track(Key.VIOLIN); // TODO fw aus Settings auslesen
 		trackDrawer = new TrackDrawer();
 		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
@@ -143,8 +143,7 @@ public class NoteSheetView extends ScrollView {
 	private void drawKey() {
 		Resources res = getContext().getResources();
 		Bitmap keyPicture;
-		//TODO AUS SETTINGS AUSlesen
-		Key key = Key.VIOLIN;
+		Key key = track.getKey();
 		if (key == Key.VIOLIN) {
 			keyPicture = BitmapFactory.decodeResource(res, R.drawable.violine);
 		} else {

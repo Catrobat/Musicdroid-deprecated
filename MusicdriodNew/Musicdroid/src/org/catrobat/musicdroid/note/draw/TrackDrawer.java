@@ -35,7 +35,7 @@ public class TrackDrawer {
 		SymbolDrawer symbolDrawer = new SymbolDrawer();
 
 		for (Symbol symbol : converter.convertTrack(track)) {
-			symbolDrawer.drawSymbol(symbol, noteSheetCanvas, context);
+			symbolDrawer.drawSymbol(symbol, noteSheetCanvas, context, track.getKey());
 		}
 	}
 }

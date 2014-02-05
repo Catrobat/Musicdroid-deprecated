@@ -108,7 +108,8 @@ public class TrackTest extends TestCase {
 
 	public void testToString() {
 		Track track = TrackTestDataFactory.createTrack();
-		String expectedString = "[Track] instrument= " + Track.DEFAULT_INSTRUMENT + " size: " + track.size();
+		String expectedString = "[Track] instrument=" + Track.DEFAULT_INSTRUMENT + " key=" + track.getKey() + " size="
+				+ track.size();
 
 		assertEquals(expectedString, track.toString());
 	}

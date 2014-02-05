@@ -38,4 +38,37 @@ public class NoteSymbolTestDataFactory {
 
 		return noteSymbol;
 	}
+
+	public static NoteSymbol createNoteSymbolWithNote(NoteLength noteLength) {
+		NoteSymbol noteSymbol = createNoteSymbol();
+		noteSymbol.addNote(NoteName.C4, noteLength);
+
+		return noteSymbol;
+	}
+
+	public static NoteSymbol createNoteSymbolWithNote(NoteName noteName) {
+		NoteSymbol noteSymbol = createNoteSymbol();
+		noteSymbol.addNote(noteName, NoteLength.QUARTER);
+
+		return noteSymbol;
+	}
+
+	public static NoteSymbol createNoteSymbolWithAccord(NoteLength noteLength1, NoteLength noteLength2,
+			NoteLength noteLength3) {
+		NoteSymbol noteSymbol = createNoteSymbol();
+		noteSymbol.addNote(NoteName.F4, noteLength1);
+		noteSymbol.addNote(NoteName.D4, noteLength2);
+		noteSymbol.addNote(NoteName.E4, noteLength3);
+
+		return noteSymbol;
+	}
+
+	public static NoteSymbol createNoteSymbolWithAccord(NoteName noteName1, NoteName noteName2, NoteName noteName3) {
+		NoteSymbol noteSymbol = createNoteSymbol();
+		noteSymbol.addNote(noteName1, NoteLength.QUARTER);
+		noteSymbol.addNote(noteName2, NoteLength.QUARTER);
+		noteSymbol.addNote(noteName3, NoteLength.QUARTER);
+
+		return noteSymbol;
+	}
 }

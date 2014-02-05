@@ -41,15 +41,9 @@ public class ProjectTest extends TestCase {
 		assertEquals(Project.DEFAULT_BEATS_PER_MINUTE, project.getBeatsPerMinute());
 	}
 
-	public void testGetKey() {
-		Project project = ProjectTestDataFactory.createProject();
-
-		assertEquals(Project.DEFAULT_KEY, project.getKey());
-	}
-
 	public void testAddTrack() {
 		Project project = ProjectTestDataFactory.createProject();
-		project.addTrack(new Track());
+		project.addTrack(TrackTestDataFactory.createTrack());
 
 		assertEquals(1, project.size());
 	}
@@ -121,7 +115,7 @@ public class ProjectTest extends TestCase {
 	public void testToString() {
 		Project project = ProjectTestDataFactory.createProject();
 		String expectedString = "[Project] name=" + project.getName() + " beatsPerMinute="
-				+ project.getBeatsPerMinute() + " key=" + project.getKey() + " trackCount=" + project.size();
+				+ project.getBeatsPerMinute() + " trackCount=" + project.size();
 
 		assertEquals(expectedString, project.toString());
 	}

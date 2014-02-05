@@ -115,7 +115,7 @@ public class NoteNameTest extends TestCase {
 	public void testCalculateDistanceCountingNoneSignedNotesOnly1() {
 		NoteName noteName1 = NoteName.D1;
 		NoteName noteName2 = NoteName.C1S;
-		int expectedDistance = -1;
+		int expectedDistance = 1;
 
 		assertEquals(expectedDistance, NoteName.calculateDistanceCountingNoneSignedNotesOnly(noteName1, noteName2));
 	}
@@ -131,15 +131,31 @@ public class NoteNameTest extends TestCase {
 	public void testCalculateDistanceCountingNoneSignedNotesOnly3() {
 		NoteName noteName1 = NoteName.D3;
 		NoteName noteName2 = NoteName.B3;
-		int expectedDistance = 5;
+		int expectedDistance = -5;
 
 		assertEquals(expectedDistance, NoteName.calculateDistanceCountingNoneSignedNotesOnly(noteName1, noteName2));
 	}
 
-	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly() {
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly1() {
 		NoteName noteName = NoteName.B4;
 		Key key = Key.VIOLIN;
 		int expectedDistance = 0;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
+	}
+
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly2() {
+		NoteName noteName = NoteName.C5;
+		Key key = Key.VIOLIN;
+		int expectedDistance = -1;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
+	}
+
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly3() {
+		NoteName noteName = NoteName.A4;
+		Key key = Key.VIOLIN;
+		int expectedDistance = 1;
 
 		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
 	}

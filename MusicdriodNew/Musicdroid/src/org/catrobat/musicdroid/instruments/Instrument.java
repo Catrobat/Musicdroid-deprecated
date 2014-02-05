@@ -24,6 +24,7 @@ package org.catrobat.musicdroid.instruments;
 
 import android.app.Activity;
 
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Track;
 
@@ -34,7 +35,7 @@ public abstract class Instrument extends Activity {
 
 	public Instrument() {
 		tickThread = new TickThread();
-		track = new Track();
+		track = new Track(Key.VIOLIN); //TODO FW
 	}
 
 	public Track getTrack() {

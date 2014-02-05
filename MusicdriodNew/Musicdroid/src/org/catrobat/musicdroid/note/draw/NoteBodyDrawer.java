@@ -28,11 +28,18 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.RectF;
 
+import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.symbol.NoteSymbol;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class NoteBodyDrawer {
 
-	public static RectF[] drawBody(NoteSheetCanvas noteSheetCanvas, int[] toneDistanceFromToneToMiddleLineInHalfTones,
-			boolean isFilled, boolean isStemUp) {
+	public static List<RectF> drawBody(NoteSheetCanvas noteSheetCanvas, NoteSymbol noteSymbol,
+			boolean isStemUpdirected, Key key) {
 
 		int lineHeight = noteSheetCanvas.getDistanceBetweenNoteLines();
 		int noteHeigth = lineHeight / 2;
@@ -40,29 +47,36 @@ public class NoteBodyDrawer {
 
 		Point centerPointOfSpaceForNote = noteSheetCanvas.getCenterPointForNextSymbol();
 
-		RectF[] noteSurroundingRects = new RectF[toneDistanceFromToneToMiddleLineInHalfTones.length];
+		List<RectF> noteSurroundingRects = new LinkedList<RectF>();
 
 		Paint paint = new Paint();
 		paint.setColor(Color.BLACK);
-		if (!isFilled) {
-			paint.setStyle(Style.STROKE);
-			paint.setStrokeWidth(4);
-		}
 
-		for (int distanceIndex = 0; distanceIndex < toneDistanceFromToneToMiddleLineInHalfTones.length; distanceIndex++) {
+		NoteName prevNoteName = null;
+
+		for (NoteName noteName : noteSymbol.getNoteNamesSorted()) {
+
+			NoteLength noteLength = noteSymbol.getNoteLength(noteName);
+			if (noteLength.isFilled()) {
+				paint.setStyle(Style.FILL);
+			} else {
+				paint.setStyle(Style.STROKE);
+				paint.setStrokeWidth(4);
+			}
 			Point centerPointOfActualNote = new Point(centerPointOfSpaceForNote);
-			centerPointOfActualNote.y += toneDistanceFromToneToMiddleLineInHalfTones[distanceIndex] * noteHeigth;
+			centerPointOfActualNote.y += NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName)
+					* noteHeigth;
 			int left = centerPointOfActualNote.x - noteWidth;
 			int top = centerPointOfActualNote.y - noteHeigth;
 			int right = centerPointOfActualNote.x + noteWidth;
 			int bottom = centerPointOfActualNote.y + noteHeigth;
 
-			if (distanceIndex > 0) {
-				int differenceBetweenNotesInHalfTones = Math
-						.abs(toneDistanceFromToneToMiddleLineInHalfTones[distanceIndex - 1]
-								- toneDistanceFromToneToMiddleLineInHalfTones[distanceIndex]);
+			if (prevNoteName != null) {
+				int differenceBetweenNotesInHalfTones = Math.abs(NoteName.calculateDistanceCountingNoneSignedNotesOnly(
+						prevNoteName, noteName));
+
 				if (differenceBetweenNotesInHalfTones == 1) {
-					if (isStemUp) {
+					if (isStemUpdirected) {
 						right += 2 * noteWidth;
 						left += 2 * noteWidth;
 					} else {
@@ -74,8 +88,9 @@ public class NoteBodyDrawer {
 
 			RectF rect = new RectF(left, top, right, bottom);
 
-			noteSurroundingRects[distanceIndex] = rect;
-			noteSheetCanvas.getCanvas().drawOval(noteSurroundingRects[distanceIndex], paint);
+			noteSurroundingRects.add(rect);
+			noteSheetCanvas.getCanvas().drawOval(rect, paint);
+			prevNoteName = noteName;
 		}
 
 		return noteSurroundingRects;

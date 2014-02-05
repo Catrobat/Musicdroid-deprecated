@@ -24,6 +24,8 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.symbol.testutil.NoteSymbolTestDataFactory;
 
 public class NoteSymbolTest extends TestCase {
@@ -72,5 +74,42 @@ public class NoteSymbolTest extends TestCase {
 		String expectedString = "[NoteSymbol] size: " + noteSymbol.size();
 
 		assertEquals(expectedString, noteSymbol.toString());
+	}
+
+	public void testIsStemUp1() {
+		Key key = Key.VIOLIN;
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote(NoteName.C5);
+
+		assertFalse(noteSymbol.isStemUp(key));
+	}
+
+	public void testIsStemUp2() {
+		Key key = Key.VIOLIN;
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote(NoteName.D4);
+
+		assertTrue(noteSymbol.isStemUp(key));
+	}
+
+	public void testIsStemUp3() {
+		Key key = Key.VIOLIN;
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote(NoteName.B4);
+
+		assertFalse(noteSymbol.isStemUp(key));
+	}
+
+	public void testIsStemUp4() {
+		Key key = Key.VIOLIN;
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithAccord(NoteName.D5, NoteName.G4,
+				NoteName.B4);
+
+		assertFalse(noteSymbol.isStemUp(key));
+	}
+
+	public void testIsStemUp5() {
+		Key key = Key.VIOLIN;
+		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithAccord(NoteName.D5, NoteName.G3,
+				NoteName.B4);
+
+		assertTrue(noteSymbol.isStemUp(key));
 	}
 }

@@ -36,10 +36,12 @@ public class Track implements Serializable {
 
 	private Instrument instrument;
 	private HashMap<Long, List<NoteEvent>> events;
+	private Key key;
 
-	public Track() {
+	public Track(Key key) {
 		this.events = new HashMap<Long, List<NoteEvent>>();
 		this.instrument = DEFAULT_INSTRUMENT;
+		this.key = key;
 	}
 
 	public Track(Instrument instrument) {
@@ -49,6 +51,10 @@ public class Track implements Serializable {
 
 	public Instrument getInstrument() {
 		return instrument;
+	}
+
+	public Key getKey() {
+		return key;
 	}
 
 	public void addNoteEvent(long tick, NoteEvent noteEvent) {
@@ -115,6 +121,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] instrument= " + instrument + " size: " + size();
+		return "[Track] instrument=" + instrument + " key=" + key + " size=" + size();
 	}
 }

@@ -23,6 +23,7 @@
 package org.catrobat.musicdroid.note.testutil;
 
 import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
@@ -31,7 +32,7 @@ import org.catrobat.musicdroid.note.Track;
 public class TrackTestDataFactory {
 
 	public static Track createTrack() {
-		return new Track();
+		return new Track(Key.VIOLIN);
 	}
 
 	public static Track createTrack(Instrument instrument) {
@@ -39,7 +40,7 @@ public class TrackTestDataFactory {
 	}
 
 	public static Track createSimpleTrack() {
-		Track track = new Track();
+		Track track = new Track(Key.VIOLIN);
 
 		long tick = 0;
 
@@ -61,7 +62,7 @@ public class TrackTestDataFactory {
 	}
 
 	public static Track createTrackWithBreak() {
-		Track track = new Track();
+		Track track = new Track(Key.VIOLIN);
 
 		long tick = 0;
 
@@ -122,7 +123,7 @@ public class TrackTestDataFactory {
 	}
 
 	public static Track createComplexTrack() {
-		Track track = new Track();
+		Track track = new Track(Key.VIOLIN);
 
 		long tick = 0;
 

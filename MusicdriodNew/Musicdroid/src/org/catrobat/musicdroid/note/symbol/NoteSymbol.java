@@ -22,10 +22,15 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class NoteSymbol implements Symbol {
@@ -42,6 +47,16 @@ public class NoteSymbol implements Symbol {
 
 	public int size() {
 		return notes.size();
+	}
+
+	public List<NoteName> getNoteNamesSorted() {
+		List<NoteName> noteNames = new LinkedList<NoteName>(notes.keySet());
+		Collections.sort(noteNames);
+		return noteNames;
+	}
+
+	public NoteLength getNoteLength(NoteName noteName) {
+		return notes.get(noteName);
 	}
 
 	@Override
@@ -62,5 +77,25 @@ public class NoteSymbol implements Symbol {
 	@Override
 	public String toString() {
 		return "[NoteSymbol] size: " + size();
+	}
+
+	public boolean isStemUp(Key key) {
+		List<NoteName> noteNames = new ArrayList<NoteName>(notes.keySet());
+		Collections.sort(noteNames);
+
+		NoteName firstNoteName = noteNames.get(0);
+		NoteName lastNoteName = noteNames.get(noteNames.size() - 1);
+
+		int distanceFirst = NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, firstNoteName);
+		int distanceLast = NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, lastNoteName);
+		int distance = 0;
+
+		if (Math.abs(distanceFirst) > Math.abs(distanceLast)) {
+			distance = distanceFirst;
+		} else {
+			distance = distanceLast;
+		}
+
+		return distance < 0;
 	}
 }

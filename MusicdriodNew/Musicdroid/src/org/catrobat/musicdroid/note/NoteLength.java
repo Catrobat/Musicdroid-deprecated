@@ -65,6 +65,10 @@ public enum NoteLength {
 		return (this == WHOLE_DOT) || (this == HALF_DOT) || (this == QUARTER_DOT) || (this == EIGHT_DOT);
 	}
 
+	public boolean isFilled() {
+		return (this != WHOLE_DOT) && (this != WHOLE) && (this != HALF) && (this != HALF_DOT);
+	}
+
 	public static NoteLength getNoteLengthFromTickDuration(long duration) {
 		NoteLength noteLength = SMALLEST_NOTE_LENGTH;
 		NoteLength[] allNoteLengths = NoteLength.values();

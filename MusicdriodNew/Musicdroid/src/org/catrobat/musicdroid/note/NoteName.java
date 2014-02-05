@@ -87,12 +87,12 @@ public enum NoteName {
 		return DEFAULT_NOTE_NAME;
 	}
 
-	public static int calculateDistanceCountingNoneSignedNotesOnly(NoteName noteName1, NoteName noteName2) {
+	public static int calculateDistanceCountingNoneSignedNotesOnly(NoteName referenceNoteName, NoteName noteName) {
 		int distance = 0;
-		boolean isDownGoing = (noteName2.midi - noteName1.midi) > 0;
+		boolean isDownGoing = (noteName.midi - referenceNoteName.midi) > 0;
 
-		NoteName smallNoteName = isDownGoing ? noteName1 : noteName2;
-		NoteName largeNoteName = isDownGoing ? noteName2 : noteName1;
+		NoteName smallNoteName = isDownGoing ? referenceNoteName : noteName;
+		NoteName largeNoteName = isDownGoing ? noteName : referenceNoteName;
 
 		if (smallNoteName.isSigned()) {
 			distance = 1;
@@ -108,7 +108,7 @@ public enum NoteName {
 			smallNoteName = smallNoteName.next();
 		}
 
-		return (isDownGoing ? distance : distance * (-1));
+		return (isDownGoing ? distance * (-1) : distance);
 	}
 
 	public static int calculateDistanceToMiddleLineCountingSignedNotesOnly(Key key, NoteName noteName) {
