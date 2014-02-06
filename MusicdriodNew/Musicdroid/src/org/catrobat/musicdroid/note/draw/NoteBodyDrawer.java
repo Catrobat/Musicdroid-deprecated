@@ -26,7 +26,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.RectF;
 
 import org.catrobat.musicdroid.note.Key;
@@ -45,8 +44,6 @@ public class NoteBodyDrawer {
 		int lineHeight = noteSheetCanvas.getDistanceBetweenNoteLines();
 		int noteHeigth = lineHeight / 2;
 		int noteWidth = noteHeigth * 130 / 100;
-		int dotRadius = 5;
-		int pixelDistanceBetweenNoteAndDot = 10;
 
 		Point centerPointOfSpaceForNote = noteSheetCanvas.getCenterPointForNextSymbol();
 
@@ -95,17 +92,7 @@ public class NoteBodyDrawer {
 			noteSheetCanvas.getCanvas().drawOval(rect, paint);
 
 			if (noteLength.hasDot()) {
-				RectF dotRect = new RectF();
-				float x = rect.right + pixelDistanceBetweenNoteAndDot;
-				float y = (rect.top + rect.bottom) / 2;
-				PointF centerPointForDot = new PointF(x, y);
-				dotRect.left = centerPointForDot.x;
-				dotRect.right = centerPointForDot.x + 2 * dotRadius;
-				dotRect.bottom = centerPointForDot.y + dotRadius;
-				dotRect.top = centerPointForDot.y - dotRadius;
-
-				paint.setStyle(Style.FILL);
-				noteSheetCanvas.getCanvas().drawOval(dotRect, paint);
+				DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
 			}
 
 			prevNoteName = noteName;

@@ -76,7 +76,7 @@ public class NoteSheetView extends ScrollView {
 		NoteEvent note2 = new NoteEvent(NoteName.D4, false);
 		track.addNoteEvent(tick, note2);
 
-		tick += NoteLength.SIXTEENTH.getTickDuration();
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
 		NoteEvent note3 = new NoteEvent(NoteName.D4, true);
 		track.addNoteEvent(tick, note3);
 		tick += NoteLength.HALF_DOT.getTickDuration();

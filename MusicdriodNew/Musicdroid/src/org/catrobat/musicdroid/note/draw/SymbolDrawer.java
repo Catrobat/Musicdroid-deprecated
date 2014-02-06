@@ -62,10 +62,10 @@ public class SymbolDrawer {
 	private void drawBreakSymbol(BreakSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
 		// TODO das Dream Team Eli und Flo :D Bianca und die anderen(neuen) + Dani 
 
-		if (symbol.getNoteLength() == NoteLength.WHOLE) {
-			drawWholeBreak(noteSheetCanvas, context);
-		} else if (symbol.getNoteLength() == NoteLength.HALF) {
-			drawHalfBreak(noteSheetCanvas, context);
+		if (symbol.getNoteLength() == NoteLength.WHOLE || symbol.getNoteLength() == NoteLength.WHOLE_DOT) {
+			drawWholeBreak(noteSheetCanvas, context, symbol.getNoteLength().hasDot());
+		} else if (symbol.getNoteLength() == NoteLength.HALF || symbol.getNoteLength() == NoteLength.HALF_DOT) {
+			drawHalfBreak(noteSheetCanvas, context, symbol.getNoteLength().hasDot());
 		} else {
 			drawBreakPicture(noteSheetCanvas, context, symbol);
 		}
@@ -76,10 +76,10 @@ public class SymbolDrawer {
 
 		Resources res = context.getResources();
 		Bitmap breakPicture = null;
-		if (symbol.getNoteLength() == NoteLength.QUARTER) {
+		if (symbol.getNoteLength() == NoteLength.QUARTER || symbol.getNoteLength() == NoteLength.QUARTER_DOT) {
 			breakHeight = 3 * noteSheetCanvas.getDistanceBetweenNoteLines();
 			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_4);
-		} else if (symbol.getNoteLength() == NoteLength.EIGHT) {
+		} else if (symbol.getNoteLength() == NoteLength.EIGHT || symbol.getNoteLength() == NoteLength.EIGHT_DOT) {
 			breakHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();
 			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_8);
 		} else if (symbol.getNoteLength() == NoteLength.SIXTEENTH) {
@@ -98,18 +98,21 @@ public class SymbolDrawer {
 		//				* noteSheetCanvas.getDistanceBetweenNoteLines();
 		xStartPositionForBreak += noteSheetCanvas.getWidthForOneSymbol() / 4;
 
-		Rect rect = PictureTools.calculateProportionalPictureContourRect(breakPicture, breakHeight,
-				xStartPositionForBreak, noteSheetCanvas.getYPositionOfCenterLine());
+		RectF rect = new RectF(PictureTools.calculateProportionalPictureContourRect(breakPicture, breakHeight,
+				xStartPositionForBreak, noteSheetCanvas.getYPositionOfCenterLine()));
 
 		Paint paint = new Paint();
 		paint.setColor(Color.RED);
 		paint.setStyle(Style.STROKE);
 		noteSheetCanvas.getCanvas().drawBitmap(breakPicture, null, rect, null);
+		if (symbol.getNoteLength().hasDot()) {
+			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+		}
 		//		noteSheetCanvas.getCanvas().drawRect(rectWohleSpace, paint);
 
 	}
 
-	private void drawHalfBreak(NoteSheetCanvas noteSheetCanvas, Context context) {
+	private void drawHalfBreak(NoteSheetCanvas noteSheetCanvas, Context context, boolean hasDot) {
 		Point centerPoint = noteSheetCanvas.getCenterPointForNextSymbol();
 		RectF rect = new RectF();
 		int breakWidth = noteSheetCanvas.getDistanceBetweenNoteLines();
@@ -122,9 +125,13 @@ public class SymbolDrawer {
 		paint.setColor(Color.BLACK);
 		paint.setStyle(Style.FILL);
 		noteSheetCanvas.getCanvas().drawRect(rect, paint);
+
+		if (hasDot) {
+			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+		}
 	}
 
-	private void drawWholeBreak(NoteSheetCanvas noteSheetCanvas, Context context) {
+	private void drawWholeBreak(NoteSheetCanvas noteSheetCanvas, Context context, boolean hasDot) {
 		Point centerPoint = noteSheetCanvas.getCenterPointForNextSmallSymbol();
 		RectF rect = new RectF();
 		int breakWidth = noteSheetCanvas.getDistanceBetweenNoteLines();
@@ -137,6 +144,10 @@ public class SymbolDrawer {
 		paint.setColor(Color.BLACK);
 		paint.setStyle(Style.FILL);
 		noteSheetCanvas.getCanvas().drawRect(rect, paint);
+
+		if (hasDot) {
+			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+		}
 	}
 
 	private void drawNoteSymbol(NoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context, Key key) {
