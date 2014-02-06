@@ -87,12 +87,25 @@ public class SymbolDrawer {
 			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_16);
 		}
 
-		int xStartPositionForCrosses = noteSheetCanvas.getStartXPointForNextSmallSymbolSpace();
+		int xStartPositionForBreak = noteSheetCanvas.getStartXPointForNextSymbolSpace();
+
+		//		Rect rectWohleSpace = new Rect();
+		//		rectWohleSpace.left = xStartPositionForBreak;
+		//		rectWohleSpace.right = xStartPositionForBreak + noteSheetCanvas.getWidthForOneSymbol();
+		//		rectWohleSpace.bottom = noteSheetCanvas.getYPositionOfCenterLine() + 2
+		//				* noteSheetCanvas.getDistanceBetweenNoteLines();
+		//		rectWohleSpace.top = noteSheetCanvas.getYPositionOfCenterLine() - 2
+		//				* noteSheetCanvas.getDistanceBetweenNoteLines();
+		xStartPositionForBreak += noteSheetCanvas.getWidthForOneSymbol() / 4;
 
 		Rect rect = PictureTools.calculateProportionalPictureContourRect(breakPicture, breakHeight,
-				xStartPositionForCrosses, noteSheetCanvas.getYPositionOfCenterLine());
+				xStartPositionForBreak, noteSheetCanvas.getYPositionOfCenterLine());
 
+		Paint paint = new Paint();
+		paint.setColor(Color.RED);
+		paint.setStyle(Style.STROKE);
 		noteSheetCanvas.getCanvas().drawBitmap(breakPicture, null, rect, null);
+		//		noteSheetCanvas.getCanvas().drawRect(rectWohleSpace, paint);
 
 	}
 
