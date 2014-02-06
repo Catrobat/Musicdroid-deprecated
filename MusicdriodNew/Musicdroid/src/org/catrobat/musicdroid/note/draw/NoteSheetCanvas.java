@@ -48,7 +48,7 @@ public class NoteSheetCanvas {
 	}
 
 	public int getWidthForSmallSymbol() {
-		return widthForOneSymbol / 2;
+		return widthForOneSymbol / 4;
 	}
 
 	public int getWidthForOneSymbol() {
@@ -99,7 +99,8 @@ public class NoteSheetCanvas {
 
 	public Point getCenterPointForNextSymbol() {
 		Point centerPoint = new Point();
-		int x = getStartXPointForNextSymbolSpace() + widthForOneSymbol / 2;
+		int x = getStartXPointForNextSymbolSpace() + getWidthForOneSymbol() / 2;
+
 		int y = getYPositionOfCenterLine();
 		centerPoint.set(x, y);
 		return centerPoint;

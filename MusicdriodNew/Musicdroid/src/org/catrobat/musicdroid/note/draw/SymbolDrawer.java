@@ -74,7 +74,6 @@ public class SymbolDrawer {
 				drawCross(noteSheetCanvas, xPositionForCrosses,
 						NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName), context);
 			}
-
 		}
 
 		List<RectF> noteSurroundingRects = NoteBodyDrawer.drawBody(noteSheetCanvas, symbol, isStemUpdirected, key);

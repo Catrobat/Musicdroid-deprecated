@@ -35,6 +35,9 @@ import android.widget.ScrollView;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.tools.PictureTools;
 
@@ -66,6 +69,19 @@ public class NoteSheetView extends ScrollView {
 		super(context);
 		paint = new Paint();
 		track = new Track(Key.VIOLIN); // TODO fw aus Settings auslesen
+		long tick = 0;
+		NoteEvent note = new NoteEvent(NoteName.D4, true);
+		track.addNoteEvent(tick, note);
+		tick += NoteLength.HALF_DOT.getTickDuration();
+		NoteEvent note2 = new NoteEvent(NoteName.D4, false);
+		track.addNoteEvent(tick, note2);
+
+		NoteEvent note3 = new NoteEvent(NoteName.D4S, true);
+		track.addNoteEvent(tick, note3);
+		tick += NoteLength.HALF_DOT.getTickDuration();
+		NoteEvent note4 = new NoteEvent(NoteName.D4S, false);
+		track.addNoteEvent(tick, note4);
+
 		trackDrawer = new TrackDrawer();
 		xPositionOfNextSheetElement = NOTE_SHEET_PADDING;
 	}
