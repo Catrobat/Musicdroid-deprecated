@@ -106,6 +106,15 @@ public class NoteSheetCanvas {
 		return centerPoint;
 	}
 
+	public Point getCenterPointForNextSmallSymbol() {
+		Point centerPoint = new Point();
+		int x = getStartXPointForNextSmallSymbolSpace() + getWidthForSmallSymbol() / 2;
+
+		int y = getYPositionOfCenterLine();
+		centerPoint.set(x, y);
+		return centerPoint;
+	}
+
 	public int getStartXPointForNextSymbolSpace() {
 		int startXPointForNextSymbolSpace = this.startXPointForNextSymbolSpace;
 		this.startXPointForNextSymbolSpace += widthForOneSymbol;
@@ -117,4 +126,5 @@ public class NoteSheetCanvas {
 		this.startXPointForNextSymbolSpace += this.getWidthForSmallSymbol();
 		return startXPointForNextSymbolSpace;
 	}
+
 }

@@ -29,11 +29,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.symbol.BoundNoteSymbol;
 import org.catrobat.musicdroid.note.symbol.BreakSymbol;
@@ -58,7 +60,70 @@ public class SymbolDrawer {
 	}
 
 	private void drawBreakSymbol(BreakSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context) {
-		// TODO das Dream Team Eli und Flo :D
+		// TODO das Dream Team Eli und Flo :D Bianca und die anderen(neuen) + Dani 
+
+		if (symbol.getNoteLength() == NoteLength.WHOLE) {
+			drawWholeBreak(noteSheetCanvas, context);
+		} else if (symbol.getNoteLength() == NoteLength.HALF) {
+			drawHalfBreak(noteSheetCanvas, context);
+		} else {
+			drawBreakPicture(noteSheetCanvas, context, symbol);
+		}
+	}
+
+	private void drawBreakPicture(NoteSheetCanvas noteSheetCanvas, Context context, BreakSymbol symbol) {
+		int breakHeight = 0;
+
+		Resources res = context.getResources();
+		Bitmap breakPicture = null;
+		if (symbol.getNoteLength() == NoteLength.QUARTER) {
+			breakHeight = 3 * noteSheetCanvas.getDistanceBetweenNoteLines();
+			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_4);
+		} else if (symbol.getNoteLength() == NoteLength.EIGHT) {
+			breakHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();
+			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_8);
+		} else if (symbol.getNoteLength() == NoteLength.SIXTEENTH) {
+			breakHeight = 4 * noteSheetCanvas.getDistanceBetweenNoteLines();
+			breakPicture = BitmapFactory.decodeResource(res, R.drawable.break_16);
+		}
+
+		int xStartPositionForCrosses = noteSheetCanvas.getStartXPointForNextSmallSymbolSpace();
+
+		Rect rect = PictureTools.calculateProportionalPictureContourRect(breakPicture, breakHeight,
+				xStartPositionForCrosses, noteSheetCanvas.getYPositionOfCenterLine());
+
+		noteSheetCanvas.getCanvas().drawBitmap(breakPicture, null, rect, null);
+
+	}
+
+	private void drawHalfBreak(NoteSheetCanvas noteSheetCanvas, Context context) {
+		Point centerPoint = noteSheetCanvas.getCenterPointForNextSymbol();
+		RectF rect = new RectF();
+		int breakWidth = noteSheetCanvas.getDistanceBetweenNoteLines();
+		rect.left = centerPoint.x - breakWidth / 2;
+		rect.right = centerPoint.x + breakWidth / 2;
+		rect.bottom = centerPoint.y;
+		rect.top = centerPoint.y - breakWidth / 2;
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Style.FILL);
+		noteSheetCanvas.getCanvas().drawRect(rect, paint);
+	}
+
+	private void drawWholeBreak(NoteSheetCanvas noteSheetCanvas, Context context) {
+		Point centerPoint = noteSheetCanvas.getCenterPointForNextSmallSymbol();
+		RectF rect = new RectF();
+		int breakWidth = noteSheetCanvas.getDistanceBetweenNoteLines();
+		rect.left = centerPoint.x - breakWidth / 2;
+		rect.right = centerPoint.x + breakWidth / 2;
+		rect.top = centerPoint.y;
+		rect.bottom = centerPoint.y + breakWidth / 2;
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Style.FILL);
+		noteSheetCanvas.getCanvas().drawRect(rect, paint);
 	}
 
 	private void drawNoteSymbol(NoteSymbol symbol, NoteSheetCanvas noteSheetCanvas, Context context, Key key) {
@@ -78,6 +143,34 @@ public class SymbolDrawer {
 
 		List<RectF> noteSurroundingRects = NoteBodyDrawer.drawBody(noteSheetCanvas, symbol, isStemUpdirected, key);
 		drawHelpLines(noteSheetCanvas, noteSurroundingRects, symbol, key);
+
+		Point startPointOfNoteStem = new Point();
+		Point endPointOfNoteStem = new Point();
+
+		if (!isStemUpdirected) {
+			startPointOfNoteStem.y = (int) Math
+					.round((noteSurroundingRects.get(0).bottom + noteSurroundingRects.get(0).top) / 2.0);
+			endPointOfNoteStem.y = (int) Math
+					.round((noteSurroundingRects.get(noteSurroundingRects.size() - 1).bottom + noteSurroundingRects
+							.get(noteSurroundingRects.size() - 1).top) / 2.0);
+		} else {
+			startPointOfNoteStem.y = (int) Math
+					.round((noteSurroundingRects.get(noteSurroundingRects.size() - 1).bottom + noteSurroundingRects
+							.get(noteSurroundingRects.size() - 1).top) / 2.0);
+			endPointOfNoteStem.y = (int) Math
+					.round((noteSurroundingRects.get(0).bottom + noteSurroundingRects.get(0).top) / 2.0);
+		}
+
+		if (!isStemUpdirected) {
+			startPointOfNoteStem.x = (int) noteSurroundingRects.get(0).right;
+			endPointOfNoteStem.x = (int) noteSurroundingRects.get(0).right;
+		} else {
+
+			startPointOfNoteStem.x = (int) noteSurroundingRects.get(0).left;
+			endPointOfNoteStem.x = (int) noteSurroundingRects.get(0).left;
+		}
+		NoteStemDrawer.drawStem(noteSheetCanvas, NoteLength.SIXTEENTH, startPointOfNoteStem, endPointOfNoteStem,
+				!isStemUpdirected);
 	}
 
 	private void drawHelpLines(NoteSheetCanvas noteSheetCanvas, List<RectF> noteSurroundingRects, NoteSymbol symbol,
