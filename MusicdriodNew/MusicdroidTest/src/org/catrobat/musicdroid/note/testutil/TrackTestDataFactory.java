@@ -36,7 +36,7 @@ public class TrackTestDataFactory {
 	}
 
 	public static Track createTrack(Instrument instrument) {
-		return new Track(instrument);
+		return new Track(Key.VIOLIN, instrument);
 	}
 
 	public static Track createSimpleTrack() {
@@ -105,7 +105,7 @@ public class TrackTestDataFactory {
 	}
 
 	public static Track createSemiComplexTrack(Instrument instrument) {
-		Track track = new Track(instrument);
+		Track track = new Track(Key.VIOLIN, instrument);
 
 		long tick = 0;
 
