@@ -46,6 +46,18 @@ public class SymbolListTestDataFactory {
 		noteSymbol2.addNote(NoteName.E1, NoteLength.QUARTER_DOT);
 		symbols.add(noteSymbol2);
 
+		NoteSymbol noteSymbol3 = new NoteSymbol();
+		noteSymbol3.addNote(NoteName.F1, NoteLength.QUARTER);
+		symbols.add(noteSymbol3);
+
+		NoteSymbol noteSymbol4 = new NoteSymbol();
+		noteSymbol4.addNote(NoteName.C1, NoteLength.QUARTER);
+		symbols.add(noteSymbol4);
+
+		NoteSymbol noteSymbol5 = new NoteSymbol();
+		noteSymbol5.addNote(NoteName.C2, NoteLength.QUARTER);
+		symbols.add(noteSymbol5);
+
 		return symbols;
 	}
 

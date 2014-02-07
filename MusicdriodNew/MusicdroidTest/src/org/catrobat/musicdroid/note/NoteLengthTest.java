@@ -35,39 +35,39 @@ public class NoteLengthTest extends TestCase {
 
 	public void testGetNoteLengthFromTick1() {
 		NoteLength expectedNoteLength = NoteLength.WHOLE_DOT;
-		long tick = expectedNoteLength.getTickDuration();
+		long duration = expectedNoteLength.getTickDuration();
 
-		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
 
 		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
 	public void testGetNoteLengthFromTick2() {
 		NoteLength expectedNoteLength = NoteLength.WHOLE_DOT;
-		long tick = expectedNoteLength.getTickDuration();
-		tick += 1;
+		long duration = expectedNoteLength.getTickDuration();
+		duration += 1;
 
-		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
 
 		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
 	public void testGetNoteLengthFromTick3() {
 		NoteLength expectedNoteLength = NoteLength.QUARTER;
-		long tick = NoteLength.QUARTER_DOT.getTickDuration();
-		tick -= 1;
+		long duration = NoteLength.QUARTER_DOT.getTickDuration();
+		duration -= 1;
 
-		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
 
 		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
 	public void testGetNoteLengthFromTick4() {
 		NoteLength expectedNoteLength = NoteLength.QUARTER;
-		long tick = expectedNoteLength.getTickDuration();
-		tick += 1;
+		long duration = expectedNoteLength.getTickDuration();
+		duration += 1;
 
-		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(tick);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
 
 		assertEquals(expectedNoteLength, actualNoteLength);
 	}

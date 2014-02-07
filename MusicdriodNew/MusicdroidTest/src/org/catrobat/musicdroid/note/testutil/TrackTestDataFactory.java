@@ -53,10 +53,24 @@ public class TrackTestDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 
-		tick += NoteLength.QUARTER.getTickDuration();
-		tick += NoteLength.EIGHT.getTickDuration();
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, true));
+
+		tick += NoteLength.QUARTER.getTickDuration();
+
+		track.addNoteEvent(tick, new NoteEvent(NoteName.F1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, true));
+
+		tick += NoteLength.QUARTER.getTickDuration();
+
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C1, false));
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, true));
+
+		tick += NoteLength.QUARTER.getTickDuration();
+
+		track.addNoteEvent(tick, new NoteEvent(NoteName.C2, false));
 
 		return track;
 	}
@@ -75,8 +89,7 @@ public class TrackTestDataFactory {
 		track.addNoteEvent(tick, new NoteEvent(NoteName.D1, false));
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, true));
 
-		tick += NoteLength.QUARTER.getTickDuration();
-		tick += NoteLength.EIGHT.getTickDuration();
+		tick += NoteLength.QUARTER_DOT.getTickDuration();
 
 		track.addNoteEvent(tick, new NoteEvent(NoteName.E1, false));
 

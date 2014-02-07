@@ -96,6 +96,6 @@ public class NoteSymbol implements Symbol {
 			distance = distanceLast;
 		}
 
-		return distance < 0;
+		return distance > 0;
 	}
 }
