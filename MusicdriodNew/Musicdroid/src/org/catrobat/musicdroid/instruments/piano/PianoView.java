@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.catrobat.musicdroid.instruments.Instrument;
 import org.catrobat.musicdroid.note.Octave;
 
 /**
@@ -36,17 +37,15 @@ import org.catrobat.musicdroid.note.Octave;
 @SuppressLint("ViewConstructor")
 public class PianoView extends LinearLayout {
 
-	private static final Octave[] SUPPORTED_OCTAVES = new Octave[] {
-		Octave.createSmallOctave(),
-		Octave.createOneLineOctave(),
-		Octave.createTwoLineOctave() };
+	private static final Octave[] SUPPORTED_OCTAVES = new Octave[] { Octave.createSmallOctave(),
+			Octave.createOneLineOctave(), Octave.createTwoLineOctave() };
 
 	private int activeOctaveIndex;
 	private PianoOctaveView pianoOctaveView;
 	private Button buttonLeft;
 	private Button buttonRight;
 
-	public PianoView(PianoActivity pianoActivity) {
+	public PianoView(Instrument pianoActivity) {
 		super(pianoActivity);
 		activeOctaveIndex = 1;
 		initComponents();

@@ -64,10 +64,12 @@
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
-        <activity
+        <activity android:name="org.catrobat.musicdroid.instruments.drums.DrumsActivity"></activity><activity
             android:name="org.catrobat.musicdroid.instruments.piano.PianoActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
         </activity>
+        
+        <activity android:name="org.catrobat.musicdroid.instruments.drums.DrumView"></activity>
     </application>
 </manifest>

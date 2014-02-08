@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,9 +35,8 @@ import android.widget.GridView;
 import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.instruments.drums.DrumsActivity;
 import org.catrobat.musicdroid.instruments.piano.PianoActivity;
-import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
-import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
 
 public class AddSoundDialog extends BaseDialog implements OnItemClickListener, OnItemLongClickListener {
@@ -80,8 +80,17 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener, O
 
 		switch (toolType) {
 			case DRUMS:
-				SoundTrackDrums stvd = new SoundTrackDrums();
-				parent.addSoundTrack(new SoundTrackView(parent, stvd));
+				Log.d("DRUMS", "klicked");
+				Intent intentDrums = new Intent(parent, DrumsActivity.class);
+				Log.d("DRUMS", "klicked 2");
+				parent.startActivityForResult(intentDrums, 1);
+
+				//parent.startActivity(new Intent(parent, DrumsActivity.class));
+				/*
+				 * SoundTrackDrums stvd = new SoundTrackDrums();
+				 * parent.addSoundTrack(new SoundTrackView(parent, stvd));
+				 * break;
+				 */
 				break;
 			case PIANO:
 				parent.startActivity(new Intent(parent, PianoActivity.class));

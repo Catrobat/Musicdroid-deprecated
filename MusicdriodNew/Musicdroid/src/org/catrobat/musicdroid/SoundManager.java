@@ -45,8 +45,9 @@ public class SoundManager {
 	}
 
 	static synchronized public SoundManager getInstance() {
-		if (_instance == null)
+		if (_instance == null) {
 			_instance = new SoundManager();
+		}
 		return _instance;
 	}
 
