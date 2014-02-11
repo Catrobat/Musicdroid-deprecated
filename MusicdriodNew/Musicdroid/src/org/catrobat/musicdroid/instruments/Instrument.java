@@ -24,19 +24,28 @@ package org.catrobat.musicdroid.instruments;
 
 import android.app.Activity;
 
+import org.catrobat.musicdroid.instruments.drums.DrumEvent;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.types.SpecialEvent;
 
 public abstract class Instrument extends Activity {
 
 	private TickThread tickThread;
 	private Track track;
 
+	//private List<DrumEvent> drumsDB;
+
 	public Instrument() {
 		tickThread = new TickThread();
 		track = new Track(Key.VIOLIN); //TODO FW
 	}
+
+	//	public Instrument(String instrumentName) {
+	//		if(instrumentName == "drums")
+	//			drumsDB = new ArrayList<DrumEvent>();
+	//	}
 
 	public Track getTrack() {
 		return track;
@@ -44,8 +53,15 @@ public abstract class Instrument extends Activity {
 
 	public void addNoteEvent(NoteEvent noteEvent) {
 		track.addNoteEvent(tickThread.getNextTick(noteEvent), noteEvent);
-		doAfterAddNoteEvent(noteEvent);
+		doAfterAddAnEvent(noteEvent);
 	}
 
-	protected abstract void doAfterAddNoteEvent(NoteEvent noteEvent);
+	public void addDrumEvent(DrumEvent drumEvent) {
+		//drumsDB.add(drumEvent);//(tickThread.getNextTick(drumEvent), drumEvent);
+		doAfterAddAnEvent(drumEvent);
+	}
+
+	// TODO: its not beautiful :(
+	protected abstract void doAfterAddAnEvent(SpecialEvent anEvent);
+
 }

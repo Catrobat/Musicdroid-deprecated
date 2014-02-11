@@ -22,7 +22,9 @@
  */
 package org.catrobat.musicdroid.note;
 
-public class NoteEvent {
+import org.catrobat.musicdroid.types.SpecialEvent;
+
+public class NoteEvent extends SpecialEvent {
 
 	private NoteName noteName;
 	private boolean noteOn;

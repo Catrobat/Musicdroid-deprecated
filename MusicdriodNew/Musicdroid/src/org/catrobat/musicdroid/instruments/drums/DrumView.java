@@ -44,13 +44,12 @@ public class DrumView extends FrameLayout implements View.OnTouchListener {
 	@Override
 	public boolean onTouch(View v, MotionEvent ev) {
 		boolean handledHere = false;
-		final int action = ev.getAction();
 
 		final int xEventPos = (int) ev.getX();
 		final int yEventPos = (int) ev.getY();
 		int nextImage = -1;
 
-		switch (action) {
+		switch (ev.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 
 				int touchColor = getAreaColor(xEventPos, yEventPos);
@@ -60,82 +59,52 @@ public class DrumView extends FrameLayout implements View.OnTouchListener {
 
 				if (colorInspector.isMatch(Color.RED, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_red;
-					Log.d("Drum", "RED");
+					onDrumClicked(new DrumEvent("RE", 1, Color.RED));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.BLUE, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_blue;
-					Log.d("Drum", "BLUE");
-
+					onDrumClicked(new DrumEvent("BL", 1, Color.BLUE));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.YELLOW, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_yellow;
+					onDrumClicked(new DrumEvent("YL", 1, Color.YELLOW));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.WHITE, touchColor, tolerance)) {
-					//nextImage = R.drawable.ds_mask;
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.CYAN, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_cyan;
+					onDrumClicked(new DrumEvent("CY", 1, Color.CYAN));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.MAGENTA, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_magenta;
+					onDrumClicked(new DrumEvent("MA", 1, Color.MAGENTA));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.BLACK, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_black;
+					onDrumClicked(new DrumEvent("BL", 1, Color.BLACK));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(Color.GREEN, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_green;
+					onDrumClicked(new DrumEvent("GR", 1, Color.GREEN));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(0x996633, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_brown;
+					onDrumClicked(new DrumEvent("BR", 1, 0x996633));
 					// TODO: PLAY SOUND / animate
 				} else if (colorInspector.isMatch(0xFF9900, touchColor, tolerance)) {
 					nextImage = R.drawable.ds_orange;
+					onDrumClicked(new DrumEvent("OR", 1, 0xFF9900));
 					// TODO: PLAY SOUND / animate
 				}
 				handledHere = true;
+
 				break;
-			case MotionEvent.ACTION_POINTER_DOWN:
-				touchColor = getAreaColor(xEventPos, yEventPos);
-				colorInspector = new ColorInspectTool();
 
-				tolerance = 25; // TODO: Tolerance
+			//TODO: 2 drum-parts simultaneously touched
 
-				if (colorInspector.isMatch(Color.RED, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_red;
-					Log.d("Drum", "RED");
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.BLUE, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_blue;
-					Log.d("Drum", "BLUE");
-
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.YELLOW, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_yellow;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.WHITE, touchColor, tolerance)) {
-					//nextImage = R.drawable.ds_mask;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.CYAN, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_cyan;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.MAGENTA, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_magenta;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.BLACK, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_black;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(Color.GREEN, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_green;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(0x996633, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_brown;
-					// TODO: PLAY SOUND / animate
-				} else if (colorInspector.isMatch(0xFF9900, touchColor, tolerance)) {
-					nextImage = R.drawable.ds_orange;
-					// TODO: PLAY SOUND / animate
-				}
-				break;
 			case MotionEvent.ACTION_UP:
+				Log.d("Drum", " UP");
+
 				nextImage = R.drawable.ds_main;
 
 				// TODO: Drum Animation
@@ -152,6 +121,11 @@ public class DrumView extends FrameLayout implements View.OnTouchListener {
 			}
 		}
 		return handledHere;
+	}
+
+	private void onDrumClicked(DrumEvent drumEvent) {
+		DrumsActivity drumsActivity = (DrumsActivity) getContext();
+		drumsActivity.addDrumEvent(drumEvent);
 	}
 
 	public int getAreaColor(int x, int y) {

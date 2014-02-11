@@ -49,6 +49,10 @@ public class Track implements Serializable {
 		this.instrument = instrument;
 	}
 
+	public Track() {
+		this.events = new HashMap<Long, List<NoteEvent>>();
+	}
+
 	public Instrument getInstrument() {
 		return instrument;
 	}

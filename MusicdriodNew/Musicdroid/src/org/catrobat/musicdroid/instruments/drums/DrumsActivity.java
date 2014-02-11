@@ -27,8 +27,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
 import org.catrobat.musicdroid.instruments.Instrument;
-import org.catrobat.musicdroid.note.NoteEvent;
-import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.types.SpecialEvent;
 
 /**
  * @author musicdroid
@@ -36,33 +35,33 @@ import org.catrobat.musicdroid.note.draw.NoteSheetView;
  */
 public class DrumsActivity extends Instrument {
 
-	private NoteSheetView noteSheetView;
+	private DrumTrackView drumTrackView;
 	private DrumView drumView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		noteSheetView = new NoteSheetView(this);
+		drumTrackView = new DrumTrackView(this);
 		drumView = new DrumView(this);
 
 		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
-		noteSheetView.setLayoutParams(layoutParams);
+		drumTrackView.setLayoutParams(layoutParams);
 		drumView.setLayoutParams(layoutParams);
 
 		LinearLayout linearLayout = new LinearLayout(this);
 
-		linearLayout.addView(noteSheetView);
+		linearLayout.addView(drumTrackView);
 		linearLayout.addView(drumView);
 
-		//RelativeLayout item = (RelativeLayout) view.findViewById(R.id.item);
-		//View.inflate(this, R.layout.drumset_layout, null);//addView(drumView);
 		linearLayout.setOrientation(1);
 		setContentView(linearLayout);
 	}
 
 	@Override
-	protected void doAfterAddNoteEvent(NoteEvent noteEvent) {
-		noteSheetView.redraw(getTrack());
+	protected void doAfterAddAnEvent(SpecialEvent drumEvent) {
+
+		drumTrackView.updateView((DrumEvent) drumEvent);
 	}
+
 }

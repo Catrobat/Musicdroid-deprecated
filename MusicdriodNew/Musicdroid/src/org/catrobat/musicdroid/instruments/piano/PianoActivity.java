@@ -27,8 +27,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
 import org.catrobat.musicdroid.instruments.Instrument;
-import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.types.SpecialEvent;
 
 /**
  * @author musicdroid
@@ -57,7 +57,8 @@ public class PianoActivity extends Instrument {
 	}
 
 	@Override
-	protected void doAfterAddNoteEvent(NoteEvent noteEvent) {
+	protected void doAfterAddAnEvent(SpecialEvent noteEvent) {
 		noteSheetView.redraw(getTrack());
 	}
+
 }
