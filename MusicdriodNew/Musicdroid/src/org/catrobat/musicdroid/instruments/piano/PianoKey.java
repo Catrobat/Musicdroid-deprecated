@@ -31,6 +31,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.soundplayer.SoundPlayer;
 
 /**
  * @author Bianca TEUFL
@@ -39,10 +40,14 @@ import org.catrobat.musicdroid.note.NoteName;
 @SuppressLint("ViewConstructor")
 public class PianoKey extends Button {
 
+	private SoundPlayer soundPlayer;
+
 	public PianoKey(PianoActivity pianoActivity, NoteName noteName, int width, int height, int xPosition,
 			boolean isBlackKey) {
 		super(pianoActivity);
 		initComponents(noteName, width, height, xPosition, isBlackKey);
+		soundPlayer = pianoActivity.getSoundPlayer();
+
 	}
 
 	private void initComponents(final NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
@@ -59,11 +64,26 @@ public class PianoKey extends Button {
 
 				if (isDownActionEvent(event)) {
 					addKeyPress(new NoteEvent(noteName, true));
+					toggleSoundOn(noteName);
+
 				} else if (isUpActionEvent(event)) {
 					addKeyPress(new NoteEvent(noteName, false));
+					toggleSoundOff(noteName);
 				}
 
 				return true;
+			}
+
+			private void toggleSoundOn(NoteName noteName) {
+				if (!soundPlayer.isNotePlaying(noteName.getMidi())) {
+					soundPlayer.playNote(noteName.getMidi());
+
+				}
+
+			}
+
+			private void toggleSoundOff(NoteName noteName) {
+				soundPlayer.stopNote(noteName.getMidi());
 			}
 
 			private boolean isDownActionEvent(MotionEvent event) {

@@ -22,13 +22,27 @@
  */
 package org.catrobat.musicdroid.instruments.piano;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
+import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.instruments.Instrument;
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
+import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.Track;
 import org.catrobat.musicdroid.note.draw.NoteSheetView;
+import org.catrobat.musicdroid.note.midi.MidiException;
+import org.catrobat.musicdroid.note.midi.ProjectToMidiConverter;
+import org.catrobat.musicdroid.soundplayer.SoundPlayer;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author musicdroid
@@ -38,6 +52,8 @@ public class PianoActivity extends Instrument {
 
 	private NoteSheetView noteSheetView;
 	private PianoView pianoView;
+	SoundPlayer soundPlayer;
+	ProgressDialog progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +64,91 @@ public class PianoActivity extends Instrument {
 				1.0f);
 		noteSheetView.setLayoutParams(layoutParams);
 		pianoView.setLayoutParams(layoutParams);
-
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.addView(noteSheetView);
 		linearLayout.addView(pianoView);
 		linearLayout.setOrientation(1);
 		setContentView(linearLayout);
+		soundPlayer = new SoundPlayer(this);
+
+		progress = ProgressDialog.show(this, getString(R.string.piano), getString(R.string.piano_loading_sounds));
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				soundPlayer.initSoundpool();
+				createMidiSounds();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						progress.dismiss();
+					}
+				});
+			}
+		}).start();
+
 	}
 
 	@Override
 	protected void doAfterAddNoteEvent(NoteEvent noteEvent) {
 		noteSheetView.redraw(getTrack());
+	}
+
+	private boolean createMidiSounds() {
+		boolean success = false;
+		File directory;
+		String noteNameName;
+		String fileName;
+		String path;
+		directory = new File(Environment.getExternalStorageDirectory() + File.separator + "records" + File.separator
+				+ "piano_midi_sounds");
+		if (!directory.exists()) {
+
+			directory.mkdirs();
+		}
+		for (NoteName noteName : NoteName.values()) {
+			noteNameName = "" + noteName;
+			fileName = noteNameName + "_" + noteName.getMidi() + ".mid";
+			path = directory.getAbsolutePath();
+			File file = new File(path + File.separator + fileName);
+			if (!file.exists()) {
+
+				createMidiFileOfMidiVal(noteName, path, noteNameName + "_" + noteName.getMidi());
+
+			} else {
+				// at the moment, do nothing
+			}
+
+			soundPlayer.setSoundpool(noteName.getMidi(), path + File.separator + fileName);
+		}
+		return success;
+	}
+
+	private void createMidiFileOfMidiVal(NoteName noteName, String path, String fileName) {
+		Project project = new Project(fileName, 100, Key.VIOLIN);
+
+		Track track = new Track(Key.VIOLIN);
+		long tick = 0;
+		NoteEvent noteEvent = new NoteEvent(noteName, true);
+		track.addNoteEvent(tick, noteEvent);
+		tick += NoteLength.WHOLE.getTickDuration();
+		noteEvent = new NoteEvent(noteName, false);
+		track.addNoteEvent(tick, noteEvent);
+
+		project.addTrack(track);
+
+		ProjectToMidiConverter converter = new ProjectToMidiConverter();
+		try {
+			converter.convertProjectAndWriteMidi(project, path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MidiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public SoundPlayer getSoundPlayer() {
+		return this.soundPlayer;
 	}
 }

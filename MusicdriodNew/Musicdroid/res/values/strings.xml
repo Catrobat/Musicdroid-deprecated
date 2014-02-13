@@ -110,4 +110,8 @@
   <string name="recorder_context_title">Recorder Settings</string>
   <string name="recorder_menu_entry_playback">Play Playback</string>
   <string name="recorder_menu_entry_metronom">Play Metronom</string>  
+  
+  
+  <string name="piano_loading_sounds">The piano is loading the sounds</string>
+  <string name="piano">Piano</string>
 </resources>

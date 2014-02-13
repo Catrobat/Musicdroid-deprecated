@@ -54,10 +54,10 @@ public class ProjectToMidiConverter {
 		usedChannels = new ArrayList<Instrument>();
 	}
 
-	public void convertProjectAndWriteMidi(Project project) throws IOException, MidiException {
+	public void convertProjectAndWriteMidi(Project project, String path) throws IOException, MidiException {
 		MidiFile midi = convertProject(project);
 
-		File file = new File(project.getName() + ".midi");
+		File file = new File(path + File.separator + project.getName() + ".midi");
 		midi.writeToFile(file);
 	}
 

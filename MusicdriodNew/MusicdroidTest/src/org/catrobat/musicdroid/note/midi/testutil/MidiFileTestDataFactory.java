@@ -54,7 +54,7 @@ public class MidiFileTestDataFactory {
 
 	private static void createAndWriteMidiFile(Project project) throws IOException, MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-		converter.convertProjectAndWriteMidi(project);
+		converter.convertProjectAndWriteMidi(project, ""); //TODO: PFAD ANGEBEN
 	}
 
 	public static boolean createAndReadMidiFile() {
