@@ -24,7 +24,6 @@ package org.catrobat.musicdroid.instruments;
 
 import android.app.Activity;
 
-import org.catrobat.musicdroid.instruments.drums.DrumEvent;
 import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Track;
@@ -32,10 +31,9 @@ import org.catrobat.musicdroid.types.SpecialEvent;
 
 public abstract class Instrument extends Activity {
 
+	// TODO: STH for drums
 	private TickThread tickThread;
 	private Track track;
-
-	//private List<DrumEvent> drumsDB;
 
 	public Instrument() {
 		tickThread = new TickThread();
@@ -56,12 +54,7 @@ public abstract class Instrument extends Activity {
 		doAfterAddAnEvent(noteEvent);
 	}
 
-	public void addDrumEvent(DrumEvent drumEvent) {
-		//drumsDB.add(drumEvent);//(tickThread.getNextTick(drumEvent), drumEvent);
-		doAfterAddAnEvent(drumEvent);
-	}
-
-	// TODO: its not beautiful :(
+	// TODO: 
 	protected abstract void doAfterAddAnEvent(SpecialEvent anEvent);
 
 }

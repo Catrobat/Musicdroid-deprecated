@@ -22,6 +22,8 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.tools;
 
+import org.catrobat.musicdroid.preferences.PreferenceManager;
+
 /**
  * @author matthias schlesinger
  * 
@@ -38,17 +40,30 @@ public class StringFormatter {
 
 		String durationString = "";
 
-		if (hours > 0)
+		if (hours > 0) {
 			durationString = "" + hours + SEPERATOR;
+		}
 
 		String min = "" + minutes;
 		String sec = "" + seconds;
 
-		if (minutes < 10)
+		if (minutes < 10) {
 			min = "0" + min;
-		if (seconds < 10)
+		}
+		if (seconds < 10) {
 			sec = "0" + sec;
+		}
 
 		return durationString + min + SEPERATOR + sec;
 	}
+
+	public static String buildDrumExportDurationString(int progress, int beatsPerLoop) {
+		return "Number of Loops: " + progress + " / Duration: " + secondsByBPM(progress, beatsPerLoop) + " Sec";
+	}
+
+	private static int secondsByBPM(int progress, int beatsPerLoop) {
+		return beatsPerLoop * progress * 60
+				/ PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_BPM_KEY);
+	}
+
 }
