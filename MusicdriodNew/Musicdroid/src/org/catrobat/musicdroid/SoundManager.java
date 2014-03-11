@@ -73,6 +73,8 @@ public class SoundManager {
 	public static int loadSound(int raw_id) {
 		int position = soundPoolMap.size() + 1;
 		soundPoolMap.put(position, soundPool.load(context, raw_id, 1));
+		Log.i("SoundManager", "Added " + position);
+
 		return position;
 	}
 
@@ -84,8 +86,10 @@ public class SoundManager {
 	public static void playSoundByRawId(int raw_id, float speed) {
 		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
 		while (it.hasNext()) {
+
 			HashMap.Entry<Integer, Integer> pairs = it.next();
 			if (pairs.getValue() == raw_id) {
+
 				playSound(pairs.getKey(), speed, 1);
 				return;
 			}
@@ -110,8 +114,11 @@ public class SoundManager {
 		Log.i("SoundManager", "SoundPoolID = " + index);
 		int poolId = soundPoolMap.get(index);
 		Integer stream_id = soundPool.play(poolId, volume, volume, 1, 0, speed);
-		Log.e("PUT: ", "" + index + " " + stream_id);
-		soundPlayMap.put(index, stream_id);
+		Log.i("SoundManager", "Played = " + index);
+
+		//Log.e("PUT: ", "" + index + " " + stream_id);
+		//soundPlayMap.put(index, stream_id);
+
 	}
 
 	public static void stopAllSounds() {

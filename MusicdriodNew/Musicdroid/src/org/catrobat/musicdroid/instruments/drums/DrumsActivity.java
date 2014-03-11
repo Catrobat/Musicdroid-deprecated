@@ -37,6 +37,7 @@ import org.catrobat.musicdroid.dialog.ExportDrumSoundDialog;
 import org.catrobat.musicdroid.dialog.listener.ChangeBeatsPerMinuteDialogListener;
 import org.catrobat.musicdroid.dialog.listener.ExportDrumSoundDialogListener;
 import org.catrobat.musicdroid.instruments.Instrument;
+import org.catrobat.musicdroid.types.DrumTrack;
 import org.catrobat.musicdroid.types.SpecialEvent;
 
 /**
@@ -46,7 +47,12 @@ import org.catrobat.musicdroid.types.SpecialEvent;
 public class DrumsActivity extends Instrument {
 
 	private DrumTrackView drumTrackView;
-	private DrumView drumView;
+	private DrumChannelPlayThread drumChannelPlayThreadC1;
+	private DrumChannelPlayThread drumChannelPlayThreadC2;
+	private DrumChannelPlayThread drumChannelPlayThreadC3;
+
+	private DrumTrack drumTrack;
+	private DrumKitView drumView;
 	private int beatsPerMinute = ChangeBeatsPerMinuteDialog.BEATS_PER_MINUTE_DEFAULT;
 	private ExportDrumSoundDialog exportDrumSoundDialog = null;
 	private ChangeBeatsPerMinuteDialog changeBeatsPerMinuteDialog = null;
@@ -67,7 +73,16 @@ public class DrumsActivity extends Instrument {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-			case R.id.drum_settings_btn:
+			case R.id.drum_play_btn:
+
+				drumChannelPlayThreadC1 = new DrumChannelPlayThread(drumTrack, 1);
+				drumChannelPlayThreadC2 = new DrumChannelPlayThread(drumTrack, 2);
+				drumChannelPlayThreadC3 = new DrumChannelPlayThread(drumTrack, 3);
+
+				drumChannelPlayThreadC1.start();
+				drumChannelPlayThreadC2.start();
+				drumChannelPlayThreadC3.start();
+
 				//DrumMenuSettingsCallback drumMenuSettingsCallback = new DrumMenuSettingsCallback(this);
 				//startActionMode(drumMenuSettingsCallback);
 				break;
@@ -98,9 +113,9 @@ public class DrumsActivity extends Instrument {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
-		drumTrackView = new DrumTrackView(this);
-		drumView = new DrumView(this);
+		this.drumTrack = new DrumTrack();
+		drumTrackView = new DrumTrackView(this, drumTrack);
+		drumView = new DrumKitView(this);
 
 		exportDrumSoundDialog = new ExportDrumSoundDialog(new ExportDrumSoundDialogListener(this));
 		changeBeatsPerMinuteDialog = new ChangeBeatsPerMinuteDialog(new ChangeBeatsPerMinuteDialogListener(this));

@@ -122,6 +122,7 @@
   <string name="drums_load_preset_text">Load Preset</string>
   
   <string name="drums_menu_entry_bpm">Beats per Minute</string>
+  <string name="drums_menu_play_button">Play</string>
   <string name="drums_menu_entry_clear_preset">Clear Preset</string>
   <string name="drums_menu_entry_load_preset">Load Preset</string>
   <string name="drums_menu_entry_save_preset">Save Preset</string>
@@ -130,7 +131,19 @@
   <string name="drum_sound_export_num_loops_description_text">Number of Loops</string>
   <string name="drums_menu_export_button">EXPORT</string>
   
+ <string name="base_drum">Base Drum</string>
+  <string name="snare_drum">Snare Drum</string>
+  <string name="snare_drum_hard">Snare Drum Hard</string>
+  <string name="high_hat_closed">High Hat Closed</string>
+  <string name="high_hat_open">High Hat Open</string>
+  <string name="tom_1">Tom 1</string>
+  <string name="tom_2">Tom 2</string>
+  <string name="tom_3">Tom 3</string>
+  <string name="crash_one">Crash One</string>
+  <string name="ride">Ride</string>
   
+  <string name="drums_add_to_sound_mixer_text">Add Drum-Loop to SoundMixer</string>
+  <string name="drums_load_preset_text">Load Preset</string>
   
   
 </resources>
