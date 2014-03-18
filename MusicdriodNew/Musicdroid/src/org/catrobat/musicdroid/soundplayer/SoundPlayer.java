@@ -45,8 +45,8 @@ public class SoundPlayer {
 	}
 
 	private void fillSoundpool(int midiVal, String path) {
-
-		soundPoolMap.put(midiVal, soundPool.load(path, PRIORITY));
+		int soundId = soundPool.load(path, 1);
+		soundPoolMap.put(midiVal, soundId);
 
 	}
 
@@ -76,15 +76,12 @@ public class SoundPlayer {
 		float normal_playback_rate = 1f;
 		soundPool.play(soundPoolMap.get(noteName.getMidi()), leftVolume, rightVolume, priority, no_loop,
 				normal_playback_rate);
-
 	}
 
 	public void playNote(int midiValue) {
-		if (!isNotePlaying(midiValue)) {
-			PlayThread thread = new PlayThread(midiValue);
-			thread.start();
-			threadMap.put(midiValue, thread);
-		}
+		PlayThread thread = new PlayThread(midiValue);
+		thread.start();
+		threadMap.put(midiValue, thread);
 	}
 
 	public boolean isNotePlaying(int midiValue) {
@@ -106,7 +103,6 @@ public class SoundPlayer {
 		int streamId = 0;
 
 		public PlayThread(int midiValue) {
-			super();
 			this.midiValue = midiValue;
 		}
 

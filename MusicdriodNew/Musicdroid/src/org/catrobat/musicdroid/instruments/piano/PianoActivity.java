@@ -107,7 +107,7 @@ public class PianoActivity extends Instrument {
 		}
 		for (NoteName noteName : NoteName.values()) {
 			noteNameName = "" + noteName;
-			fileName = noteNameName + "_" + noteName.getMidi() + ".mid";
+			fileName = noteNameName + "_" + noteName.getMidi() + ".midi";
 			path = directory.getAbsolutePath();
 			File file = new File(path + File.separator + fileName);
 			if (!file.exists()) {
