@@ -55,6 +55,12 @@ public class PianoActivity extends Instrument {
 	SoundPlayer soundPlayer;
 	ProgressDialog progress;
 
+	private int beatsPerMinute = 100;
+
+	private static final String directoryName = "records";
+
+	private static final String directoryNameMidiFiles = "piano_midi_sounds";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,8 +105,8 @@ public class PianoActivity extends Instrument {
 		String noteNameName;
 		String fileName;
 		String path;
-		directory = new File(Environment.getExternalStorageDirectory() + File.separator + "records" + File.separator
-				+ "piano_midi_sounds");
+		directory = new File(Environment.getExternalStorageDirectory() + File.separator + directoryName
+				+ File.separator + directoryNameMidiFiles);
 		if (!directory.exists()) {
 
 			directory.mkdirs();
@@ -114,17 +120,14 @@ public class PianoActivity extends Instrument {
 
 				createMidiFileOfMidiVal(noteName, path, noteNameName + "_" + noteName.getMidi());
 
-			} else {
-				// at the moment, do nothing
 			}
-
 			soundPlayer.setSoundpool(noteName.getMidi(), path + File.separator + fileName);
 		}
 		return success;
 	}
 
 	private void createMidiFileOfMidiVal(NoteName noteName, String path, String fileName) {
-		Project project = new Project(fileName, 100, Key.VIOLIN);
+		Project project = new Project(fileName, beatsPerMinute, Key.VIOLIN);
 
 		Track track = new Track(Key.VIOLIN);
 		long tick = 0;

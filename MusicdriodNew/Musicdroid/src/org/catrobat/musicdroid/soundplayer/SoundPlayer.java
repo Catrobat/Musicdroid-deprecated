@@ -37,6 +37,8 @@ public class SoundPlayer {
 	private static final int PRIORITY = 1;
 	private Context context;
 	private HashMap<Integer, PlayThread> threadMap = null;
+	private int maxStreams = 90;
+	private int srcQuality = 100;
 
 	@SuppressLint("UseSparseArrays")
 	public SoundPlayer(Context cxt) {
@@ -53,7 +55,7 @@ public class SoundPlayer {
 	@SuppressLint("UseSparseArrays")
 	public void initSoundpool() {
 
-		soundPool = new SoundPool(90, AudioManager.STREAM_MUSIC, 100);
+		soundPool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, srcQuality);
 		soundPoolMap = new HashMap<Integer, Integer>();
 
 	}
@@ -65,7 +67,6 @@ public class SoundPlayer {
 	}
 
 	public void playSound(NoteName noteName) {
-		//		midiValue = midiValue - 35;
 		AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -98,8 +99,6 @@ public class SoundPlayer {
 
 	private class PlayThread extends Thread {
 		int midiValue;
-		@SuppressWarnings("unused")
-		boolean stop = false;
 		int streamId = 0;
 
 		public PlayThread(int midiValue) {
@@ -108,8 +107,6 @@ public class SoundPlayer {
 
 		@Override
 		public void run() {
-
-			//			noteName = noteName - 36;
 			AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 			float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -127,7 +124,6 @@ public class SoundPlayer {
 		public synchronized void requestStop() {
 
 			soundPool.stop(streamId);
-			stop = true;
 		}
 	}
 }
