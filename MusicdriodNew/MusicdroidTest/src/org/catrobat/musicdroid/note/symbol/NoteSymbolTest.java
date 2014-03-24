@@ -80,14 +80,14 @@ public class NoteSymbolTest extends TestCase {
 		Key key = Key.VIOLIN;
 		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote(NoteName.C5);
 
-		assertFalse(noteSymbol.isStemUp(key));
+		assertTrue(noteSymbol.isStemUp(key));
 	}
 
 	public void testIsStemUp2() {
 		Key key = Key.VIOLIN;
 		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithNote(NoteName.D4);
 
-		assertTrue(noteSymbol.isStemUp(key));
+		assertFalse(noteSymbol.isStemUp(key));
 	}
 
 	public void testIsStemUp3() {
@@ -102,7 +102,7 @@ public class NoteSymbolTest extends TestCase {
 		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithAccord(NoteName.D5, NoteName.G4,
 				NoteName.B4);
 
-		assertFalse(noteSymbol.isStemUp(key));
+		assertTrue(noteSymbol.isStemUp(key));
 	}
 
 	public void testIsStemUp5() {
@@ -110,6 +110,6 @@ public class NoteSymbolTest extends TestCase {
 		NoteSymbol noteSymbol = NoteSymbolTestDataFactory.createNoteSymbolWithAccord(NoteName.D5, NoteName.G3,
 				NoteName.B4);
 
-		assertTrue(noteSymbol.isStemUp(key));
+		assertFalse(noteSymbol.isStemUp(key));
 	}
 }

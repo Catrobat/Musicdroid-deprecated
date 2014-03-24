@@ -22,6 +22,8 @@
  */
 package org.catrobat.musicdroid.note.midi.testutil;
 
+import android.os.Environment;
+
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.meta.Tempo;
@@ -54,7 +56,7 @@ public class MidiFileTestDataFactory {
 
 	private static void createAndWriteMidiFile(Project project) throws IOException, MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-		converter.convertProjectAndWriteMidi(project, ""); //TODO: PFAD ANGEBEN
+		converter.convertProjectAndWriteMidi(project, Environment.getExternalStorageDirectory().getAbsolutePath()); //TODO: PFAD ANGEBEN
 	}
 
 	public static boolean createAndReadMidiFile() {
@@ -62,7 +64,8 @@ public class MidiFileTestDataFactory {
 		try {
 			createAndWriteMidiFile(project);
 			MidiToProjectConverter converter = new MidiToProjectConverter();
-			project = converter.readFileAndConvertMidi(new File(project.getName() + ".midi"));
+			project = converter.readFileAndConvertMidi(new File(Environment.getExternalStorageDirectory()
+					.getAbsoluteFile() + File.separator + project.getName() + ".midi"));
 
 			return (project != null);
 		} catch (Exception e) {
