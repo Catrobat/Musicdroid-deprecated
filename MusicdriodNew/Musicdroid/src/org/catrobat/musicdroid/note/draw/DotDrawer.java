@@ -20,39 +20,34 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.note.draw;
 
-import org.catrobat.musicdroid.note.NoteLength;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PointF;
+import android.graphics.RectF;
 
-public class BreakSymbol implements Symbol {
+public class DotDrawer {
+	public static void DrawDotOnRightSideOfRect(RectF rect, NoteSheetCanvas noteSheetCanvas) {
 
-	private NoteLength noteLength;
+		int dotRadius = 5;
+		int pixelDistanceBetweenRectAndDot = 10;
 
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
-	}
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Style.FILL);
 
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
+		RectF dotRect = new RectF();
+		float x = rect.right + pixelDistanceBetweenRectAndDot;
+		float y = (rect.top + rect.bottom) / 2;
+		PointF centerPointForDot = new PointF(x, y);
+		dotRect.left = centerPointForDot.x;
+		dotRect.right = centerPointForDot.x + 2 * dotRadius;
+		dotRect.bottom = centerPointForDot.y + dotRadius;
+		dotRect.top = centerPointForDot.y - dotRadius;
 
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
+		noteSheetCanvas.getCanvas().drawOval(dotRect, paint);
 
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
 	}
 }

@@ -20,16 +20,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.piano;
+package org.catrobat.musicdroid.instruments.piano;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout.LayoutParams;
 
-import org.catrobat.musicdroid.NoteSheetActivity;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 
@@ -37,43 +36,59 @@ import org.catrobat.musicdroid.note.NoteName;
  * @author Bianca TEUFL
  * 
  */
+@SuppressLint("ViewConstructor")
 public class PianoKey extends Button {
 
-	protected NoteName noteName;
+	public PianoKey(PianoActivity pianoActivity, NoteName noteName, int width, int height, int xPosition,
+			boolean isBlackKey) {
+		super(pianoActivity);
+		initComponents(noteName, width, height, xPosition, isBlackKey);
+	}
 
-	public PianoKey(Context context, NoteName noteName, int width, int height, int xPosition) {
-		super(context);
-		this.noteName = noteName;
-		this.setLayoutParams(new LayoutParams(width, height));
-		this.setX(xPosition);
+	private void initComponents(final NoteName noteName, int width, int height, int xPosition, boolean isBlackKey) {
+		setLayoutParams(new LayoutParams(width, height));
+		setX(xPosition);
 
-		this.setOnTouchListener(new OnTouchListener() {
+		if (isBlackKey) {
+			setBackgroundColor(Color.BLACK);
+		}
+
+		setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
-				NoteSheetActivity noteSheetActivity = (NoteSheetActivity) view.getContext();
-				if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
-							new NoteEvent(getNoteName(), true));
-					setText(PianoKey.this.noteName.toString());
-					setTextColor(Color.BLUE);
-				} else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-					noteSheetActivity.incrementTick();
-					noteSheetActivity.getTrack().addNoteEvent(noteSheetActivity.getTick(),
-							new NoteEvent(getNoteName(), false));
-					noteSheetActivity.drawTrack();
-					setText("");
-					setTextColor(Color.BLUE);
+
+				if (isDownActionEvent(event)) {
+					addKeyPress(new NoteEvent(noteName, true));
+				} else if (isUpActionEvent(event)) {
+					addKeyPress(new NoteEvent(noteName, false));
 				}
+
 				return true;
+			}
+
+			private boolean isDownActionEvent(MotionEvent event) {
+				return (event.getAction() == android.view.MotionEvent.ACTION_DOWN);
+			}
+
+			private boolean isUpActionEvent(MotionEvent event) {
+				return (event.getAction() == android.view.MotionEvent.ACTION_UP);
 			}
 		});
 	}
 
-	public NoteName getNoteName() {
-		return noteName;
+	private void addKeyPress(NoteEvent noteEvent) {
+		PianoActivity pianoActivity = (PianoActivity) getContext();
+		pianoActivity.addNoteEvent(noteEvent);
+		setPianoKeyText(noteEvent);
 	}
 
-	public void setNoteName(NoteName noteName) {
-		this.noteName = noteName;
+	private void setPianoKeyText(NoteEvent noteEvent) {
+		if (noteEvent.isNoteOn()) {
+			setText(noteEvent.getNoteName().toString());
+		} else {
+			setText("");
+		}
+
+		setTextColor(Color.BLUE);
 	}
 }

@@ -27,6 +27,7 @@ import com.leff.midi.MidiTrack;
 import com.leff.midi.event.ChannelEvent;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.Text;
 import com.leff.midi.event.meta.TimeSignature;
 
 import org.catrobat.musicdroid.note.Instrument;
@@ -41,6 +42,8 @@ import java.util.List;
 
 public class ProjectToMidiConverter {
 
+	public static final String MUSICDROID_MIDI_FILE_IDENTIFIER = "Musicdroid Midi File";
+
 	private static final int MAX_CHANNEL = 16;
 
 	private NoteEventToMidiEventConverter eventConverter;
@@ -54,13 +57,14 @@ public class ProjectToMidiConverter {
 	public void convertProjectAndWriteMidi(Project project) throws IOException, MidiException {
 		MidiFile midi = convertProject(project);
 
-		midi.writeToFile(new File(project.getName() + ".midi"));
+		File file = new File(project.getName() + ".midi");
+		midi.writeToFile(file);
 	}
 
 	protected MidiFile convertProject(Project project) throws MidiException {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
-		MidiTrack tempoTrack = createTempoTrack(project.getBeatsPerMinute());
+		MidiTrack tempoTrack = createTempoTrackWithMetaInfo(project.getBeatsPerMinute());
 		tracks.add(tempoTrack);
 
 		for (int i = 0; i < project.size(); i++) {
@@ -87,17 +91,18 @@ public class ProjectToMidiConverter {
 		}
 	}
 
-	protected MidiTrack createTempoTrack(int beatsPerMinute) {
+	protected MidiTrack createTempoTrackWithMetaInfo(int beatsPerMinute) {
 		MidiTrack tempoTrack = new MidiTrack();
+
+		Text text = new Text(0, 0, MUSICDROID_MIDI_FILE_IDENTIFIER);
+		tempoTrack.insertEvent(text);
 
 		Tempo tempo = new Tempo();
 		tempo.setBpm(beatsPerMinute);
-
 		tempoTrack.insertEvent(tempo);
 
 		TimeSignature timeSignature = new TimeSignature();
 		timeSignature.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
-
 		tempoTrack.insertEvent(timeSignature);
 
 		return tempoTrack;

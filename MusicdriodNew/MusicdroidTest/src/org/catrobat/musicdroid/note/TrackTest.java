@@ -24,115 +24,93 @@ package org.catrobat.musicdroid.note;
 
 import junit.framework.TestCase;
 
+import org.catrobat.musicdroid.note.testutil.NoteEventTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.TrackTestDataFactory;
+
 public class TrackTest extends TestCase {
 
-	public void testTrack1() {
-		Track track = new Track();
+	public void testGetInstrument() {
+		Track track = TrackTestDataFactory.createTrack();
 
-		assertEquals(Instrument.ACOUSTIC_GRAND_PIANO, track.getInstrument());
+		assertEquals(Track.DEFAULT_INSTRUMENT, track.getInstrument());
 	}
 
-	public void testTrack2() {
-		Instrument instrument = Instrument.ACCORDION;
-		Track track = new Track(instrument);
+	public void testAddNoteEvent1() {
+		Track track = TrackTestDataFactory.createTrack();
+		track.addNoteEvent(0, NoteEventTestDataFactory.createNoteEvent());
 
-		assertEquals(instrument, track.getInstrument());
+		assertEquals(1, track.size());
 	}
 
-	public void testAddNoteEventl() {
-		Track track = new Track();
+	public void testAddNoteEvent2() {
+		Track track = TrackTestDataFactory.createTrack();
+		track.addNoteEvent(0, NoteEventTestDataFactory.createNoteEvent());
+		track.addNoteEvent(0, NoteEventTestDataFactory.createNoteEvent());
 
+		assertEquals(2, track.size());
+	}
+
+	public void testGetNoteEventsForTick() {
+		Track track = TrackTestDataFactory.createTrack();
 		long tick = 0;
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
-		track.addNoteEvent(tick, noteEvent);
-
-		assertEquals(1, track.getSortedTicks().size());
-		assertEquals(1, track.getNoteEventsForTick(0).size());
-	}
-
-	public void testGetSymbol() {
-		Track track = new Track();
-
-		long tick = 0;
-		NoteEvent noteEvent = new NoteEvent(NoteName.C1, true);
+		NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
 		track.addNoteEvent(tick, noteEvent);
 
 		assertEquals(noteEvent, track.getNoteEventsForTick(tick).get(0));
 	}
 
-	public void testSize1() {
-		Track track = new Track();
-		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
-
-		assertEquals(1, track.size());
-	}
-
-	public void testSize2() {
-		Track track = new Track();
-		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
-		track.addNoteEvent(0, new NoteEvent(NoteName.C1, true));
-		track.addNoteEvent(64, new NoteEvent(NoteName.C1, true));
-
-		assertEquals(3, track.size());
-	}
-
 	public void testEquals1() {
-		long tick1 = 0;
-		Track track1 = new Track();
-		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
-
-		long tick2 = 0;
-		Track track2 = new Track();
-		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C1, true));
+		long tick = 0;
+		Track track1 = TrackTestDataFactory.createTrack();
+		track1.addNoteEvent(tick, NoteEventTestDataFactory.createNoteEvent());
+		Track track2 = TrackTestDataFactory.createTrack();
+		track2.addNoteEvent(tick, NoteEventTestDataFactory.createNoteEvent());
 
 		assertTrue(track1.equals(track2));
 	}
 
 	public void testEquals2() {
-		long tick1 = 0;
-		Track track1 = new Track();
-		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
-
-		long tick2 = 0;
-		Track track2 = new Track();
-		track2.addNoteEvent(tick2, new NoteEvent(NoteName.C2, true));
+		long tick = 0;
+		Track track1 = TrackTestDataFactory.createTrack();
+		track1.addNoteEvent(tick, NoteEventTestDataFactory.createNoteEvent(NoteName.C1));
+		Track track2 = TrackTestDataFactory.createTrack();
+		track2.addNoteEvent(tick, NoteEventTestDataFactory.createNoteEvent(NoteName.C2));
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals3() {
-		long tick1 = 0;
-		Track track1 = new Track();
-		track1.addNoteEvent(tick1, new NoteEvent(NoteName.C1, true));
-
-		Track track2 = new Track();
+		Track track1 = TrackTestDataFactory.createTrack();
+		track1.addNoteEvent(0, NoteEventTestDataFactory.createNoteEvent());
+		Track track2 = TrackTestDataFactory.createTrack();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals4() {
-		Track track1 = new Track(Instrument.ACCORDION);
-		Track track2 = new Track();
+		Track track1 = TrackTestDataFactory.createTrack(Instrument.ACCORDION);
+		Track track2 = TrackTestDataFactory.createTrack();
 
 		assertFalse(track1.equals(track2));
 	}
 
 	public void testEquals5() {
-		Track track = new Track();
+		Track track = TrackTestDataFactory.createTrack();
 
 		assertFalse(track.equals(null));
 	}
 
 	public void testEquals6() {
-		Track track = new Track();
+		Track track = TrackTestDataFactory.createTrack();
 
 		assertFalse(track.equals(""));
 	}
 
 	public void testToString() {
-		Instrument instrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		Track track = new Track(instrument);
+		Track track = TrackTestDataFactory.createTrack();
+		String expectedString = "[Track] instrument=" + Track.DEFAULT_INSTRUMENT + " key=" + track.getKey() + " size="
+				+ track.size();
 
-		assertEquals("[Track] instrument= " + instrument + " size: " + 0, track.toString());
+		assertEquals(expectedString, track.toString());
 	}
 }

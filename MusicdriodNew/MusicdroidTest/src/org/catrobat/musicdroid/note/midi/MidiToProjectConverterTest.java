@@ -26,21 +26,68 @@ import com.leff.midi.MidiFile;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.MockDataFactory;
 import org.catrobat.musicdroid.note.Project;
+import org.catrobat.musicdroid.note.midi.testutil.MidiFileTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.ProjectTestDataFactory;
 
 public class MidiToProjectConverterTest extends TestCase {
-
-	private static final String PROJECT_NAME = "TestMidi";
 
 	public void testConvertMidi() throws MidiException {
 		ProjectToMidiConverter projectConverter = new ProjectToMidiConverter();
 		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
-		Project expectedProject = MockDataFactory.createProject();
+		Project expectedProject = ProjectTestDataFactory.createProjectWithSemiComplexTracks();
 		MidiFile midi = projectConverter.convertProject(expectedProject);
 
-		Project actualProject = midiConverter.convertMidi(midi, PROJECT_NAME);
+		Project actualProject = midiConverter.convertMidi(midi, Project.DEFAULT_NAME);
 
 		assertEquals(expectedProject, actualProject);
+	}
+
+	public void testReadFileAndConvertMidi() {
+		assertTrue(MidiFileTestDataFactory.createAndReadMidiFile());
+	}
+
+	public void testValidateMidiFile1() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFile();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile2() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithEmptyTrack();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile3() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingTempoEvent();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testValidateMidiFile4() {
+		MidiToProjectConverter converter = new MidiToProjectConverter();
+		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingSomeTextEvent();
+
+		try {
+			converter.validateMidiFile(midiFile);
+			fail();
+		} catch (MidiException e) {
+		}
 	}
 }

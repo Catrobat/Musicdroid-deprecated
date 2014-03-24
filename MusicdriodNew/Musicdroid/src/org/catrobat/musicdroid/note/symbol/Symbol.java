@@ -22,37 +22,5 @@
  */
 package org.catrobat.musicdroid.note.symbol;
 
-import org.catrobat.musicdroid.note.NoteLength;
-
-public class BreakSymbol implements Symbol {
-
-	private NoteLength noteLength;
-
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
-	}
-
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
-
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
-	}
+public interface Symbol {
 }

@@ -28,22 +28,19 @@ import java.util.List;
 
 public class Project implements Serializable {
 
+	public static final String DEFAULT_NAME = "MusicdroidProject";
 	public static final int DEFAULT_BEATS_PER_MINUTE = 120;
+	public static final Key DEFAULT_KEY = Key.VIOLIN;
 	private static final long serialVersionUID = 7396763540934053008L;
 
 	private String name;
 	private int beatsPerMinute;
 	private List<Track> tracks;
 
-	public Project(String name) {
+	public Project(String name, int beatsPerMinute, Key key) {
 		this.name = name;
-		this.tracks = new LinkedList<Track>();
-		this.beatsPerMinute = DEFAULT_BEATS_PER_MINUTE;
-	}
-
-	public Project(String name, int beatsPerMinute) {
-		this(name);
 		this.beatsPerMinute = beatsPerMinute;
+		this.tracks = new LinkedList<Track>();
 	}
 
 	public String getName() {

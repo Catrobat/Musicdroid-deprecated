@@ -24,7 +24,8 @@ package org.catrobat.musicdroid.note.symbol;
 
 import junit.framework.TestCase;
 
-import org.catrobat.musicdroid.note.MockDataFactory;
+import org.catrobat.musicdroid.note.testutil.SymbolListTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.TrackTestDataFactory;
 
 import java.util.List;
 
@@ -32,41 +33,35 @@ public class TrackToSymbolsConverterTest extends TestCase {
 
 	public void testConvertTrack1() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSimpleSymbolList();
+		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createSimpleTrack());
 
-		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList1();
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack1());
-
-		assertEquals(expectedSymbols.size(), actualSymbols.size());
-		assertEquals(expectedSymbols, actualSymbols);
+		assertEqualsSymbolLists(expectedSymbols, actualSymbols);
 	}
 
 	public void testConvertTrack2() {
 		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+		List<Symbol> expectedSymbols = SymbolListTestDataFactory.createSymbolListWithBreak();
+		List<Symbol> actualSymbols = trackConverter.convertTrack(TrackTestDataFactory.createTrackWithBreak());
 
-		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList2();
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack2());
+		assertEqualsSymbolLists(expectedSymbols, actualSymbols);
+	}
 
+	private void assertEqualsSymbolLists(List<Symbol> expectedSymbols, List<Symbol> actualSymbols) {
 		assertEquals(expectedSymbols.size(), actualSymbols.size());
 		assertEquals(expectedSymbols, actualSymbols);
 	}
 
-	public void testConvertTrack3() {
-		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-
-		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList3();
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack3());
-
-		assertEquals(expectedSymbols.size(), actualSymbols.size());
-		assertEquals(expectedSymbols, actualSymbols);
-	}
-
-	public void testConvertTrack4() {
-		TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
-
-		List<AbstractSymbol> expectedSymbols = MockDataFactory.createSymbolList4();
-		List<AbstractSymbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack4());
-
-		assertEquals(expectedSymbols.size(), actualSymbols.size());
-		assertEquals(expectedSymbols, actualSymbols);
-	}
+	// TODO fw implement Algorithm for BoundNotes
+	/*
+	 * public void testConvertTrack4() {
+	 * TrackToSymbolsConverter trackConverter = new TrackToSymbolsConverter();
+	 * 
+	 * List<Symbol> expectedSymbols = MockDataFactory.createSymbolList4();
+	 * List<Symbol> actualSymbols = trackConverter.convertTrack(MockDataFactory.createTrack4());
+	 * 
+	 * assertEquals(expectedSymbols.size(), actualSymbols.size());
+	 * assertEquals(expectedSymbols, actualSymbols);
+	 * }
+	 */
 }

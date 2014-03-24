@@ -29,8 +29,10 @@ import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.Text;
 
 import org.catrobat.musicdroid.note.Instrument;
+import org.catrobat.musicdroid.note.Key;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Project;
@@ -53,24 +55,44 @@ public class MidiToProjectConverter {
 		beatsPerMinute = Project.DEFAULT_BEATS_PER_MINUTE;
 	}
 
-	public Project readFileAndConvertMidi(File file) throws FileNotFoundException, IOException, MidiException {
+	public Project readFileAndConvertMidi(File file) throws MidiException, FileNotFoundException, IOException {
 		MidiFile midi = new MidiFile(file);
 
-		try {
-			return convertMidi(midi, file.getName());
-		} catch (Exception e) {
-			throw new MidiException("Unsupported MIDI format!");
-		}
+		validateMidiFile(midi);
+
+		return convertMidi(midi, file.getName());
 	}
 
-	protected Project convertMidi(MidiFile midi, String name) throws MidiException {
+	protected void validateMidiFile(MidiFile midiFile) throws MidiException {
+		if (midiFile.getTrackCount() > 0) {
+			MidiTrack tempoTrack = midiFile.getTracks().get(0);
+
+			Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
+
+			if (it.hasNext()) {
+				MidiEvent event = it.next();
+
+				if (event instanceof Text) {
+					Text text = (Text) event;
+
+					if (text.getText().equals(ProjectToMidiConverter.MUSICDROID_MIDI_FILE_IDENTIFIER)) {
+						return;
+					}
+				}
+			}
+		}
+
+		throw new MidiException("Unsupported MIDI!");
+	}
+
+	protected Project convertMidi(MidiFile midi, String name) {
 		List<Track> tracks = new ArrayList<Track>();
 
 		for (MidiTrack midiTrack : midi.getTracks()) {
 			tracks.add(createTrack(midiTrack));
 		}
 
-		Project project = new Project(name, beatsPerMinute);
+		Project project = new Project(name, beatsPerMinute, Key.VIOLIN);
 
 		for (Track track : tracks) {
 			if (track.size() > 0) {
@@ -81,9 +103,9 @@ public class MidiToProjectConverter {
 		return project;
 	}
 
-	private Track createTrack(MidiTrack midiTrack) throws MidiException {
+	private Track createTrack(MidiTrack midiTrack) {
 		Instrument instrument = getInstrumentFromMidiTrack(midiTrack);
-		Track track = new Track(instrument);
+		Track track = new Track(Key.VIOLIN, instrument);
 		Iterator<MidiEvent> it = midiTrack.getEvents().iterator();
 
 		while (it.hasNext()) {

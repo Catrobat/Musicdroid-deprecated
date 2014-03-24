@@ -20,39 +20,18 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.note.symbol.testutil;
 
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.symbol.BreakSymbol;
 
-public class BreakSymbol implements Symbol {
+public class BreakSymbolTestDataFactory {
 
-	private NoteLength noteLength;
-
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
+	public static BreakSymbol createBreakSymbol() {
+		return new BreakSymbol(NoteLength.QUARTER);
 	}
 
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
-
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
+	public static BreakSymbol createBreakSymbol(NoteLength noteLength) {
+		return new BreakSymbol(noteLength);
 	}
 }

@@ -31,23 +31,31 @@ import java.util.TreeSet;
 
 public class Track implements Serializable {
 
+	public static final Instrument DEFAULT_INSTRUMENT = Instrument.ACOUSTIC_GRAND_PIANO;
 	private static final long serialVersionUID = 7483021689872527955L;
 
 	private Instrument instrument;
 	private HashMap<Long, List<NoteEvent>> events;
+	private Key key;
 
-	public Track() {
+	public Track(Key key) {
 		this.events = new HashMap<Long, List<NoteEvent>>();
-		this.instrument = Instrument.ACOUSTIC_GRAND_PIANO;
+		this.instrument = DEFAULT_INSTRUMENT;
+		this.key = key;
 	}
 
-	public Track(Instrument instrument) {
+	public Track(Key key, Instrument instrument) {
 		this.events = new HashMap<Long, List<NoteEvent>>();
 		this.instrument = instrument;
+		this.key = key;
 	}
 
 	public Instrument getInstrument() {
 		return instrument;
+	}
+
+	public Key getKey() {
+		return key;
 	}
 
 	public void addNoteEvent(long tick, NoteEvent noteEvent) {
@@ -114,6 +122,6 @@ public class Track implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Track] instrument= " + instrument + " size: " + size();
+		return "[Track] instrument=" + instrument + " key=" + key + " size=" + size();
 	}
 }

@@ -20,39 +20,14 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.instruments.testutil;
 
-import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.instruments.Instrument;
+import org.catrobat.musicdroid.instruments.piano.PianoActivity;
 
-public class BreakSymbol implements Symbol {
+public class InstrumentTestDataFactory {
 
-	private NoteLength noteLength;
-
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
-	}
-
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
-
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
+	public static Instrument createInstrument() {
+		return new PianoActivity();
 	}
 }

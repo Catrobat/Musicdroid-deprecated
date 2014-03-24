@@ -32,9 +32,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
 import org.catrobat.musicdroid.MainActivity;
-import org.catrobat.musicdroid.NoteSheetActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.RecorderActivity;
+import org.catrobat.musicdroid.instruments.piano.PianoActivity;
 import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
@@ -84,7 +84,7 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener, O
 				parent.addSoundTrack(new SoundTrackView(parent, stvd));
 				break;
 			case PIANO:
-				parent.startActivity(new Intent(parent, NoteSheetActivity.class));
+				parent.startActivity(new Intent(parent, PianoActivity.class));
 				// parent.startActivity(new Intent(parent, DrawTrackActivity.class));
 				// SoundTrackPiano stvp = new SoundTrackPiano();
 				// parent.addSoundTrack(new SoundTrackView(parent, stvp));

@@ -20,39 +20,31 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.note.draw;
 
-import org.catrobat.musicdroid.note.NoteLength;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
-public class BreakSymbol implements Symbol {
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.tools.PictureTools;
 
-	private NoteLength noteLength;
+public class CrossDrawer {
 
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
-	}
+	public static void drawCross(NoteSheetCanvas noteSheetCanvas, int xPosition, int yPosition, Context context) {
+		int crossHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();
 
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
+		Resources res = context.getResources();
+		Bitmap crossPicture = BitmapFactory.decodeResource(res, R.drawable.cross);
+		int xStartPositionForCrosses = noteSheetCanvas.getStartXPointForNextSmallSymbolSpace();
 
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
+		Rect rect = PictureTools.calculateProportionalPictureContourRect(crossPicture, crossHeight,
+				xStartPositionForCrosses,
+				noteSheetCanvas.getYPositionOfCenterLine() + yPosition * noteSheetCanvas.getDistanceBetweenNoteLines()
+						/ 2);
 
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
+		noteSheetCanvas.getCanvas().drawBitmap(crossPicture, null, rect, null);
 	}
 }

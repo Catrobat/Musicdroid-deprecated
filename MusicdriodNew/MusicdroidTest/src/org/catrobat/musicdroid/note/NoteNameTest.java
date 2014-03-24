@@ -27,75 +27,58 @@ import junit.framework.TestCase;
 public class NoteNameTest extends TestCase {
 
 	public void testMidi() {
-		assertEquals(36, NoteName.C1.getMidi());
-		assertEquals(48, NoteName.C2.getMidi());
-		assertEquals(60, NoteName.C3.getMidi());
-		assertEquals(72, NoteName.C4.getMidi());
-		assertEquals(84, NoteName.C5.getMidi());
+		NoteName[] noteNames = new NoteName[] { NoteName.C1, NoteName.C2, NoteName.C3, NoteName.C4, NoteName.C5,
+				NoteName.C6, NoteName.C7, NoteName.C8, };
+
+		int startMidi = 24;
+		int increment = 12;
+
+		for (int i = 0; i < noteNames.length; i++) {
+			int midi = startMidi + i * increment;
+			assertEquals(midi, noteNames[i].getMidi());
+		}
 	}
 
 	public void testNext1() {
-		NoteName a5s = NoteName.A5S;
-		NoteName b5 = NoteName.B5;
+		NoteName noteName = NoteName.B0;
+		NoteName nextNoteName = NoteName.C1;
 
-		assertEquals(b5, a5s.next());
-		assertEquals(b5, b5.next());
+		assertEquals(nextNoteName, noteName.next());
 	}
 
 	public void testNext2() {
-		NoteName b5 = NoteName.B5;
+		NoteName lastNoteName = NoteName.C8;
 
-		assertEquals(b5, b5.next());
+		assertEquals(lastNoteName, lastNoteName.next());
 	}
 
 	public void testPrevious1() {
-		NoteName c1 = NoteName.C1;
-		NoteName c1s = NoteName.C1S;
+		NoteName noteName = NoteName.C1;
+		NoteName previousNoteName = NoteName.B0;
 
-		assertEquals(c1, c1.previous());
-		assertEquals(c1, c1s.previous());
+		assertEquals(previousNoteName, noteName.previous());
 	}
 
 	public void testPrevious2() {
-		NoteName c1 = NoteName.C1;
+		NoteName firstNoteName = NoteName.A0;
 
-		assertEquals(c1, c1.previous());
-	}
-
-	public void testCalculateDistance1() {
-		NoteName c1 = NoteName.C1S;
-		NoteName c1s = NoteName.C1;
-
-		assertEquals(-1, NoteName.calculateDistance(c1, c1s));
-	}
-
-	public void testCalculateDistance2() {
-		NoteName c1 = NoteName.C1S;
-		NoteName c1s = NoteName.C1;
-
-		assertEquals(1, NoteName.calculateDistance(c1s, c1));
-	}
-
-	public void testCalculateDistance3() {
-		NoteName c1 = NoteName.C1;
-
-		assertEquals(0, NoteName.calculateDistance(c1, c1));
+		assertEquals(firstNoteName, firstNoteName.previous());
 	}
 
 	public void testIsSigned1() {
-		NoteName c1 = NoteName.C1;
+		NoteName noteName = NoteName.C1;
 
-		assertFalse(c1.isSigned());
+		assertFalse(noteName.isSigned());
 	}
 
 	public void testIsSigned2() {
-		NoteName c1s = NoteName.C1S;
+		NoteName noteName = NoteName.C1S;
 
-		assertTrue(c1s.isSigned());
+		assertTrue(noteName.isSigned());
 	}
 
 	public void testGetNoteNameFromMidiValue1() {
-		NoteName expectedNoteName = NoteName.C1;
+		NoteName expectedNoteName = NoteName.A0;
 		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
@@ -104,7 +87,7 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testGetNoteNameFromMidiValue2() {
-		NoteName expectedNoteName = NoteName.B5;
+		NoteName expectedNoteName = NoteName.C8;
 		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
@@ -113,7 +96,7 @@ public class NoteNameTest extends TestCase {
 	}
 
 	public void testGetNoteNameFromMidiValue3() {
-		NoteName expectedNoteName = NoteName.C3;
+		NoteName expectedNoteName = NoteName.C4;
 		int midiValue = expectedNoteName.getMidi();
 
 		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(midiValue);
@@ -121,24 +104,59 @@ public class NoteNameTest extends TestCase {
 		assertEquals(actualNoteName, expectedNoteName);
 	}
 
-	public void testCalculateDistanceInHalfNotelineDistances1() {
-		NoteName n1 = NoteName.D1;
-		NoteName n2 = NoteName.C1S;
+	public void testGetNoteNameFromMidiValue4() {
+		NoteName expectedNoteName = NoteName.C4;
 
-		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), -1);
+		NoteName actualNoteName = NoteName.getNoteNameFromMidiValue(1337);
+
+		assertEquals(actualNoteName, expectedNoteName);
 	}
 
-	public void testCalculateDistanceInHalfNotelineDistances2() {
-		NoteName n1 = NoteName.C1;
-		NoteName n2 = NoteName.C1S;
+	public void testCalculateDistanceCountingNoneSignedNotesOnly1() {
+		NoteName noteName1 = NoteName.D1;
+		NoteName noteName2 = NoteName.C1S;
+		int expectedDistance = 1;
 
-		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 0);
+		assertEquals(expectedDistance, NoteName.calculateDistanceCountingNoneSignedNotesOnly(noteName1, noteName2));
 	}
 
-	public void testCalculateDistanceInHalfNotelineDistances3() {
-		NoteName n2 = NoteName.B3;
-		NoteName n1 = NoteName.D3;
+	public void testCalculateDistanceCountingNoneSignedNotesOnly2() {
+		NoteName noteName1 = NoteName.C1;
+		NoteName noteName2 = NoteName.C1S;
+		int expectedDistance = 0;
 
-		assertEquals(NoteName.calculateDistanceInHalfNotelineDistances(n1, n2), 5);
+		assertEquals(expectedDistance, NoteName.calculateDistanceCountingNoneSignedNotesOnly(noteName1, noteName2));
+	}
+
+	public void testCalculateDistanceCountingNoneSignedNotesOnly3() {
+		NoteName noteName1 = NoteName.D3;
+		NoteName noteName2 = NoteName.B3;
+		int expectedDistance = -5;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceCountingNoneSignedNotesOnly(noteName1, noteName2));
+	}
+
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly1() {
+		NoteName noteName = NoteName.B4;
+		Key key = Key.VIOLIN;
+		int expectedDistance = 0;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
+	}
+
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly2() {
+		NoteName noteName = NoteName.C5;
+		Key key = Key.VIOLIN;
+		int expectedDistance = -1;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
+	}
+
+	public void testCalculateDistanceToMiddleLineCountingSignedNotesOnly3() {
+		NoteName noteName = NoteName.A4;
+		Key key = Key.VIOLIN;
+		int expectedDistance = 1;
+
+		assertEquals(expectedDistance, NoteName.calculateDistanceToMiddleLineCountingSignedNotesOnly(key, noteName));
 	}
 }

@@ -20,24 +20,48 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.tools;
+package org.catrobat.musicdroid.note.symbol;
 
-import org.catrobat.musicdroid.tool.draw.NoteSheetCanvas;
+import java.util.LinkedList;
+import java.util.List;
 
-/**
- * @author musicdroid
- * 
- */
-public class NoteSheetTools {
+public class BoundNoteSymbol implements Symbol {
 
-	private NoteSheetCanvas noteSheetCanvas;
+	private List<NoteSymbol> noteSymbols;
 
-	public NoteSheetCanvas getNoteSheetCanvas() {
-		return noteSheetCanvas;
+	public BoundNoteSymbol() {
+		noteSymbols = new LinkedList<NoteSymbol>();
 	}
 
-	public void setNoteSheetCanvas(NoteSheetCanvas noteSheetCanvas) {
-		this.noteSheetCanvas = noteSheetCanvas;
+	public void addNoteSymbol(NoteSymbol noteSymbol) {
+		noteSymbols.add(noteSymbol);
 	}
 
+	public NoteSymbol getNoteSymbol(int location) {
+		return noteSymbols.get(location);
+	}
+
+	public int size() {
+		return noteSymbols.size();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj == null) || !(obj instanceof BoundNoteSymbol)) {
+			return false;
+		}
+
+		BoundNoteSymbol accordSymbol = (BoundNoteSymbol) obj;
+
+		if (noteSymbols.equals(accordSymbol.noteSymbols)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "[BoundNoteSymbol] size: " + size();
+	}
 }

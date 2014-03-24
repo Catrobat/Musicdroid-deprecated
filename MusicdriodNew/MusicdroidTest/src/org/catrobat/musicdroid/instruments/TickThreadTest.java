@@ -20,34 +20,36 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note;
+package org.catrobat.musicdroid.instruments;
 
 import junit.framework.TestCase;
 
-public class InstrumentTest extends TestCase {
+import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.note.NoteName;
 
-	public void testGetInstrumentFromProgram1() {
-		Instrument expectedInstrument = Instrument.ACOUSTIC_GRAND_PIANO;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
+public class TickThreadTest extends TestCase {
+
+	// TODO fw yes i know that this test is garbage, but until TickThread is not a real Thread...
+	public void testGetNextTick1() {
+		TickThread tickThread = new TickThread();
+		NoteEvent noteEvent = new NoteEvent(NoteName.C4, false);
+		long tick = 0;
+
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		tick += NoteLength.QUARTER.getTickDuration();
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		tick += NoteLength.QUARTER.getTickDuration();
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
 	}
 
-	public void testGetInstrumentFromProgram2() {
-		Instrument expectedInstrument = Instrument.LEAD_5_CHARANG;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
-	}
+	public void testGetNextTick2() {
+		TickThread tickThread = new TickThread();
+		NoteEvent noteEvent = new NoteEvent(NoteName.C4, true);
+		long tick = 0;
 
-	public void testGetInstrumentFromProgram3() {
-		Instrument expectedInstrument = Instrument.GUNSHOT;
-		assertGetInstrumentFromProgram(expectedInstrument.getProgram(), expectedInstrument);
-	}
-
-	public void testGetInstrumentFromProgram4() {
-		int invalidProgram = 128;
-		assertGetInstrumentFromProgram(invalidProgram, Instrument.ACOUSTIC_GRAND_PIANO);
-	}
-
-	private void assertGetInstrumentFromProgram(int program, Instrument expectedInstrument) {
-		Instrument actualInstrument = Instrument.getInstrumentFromProgram(program);
-		assertEquals(expectedInstrument, actualInstrument);
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
+		assertEquals(tick, tickThread.getNextTick(noteEvent));
 	}
 }

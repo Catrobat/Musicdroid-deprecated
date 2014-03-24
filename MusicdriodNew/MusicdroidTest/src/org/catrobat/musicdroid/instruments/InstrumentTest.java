@@ -20,31 +20,21 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.draw;
+package org.catrobat.musicdroid.instruments;
 
-import org.catrobat.musicdroid.note.Key;
-import org.catrobat.musicdroid.note.NoteName;
+import junit.framework.TestCase;
 
-/**
- * @author musicdroid
- * 
- */
-public class NotePosition {
+public class InstrumentTest extends TestCase {
 
-	public NotePosition() {
-
-	}
-
-	public static int getToneDistanceFromToneToMiddleLineInHalfLineDistances(Key key, NoteName tone) {
-		NoteName middleNote;
-		if (key == Key.VIOLIN) {
-			middleNote = NoteName.B3;
-		} else if (key == Key.BASS) {
-			middleNote = NoteName.D3;
-		} else {
-			throw new UnsupportedOperationException();
-		}
-
-		return NoteName.calculateDistanceInHalfNotelineDistances(tone, middleNote);
-	}
+	// TODO fw make this work
+	/*
+	 * public void testAddNoteEvent() {
+	 * Instrument instrument = InstrumentTestDataFactory.createInstrument();
+	 * NoteEvent noteEvent = NoteEventTestDataFactory.createNoteEvent();
+	 * 
+	 * instrument.addNoteEvent(noteEvent);
+	 * 
+	 * assertEquals(1, instrument.getTrack().size());
+	 * }
+	 */
 }

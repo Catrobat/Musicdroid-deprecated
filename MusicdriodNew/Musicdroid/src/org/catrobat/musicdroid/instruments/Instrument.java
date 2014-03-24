@@ -20,39 +20,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.instruments;
 
-import org.catrobat.musicdroid.note.NoteLength;
+import android.app.Activity;
 
-public class BreakSymbol implements Symbol {
+import org.catrobat.musicdroid.note.Key;
+import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.note.Track;
 
-	private NoteLength noteLength;
+public abstract class Instrument extends Activity {
 
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
+	private TickThread tickThread;
+	private Track track;
+
+	public Instrument() {
+		tickThread = new TickThread();
+		track = new Track(Key.VIOLIN); //TODO FW
 	}
 
-	public NoteLength getNoteLength() {
-		return noteLength;
+	public Track getTrack() {
+		return track;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
-
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
+	public void addNoteEvent(NoteEvent noteEvent) {
+		track.addNoteEvent(tickThread.getNextTick(noteEvent), noteEvent);
+		doAfterAddNoteEvent(noteEvent);
 	}
 
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
-	}
+	protected abstract void doAfterAddNoteEvent(NoteEvent noteEvent);
 }

@@ -29,40 +29,65 @@ import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.ProgramChange;
 import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.Text;
 
 import junit.framework.TestCase;
 
 import org.catrobat.musicdroid.note.Instrument;
-import org.catrobat.musicdroid.note.MockDataFactory;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.Track;
+import org.catrobat.musicdroid.note.midi.testutil.MidiFileTestDataFactory;
+import org.catrobat.musicdroid.note.testutil.ProjectTestDataFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ProjectToMidiConverterTest extends TestCase {
 
-	public void testConvertProjectAndWriteMidi() throws MidiException {
+	public void testAddInstrumentAndGetChannel1() throws MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-		Project project = MockDataFactory.createProject();
+		int[] expectedChannels = { 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACCORDION, Instrument.ACOUSTIC_BASS,
+				Instrument.ACOUSTIC_BASS, Instrument.ACOUSTIC_GRAND_PIANO, Instrument.AGOGO_BELLS, Instrument.APPLAUSE,
+				Instrument.BAGPIPE, Instrument.BANJO, Instrument.BASSOON, Instrument.BRASS_SECTION, Instrument.CELLO,
+				Instrument.CHURCH_ORGAN, Instrument.CLARINET, Instrument.DISTORTION_GUITAR,
+				Instrument.ELECTRIC_BASS_FINGER, Instrument.FX_1_RAIN, Instrument.FX_8_SCI_FI };
 
-		try {
-			converter.convertProjectAndWriteMidi(project);
-		} catch (IOException e) {
-			assertTrue(false);
+		for (int i = 0; i < instruments.length; i++) {
+			int actualChannel = converter.addInstrumentAndGetChannel(instruments[i]);
+
+			assertEquals(expectedChannels[i], actualChannel);
+		}
+	}
+
+	public void testAddInstrumentAndGetChannel2() throws MidiException {
+		ProjectToMidiConverter converter = new ProjectToMidiConverter();
+
+		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACOUSTIC_BASS, Instrument.ACOUSTIC_GRAND_PIANO,
+				Instrument.AGOGO_BELLS, Instrument.APPLAUSE, Instrument.BAGPIPE, Instrument.BANJO, Instrument.BASSOON,
+				Instrument.BRASS_SECTION, Instrument.CELLO, Instrument.CHURCH_ORGAN, Instrument.CLARINET,
+				Instrument.DISTORTION_GUITAR, Instrument.ELECTRIC_BASS_FINGER, Instrument.FX_1_RAIN,
+				Instrument.FX_8_SCI_FI };
+
+		for (int i = 0; i < instruments.length; i++) {
+			converter.addInstrumentAndGetChannel(instruments[i]);
 		}
 
-		File file = new File(project.getName() + ".midi");
-		assertTrue(file.exists());
-		file.delete();
+		try {
+			converter.addInstrumentAndGetChannel(Instrument.HARMONICA);
+			fail();
+		} catch (MidiException e) {
+		}
+	}
+
+	public void testConvertProjectAndWriteMidi() throws MidiException {
+		assertTrue(MidiFileTestDataFactory.createAndWriteMidiFileWithDeleteOnSuccess());
 	}
 
 	public void testConvertProject() throws MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-		Project project = MockDataFactory.createProject();
+		Project project = ProjectTestDataFactory.createProjectWithSemiComplexTracks();
 
 		MidiFile midi = converter.convertProject(project);
 
@@ -88,11 +113,13 @@ public class ProjectToMidiConverterTest extends TestCase {
 	}
 
 	private void assertTempoTrack(Project project, MidiTrack tempoTrack) {
-		assertEquals(2, tempoTrack.getEventCount());
+		assertEquals(3, tempoTrack.getEventCount());
 
 		Iterator<MidiEvent> it = tempoTrack.getEvents().iterator();
+		Text text = (Text) it.next();
 		Tempo tempo = (Tempo) it.next();
 
+		assertEquals(ProjectToMidiConverter.MUSICDROID_MIDI_FILE_IDENTIFIER, text.getText());
 		assertEquals(project.getBeatsPerMinute(), (int) tempo.getBpm());
 	}
 
@@ -131,33 +158,10 @@ public class ProjectToMidiConverterTest extends TestCase {
 
 				assertEquals(noteEvent.getNoteName().getMidi(), noteOffEvent.getNoteValue());
 			} else {
-				assertTrue(false);
+				fail();
 			}
 
 			lastTick = midiEventTick;
-		}
-	}
-
-	public void testAddInstrumentAndGetChannel() throws MidiException {
-		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-
-		int[] expectedChannels = { 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-		Instrument[] instruments = { Instrument.ACCORDION, Instrument.ACCORDION, Instrument.ACOUSTIC_BASS,
-				Instrument.ACOUSTIC_BASS, Instrument.ACOUSTIC_GRAND_PIANO, Instrument.AGOGO_BELLS, Instrument.APPLAUSE,
-				Instrument.BAGPIPE, Instrument.BANJO, Instrument.BASSOON, Instrument.BRASS_SECTION, Instrument.CELLO,
-				Instrument.CHURCH_ORGAN, Instrument.CLARINET, Instrument.DISTORTION_GUITAR,
-				Instrument.ELECTRIC_BASS_FINGER, Instrument.FX_1_RAIN, Instrument.FX_8_SCI_FI };
-
-		for (int i = 0; i < instruments.length; i++) {
-			int actualChannel = converter.addInstrumentAndGetChannel(instruments[i]);
-
-			assertEquals(expectedChannels[i], actualChannel);
-		}
-
-		try {
-			converter.addInstrumentAndGetChannel(Instrument.HARMONICA);
-			assertTrue(false);
-		} catch (MidiException e) {
 		}
 	}
 }

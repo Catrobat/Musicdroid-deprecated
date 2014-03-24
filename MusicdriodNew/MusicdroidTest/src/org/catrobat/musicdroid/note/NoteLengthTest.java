@@ -26,68 +26,113 @@ import junit.framework.TestCase;
 
 public class NoteLengthTest extends TestCase {
 
-	private static final float SIXTEENTH_DURATION = 1 / 4f;
-	private static final float EIGHT_DURATION = 1 / 2f;
-	private static final float QUARTER_DURATION = 1f;
-	private static final float HALF_DURATION = 2f;
-	private static final float WHOLE_DURATION = 4f;
-
 	public void testCalculateDuration1() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * SIXTEENTH_DURATION);
-		long actual = NoteLength.SIXTEENTH.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration2() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * EIGHT_DURATION);
-		long actual = NoteLength.EIGHT.getTickDuration();
-
-		assertEquals(expected, actual);
-	}
-
-	public void testCalculateDuration3() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * QUARTER_DURATION);
+		long expected = Math.round(NoteLength.DEFAULT_DURATION * 1f);
 		long actual = NoteLength.QUARTER.getTickDuration();
 
 		assertEquals(expected, actual);
 	}
 
-	public void testCalculateDuration4() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * HALF_DURATION);
-		long actual = NoteLength.HALF.getTickDuration();
+	public void testGetNoteLengthFromTick1() {
+		NoteLength expectedNoteLength = NoteLength.WHOLE_DOT;
+		long duration = expectedNoteLength.getTickDuration();
 
-		assertEquals(expected, actual);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
+
+		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
-	public void testCalculateDuration5() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * WHOLE_DURATION);
-		long actual = NoteLength.WHOLE.getTickDuration();
+	public void testGetNoteLengthFromTick2() {
+		NoteLength expectedNoteLength = NoteLength.WHOLE_DOT;
+		long duration = expectedNoteLength.getTickDuration();
+		duration += 1;
 
-		assertEquals(expected, actual);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
+
+		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
-	public void testGetNoteLengthFromDuration1() {
-		NoteLength[] expectedNoteLengths = { NoteLength.QUARTER, NoteLength.EIGHT, NoteLength.SIXTEENTH };
+	public void testGetNoteLengthFromTick3() {
+		NoteLength expectedNoteLength = NoteLength.QUARTER;
+		long duration = NoteLength.QUARTER_DOT.getTickDuration();
+		duration -= 1;
 
-		assertNoteLengths(expectedNoteLengths);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
+
+		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
-	public void testGetNoteLengthFromDuration2() {
-		NoteLength[] expectedNoteLengths = { NoteLength.WHOLE, NoteLength.WHOLE };
+	public void testGetNoteLengthFromTick4() {
+		NoteLength expectedNoteLength = NoteLength.QUARTER;
+		long duration = expectedNoteLength.getTickDuration();
+		duration += 1;
 
-		assertNoteLengths(expectedNoteLengths);
+		NoteLength actualNoteLength = NoteLength.getNoteLengthFromTickDuration(duration);
+
+		assertEquals(expectedNoteLength, actualNoteLength);
 	}
 
-	private void assertNoteLengths(NoteLength[] expectedNoteLengths) {
-		long duration = NoteLength.getTickDurationFromNoteLengths(expectedNoteLengths);
+	public void testHasStem1() {
+		assertFalse(NoteLength.WHOLE.hasStem());
+	}
 
-		NoteLength[] actualNoteLengths = NoteLength.getNoteLengthsFromTickDuration(duration);
+	public void testHasStem2() {
+		assertFalse(NoteLength.WHOLE_DOT.hasStem());
+	}
 
-		assertEquals(expectedNoteLengths.length, actualNoteLengths.length);
+	public void testHasStem3() {
+		assertTrue(NoteLength.QUARTER.hasStem());
+	}
 
-		for (int i = 0; i < expectedNoteLengths.length; i++) {
-			assertEquals(expectedNoteLengths[i], actualNoteLengths[i]);
-		}
+	public void testHasDot1() {
+		assertFalse(NoteLength.QUARTER.hasDot());
+	}
+
+	public void testHasDot2() {
+		assertTrue(NoteLength.WHOLE_DOT.hasDot());
+	}
+
+	public void testHasDot3() {
+		assertTrue(NoteLength.HALF_DOT.hasDot());
+	}
+
+	public void testHasDot4() {
+		assertTrue(NoteLength.QUARTER_DOT.hasDot());
+	}
+
+	public void testHasDot5() {
+		assertTrue(NoteLength.EIGHT_DOT.hasDot());
+	}
+
+	public void testHasFlag1() {
+		assertFalse(NoteLength.QUARTER.hasFlag());
+	}
+
+	public void testHasFlag2() {
+		assertTrue(NoteLength.EIGHT.hasFlag());
+	}
+
+	public void testHasFlag3() {
+		assertTrue(NoteLength.EIGHT_DOT.hasFlag());
+	}
+
+	public void testHasFlag4() {
+		assertTrue(NoteLength.SIXTEENTH.hasFlag());
+	}
+
+	public void testGetAmountOfFlags1() {
+		assertEquals(2, NoteLength.SIXTEENTH.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags2() {
+		assertEquals(1, NoteLength.EIGHT.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags3() {
+		assertEquals(1, NoteLength.EIGHT_DOT.getAmountOfFlags());
+	}
+
+	public void testGetAmountOfFlags4() {
+		assertEquals(0, NoteLength.QUARTER.getAmountOfFlags());
 	}
 }

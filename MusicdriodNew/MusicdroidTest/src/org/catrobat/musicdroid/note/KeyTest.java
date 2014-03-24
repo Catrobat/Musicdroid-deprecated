@@ -20,39 +20,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.note.symbol;
+package org.catrobat.musicdroid.note;
 
-import org.catrobat.musicdroid.note.NoteLength;
+import junit.framework.TestCase;
 
-public class BreakSymbol implements Symbol {
+public class KeyTest extends TestCase {
 
-	private NoteLength noteLength;
-
-	public BreakSymbol(NoteLength noteLength) {
-		this.noteLength = noteLength;
+	public void testGetNoteNameOnMiddleLine1() {
+		assertEquals(NoteName.B4, Key.VIOLIN.getNoteNameOnMiddleLine());
 	}
 
-	public NoteLength getNoteLength() {
-		return noteLength;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof BreakSymbol)) {
-			return false;
-		}
-
-		BreakSymbol breakSymbol = (BreakSymbol) obj;
-
-		if (noteLength.equals(breakSymbol.getNoteLength())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "[BreakSymbol] noteLength: " + noteLength;
+	public void testGetNoteNameOnMiddleLine2() {
+		assertEquals(NoteName.D3, Key.BASS.getNoteNameOnMiddleLine());
 	}
 }

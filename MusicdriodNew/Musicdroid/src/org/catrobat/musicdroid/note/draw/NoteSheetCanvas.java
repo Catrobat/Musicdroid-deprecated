@@ -20,7 +20,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.musicdroid.tool.draw;
+package org.catrobat.musicdroid.note.draw;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -30,21 +30,25 @@ import android.graphics.Point;
  * 
  */
 public class NoteSheetCanvas {
+
 	private static final int POSSIBLE_LINE_SPACES_ON_SCREEN = 12;
 	private int startXPositionNotes;
 	private int endXPositionNotes;
 	private int startXPointForNextSymbolSpace;
 	private int widthForOneSymbol;
 	private int numberOfSymbolsOnScreen;
-
 	private Canvas canvas;
+
+	public NoteSheetCanvas(Canvas canvas) {
+		this.canvas = canvas;
+	}
 
 	public int getHeightOfAllNoteLines() {
 		return getDistanceBetweenNoteLines() * 4;
 	}
 
 	public int getWidthForSmallSymbol() {
-		return widthForOneSymbol / 2;
+		return widthForOneSymbol / 4;
 	}
 
 	public int getWidthForOneSymbol() {
@@ -53,10 +57,6 @@ public class NoteSheetCanvas {
 
 	public void setWidthForOneSymbol(int widthForOneSymbol) {
 		this.widthForOneSymbol = widthForOneSymbol;
-	}
-
-	public NoteSheetCanvas(Canvas canvas) {
-		this.canvas = canvas;
 	}
 
 	public Canvas getCanvas() {
@@ -99,7 +99,17 @@ public class NoteSheetCanvas {
 
 	public Point getCenterPointForNextSymbol() {
 		Point centerPoint = new Point();
-		int x = getStartXPointForNextSymbolSpace() + widthForOneSymbol / 2;
+		int x = getStartXPointForNextSymbolSpace() + getWidthForOneSymbol() / 2;
+
+		int y = getYPositionOfCenterLine();
+		centerPoint.set(x, y);
+		return centerPoint;
+	}
+
+	public Point getCenterPointForNextSmallSymbol() {
+		Point centerPoint = new Point();
+		int x = getStartXPointForNextSmallSymbolSpace() + getWidthForSmallSymbol() / 2;
+
 		int y = getYPositionOfCenterLine();
 		centerPoint.set(x, y);
 		return centerPoint;
@@ -116,4 +126,5 @@ public class NoteSheetCanvas {
 		this.startXPointForNextSymbolSpace += this.getWidthForSmallSymbol();
 		return startXPointForNextSymbolSpace;
 	}
+
 }
