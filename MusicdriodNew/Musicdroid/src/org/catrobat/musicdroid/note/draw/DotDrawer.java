@@ -22,20 +22,32 @@
  */
 package org.catrobat.musicdroid.note.draw;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PointF;
+import android.graphics.RectF;
 
-import org.catrobat.musicdroid.note.Track;
-import org.catrobat.musicdroid.note.symbol.Symbol;
-import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
+public class DotDrawer {
+	public static void DrawDotOnRightSideOfRect(RectF rect, NoteSheetCanvas noteSheetCanvas) {
 
-public class TrackDrawer {
+		int dotRadius = 5;
+		int pixelDistanceBetweenRectAndDot = 10;
 
-	public void drawTrack(Track track, NoteSheetCanvas noteSheetCanvas, Context context) {
-		TrackToSymbolsConverter converter = new TrackToSymbolsConverter();
-		SymbolDrawer symbolDrawer = new SymbolDrawer(noteSheetCanvas, context, track.getKey());
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Style.FILL);
 
-		for (Symbol symbol : converter.convertTrack(track)) {
-			symbolDrawer.drawSymbol(symbol);
-		}
+		RectF dotRect = new RectF();
+		float x = rect.right + pixelDistanceBetweenRectAndDot;
+		float y = (rect.top + rect.bottom) / 2;
+		PointF centerPointForDot = new PointF(x, y);
+		dotRect.left = centerPointForDot.x;
+		dotRect.right = centerPointForDot.x + 2 * dotRadius;
+		dotRect.bottom = centerPointForDot.y + dotRadius;
+		dotRect.top = centerPointForDot.y - dotRadius;
+
+		noteSheetCanvas.getCanvas().drawOval(dotRect, paint);
+
 	}
 }

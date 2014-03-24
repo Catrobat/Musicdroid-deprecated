@@ -23,19 +23,28 @@
 package org.catrobat.musicdroid.note.draw;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
-import org.catrobat.musicdroid.note.Track;
-import org.catrobat.musicdroid.note.symbol.Symbol;
-import org.catrobat.musicdroid.note.symbol.TrackToSymbolsConverter;
+import org.catrobat.musicdroid.R;
+import org.catrobat.musicdroid.tools.PictureTools;
 
-public class TrackDrawer {
+public class CrossDrawer {
 
-	public void drawTrack(Track track, NoteSheetCanvas noteSheetCanvas, Context context) {
-		TrackToSymbolsConverter converter = new TrackToSymbolsConverter();
-		SymbolDrawer symbolDrawer = new SymbolDrawer(noteSheetCanvas, context, track.getKey());
+	public static void drawCross(NoteSheetCanvas noteSheetCanvas, int xPosition, int yPosition, Context context) {
+		int crossHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();
 
-		for (Symbol symbol : converter.convertTrack(track)) {
-			symbolDrawer.drawSymbol(symbol);
-		}
+		Resources res = context.getResources();
+		Bitmap crossPicture = BitmapFactory.decodeResource(res, R.drawable.cross);
+		int xStartPositionForCrosses = noteSheetCanvas.getStartXPointForNextSmallSymbolSpace();
+
+		Rect rect = PictureTools.calculateProportionalPictureContourRect(crossPicture, crossHeight,
+				xStartPositionForCrosses,
+				noteSheetCanvas.getYPositionOfCenterLine() + yPosition * noteSheetCanvas.getDistanceBetweenNoteLines()
+						/ 2);
+
+		noteSheetCanvas.getCanvas().drawBitmap(crossPicture, null, rect, null);
 	}
 }
