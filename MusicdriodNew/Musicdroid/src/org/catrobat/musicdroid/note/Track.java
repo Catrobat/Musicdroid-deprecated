@@ -44,9 +44,10 @@ public class Track implements Serializable {
 		this.key = key;
 	}
 
-	public Track(Instrument instrument) {
+	public Track(Key key, Instrument instrument) {
 		this.events = new HashMap<Long, List<NoteEvent>>();
 		this.instrument = instrument;
+		this.key = key;
 	}
 
 	public Instrument getInstrument() {

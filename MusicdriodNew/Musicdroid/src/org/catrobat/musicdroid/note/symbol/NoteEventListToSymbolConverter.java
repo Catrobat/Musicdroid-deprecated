@@ -43,10 +43,10 @@ public class NoteEventListToSymbolConverter {
 		currentSymbol = null;
 	}
 
-	public List<Symbol> convertNoteEventList(long tick, List<NoteEvent> noteEventList) {
+	public List<Symbol> convertNoteEventList(long tick, List<NoteEvent> noteEvents) {
 		List<Symbol> symbols = new LinkedList<Symbol>();
 
-		for (NoteEvent noteEvent : noteEventList) {
+		for (NoteEvent noteEvent : noteEvents) {
 			NoteName noteName = noteEvent.getNoteName();
 
 			if (noteEvent.isNoteOn()) {
