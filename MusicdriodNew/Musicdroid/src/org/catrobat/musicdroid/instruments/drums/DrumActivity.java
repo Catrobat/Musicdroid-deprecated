@@ -23,10 +23,12 @@
 package org.catrobat.musicdroid.instruments.drums;
 
 import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ScrollView;
 
+import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.instruments.Instrument;
 import org.catrobat.musicdroid.note.NoteEvent;
 
@@ -46,21 +48,28 @@ public class DrumActivity extends Instrument {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_drum_layout);
 		drumEventList = new ArrayList<DrumEvent>();
 		drumTrackView = new DrumTrackView(this);
 		drumKitView = new DrumKitView(this);
 
 		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
-		drumTrackView.setLayoutParams(layoutParams);
+		LayoutParams layoutParamsScroll = new LinearLayout.LayoutParams(500, 500, 1.0f);
+		//drumTrackView.setLayoutParams(layoutParams);
 		drumKitView.setLayoutParams(layoutParams);
 
 		LinearLayout linearLayout = new LinearLayout(this);
+
 		HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
+		//horizontalScrollView.setLayoutParams(layoutParamsScroll);
 		horizontalScrollView.addView(drumTrackView);
 
+		ScrollView horizontalScrollView2 = new ScrollView(this);
+		horizontalScrollView2.addView(drumKitView);
+
 		linearLayout.addView(horizontalScrollView);
-		linearLayout.addView(drumKitView);
+		linearLayout.addView(horizontalScrollView2);
 
 		//RelativeLayout item = (RelativeLayout) view.findViewById(R.id.item);
 		//View.inflate(this, R.layout.drumset_layout, null);//addView(drumView);

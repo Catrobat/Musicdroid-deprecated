@@ -26,23 +26,21 @@ package org.catrobat.musicdroid.instruments.drums;
  * @author AM
  * 
  */
-public class DrumEvent {
-
-	private int eventLength;
+public class DrumKitPart {
 	private String drumPartName;
-	private int imageRessource;
+	private int drawableId;
 
-	public DrumEvent(String drumPartName, int drawableId) {
+	public DrumKitPart(String drumPartName, int drawableId) {
 		this.drumPartName = drumPartName;
-		imageRessource = drawableId;
+		this.drawableId = drawableId;
 	}
 
 	public String getDrumPartName() {
 		return drumPartName;
 	}
 
-	public int getImageRessource() {
-		return imageRessource;
+	public int getDrawableId() {
+		return drawableId;
 	}
 
 }

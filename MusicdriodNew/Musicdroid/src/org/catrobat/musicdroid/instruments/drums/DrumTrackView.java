@@ -23,8 +23,10 @@
 package org.catrobat.musicdroid.instruments.drums;
 
 import android.app.Activity;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * @author AM
@@ -35,23 +37,40 @@ public class DrumTrackView extends LinearLayout {
 	/**
 	 * @param context
 	 */
-	private DrumTrackRowView channel1View;
+	private ArrayList<DrumTrackRowView> drumChannels;
+	private int NUM_OF_CHANNELS = 3;
 
 	public DrumTrackView(Activity a) {
 		super(a);
+		this.setOrientation(VERTICAL);
+		this.setLayoutParams(new LayoutParams(900, 100, 1.0f));
+		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
+				1.0f);
 
-		channel1View = new DrumTrackRowView(a, "Channel 1");
-		this.addView(channel1View);
+		drumChannels = new ArrayList<DrumTrackRowView>();
+
+		for (int i = 0; i < NUM_OF_CHANNELS; i++) {
+			drumChannels.add(new DrumTrackRowView(a, "Channel " + i));
+			drumChannels.get(i).setLayoutParams(layoutParams);
+			this.addView(drumChannels.get(i));
+		}
+
 	}
 
 	/**
 	 * @param drumEvent
 	 */
 	public void updateView(DrumEvent drumEvent) {
-		if (channel1View.isSelected()) {
-			TextView testTextView = new TextView(getContext());
-			testTextView.setText(drumEvent.getDrumPartName());
-			this.addView(testTextView);
+		for (int i = 0; i < NUM_OF_CHANNELS; i++) {
+			if (drumChannels.get(i).isSelected()) {
+				ImageView drumEventView = new ImageView(getContext());
+
+				drumEventView.setImageResource(drumEvent.getImageRessource());
+				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 30);
+				drumEventView.setLayoutParams(layoutParams);
+				drumChannels.get(i).drawTrackElement(drumEventView);
+
+			}
 		}
 	}
 }

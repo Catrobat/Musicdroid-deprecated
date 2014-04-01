@@ -23,20 +23,67 @@
 package org.catrobat.musicdroid.instruments.drums;
 
 import android.app.Activity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * @author AM
  * 
  */
-public class DrumKitPartView extends LinearLayout {
+public class DrumKitPartView extends LinearLayout implements OnTouchListener {
+	private DrumKitPart drumKitPart;
+	DrumActivity drumActivity;
 
-	public DrumKitPartView(Activity a) {
+	public DrumKitPartView(Activity a, DrumKitPart drumKitPart) {
 		super(a);
-		TextView testTextView = new TextView(a);
-		testTextView.setText("Drum Part");
-		this.addView(testTextView);
+		drumActivity = (DrumActivity) a;
+		this.drumKitPart = drumKitPart;
+		ImageButton drumPartButton = new ImageButton(a);
+		drumPartButton.setBackgroundResource(drumKitPart.getDrawableId());
+
+		drumPartButton.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+		//this.addView(drumPartNameView);
+		this.addView(drumPartButton);
+
 	}
 
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		return true; // With this i tell my layout to consume all the touch events from its childs
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+
+				break;
+			case MotionEvent.ACTION_MOVE:
+				//Log.d(TAG, String.format("ACTION_MOVE | x:%s y:%s", 
+				break;
+			case MotionEvent.ACTION_UP:
+				drumActivity.addDrumEvent(new DrumEvent(drumKitPart.getDrumPartName(), drumKitPart.getDrawableId()));
+				break;
+		}
+		return true;
+	}
+
+	public DrumKitPart getDrumKitPart() {
+		return drumKitPart;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
+	 */
+	@Override
+	public boolean onTouch(View arg0, MotionEvent arg1) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

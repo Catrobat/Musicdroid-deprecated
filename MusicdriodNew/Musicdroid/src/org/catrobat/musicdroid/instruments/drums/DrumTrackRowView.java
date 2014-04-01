@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.instruments.drums;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ import android.widget.TextView;
  * 
  */
 public class DrumTrackRowView extends LinearLayout {
+	int BLOCK_SIZE = 5;
 
 	public DrumTrackRowView(Activity a, String channelName) {
 		super(a);
@@ -47,6 +49,7 @@ public class DrumTrackRowView extends LinearLayout {
 		channelTextView.setWidth(200);
 
 		this.addView(channelTextView);
+
 	}
 
 	@Override
@@ -69,6 +72,13 @@ public class DrumTrackRowView extends LinearLayout {
 		}
 
 		return true;
+	}
+
+	/**
+	 * 
+	 */
+	public void drawTrackElement(ImageView trackElementImage) {
+		this.addView(trackElementImage);
 	}
 
 }
