@@ -63,7 +63,7 @@ public class MidiToProjectConverter {
 		return convertMidi(midi, file.getName());
 	}
 
-	protected void validateMidiFile(MidiFile midiFile) throws MidiException {
+	public void validateMidiFile(MidiFile midiFile) throws MidiException {
 		if (midiFile.getTrackCount() > 0) {
 			MidiTrack tempoTrack = midiFile.getTracks().get(0);
 
@@ -85,7 +85,7 @@ public class MidiToProjectConverter {
 		throw new MidiException("Unsupported MIDI!");
 	}
 
-	protected Project convertMidi(MidiFile midi, String name) {
+	public Project convertMidi(MidiFile midi, String name) {
 		List<Track> tracks = new ArrayList<Track>();
 
 		for (MidiTrack midiTrack : midi.getTracks()) {
