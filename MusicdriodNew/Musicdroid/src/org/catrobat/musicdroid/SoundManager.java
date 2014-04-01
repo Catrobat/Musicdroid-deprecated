@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,17 +27,14 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
+import android.util.SparseIntArray;
 
 public class SoundManager {
 
 	static private SoundManager _instance;
 	private static SoundPool soundPool;
-	private static HashMap<Integer, Integer> soundPoolMap;
-	private static HashMap<Integer, Integer> soundPlayMap;
+	private static SparseIntArray soundPoolMap;
+	private static SparseIntArray soundPlayMap;
 	private static AudioManager audioManager;
 	private static Context context;
 
@@ -53,8 +50,8 @@ public class SoundManager {
 	public static void initSounds(Context theContext) {
 		context = theContext;
 		soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
-		soundPoolMap = new HashMap<Integer, Integer>();
-		soundPlayMap = new HashMap<Integer, Integer>();
+		soundPoolMap = new SparseIntArray();
+		soundPlayMap = new SparseIntArray();
 		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 
@@ -81,25 +78,11 @@ public class SoundManager {
 	}
 
 	public static void playSoundByRawId(int raw_id, float speed) {
-		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
-		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = it.next();
-			if (pairs.getValue() == raw_id) {
-				playSound(pairs.getKey(), speed, 1);
-				return;
-			}
-		}
+		playSound(soundPoolMap.get(raw_id), speed, 1);
 	}
 
 	public static void stopSoundByRawId(int raw_id) {
-		Iterator<Entry<Integer, Integer>> it = soundPoolMap.entrySet().iterator();
-		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = it.next();
-			if (pairs.getValue() == raw_id) {
-				stopSound(pairs.getKey());
-				return;
-			}
-		}
+		stopSound(soundPoolMap.get(raw_id));
 	}
 
 	public static void playSound(int index, float speed, float volume) {
@@ -114,18 +97,14 @@ public class SoundManager {
 	}
 
 	public static void stopAllSounds() {
-		Iterator<Entry<Integer, Integer>> it = soundPlayMap.entrySet().iterator();
-		while (it.hasNext()) {
-			HashMap.Entry<Integer, Integer> pairs = it.next();
-			soundPool.stop(pairs.getValue());
+		for (int index = 0; index < soundPlayMap.size(); index++) {
+			soundPool.stop(soundPlayMap.valueAt(index));
 		}
-		soundPlayMap.clear();
-
 	}
 
 	public static void stopSound(int index) {
 		soundPool.stop(soundPlayMap.get(index));
-		soundPlayMap.remove(index);
+		soundPlayMap.removeAt(index);
 	}
 
 	public static void cleanup() {

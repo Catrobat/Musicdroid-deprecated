@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -20,7 +20,7 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -39,41 +39,40 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="Theme.MusicdroidSplitActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
-        <item name="android:selectableItemBackground">@color/custom_background_color</item>
-        <item name="android:popupMenuStyle">@style/MusicdroidPoupupMenuStyle</item>
-        <item name="actionOverflowButtonStyle">@style/MusicdroidOverflowButton</item>
-        <item name="android:actionOverflowButtonStyle">@style/MusicdroidOverflowButton</item>
-        <item name="android:actionBarStyle">@style/MusicdroidActionBarBottomStyle</item>
-        <item name="android:actionBarSplitStyle">@style/MusicdroidActionBarTopSplitStyle</item>
-        <item name="android:actionBarSize">40dip</item>
-    </style>  
-
-
-    <style name="MusicdroidActionBarBottomStyle" parent="android:style/Widget.ActionBar">
-        <item name="android:background">@color/custom_background_color</item>
+    <style name="Theme.MusicdroidSplitActionBar" parent="android:Theme.Light">
+        <!--<item name="selectableItemBackground">@color/custom_background_color</item>-->
+        <!--<item name="popupMenuStyle">@style/MusicdroidPoupupMenuStyle</item>-->
+        <!--<item name="actionOverflowButtonStyle">@style/MusicdroidOverflowButton</item>-->
+        <!--<item name="actionBarStyle">@style/MusicdroidActionBarBottomStyle</item>-->
+        <!--<item name="actionBarSplitStyle">@style/MusicdroidActionBarTopSplitStyle</item>-->
+        <!--<item name="actionBarSize">40dip</item>-->
     </style>
 
-    <style name="MusicdroidActionBarTopSplitStyle" parent="android:style/Widget.ActionBar">
-        <item name="android:backgroundSplit">@color/custom_background_color</item>
-    </style>
-    
-    <style name="MusicdroidPoupupMenuStyle" parent="android:style/Widget.Holo.Light.ListPopupWindow">
-        <item name="android:popupBackground">@color/custom_background_color</item>
-    </style>
-    
-    <style name="MusicdroidOverflowButton" parent="@style/Widget.Sherlock.ActionButton.Overflow">
-   	 <item name="android:src">@drawable/icon_menu_overflow</item>
-    </style>
-    
-    
+
+    <!--<style name="MusicdroidActionBarBottomStyle" parent="android:Widget.ActionBar">-->
+        <!--<item name="android:background">@color/custom_background_color</item>-->
+    <!--</style>-->
+
+    <!--<style name="MusicdroidActionBarTopSplitStyle" parent="android:style/Widget.ActionBar">-->
+        <!--<item name="android:backgroundSplit">@color/custom_background_color</item>-->
+    <!--</style>-->
+
+    <!--<style name="MusicdroidPoupupMenuStyle" parent="android:style/Widget.Holo.Light.ListPopupWindow">-->
+        <!--<item name="android:popupBackground">@color/custom_background_color</item>-->
+    <!--</style>-->
+
+    <!--<style name="MusicdroidOverflowButton" parent="@style/Widget.Sherlock.ActionButton.Overflow">-->
+        <!--<item name="android:src">@drawable/icon_menu_overflow</item>-->
+    <!--</style>-->
+
+
     <style name="CustomMusicdroidDialog" parent="@android:style/Theme.Holo.Dialog">
         <item name="android:linksClickable">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    
+
     <style name="customImageButton" parent="@android:style/Widget.ImageButton">
-    <item name="android:background">@drawable/btn_default_transparent_custom</item>
-</style>
-    
+        <item name="android:background">@drawable/btn_default_transparent_custom</item>
+    </style>
+
 </resources>

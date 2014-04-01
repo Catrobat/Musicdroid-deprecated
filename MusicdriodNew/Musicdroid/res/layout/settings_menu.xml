@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -22,38 +22,35 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_menu_layout"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/settings_sound_track_length_descriptor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <NumberPicker 
+    <NumberPicker
         android:id="@+id/numberpicker_min"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:layout_alignRight="@+id/vertical_seperator"
-		/>
-    
-    <NumberPicker 
+        android:layout_marginRight="10dp" />
+
+    <NumberPicker
         android:id="@+id/numberpicker_sec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_alignLeft="@+id/vertical_seperator"
-        />
-    
-    <View 
-		android:layout_width="2dp"
-		android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:background="@android:color/transparent"
-		android:layout_alignBottom="@+id/settings_sound_track_length_descriptor"
-		android:id="@+id/vertical_seperator"
-		/>
-    
+        android:layout_marginLeft="10dp" />
+
+    <View
+        android:id="@+id/vertical_seperator"
+        android:layout_width="2dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/settings_sound_track_length_descriptor"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent" />
+
 </RelativeLayout>

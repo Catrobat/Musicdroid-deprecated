@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -21,25 +20,19 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/soundtrack_context_edit"
-        android:title="@string/sound_track_menu_entry_edit"
         android:icon="@drawable/ic_action_edit"
-        android:showAsAction="ifRoom|withText"  
-    />
- 
+        android:title="@string/sound_track_menu_entry_edit" />
+
     <item
         android:id="@+id/soundtrack_context_copy"
-        android:title="@string/sound_track_menu_entry_copy"
         android:icon="@drawable/ic_action_copy_music"
-        android:showAsAction="ifRoom|withText"         
-    />
- 
+        android:title="@string/sound_track_menu_entry_copy" />
+
     <item
         android:id="@+id/soundtrack_context_delete"
-        android:title="@string/sound_track_menu_entry_delete"
         android:icon="@drawable/ic_action_delete"
-        android:showAsAction="ifRoom|withText"
-    />
+        android:title="@string/sound_track_menu_entry_delete" />
 </menu>

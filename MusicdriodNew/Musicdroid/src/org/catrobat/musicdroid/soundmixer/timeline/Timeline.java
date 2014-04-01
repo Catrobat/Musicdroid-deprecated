@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -26,20 +26,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.catrobat.musicdroid.MainActivity;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.preferences.PreferenceManager;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.tools.DeviceInfo;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 public class Timeline extends RelativeLayout {
 	private Context context = null;
@@ -51,14 +48,14 @@ public class Timeline extends RelativeLayout {
 	private int height = 0;
 	private int lastSetTime = 0;
 	private int[] clickLocation;
-	private HashMap<Integer, TimelineTrackPosition> trackPositions = null;
+	private SparseArray<TimelineTrackPosition> trackPositions = null;
 	private TimelineOnTouchListener onTimelineTouchListener = null;
 	private TimelineEventHandler timelineEventHandler;
 
 	public Timeline(Context context) {
 		super(context);
 		this.context = context;
-		trackPositions = new HashMap<Integer, TimelineTrackPosition>();
+		trackPositions = new SparseArray<TimelineTrackPosition>();
 
 		LayoutInflater inflater = LayoutInflater.from(this.context);
 		inflater.inflate(R.layout.timeline_layout, this);
@@ -174,11 +171,8 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void resetTimeline() {
-		Iterator<Entry<Integer, TimelineTrackPosition>> it = trackPositions.entrySet().iterator();
-
-		while (it.hasNext()) {
-			HashMap.Entry<Integer, TimelineTrackPosition> pairs = it.next();
-			removeView(pairs.getValue().getTrackPosition());
+		for (int position = 0; position < trackPositions.size(); position++) {
+			removeView(trackPositions.valueAt(position));
 		}
 	}
 
@@ -187,15 +181,16 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void startTimelineActionMode() {
-		((MainActivity) context).startTimelineActionMode();
-	}
-
-	public void setClickLocation(int[] l) {
-		clickLocation = l;
+		Toast.makeText(context, "startTimelineActionMode is wrong implemented here!", Toast.LENGTH_SHORT).show();
+//		((MainActivity) context).startTimelineActionMode();
 	}
 
 	public int[] getClickLocation() {
 		return clickLocation;
+	}
+
+	public void setClickLocation(int[] l) {
+		clickLocation = l;
 	}
 
 	public TimelineProgressBar getTimelineProgressBar() {

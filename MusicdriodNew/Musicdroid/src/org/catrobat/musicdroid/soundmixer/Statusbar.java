@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -39,20 +39,20 @@ import org.catrobat.musicdroid.animation.HighlightAnimation;
 
 public class Statusbar extends Observable implements OnTouchListener {
 	public static Statusbar instance = null;
+	protected Boolean displayPlayButton;
+	protected Context context;
 	private ImageButton playButton;
 	private ImageButton rewindButton;
 	private ImageView metronomLightImageView;
-	protected Boolean displayPlayButton;
-	protected Context context;
+
+	public Statusbar() {
+	}
 
 	public static Statusbar getInstance() {
 		if (instance == null) {
 			instance = new Statusbar();
 		}
 		return instance;
-	}
-
-	public Statusbar() {
 	}
 
 	public void initStatusbar(Context c) {
@@ -70,7 +70,6 @@ public class Statusbar extends Observable implements OnTouchListener {
 		rewindButton.setVisibility(View.INVISIBLE);
 
 		metronomLightImageView = (ImageView) ((Activity) context).findViewById(R.id.metronom_light);
-		metronomLightImageView.setColorFilter(R.color.abs__background_holo_dark);
 	}
 
 	public void modifyStatusbarForRecorderActivity() {

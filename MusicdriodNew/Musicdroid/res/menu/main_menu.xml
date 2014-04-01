@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -21,54 +20,46 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group>        
-        
-      <item
-        android:id="@+id/btn_settings"
-        android:icon="@drawable/settings_button"
-        android:showAsAction="always" 
-        android:title="@string/menu_item_add"  />
-        
-      <item
-        android:id="@+id/btn_add"
-        android:icon="@drawable/add_button"
-        android:showAsAction="always" 
-        android:title="@string/menu_item_add"  />
+    <group>
+
+        <item
+            android:id="@+id/btn_settings"
+            android:icon="@drawable/settings_button"
+            android:title="@string/menu_item_add" />
+
+        <item
+            android:id="@+id/btn_add"
+            android:icon="@drawable/add_button"
+            android:title="@string/menu_item_add" />
 
     </group>
     <group>
         <item
             android:id="@+id/menu_item_save_song"
-            android:icon="@drawable/icon_menu_save"            
-        	android:showAsAction="never" 
-            android:title="@string/menu_save_song"/>
+            android:icon="@drawable/icon_menu_save"
+            android:title="@string/menu_save_song" />
         <item
             android:id="@+id/menu_item_new_song"
-            android:showAsAction="never"
-            android:title="@string/menu_new_song"/>
+            android:title="@string/menu_new_song" />
 
         <item
             android:id="@+id/menu_item_load_song"
-            android:showAsAction="never"
-            android:title="@string/menu_load_song"/>
+            android:title="@string/menu_load_song" />
 
         <item
             android:id="@+id/menu_item_preferences"
-            android:showAsAction="never"
-            android:title="@string/menu_preferences"/>
-        
+            android:title="@string/menu_preferences" />
+
         <item
             android:id="@+id/menu_item_about"
             android:icon="@android:drawable/ic_menu_info_details"
-            android:showAsAction="never"
-            android:title="@string/menu_about"/>
+            android:title="@string/menu_about" />
         <item
             android:id="@+id/menu_item_quit"
             android:icon="@android:drawable/ic_lock_power_off"
-            android:showAsAction="never"
-            android:title="@string/menu_quit"/>
+            android:title="@string/menu_quit" />
     </group>
 
 </menu>

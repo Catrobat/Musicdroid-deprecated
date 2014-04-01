@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -39,9 +39,9 @@ import java.util.ArrayList;
 
 public class SoundMixer {
 	public static SoundMixer instance = null;
-	private SoundMixerLayout layout;
 	protected MainActivity parentActivity;
 	protected ArrayList<SoundTrackView> tracks;
+	private SoundMixerLayout layout;
 	private int defaultTrackLength;
 	private int soundMixerLength;
 	private int pixelPerSecond;
@@ -51,6 +51,10 @@ public class SoundMixer {
 	private Metronom metronom = null;
 	private Timeline timeline;
 	private UniqueSoundMixerIDCreator idCreator;
+
+	public SoundMixer() {
+		tracks = new ArrayList<SoundTrackView>();
+	}
 
 	public static SoundMixer getInstance() {
 		if (instance == null) {
@@ -76,10 +80,6 @@ public class SoundMixer {
 
 		soundMixerLength = defaultTrackLength;
 		pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
-	}
-
-	public SoundMixer() {
-		tracks = new ArrayList<SoundTrackView>();
 	}
 
 	public void handleCopy() {
@@ -177,11 +177,6 @@ public class SoundMixer {
 		tracks.clear();
 	}
 
-	public void setSoundMixerLength(int length) {
-		if (length > soundMixerLength)
-			soundMixerLength = length;
-	}
-
 	public void setSoundTrackLengthAndResizeTracks(int minutes, int seconds) {
 		int newLength = minutes * 60 + seconds;
 		soundMixerLength = newLength;
@@ -222,6 +217,11 @@ public class SoundMixer {
 
 	public int getSoundMixerLength() {
 		return soundMixerLength;
+	}
+
+	public void setSoundMixerLength(int length) {
+		if (length > soundMixerLength)
+			soundMixerLength = length;
 	}
 
 	public int getPixelPerSecond() {

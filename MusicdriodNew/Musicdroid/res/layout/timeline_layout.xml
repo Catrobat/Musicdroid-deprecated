@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -21,78 +20,68 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<org.catrobat.musicdroid.soundmixer.timeline.Timeline
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<org.catrobat.musicdroid.soundmixer.timeline.Timeline xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timeline"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/timeline">
-    
+    android:layout_height="wrap_content">
+
     <RelativeLayout
-        android:id="@+id/timeline_top"    
+        android:id="@+id/timeline_top"
         android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentTop="true">
-    	
-	     <TextView 
-	     android:layout_width="wrap_content"
-	     android:layout_height="wrap_content"    
-	     android:textColor="@color/custom_background_color"
-	     android:layout_centerVertical="true"
-	     android:layout_alignParentLeft="true"
-	     android:id="@+id/timeline_start_time"
-	     />        
-    </RelativeLayout>    
-    
-    <RelativeLayout
-         android:id="@+id/timeline_bottom"    
-         android:layout_width="wrap_content"
-    	 android:layout_height="wrap_content"
-    	 android:layout_below="@+id/timeline_top">
-	     
-         <org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar 
-	     android:layout_width="0dp"
-	     android:layout_height="fill_parent"
-	     android:layout_alignParentBottom="true"
-    	 android:layout_alignParentLeft="true"
-	     android:background="@color/holo_blue_light"
-	     android:id="@+id/timeline_progressBar"
-         />
-             
-	     <ImageButton
-	     android:layout_width="1dp"
-	     android:layout_height="1dp"  
-	     android:layout_alignParentBottom="true"
-	     android:layout_alignParentLeft="true"
-	     android:background="@color/transparent"
-	     android:visibility="gone"
-	     android:src="@drawable/timeline_start_point"
-	     android:id="@+id/timeline_start_point"
-	     />
-	
-	     <ImageButton
-	     android:layout_width="1dp"
-	     android:layout_height="1dp"   
-	     android:layout_alignParentBottom="true"
-	     android:background="@color/transparent"
-	     android:visibility="gone"
-	     android:src="@drawable/timeline_end_point"
-	     android:id="@+id/timeline_end_point"
-         />
-	     
-    	
-         <View 
-	     android:layout_width="fill_parent"
-	     android:layout_height="2dp"
-	     android:layout_centerHorizontal="true"
-	     android:layout_alignParentBottom="true"
-	     android:background="@color/custom_background_color"
-	     android:id="@+id/timeline_seperator"
-	     />    	     
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/timeline_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/custom_background_color" />
     </RelativeLayout>
-    
-    
-          
+
+    <RelativeLayout
+        android:id="@+id/timeline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeline_top">
+
+        <org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar
+            android:id="@+id/timeline_progressBar"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@color/holo_blue_light" />
+
+        <ImageButton
+            android:id="@+id/timeline_start_point"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@color/transparent"
+            android:src="@drawable/timeline_start_point"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/timeline_end_point"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"
+            android:src="@drawable/timeline_end_point"
+            android:visibility="gone" />
 
 
-     
+        <View
+            android:id="@+id/timeline_seperator"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/custom_background_color" />
+    </RelativeLayout>
+
+
 </org.catrobat.musicdroid.soundmixer.timeline.Timeline>

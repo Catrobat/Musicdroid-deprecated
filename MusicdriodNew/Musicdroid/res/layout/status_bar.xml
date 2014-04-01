@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -28,32 +27,32 @@
     android:orientation="horizontal"
     android:paddingLeft="2dp"
     android:paddingRight="2dp">
-    
-   <ImageButton
+
+    <ImageButton
         android:id="@+id/btn_rewind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:background="@color/transparent"
-        android:src="@drawable/rewind_button"  />
-     
+        android:src="@drawable/rewind_button" />
+
     <ImageButton
         android:id="@+id/btn_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingLeft="5dp	"
         android:background="@color/transparent"
-        android:src="@drawable/play_button"  />
- 
+        android:paddingLeft="5dp	"
+        android:src="@drawable/play_button" />
+
     <ImageView
         android:id="@+id/metronom_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/btn_play"
         android:layout_centerVertical="true"
-        android:paddingLeft="5dp	"
+        android:layout_toRightOf="@+id/btn_play"
         android:background="@color/transparent"
-        android:src="@drawable/metronom_light"  />
+        android:paddingLeft="5dp	"
+        android:src="@drawable/metronom_light" />
 </RelativeLayout>
 

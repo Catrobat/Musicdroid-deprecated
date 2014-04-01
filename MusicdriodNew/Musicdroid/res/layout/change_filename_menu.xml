@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -22,20 +22,20 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_menu_layout"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    
-    <EditText 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:minHeight="50dp"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginBottom="20dp"
-		android:background="@android:color/transparent"
-		android:id="@+id/dialog_edittext"
-		/>
-    
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/dialog_edittext"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:minHeight="50dp" />
+
 </RelativeLayout>

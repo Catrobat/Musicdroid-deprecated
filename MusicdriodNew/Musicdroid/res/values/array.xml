@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -23,14 +22,14 @@
 -->
 <resources>
     <string-array name="metronom_states_array">
-        <item name = "off">Off</item>
-        <item name = "light">Light</item>
-        <item name = "both">Sound and Light</item>
+        <item name="off">Off</item>
+        <item name="light">Light</item>
+        <item name="both">Sound and Light</item>
     </string-array>
-    
+
     <string-array name="metronom_states_array_values">
-	    <item name = "off">0</item>
-	    <item name = "light">1</item>
-	    <item name = "both">2</item>
+        <item name="off">0</item>
+        <item name="light">1</item>
+        <item name="both">2</item>
     </string-array>
 </resources>

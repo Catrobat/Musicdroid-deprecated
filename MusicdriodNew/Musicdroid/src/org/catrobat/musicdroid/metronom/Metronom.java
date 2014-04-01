@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -35,18 +35,17 @@ public class Metronom {
 	private static final int METRONOM_OFF = 0;
 	private static final int METRONOM_LIGHT = 1;
 	private static final int METRONOM_LIGHT_AND_SOUND = 2;
+	private final int tickLengthInSamples = 1000; //
 	private Context context = null;
 	private ImageView metronomView = null;
 	private AnimationDrawable animation = null;
 	private boolean play = true;
-
 	private double beatsPerMinute;
 	private int beat;
 	private int silenceDuration;
 	private int metronomState;
 	private double accentSound;
 	private double sound;
-	private final int tickLengthInSamples = 1000; //
 	private AudioGenerator audioGenerator = new AudioGenerator(8000);
 
 	public Metronom(Context c) {
@@ -89,7 +88,11 @@ public class Metronom {
 			double[] tockArray = audioGenerator.getSineWave(tickLengthInSamples, 8000, sound);
 			double silence = 0;
 			double[] soundArray = new double[8000];
-			int t = 0, s = 0, b = 0;
+			int t = 0
+					,
+					s = 0
+					,
+					b = 0;
 
 			@Override
 			public void run() {

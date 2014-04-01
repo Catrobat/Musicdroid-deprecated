@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Catroid: An on-device visual programming system for Android devices
    Copyright (C) 2010-2013 The Catrobat Team
    (<http://developer.catrobat.org/credits>)
@@ -25,7 +24,7 @@
     android:id="@+id/gridview_add_sound_menu"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:listSelector="@drawable/attribute_button_selector"
     android:numColumns="2"
-   	android:listSelector="@drawable/attribute_button_selector"
-    android:stretchMode="columnWidth"/>
+    android:stretchMode="columnWidth" />
  

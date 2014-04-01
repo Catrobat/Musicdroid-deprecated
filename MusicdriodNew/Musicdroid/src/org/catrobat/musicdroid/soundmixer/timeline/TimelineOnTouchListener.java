@@ -2,21 +2,21 @@
  * Catroid: An on-device visual programming system for Android devices
  *  Copyright (C) 2010-2013 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
- * 
+ *
  *  An additional term exception under section 7 of the GNU Affero
  *  General Public License, version 3, is available at
  *  http://www.catroid.org/catroid/licenseadditionalterm
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU Affero General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -34,6 +34,17 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 
 public class TimelineOnTouchListener implements OnTouchListener {
+	@SuppressWarnings("deprecation")
+	final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+		@Override
+		public void onLongPress(final MotionEvent e) {
+			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
+			// e.getY());
+			int[] location = {(int) e.getX(), (int) e.getY()};
+			timeline.setClickLocation(location);
+			timeline.startTimelineActionMode();
+		}
+	});
 	private Timeline timeline;
 	private ImageButton startPoint = null;
 	private ImageButton endPoint = null;
@@ -61,18 +72,6 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 	}
 
-	@SuppressWarnings("deprecation")
-	final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
-		@Override
-		public void onLongPress(final MotionEvent e) {
-			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
-			// e.getY());
-			int[] location = { (int) e.getX(), (int) e.getY() };
-			timeline.setClickLocation(location);
-			timeline.startTimelineActionMode();
-		}
-	});
-
 	private boolean handleStartPointOnTouch(MotionEvent event) {
 		final int X = (int) event.getRawX();
 		boolean ret = true;
@@ -90,7 +89,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 				if (margin != old_margin) {
 					layoutParams.leftMargin = margin;
-					int[] location = { margin, 0 };
+					int[] location = {margin, 0};
 					SoundMixer.getInstance().setStartPoint(location);
 				}
 				ret = true;
@@ -116,7 +115,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 				if (margin != old_margin) {
 					layoutParams.leftMargin = margin;
-					int[] location = { margin, 0 };
+					int[] location = {margin, 0};
 					SoundMixer.getInstance().setEndPoint(location);
 				}
 				ret = true;
