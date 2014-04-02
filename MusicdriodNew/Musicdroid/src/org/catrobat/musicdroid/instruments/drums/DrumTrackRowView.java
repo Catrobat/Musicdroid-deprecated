@@ -35,10 +35,13 @@ import android.widget.TextView;
  */
 public class DrumTrackRowView extends LinearLayout {
 	int BLOCK_SIZE = 5;
+	private String channelName;
 
 	public DrumTrackRowView(Activity a, String channelName) {
 		super(a);
 		this.setBackgroundColor(Color.GREEN);
+		this.channelName = channelName;
+
 		initComponents(channelName);
 	}
 
@@ -74,9 +77,11 @@ public class DrumTrackRowView extends LinearLayout {
 		return true;
 	}
 
-	/**
-	 * 
-	 */
+	public void resetDrumTrackRowView() {
+		this.removeAllViews();
+		initComponents(channelName);
+	}
+
 	public void drawTrackElement(ImageView trackElementImage) {
 		this.addView(trackElementImage);
 	}

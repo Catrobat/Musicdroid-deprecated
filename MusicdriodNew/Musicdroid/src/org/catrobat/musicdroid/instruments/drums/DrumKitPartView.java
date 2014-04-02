@@ -41,19 +41,19 @@ public class DrumKitPartView extends LinearLayout implements OnTouchListener {
 		super(a);
 		drumActivity = (DrumActivity) a;
 		this.drumKitPart = drumKitPart;
+
 		ImageButton drumPartButton = new ImageButton(a);
 		drumPartButton.setBackgroundResource(drumKitPart.getDrawableId());
 
 		drumPartButton.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		//this.addView(drumPartNameView);
 		this.addView(drumPartButton);
 
 	}
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		return true; // With this i tell my layout to consume all the touch events from its childs
+		return true;
 	}
 
 	@Override
@@ -63,10 +63,9 @@ public class DrumKitPartView extends LinearLayout implements OnTouchListener {
 
 				break;
 			case MotionEvent.ACTION_MOVE:
-				//Log.d(TAG, String.format("ACTION_MOVE | x:%s y:%s", 
 				break;
 			case MotionEvent.ACTION_UP:
-				drumActivity.addDrumEvent(new DrumEvent(drumKitPart.getDrumPartName(), drumKitPart.getDrawableId()));
+				drumActivity.addDrumEvent(new DrumEvent(drumKitPart));
 				break;
 		}
 		return true;
@@ -76,14 +75,8 @@ public class DrumKitPartView extends LinearLayout implements OnTouchListener {
 		return drumKitPart;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
-	 */
 	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }

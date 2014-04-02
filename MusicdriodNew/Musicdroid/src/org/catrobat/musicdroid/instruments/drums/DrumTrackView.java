@@ -57,19 +57,23 @@ public class DrumTrackView extends LinearLayout {
 
 	}
 
-	/**
-	 * @param drumEvent
-	 */
+	public void resetRowInDrumTrackView() {
+		for (int i = 0; i < NUM_OF_CHANNELS; i++) {
+			if (drumChannels.get(i).isSelected()) {
+				drumChannels.get(i).resetDrumTrackRowView();
+			}
+		}
+	}
+
 	public void updateView(DrumEvent drumEvent) {
 		for (int i = 0; i < NUM_OF_CHANNELS; i++) {
 			if (drumChannels.get(i).isSelected()) {
-				ImageView drumEventView = new ImageView(getContext());
 
+				ImageView drumEventView = new ImageView(getContext());
 				drumEventView.setImageResource(drumEvent.getImageRessource());
 				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 30);
 				drumEventView.setLayoutParams(layoutParams);
 				drumChannels.get(i).drawTrackElement(drumEventView);
-
 			}
 		}
 	}

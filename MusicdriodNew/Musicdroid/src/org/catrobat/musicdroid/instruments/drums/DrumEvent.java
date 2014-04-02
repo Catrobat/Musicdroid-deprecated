@@ -32,9 +32,9 @@ public class DrumEvent {
 	private String drumPartName;
 	private int imageRessource;
 
-	public DrumEvent(String drumPartName, int drawableId) {
-		this.drumPartName = drumPartName;
-		imageRessource = drawableId;
+	public DrumEvent(DrumKitPart drumKitPart) {
+		this.drumPartName = drumKitPart.getDrumPartName();
+		imageRessource = drumKitPart.getDrawableId();
 	}
 
 	public String getDrumPartName() {

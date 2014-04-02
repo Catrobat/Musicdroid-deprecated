@@ -18,6 +18,7 @@ public class DrumKitView extends GridLayout {
 	public DrumKitView(DrumActivity drumActivity) {
 		super(drumActivity);
 		this.drumActivity = drumActivity;
+
 		drumSetList = new ArrayList<DrumKitPartView>();
 		this.setColumnCount(NUM_COLUMNS);
 		this.setRowCount(NUM_ROWS);
@@ -65,10 +66,6 @@ public class DrumKitView extends GridLayout {
 	public void replaceDrumKitPartOfDrumSet(int drumPosition, DrumKitPart drumKitPart) {
 
 		drumSetList.add(drumPosition, new DrumKitPartView(drumActivity, drumKitPart));
-	}
-
-	public void initComponents() {
-
 	}
 
 }

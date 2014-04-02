@@ -71,6 +71,7 @@ public class PianoActivity extends Instrument {
 		noteSheetView.setLayoutParams(layoutParams);
 		pianoView.setLayoutParams(layoutParams);
 		LinearLayout linearLayout = new LinearLayout(this);
+
 		linearLayout.addView(noteSheetView);
 		linearLayout.addView(pianoView);
 		linearLayout.setOrientation(1);
