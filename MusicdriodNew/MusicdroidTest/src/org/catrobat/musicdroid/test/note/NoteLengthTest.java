@@ -25,11 +25,14 @@ package org.catrobat.musicdroid.test.note;
 import android.test.AndroidTestCase;
 
 import org.catrobat.musicdroid.note.NoteLength;
+import org.catrobat.musicdroid.test.utils.Reflection;
 
 public class NoteLengthTest extends AndroidTestCase {
 
 	public void testCalculateDuration1() {
-		long expected = Math.round(NoteLength.DEFAULT_DURATION * 1f);
+		double defaultDuration = Double.valueOf(Reflection.getPrivateField(NoteLength.class, "DEFAULT_DURATION")
+				.toString());
+		long expected = Math.round(defaultDuration * 1f);
 		long actual = NoteLength.QUARTER.getTickDuration();
 
 		assertEquals(expected, actual);

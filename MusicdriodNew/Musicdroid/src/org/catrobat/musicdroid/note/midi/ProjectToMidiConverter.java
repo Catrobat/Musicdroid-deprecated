@@ -61,7 +61,7 @@ public class ProjectToMidiConverter {
 		midi.writeToFile(file);
 	}
 
-	public MidiFile convertProject(Project project) throws MidiException {
+	protected MidiFile convertProject(Project project) throws MidiException {
 		ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
 
 		MidiTrack tempoTrack = createTempoTrackWithMetaInfo(project.getBeatsPerMinute());
@@ -79,7 +79,7 @@ public class ProjectToMidiConverter {
 		return new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
 	}
 
-	public int addInstrumentAndGetChannel(Instrument instrument) throws MidiException {
+	protected int addInstrumentAndGetChannel(Instrument instrument) throws MidiException {
 		if (usedChannels.contains(instrument)) {
 			return usedChannels.indexOf(instrument) + 1;
 		} else if (usedChannels.size() == MAX_CHANNEL) {

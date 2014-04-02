@@ -32,6 +32,8 @@ import org.catrobat.musicdroid.note.midi.MidiToProjectConverter;
 import org.catrobat.musicdroid.note.midi.ProjectToMidiConverter;
 import org.catrobat.musicdroid.test.note.midi.testutil.MidiFileTestDataFactory;
 import org.catrobat.musicdroid.test.note.testutil.ProjectTestDataFactory;
+import org.catrobat.musicdroid.test.utils.Reflection;
+import org.catrobat.musicdroid.test.utils.Reflection.ParameterList;
 
 public class MidiToProjectConverterTest extends AndroidTestCase {
 
@@ -39,9 +41,12 @@ public class MidiToProjectConverterTest extends AndroidTestCase {
 		ProjectToMidiConverter projectConverter = new ProjectToMidiConverter();
 		MidiToProjectConverter midiConverter = new MidiToProjectConverter();
 		Project expectedProject = ProjectTestDataFactory.createProjectWithSemiComplexTracks();
-		MidiFile midi = projectConverter.convertProject(expectedProject);
+		ParameterList convertProjectParameters = new ParameterList(expectedProject);
+		MidiFile midi = (MidiFile) Reflection
+				.invokeMethod(projectConverter, "convertProject", convertProjectParameters);
 
-		Project actualProject = midiConverter.convertMidi(midi, Project.DEFAULT_NAME);
+		ParameterList convertMidiParameters = new ParameterList(midi, Project.DEFAULT_NAME);
+		Project actualProject = (Project) Reflection.invokeMethod(midiConverter, "convertMidi", convertMidiParameters);
 
 		assertEquals(expectedProject, actualProject);
 	}
@@ -54,10 +59,14 @@ public class MidiToProjectConverterTest extends AndroidTestCase {
 		MidiToProjectConverter converter = new MidiToProjectConverter();
 		MidiFile midiFile = MidiFileTestDataFactory.createMidiFile();
 
+		ParameterList validateMidiParameters = new ParameterList(midiFile);
 		try {
-			converter.validateMidiFile(midiFile);
-			fail();
-		} catch (MidiException e) {
+			Reflection.invokeMethodAndExpectException(MidiToProjectConverter.class, converter, "validateMidiFile",
+					validateMidiParameters);
+			fail("Should throw a MidiException");
+		} catch (Exception e) {
+			assertTrue("Should just throw a MidiException",
+					e.getCause().toString().contains("org.catrobat.musicdroid.note.midi.MidiException"));
 		}
 	}
 
@@ -65,10 +74,14 @@ public class MidiToProjectConverterTest extends AndroidTestCase {
 		MidiToProjectConverter converter = new MidiToProjectConverter();
 		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithEmptyTrack();
 
+		ParameterList validateMidiParameters = new ParameterList(midiFile);
 		try {
-			converter.validateMidiFile(midiFile);
-			fail();
-		} catch (MidiException e) {
+			Reflection.invokeMethodAndExpectException(MidiToProjectConverter.class, converter, "validateMidiFile",
+					validateMidiParameters);
+			fail("Should throw a MidiException");
+		} catch (Exception e) {
+			assertTrue("Should just throw a MidiException",
+					e.getCause().toString().contains("org.catrobat.musicdroid.note.midi.MidiException"));
 		}
 	}
 
@@ -76,10 +89,14 @@ public class MidiToProjectConverterTest extends AndroidTestCase {
 		MidiToProjectConverter converter = new MidiToProjectConverter();
 		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingTempoEvent();
 
+		ParameterList validateMidiParameters = new ParameterList(midiFile);
 		try {
-			converter.validateMidiFile(midiFile);
-			fail();
-		} catch (MidiException e) {
+			Reflection.invokeMethodAndExpectException(MidiToProjectConverter.class, converter, "validateMidiFile",
+					validateMidiParameters);
+			fail("Should throw a MidiException");
+		} catch (Exception e) {
+			assertTrue("Should just throw a MidiException",
+					e.getCause().toString().contains("org.catrobat.musicdroid.note.midi.MidiException"));
 		}
 	}
 
@@ -87,10 +104,14 @@ public class MidiToProjectConverterTest extends AndroidTestCase {
 		MidiToProjectConverter converter = new MidiToProjectConverter();
 		MidiFile midiFile = MidiFileTestDataFactory.createMidiFileWithTrackContainingSomeTextEvent();
 
+		ParameterList validateMidiParameters = new ParameterList(midiFile);
 		try {
-			converter.validateMidiFile(midiFile);
-			fail();
-		} catch (MidiException e) {
+			Reflection.invokeMethodAndExpectException(MidiToProjectConverter.class, converter, "validateMidiFile",
+					validateMidiParameters);
+			fail("Should throw a MidiException");
+		} catch (Exception e) {
+			assertTrue("Should just throw a MidiException",
+					e.getCause().toString().contains("org.catrobat.musicdroid.note.midi.MidiException"));
 		}
 	}
 }

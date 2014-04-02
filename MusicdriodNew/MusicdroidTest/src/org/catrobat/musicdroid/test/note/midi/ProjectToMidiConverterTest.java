@@ -41,6 +41,8 @@ import org.catrobat.musicdroid.note.midi.MidiException;
 import org.catrobat.musicdroid.note.midi.ProjectToMidiConverter;
 import org.catrobat.musicdroid.test.note.midi.testutil.MidiFileTestDataFactory;
 import org.catrobat.musicdroid.test.note.testutil.ProjectTestDataFactory;
+import org.catrobat.musicdroid.test.utils.Reflection;
+import org.catrobat.musicdroid.test.utils.Reflection.ParameterList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,7 +59,8 @@ public class ProjectToMidiConverterTest extends AndroidTestCase {
 				Instrument.ELECTRIC_BASS_FINGER, Instrument.FX_1_RAIN, Instrument.FX_8_SCI_FI };
 
 		for (int i = 0; i < instruments.length; i++) {
-			int actualChannel = converter.addInstrumentAndGetChannel(instruments[i]);
+			ParameterList parameters = new ParameterList(instruments[i]);
+			int actualChannel = (Integer) Reflection.invokeMethod(converter, "addInstrumentAndGetChannel", parameters);
 
 			assertEquals(expectedChannels[i], actualChannel);
 		}
@@ -73,14 +76,20 @@ public class ProjectToMidiConverterTest extends AndroidTestCase {
 				Instrument.FX_8_SCI_FI };
 
 		for (int i = 0; i < instruments.length; i++) {
-			converter.addInstrumentAndGetChannel(instruments[i]);
+			ParameterList parameters = new ParameterList(instruments[i]);
+			int actualChannel = (Integer) Reflection.invokeMethod(converter, "addInstrumentAndGetChannel", parameters);
 		}
 
+		ParameterList parameters = new ParameterList(Instrument.HARMONICA);
 		try {
-			converter.addInstrumentAndGetChannel(Instrument.HARMONICA);
-			fail();
-		} catch (MidiException e) {
+			Reflection.invokeMethodAndExpectException(ProjectToMidiConverter.class, converter,
+					"addInstrumentAndGetChannel", parameters);
+			fail("Should throw a MidiException");
+		} catch (Exception e) {
+			assertTrue("Should just throw a MidiException",
+					e.getCause().toString().contains("org.catrobat.musicdroid.note.midi.MidiException"));
 		}
+
 	}
 
 	public void testConvertProjectAndWriteMidi() throws MidiException {
@@ -91,7 +100,8 @@ public class ProjectToMidiConverterTest extends AndroidTestCase {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
 		Project project = ProjectTestDataFactory.createProjectWithSemiComplexTracks();
 
-		MidiFile midi = converter.convertProject(project);
+		ParameterList parameters = new ParameterList(project);
+		MidiFile midi = (MidiFile) Reflection.invokeMethod(converter, "convertProject", parameters);
 
 		assertMidi(project, midi);
 	}

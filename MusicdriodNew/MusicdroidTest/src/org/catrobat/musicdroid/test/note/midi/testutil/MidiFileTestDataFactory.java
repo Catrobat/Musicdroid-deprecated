@@ -34,6 +34,8 @@ import org.catrobat.musicdroid.note.midi.MidiException;
 import org.catrobat.musicdroid.note.midi.MidiToProjectConverter;
 import org.catrobat.musicdroid.note.midi.ProjectToMidiConverter;
 import org.catrobat.musicdroid.test.note.testutil.ProjectTestDataFactory;
+import org.catrobat.musicdroid.test.utils.Reflection;
+import org.catrobat.musicdroid.test.utils.Reflection.ParameterList;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +58,9 @@ public class MidiFileTestDataFactory {
 
 	private static void createAndWriteMidiFile(Project project) throws IOException, MidiException {
 		ProjectToMidiConverter converter = new ProjectToMidiConverter();
-		converter.convertProjectAndWriteMidi(project, Environment.getExternalStorageDirectory().getAbsolutePath()); //TODO: PFAD ANGEBEN
+		ParameterList parameters = new ParameterList(project, Environment.getExternalStorageDirectory()
+				.getAbsolutePath()); //TODO: PFAD ANGEBEN
+		Reflection.invokeMethod(converter, "convertProjectAndWriteMidi", parameters);
 	}
 
 	public static boolean createAndReadMidiFile() {
