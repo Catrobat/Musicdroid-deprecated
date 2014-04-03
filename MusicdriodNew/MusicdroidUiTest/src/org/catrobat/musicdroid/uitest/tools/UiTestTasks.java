@@ -33,7 +33,7 @@ import org.catrobat.musicdroid.types.SoundType;
  * @author matthias
  * 
  */
-public class TrackCreator {
+public class UiTestTasks {
 
 	public static void createMicTrack(Solo solo, int durationSeconds) {
 		solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.btn_add));

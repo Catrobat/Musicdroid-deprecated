@@ -33,7 +33,7 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
-import org.catrobat.musicdroid.uitest.tools.TrackCreator;
+import org.catrobat.musicdroid.uitest.tools.UiTestTasks;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
@@ -158,7 +158,7 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 
 	public void testCollapseAndExpand() {
 		//ui_helper.addTrack(SoundType.DRUMS);
-		TrackCreator.createMicTrack(solo, 5);
+		UiTestTasks.createMicTrack(solo, 5);
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildAt(1);

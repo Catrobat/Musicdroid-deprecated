@@ -44,6 +44,7 @@ import org.catrobat.musicdroid.types.SoundType;
 import java.io.File;
 
 public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private static final String TAG = RecorderUITest.class.getSimpleName();
 	protected Solo solo = null;
 	protected String testFilename = "testfile.mp3";
 	protected MediaPlayer mediaPlayer = null;
@@ -124,7 +125,7 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Log.e(TAG, Log.getStackTraceString(e));
 			}
 		}
 		//assertTrue("Height did not change", false);
