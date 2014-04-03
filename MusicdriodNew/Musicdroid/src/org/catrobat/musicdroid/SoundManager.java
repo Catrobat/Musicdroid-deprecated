@@ -31,6 +31,7 @@ import android.util.SparseIntArray;
 
 public class SoundManager {
 
+	private static final String TAG = SoundManager.class.getSimpleName();
 	static private SoundManager _instance;
 	private static SoundPool soundPool;
 	private static SparseIntArray soundPoolMap;
@@ -42,8 +43,9 @@ public class SoundManager {
 	}
 
 	static synchronized public SoundManager getInstance() {
-		if (_instance == null)
+		if (_instance == null) {
 			_instance = new SoundManager();
+		}
 		return _instance;
 	}
 
@@ -129,8 +131,7 @@ public class SoundManager {
 			player.setDataSource(path);
 			player.prepare();
 		} catch (Exception e) {
-			Log.i("Player-Exception", "Exception");
-			e.printStackTrace();
+			Log.e(TAG, "Exception", e);
 		}
 
 		return player.getDuration() / 1000;

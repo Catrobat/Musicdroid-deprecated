@@ -31,6 +31,7 @@ import android.util.Log;
 import java.io.IOException;
 
 public class Player {
+	private static final String TAG = Player.class.getSimpleName();
 	private RecorderLayout layout = null;
 	private MediaPlayer mediaPlayer = null;
 	private boolean stop = false;
@@ -47,17 +48,13 @@ public class Player {
 			mediaPlayer.setDataSource(AudioHandler.getInstance().getFilenameFullPath());
 			mediaPlayer.prepare();
 		} catch (IllegalArgumentException e) {
-			Log.i("Player-Exception", "IllegalArgumentException");
-			e.printStackTrace();
+			Log.e(TAG, "IllegalArgumentException", e);
 		} catch (SecurityException e) {
-			Log.i("Player-Exception", "SecurityException");
-			e.printStackTrace();
+			Log.e(TAG, "SecurityException", e);
 		} catch (IllegalStateException e) {
-			Log.i("Player-Exception", "IllegalStateException");
-			e.printStackTrace();
+			Log.e(TAG, "IllegalStateException", e);
 		} catch (IOException e) {
-			Log.i("Player-Exception", "IOException");
-			e.printStackTrace();
+			Log.e(TAG, "IOException", e);
 		}
 
 		mediaPlayer.setOnPreparedListener(new OnPreparedListener() {

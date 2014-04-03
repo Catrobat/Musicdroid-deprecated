@@ -34,7 +34,7 @@ public class SoundManagerTest extends ActivityInstrumentationTestCase2<MainActiv
 	}
 
 	public void testPlaySound() {
-
+		assertTrue("TODO: implement", true);
 	}
 
 }

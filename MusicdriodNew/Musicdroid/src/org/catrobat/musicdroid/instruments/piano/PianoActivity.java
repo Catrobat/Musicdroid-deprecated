@@ -25,6 +25,7 @@ package org.catrobat.musicdroid.instruments.piano;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
@@ -51,6 +52,7 @@ public class PianoActivity extends Instrument {
 
 	private static final String directoryName = "records";
 	private static final String directoryNameMidiFiles = "piano_midi_sounds";
+	private static final String TAG = PianoActivity.class.getSimpleName();
 	SoundPlayer soundPlayer;
 	ProgressDialog progress;
 	private NoteSheetView noteSheetView;
@@ -140,10 +142,10 @@ public class PianoActivity extends Instrument {
 			converter.convertProjectAndWriteMidi(project, path);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, Log.getStackTraceString(e));
 		} catch (MidiException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, Log.getStackTraceString(e));
 		}
 	}
 
