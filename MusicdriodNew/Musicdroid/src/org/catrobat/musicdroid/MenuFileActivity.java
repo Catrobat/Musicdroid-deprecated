@@ -61,12 +61,12 @@ public class MenuFileActivity extends FragmentActivity {
 						createNewSoundMixer();
 					}
 				}).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-				Toast.makeText(getApplicationContext(), R.string.save_suggestion, Toast.LENGTH_LONG).show();
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						Toast.makeText(getApplicationContext(), R.string.save_suggestion, Toast.LENGTH_LONG).show();
+					}
+				});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
 	}

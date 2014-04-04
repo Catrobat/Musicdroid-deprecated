@@ -136,8 +136,8 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		lockImageButton = (ImageButton) findViewById(R.id.lock_button);
 		expandImageButton = (ImageButton) findViewById(R.id.expand_button);
 
-		RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		vp.addRule(RelativeLayout.CENTER_VERTICAL);
 		soundTypeImageView.setLayoutParams(vp);
 		soundTypeImageView.setImageResource(id);

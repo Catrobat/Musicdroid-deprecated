@@ -43,8 +43,7 @@ public class CrossDrawer {
 		Rect rect = PictureTools.calculateProportionalPictureContourRect(crossPicture, crossHeight,
 				xStartPositionForCrosses,
 				noteSheetCanvas.getYPositionOfCenterLine() + yPosition * noteSheetCanvas.getDistanceBetweenNoteLines()
-						/ 2
-		);
+						/ 2);
 
 		noteSheetCanvas.getCanvas().drawBitmap(crossPicture, null, rect, null);
 	}

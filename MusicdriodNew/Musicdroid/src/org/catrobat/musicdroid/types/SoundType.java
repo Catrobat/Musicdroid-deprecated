@@ -38,7 +38,7 @@ public enum SoundType {
 	private int expandedColorResource;
 
 	private SoundType(int nameResource, int imageResource, int helpTextResource, int colorResource,
-	                  int expandedColorResource) {
+			int expandedColorResource) {
 		this.nameResource = nameResource;
 		this.imageResouce = imageResource;
 		this.helpTextResource = helpTextResource;

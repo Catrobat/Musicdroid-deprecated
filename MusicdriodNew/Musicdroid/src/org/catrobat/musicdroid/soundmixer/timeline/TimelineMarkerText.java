@@ -44,7 +44,8 @@ public class TimelineMarkerText extends TextView {
 		super(context);
 
 		setText(StringFormatter.durationStringFromInt(second));
-		LayoutParams textParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+		LayoutParams textParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		textParams.leftMargin = SoundMixer.getInstance().getPixelPerSecond() * second - 25;
 		setLayoutParams(textParams);
 	}

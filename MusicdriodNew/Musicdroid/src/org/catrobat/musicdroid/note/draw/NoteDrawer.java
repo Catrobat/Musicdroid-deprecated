@@ -96,7 +96,7 @@ public class NoteDrawer {
 	}
 
 	private void drawHelpLines(NoteSheetCanvas noteSheetCanvas, List<RectF> noteSurroundingRects, NoteSymbol symbol,
-	                           Key key) {
+			Key key) {
 
 		int numberOfHalfLineDistancesWithoutHelpLines = 5;
 		List<NoteName> noteNames = symbol.getNoteNamesSorted();

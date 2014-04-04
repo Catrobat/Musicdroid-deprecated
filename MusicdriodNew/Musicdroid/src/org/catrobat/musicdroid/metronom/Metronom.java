@@ -88,11 +88,7 @@ public class Metronom {
 			double[] tockArray = audioGenerator.getSineWave(tickLengthInSamples, 8000, sound);
 			double silence = 0;
 			double[] soundArray = new double[8000];
-			int t = 0
-					,
-					s = 0
-					,
-					b = 0;
+			int t = 0, s = 0, b = 0;
 
 			@Override
 			public void run() {

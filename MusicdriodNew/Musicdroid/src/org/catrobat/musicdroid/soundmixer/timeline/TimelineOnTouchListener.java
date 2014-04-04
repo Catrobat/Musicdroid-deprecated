@@ -40,7 +40,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 		public void onLongPress(final MotionEvent e) {
 			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
 			// e.getY());
-			int[] location = {(int) e.getX(), (int) e.getY()};
+			int[] location = { (int) e.getX(), (int) e.getY() };
 			timeline.setClickLocation(location);
 			timeline.startTimelineActionMode();
 		}
@@ -89,7 +89,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 				if (margin != old_margin) {
 					layoutParams.leftMargin = margin;
-					int[] location = {margin, 0};
+					int[] location = { margin, 0 };
 					SoundMixer.getInstance().setStartPoint(location);
 				}
 				ret = true;
@@ -115,7 +115,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 
 				if (margin != old_margin) {
 					layoutParams.leftMargin = margin;
-					int[] location = {margin, 0};
+					int[] location = { margin, 0 };
 					SoundMixer.getInstance().setEndPoint(location);
 				}
 				ret = true;

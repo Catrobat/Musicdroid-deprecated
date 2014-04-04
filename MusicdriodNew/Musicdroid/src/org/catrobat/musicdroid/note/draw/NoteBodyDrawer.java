@@ -39,7 +39,7 @@ import java.util.List;
 public class NoteBodyDrawer {
 
 	public static List<RectF> drawBody(NoteSheetCanvas noteSheetCanvas, NoteSymbol noteSymbol,
-	                                   boolean isStemUpdirected, Key key) {
+			boolean isStemUpdirected, Key key) {
 
 		int lineHeight = noteSheetCanvas.getDistanceBetweenNoteLines();
 		int noteHeigth = lineHeight / 2;

@@ -63,11 +63,11 @@ public class MetronomQuickSettingsDialog extends DialogFragment implements OnSee
 								state.getSelectedItemPosition());
 					}
 				}).setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				// User cancelled the dialog
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// User cancelled the dialog
+					}
+				});
 
 		AlertDialog dialog = builder.create();
 

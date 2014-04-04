@@ -182,7 +182,7 @@ public class Timeline extends RelativeLayout {
 
 	public void startTimelineActionMode() {
 		Toast.makeText(context, "startTimelineActionMode is wrong implemented here!", Toast.LENGTH_SHORT).show();
-//		((MainActivity) context).startTimelineActionMode();
+		//		((MainActivity) context).startTimelineActionMode();
 	}
 
 	public int[] getClickLocation() {

@@ -62,10 +62,10 @@ public class SoundLenghtDialog extends DialogFragment {
 						SoundMixer.getInstance().setSoundTrackLengthAndResizeTracks(minutes, seconds);
 					}
 				}).setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
 
 		AlertDialog dialog = builder.create();
 

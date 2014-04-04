@@ -35,10 +35,8 @@ import org.catrobat.musicdroid.note.Octave;
 @SuppressLint("ViewConstructor")
 public class PianoView extends LinearLayout {
 
-	private static final Octave[] SUPPORTED_OCTAVES = new Octave[]{
-			Octave.createSmallOctave(),
-			Octave.createOneLineOctave(),
-			Octave.createTwoLineOctave()};
+	private static final Octave[] SUPPORTED_OCTAVES = new Octave[] { Octave.createSmallOctave(),
+			Octave.createOneLineOctave(), Octave.createTwoLineOctave() };
 
 	private int activeOctaveIndex;
 	private PianoOctaveView pianoOctaveView;
