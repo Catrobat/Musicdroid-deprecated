@@ -24,15 +24,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.catrobat.musicdroid.test"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="19" />
-
-    <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="org.catrobat.musicdroid" />
+    
+	<instrumentation
+		android:targetPackage="org.catrobat.musicdroid"
+		android:name="pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
+		android:label="Tests for org.catrobat.musicdroid" />
 
     <application
         android:icon="@drawable/ic_launcher"

@@ -36,6 +36,10 @@
     <condition property="sdk.dir" value="${env.ANDROID_HOME}">
         <isset property="env.ANDROID_HOME" />
     </condition>
+    
+    <property name="test.runner" value="pl.polidea.instrumentation.PolideaInstrumentationTestRunner" />
+    <property name="test.runner.junitOutputDirectory" value="/mnt/sdcard/testresults"/>
+    
 
     <!-- The project.properties file is created and updated by the 'android'
          tool, as well as ADT.

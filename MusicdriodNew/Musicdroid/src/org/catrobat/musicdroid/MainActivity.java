@@ -59,15 +59,15 @@ public class MainActivity extends MenuFileActivity {
 
 		setContentView(R.layout.activity_main);
 
-//		initTopStatusBar();
-//		Statusbar.getInstance().initStatusbar(this);
+		initTopStatusBar();
+		Statusbar.getInstance().initStatusbar(this);
 
 		SoundMixer.getInstance().initSoundMixer(this);
 
 		// TESTING
 		SoundManager.getInstance();
 		SoundManager.initSounds(this);
-		// SoundManager.loadSounds();
+		SoundManager.loadSounds();
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class MainActivity extends MenuFileActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		Statusbar.getInstance().initStatusbar(this);
+		Statusbar.getInstance().initStatusbar(this);
 	}
 
 	@Override

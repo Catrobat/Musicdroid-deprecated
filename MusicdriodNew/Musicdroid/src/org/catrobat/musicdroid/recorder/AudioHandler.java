@@ -59,8 +59,9 @@ public class AudioHandler {
 	}
 
 	public void init(Context context, RecorderLayout layout) {
-		if (init)
+		if (init) {
 			return;
+		}
 
 		this.context = context;
 		this.layout = layout;
@@ -84,10 +85,11 @@ public class AudioHandler {
 
 	public void stopRecording() {
 		recorder.stopRecording();
-		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
 			SoundMixer.getInstance().stopAllSoundInSoundMixerAndRewind();
-		else if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		} else if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0) {
 			SoundMixer.getInstance().stopMetronom();
+		}
 	}
 
 	public void playRecordedFile() {
@@ -107,13 +109,13 @@ public class AudioHandler {
 						layout.resetLayoutToRecord();
 					}
 				}).setNegativeButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-				checkAndStartPlaybackAndMetronom();
-				recorder.record();
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						checkAndStartPlaybackAndMetronom();
+						recorder.record();
+					}
+				});
 		AlertDialog alertNewImage = alertDialogBuilder.create();
 		alertNewImage.show();
 	}
@@ -121,8 +123,9 @@ public class AudioHandler {
 	private void checkAndStartPlaybackAndMetronom() {
 		int metronom = PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY);
 		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
-			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0)
+			if (!SoundMixer.getInstance().playAllSoundsInSoundmixer() && metronom > 0) {
 				SoundMixer.getInstance().startMetronom();
+			}
 		} else if (metronom > 0) {
 			SoundMixer.getInstance().startMetronom();
 		}

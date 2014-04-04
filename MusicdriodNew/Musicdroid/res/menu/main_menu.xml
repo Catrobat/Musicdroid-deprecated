@@ -27,12 +27,14 @@
         <item
             android:id="@+id/btn_settings"
             android:icon="@drawable/settings_button"
-            android:title="@string/menu_item_add" />
+            android:title="@string/action_settings"
+            android:showAsAction="always" />
 
         <item
             android:id="@+id/btn_add"
             android:icon="@drawable/add_button"
-            android:title="@string/menu_item_add" />
+            android:title="@string/menu_item_add"
+            android:showAsAction="always" />
 
     </group>
     <group>
