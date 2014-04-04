@@ -34,8 +34,8 @@ import java.util.List;
 
 public class BlockCharacterTest extends TestCase {
 
-	private static final String[] DIRECTORIES = { "../MusicdroidTest", "../Musicdroid", "../MusicdroidUiTest",
-			"../musicdroidSourceTest" };
+	private static final String[] DIRECTORIES = { "../MusicdroidTest",
+			"../Musicdroid", "../MusicdroidUiTest", "../MusicdroidSourceTest" };
 	private String errorMessages;
 	private boolean errorFound;
 
@@ -48,7 +48,8 @@ public class BlockCharacterTest extends TestCase {
 		while ((line = reader.readLine()) != null) {
 			if (line.contains("\uFFFD")) {
 				errorFound = true;
-				errorMessages += file.getName() + " in line " + lineCount + "\n";
+				errorMessages += file.getName() + " in line " + lineCount
+						+ "\n";
 			}
 			++lineCount;
 		}
@@ -61,16 +62,19 @@ public class BlockCharacterTest extends TestCase {
 
 		for (String directoryName : DIRECTORIES) {
 			File directory = new File(directoryName);
-			assertTrue("Couldn't find directory: " + directoryName, directory.exists() && directory.isDirectory());
-			assertTrue("Couldn't read directory: " + directoryName, directory.canRead());
+			assertTrue("Couldn't find directory: " + directoryName,
+					directory.exists() && directory.isDirectory());
+			assertTrue("Couldn't read directory: " + directoryName,
+					directory.canRead());
 
-			List<File> filesToCheck = Utils.getFilesFromDirectoryByExtension(directory,
-					new String[] { ".java", ".xml" });
+			List<File> filesToCheck = Utils.getFilesFromDirectoryByExtension(
+					directory, new String[] { ".java", ".xml" });
 			for (File file : filesToCheck) {
 				checkFileForBlockCharacters(file);
 			}
 		}
 
-		assertFalse("Files with Block Characters found: \n" + errorMessages, errorFound);
+		assertFalse("Files with Block Characters found: \n" + errorMessages,
+				errorFound);
 	}
 }
