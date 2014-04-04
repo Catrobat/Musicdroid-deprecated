@@ -25,7 +25,9 @@ package org.catrobat.musicdroid.test.note.testutil;
 import org.catrobat.musicdroid.note.NoteEvent;
 import org.catrobat.musicdroid.note.NoteName;
 
-public class NoteEventTestDataFactory {
+public final class NoteEventTestDataFactory {
+	private NoteEventTestDataFactory() {
+	}
 
 	public static NoteEvent createNoteEvent() {
 		return createNoteEvent(NoteName.C4, true);

@@ -33,12 +33,12 @@ import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.uitest.utils.UiTestHelper;
 
 public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected Timeline timeline = null;
-	protected UITestHelper helper;
 
 	public SoundMixerTest() {
 		super(MainActivity.class);
@@ -48,7 +48,6 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 		mixer = SoundMixer.getInstance();
-		helper = new UITestHelper(solo, getActivity());
 		timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 	}
 
@@ -59,8 +58,8 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	}
 
 	public void testResetSoundMixerAtNewSongYes() {
-		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		assertTrue(((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 3);
 
 		solo.clickOnMenuItem(getActivity().getResources().getString(R.string.menu_new_song));
@@ -74,8 +73,8 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	}
 
 	public void testSoundMixerUnchangedAtNewSongNo() {
-		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		int oldCount = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount();
 		assertTrue(oldCount >= 3);
 
@@ -95,10 +94,10 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 	}
 
 	public void testDeleteTrack() {
-		helper.addTrack(SoundType.DRUMS);
-		int number_of_childs_old = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		int numberOfChildrenOld = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildCount();
-		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
+		int numberOfTracksOld = SoundMixer.getInstance().getNumberOfTracks();
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildAt(1);
@@ -107,19 +106,19 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.waitForText(v.getSoundTrack().getName(), 1, 10000, true);
 		solo.clickOnText(solo.getString(R.string.sound_track_menu_entry_delete));
 		solo.sleep(1000);
-		int number_of_childs_new = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+		int numberOfChildrenNew = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildCount();
-		int number_of_tracks_new = SoundMixer.getInstance().getNumberOfTracks();
+		int numberOfTracksNew = SoundMixer.getInstance().getNumberOfTracks();
 
-		assertTrue("Child not deleted", number_of_childs_new == number_of_childs_old - 1);
-		assertTrue("Track not deleted", number_of_tracks_new == number_of_tracks_old - 1);
+		assertTrue("Child not deleted", numberOfChildrenNew == numberOfChildrenOld - 1);
+		assertTrue("Track not deleted", numberOfTracksNew == numberOfTracksOld - 1);
 	}
 
 	public void testCopyTrack() {
-		helper.addTrack(SoundType.DRUMS);
-		int number_of_childs_old = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		int numberOfChildrenOld = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildCount();
-		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
+		int numberOfTracksOld = SoundMixer.getInstance().getNumberOfTracks();
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildAt(1);
@@ -128,32 +127,32 @@ public class SoundMixerTest extends ActivityInstrumentationTestCase2<MainActivit
 		solo.waitForText(v.getSoundTrack().getName(), 1, 10000, true);
 		solo.clickOnText(solo.getString(R.string.sound_track_menu_entry_copy));
 		solo.sleep(1000);
-		int number_of_childs_new = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+		int numberOfChildrenNew = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildCount();
-		int number_of_tracks_new = SoundMixer.getInstance().getNumberOfTracks();
+		int numberOfTracksNew = SoundMixer.getInstance().getNumberOfTracks();
 
-		assertTrue("Child not deleted", number_of_childs_new == number_of_childs_old + 1);
-		assertTrue("Track not deleted", number_of_tracks_new == number_of_tracks_old + 1);
+		assertTrue("Child not deleted", numberOfChildrenNew == numberOfChildrenOld + 1);
+		assertTrue("Track not deleted", numberOfTracksNew == numberOfTracksOld + 1);
 	}
 
 	public void testAddMultipleTracksAndDelete() {
-		helper.addTrack(SoundType.DRUMS);
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 
 		testDeleteTrack();
 	}
 
 	private void testAddSpecificTrack(SoundType type) {
-		int number_of_childs_old = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+		int numberOfChildrenOld = ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildCount();
-		int number_of_tracks_old = SoundMixer.getInstance().getNumberOfTracks();
+		int numberOfTracksOld = SoundMixer.getInstance().getNumberOfTracks();
 
-		helper.addTrack(type);
+		UiTestHelper.addTrack(solo, type);
 
-		assertTrue("No " + type + " sound track added", number_of_tracks_old < SoundMixer.getInstance()
+		assertTrue("No " + type + " sound track added", numberOfTracksOld < SoundMixer.getInstance()
 				.getNumberOfTracks());
 		assertTrue("No child layout added",
-				number_of_childs_old < ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
+				numberOfChildrenOld < ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 						.getChildCount());
 	}
 }

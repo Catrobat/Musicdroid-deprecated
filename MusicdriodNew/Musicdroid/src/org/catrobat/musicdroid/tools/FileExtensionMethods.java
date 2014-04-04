@@ -25,7 +25,10 @@ package org.catrobat.musicdroid.tools;
 /**
  * @author matthias schlesinger
  */
-public class FileExtensionMethods {
+public final class FileExtensionMethods {
+	private FileExtensionMethods() {
+	}
+
 	public static String getFilenameFromPath(String path) {
 		String filename = path;
 		int pos = path.lastIndexOf('/');

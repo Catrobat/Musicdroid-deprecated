@@ -45,14 +45,11 @@ import org.catrobat.musicdroid.soundplayer.SoundPlayer;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * @author musicdroid
- */
 public class PianoActivity extends Instrument {
 
-	private static final String directoryName = "records";
-	private static final String directoryNameMidiFiles = "piano_midi_sounds";
 	private static final String TAG = PianoActivity.class.getSimpleName();
+	private static final String RECORDS_DIRECTORY_NAME = "records";
+	private static final String MIDI_DIRECTORY_NAME = "piano_midi_sounds";
 	SoundPlayer soundPlayer;
 	ProgressDialog progress;
 	private NoteSheetView noteSheetView;
@@ -103,8 +100,8 @@ public class PianoActivity extends Instrument {
 		String noteNameName;
 		String fileName;
 		String path;
-		directory = new File(Environment.getExternalStorageDirectory() + File.separator + directoryName
-				+ File.separator + directoryNameMidiFiles);
+		directory = new File(Environment.getExternalStorageDirectory() + File.separator + RECORDS_DIRECTORY_NAME
+				+ File.separator + MIDI_DIRECTORY_NAME);
 		if (!directory.exists()) {
 
 			directory.mkdirs();

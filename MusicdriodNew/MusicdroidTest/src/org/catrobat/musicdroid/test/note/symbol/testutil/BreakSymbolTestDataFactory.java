@@ -25,7 +25,9 @@ package org.catrobat.musicdroid.test.note.symbol.testutil;
 import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.symbol.BreakSymbol;
 
-public class BreakSymbolTestDataFactory {
+public final class BreakSymbolTestDataFactory {
+	private BreakSymbolTestDataFactory() {
+	}
 
 	public static BreakSymbol createBreakSymbol() {
 		return new BreakSymbol(NoteLength.QUARTER);

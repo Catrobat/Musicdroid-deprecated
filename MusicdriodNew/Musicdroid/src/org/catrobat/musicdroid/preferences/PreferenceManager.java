@@ -24,7 +24,7 @@ package org.catrobat.musicdroid.preferences;
 
 import java.util.HashMap;
 
-public class PreferenceManager {
+public final class PreferenceManager {
 	public static final int SOUNDTRACK_DEFAULT_LENGTH_DEFAULT_VALUE = 45;
 	public static final String SOUNDTRACK_DEFAULT_LENGTH_KEY = "soundtrack_length_default";
 	public static final int SOUNDTRACK_LENGTH_DEFAULT_VALUE = 45;

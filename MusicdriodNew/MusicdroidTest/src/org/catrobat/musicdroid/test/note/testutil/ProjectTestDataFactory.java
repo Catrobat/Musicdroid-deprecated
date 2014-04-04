@@ -26,7 +26,9 @@ import org.catrobat.musicdroid.note.Instrument;
 import org.catrobat.musicdroid.note.Project;
 import org.catrobat.musicdroid.note.Track;
 
-public class ProjectTestDataFactory {
+public final class ProjectTestDataFactory {
+	private ProjectTestDataFactory() {
+	}
 
 	public static Project createProject() {
 		return createProject(Project.DEFAULT_NAME);

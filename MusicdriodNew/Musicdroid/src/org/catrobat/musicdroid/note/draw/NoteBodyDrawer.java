@@ -36,7 +36,9 @@ import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NoteBodyDrawer {
+public final class NoteBodyDrawer {
+	private NoteBodyDrawer() {
+	}
 
 	public static List<RectF> drawBody(NoteSheetCanvas noteSheetCanvas, NoteSymbol noteSymbol,
 			boolean isStemUpdirected, Key key) {
@@ -92,7 +94,7 @@ public class NoteBodyDrawer {
 			noteSheetCanvas.getCanvas().drawOval(rect, paint);
 
 			if (noteLength.hasDot()) {
-				DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+				DotDrawer.drawDotOnRightSideOfRect(rect, noteSheetCanvas);
 			}
 
 			prevNoteName = noteName;

@@ -25,7 +25,9 @@ package org.catrobat.musicdroid.test.note.symbol.testutil;
 import org.catrobat.musicdroid.note.symbol.BoundNoteSymbol;
 import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 
-public class BoundNoteSymbolTestDataFactory {
+public final class BoundNoteSymbolTestDataFactory {
+	private BoundNoteSymbolTestDataFactory() {
+	}
 
 	public static BoundNoteSymbol createBoundNoteSymbol() {
 		return new BoundNoteSymbol();

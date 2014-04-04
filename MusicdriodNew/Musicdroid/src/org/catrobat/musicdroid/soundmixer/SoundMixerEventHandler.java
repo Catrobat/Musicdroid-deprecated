@@ -64,8 +64,9 @@ public class SoundMixerEventHandler extends Observable {
 							setChanged();
 							notifyObservers(time);
 							time = time + 1;
-							if (shouldContinue && time < endPoint)
+							if (shouldContinue && time < endPoint) {
 								sendTrackPositionMessage(time);
+							}
 						} catch (Exception e) {
 						}
 					}
@@ -101,12 +102,12 @@ public class SoundMixerEventHandler extends Observable {
 	}
 
 	public void computeSecondInPixel() {
-		Log.e("Longest Track ", "" + longestTrack);
+		Log.d("Longest Track ", "" + longestTrack);
 		secondInPixel = screenWidth / longestTrack;
 	}
 
-	public int computeStartPointInSecondsByPixel(int start_pos_pixel) {
-		return start_pos_pixel / secondInPixel;
+	public int computeStartPointInSecondsByPixel(int startPosPixel) {
+		return startPosPixel / secondInPixel;
 	}
 
 	public int getEndPoint() {
@@ -122,25 +123,28 @@ public class SoundMixerEventHandler extends Observable {
 	}
 
 	public boolean setStartPoint(int startPoint) {
-		if (startPoint > endPoint)
+		if (startPoint > endPoint) {
 			return false;
+		}
 
 		this.startPoint = startPoint;
 		return true;
 	}
 
 	private int setStartTime() {
-		if (stopPoint > startPoint)
+		if (stopPoint > startPoint) {
 			return stopPoint;
-		else
+		} else {
 			return startPoint;
+		}
 	}
 
 	public boolean setEndPoint(int endPoint) {
 		Log.i("Set EndPoint", "EndPoint = " + endPoint);
 
-		if (endPoint < startPoint)
+		if (endPoint < startPoint) {
 			return false;
+		}
 
 		this.endPoint = endPoint;
 		return true;

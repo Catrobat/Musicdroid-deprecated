@@ -40,7 +40,9 @@ import org.catrobat.musicdroid.test.utils.Reflection.ParameterList;
 import java.io.File;
 import java.io.IOException;
 
-public class MidiFileTestDataFactory {
+public final class MidiFileTestDataFactory {
+	private MidiFileTestDataFactory() {
+	}
 
 	public static boolean createAndWriteMidiFileWithDeleteOnSuccess() {
 		Project project = ProjectTestDataFactory.createProject();

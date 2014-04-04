@@ -30,10 +30,14 @@ import org.catrobat.musicdroid.MainActivity;
 /**
  * @author matthias schlesinger
  */
-public class DeviceInfo {
+public final class DeviceInfo {
+	private DeviceInfo() {
+	}
+
 	public static Point getScreenSize(Context context) {
-		if (context == null)
+		if (context == null) {
 			throw new IllegalStateException("Helper not initialized");
+		}
 
 		if (android.os.Build.VERSION.SDK_INT >= 13) {
 			Point size = new Point();
@@ -47,14 +51,16 @@ public class DeviceInfo {
 	}
 
 	public static int getScreenHeight(Context context) {
-		if (context == null)
+		if (context == null) {
 			throw new IllegalStateException("Helper not initialized");
+		}
 		return getScreenSize(context).y;
 	}
 
 	public static int getScreenWidth(Context context) {
-		if (context == null)
+		if (context == null) {
 			throw new IllegalStateException("Helper not initialized");
+		}
 		return getScreenSize(context).x;
 	}
 }

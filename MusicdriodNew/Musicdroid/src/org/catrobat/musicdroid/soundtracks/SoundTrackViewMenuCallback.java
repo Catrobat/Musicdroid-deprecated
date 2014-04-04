@@ -22,6 +22,7 @@
  ******************************************************************************/
 package org.catrobat.musicdroid.soundtracks;
 
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,10 +55,12 @@ public class SoundTrackViewMenuCallback implements ActionMode.Callback {
 		SoundMixer.getInstance().disableUnselectedViews();
 
 		String name = null;
-		if ((name = SoundMixer.getInstance().getCallingTrack().getName()) != null)
+		if ((name = SoundMixer.getInstance().getCallingTrack().getName()) != null) {
 			mode.setTitle(name);
-		else
+		} else {
 			mode.setTitle("Fix this");
+			Log.e("TODO", "Fix this!");
+		}
 		return true;
 	}
 

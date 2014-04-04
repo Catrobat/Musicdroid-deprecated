@@ -33,12 +33,11 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
-import org.catrobat.musicdroid.uitest.tools.UiTestTasks;
+import org.catrobat.musicdroid.uitest.utils.UiTestHelper;
 
 public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
-	protected UITestHelper ui_helper;
 
 	public SoundTrackViewTest() {
 		super(MainActivity.class);
@@ -48,7 +47,6 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 		mixer = SoundMixer.getInstance();
-		ui_helper = new UITestHelper(solo, getActivity());
 	}
 
 	@Override
@@ -57,8 +55,8 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 	}
 
 	public void testSoundTrackViewInactive() {
-		ui_helper.addTrack(SoundType.DRUMS);
-		ui_helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		assertTrue(((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative)).getChildCount() >= 2);
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
@@ -112,23 +110,23 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 
 	public void testLock() {
 		int[] location = new int[2];
-		int[] new_location = new int[2];
+		int[] newLocation = new int[2];
 
-		ui_helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildAt(1);
 
 		v.getLocationOnScreen(location);
-		int start_x = location[0];
-		int start_y = location[1];
+		int startX = location[0];
+		int startY = location[1];
 
 		//Drag, assert position remains unchanged because Sound Track is locked
-		solo.drag(start_x + v.getWidth() / 2, 300, start_y, start_y, 1);
+		solo.drag(startX + v.getWidth() / 2, 300, startY, startY, 1);
 
-		v.getLocationOnScreen(new_location);
-		assertTrue(start_x == new_location[0]);
-		assertTrue(start_y == new_location[1]);
+		v.getLocationOnScreen(newLocation);
+		assertTrue(startX == newLocation[0]);
+		assertTrue(startY == newLocation[1]);
 
 		//Unlock Sound Track
 		solo.sleep(100);
@@ -136,12 +134,12 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		solo.sleep(100);
 
 		//Drag again, view should move  
-		new_location = new int[2];
-		solo.drag(start_x + v.getWidth() / 2, 300, start_y, start_y, 1);
+		newLocation = new int[2];
+		solo.drag(startX + v.getWidth() / 2, 300, startY, startY, 1);
 		solo.sleep(100);
-		v.getLocationOnScreen(new_location);
-		int new_x = new_location[0];
-		assertTrue(start_x != new_x);
+		v.getLocationOnScreen(newLocation);
+		int newX = newLocation[0];
+		assertTrue(startX != newX);
 
 		//Unlock again
 		solo.sleep(100);
@@ -149,16 +147,16 @@ public class SoundTrackViewTest extends ActivityInstrumentationTestCase2<MainAct
 		solo.sleep(100);
 
 		//Drag again, view should not move  
-		new_location = new int[2];
-		solo.drag(new_x + v.getWidth() / 4, -300, start_y, start_y, 1);
+		newLocation = new int[2];
+		solo.drag(newX + v.getWidth() / 4, -300, startY, startY, 1);
 		solo.sleep(100);
-		v.getLocationOnScreen(new_location);
-		assertTrue(new_x == new_location[0]);
+		v.getLocationOnScreen(newLocation);
+		assertTrue(newX == newLocation[0]);
 	}
 
 	public void testCollapseAndExpand() {
 		//ui_helper.addTrack(SoundType.DRUMS);
-		UiTestTasks.createMicTrack(solo, 5);
+		UiTestHelper.createMicTrack(solo, 5);
 
 		SoundTrackView v = (SoundTrackView) ((RelativeLayout) getActivity().findViewById(R.id.sound_mixer_relative))
 				.getChildAt(1);

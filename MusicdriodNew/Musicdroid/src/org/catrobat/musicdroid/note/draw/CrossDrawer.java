@@ -31,7 +31,9 @@ import android.graphics.Rect;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.tools.PictureTools;
 
-public class CrossDrawer {
+public final class CrossDrawer {
+	private CrossDrawer() {
+	}
 
 	public static void drawCross(NoteSheetCanvas noteSheetCanvas, int xPosition, int yPosition, Context context) {
 		int crossHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();

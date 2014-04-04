@@ -24,10 +24,10 @@ package org.catrobat.musicdroid.note;
 
 import java.util.Arrays;
 
-public class Octave {
+public final class Octave {
 
-	public final static int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
-	public final static int NUMBER_OF_UNSIGNED_HALF_TONE_STEPS_PER_OCTAVE = 7;
+	public static final int NUMBER_OF_HALF_TONE_STEPS_PER_OCTAVE = 12;
+	public static final int NUMBER_OF_UNSIGNED_HALF_TONE_STEPS_PER_OCTAVE = 7;
 
 	private NoteName[] noteNames;
 

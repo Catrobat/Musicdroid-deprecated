@@ -101,16 +101,18 @@ public class SoundMixer {
 			return false;
 		}
 
-		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0) {
 			startMetronom();
+		}
 		eventHandler.play();
 		return true;
 	}
 
 	public void stopAllSoundsInSoundmixer() {
 		eventHandler.stopNotifyThread();
-		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.METRONOM_VISUALIZATION_KEY) > 0) {
 			stopMetronom();
+		}
 		SoundManager.stopAllSounds();
 	}
 
@@ -124,8 +126,8 @@ public class SoundMixer {
 		timeline.rewind();
 	}
 
-	public void updateTimelineOnMove(int id, int pix_pos, int sec_pos, int duration) {
-		timeline.updateTimelineOnMove(id, pix_pos, sec_pos, duration);
+	public void updateTimelineOnMove(int id, int pixPos, int secPos, int trackDuration) {
+		timeline.updateTimelineOnMove(id, pixPos, secPos, trackDuration);
 	}
 
 	public void startMetronom() {
@@ -185,17 +187,19 @@ public class SoundMixer {
 	}
 
 	public void setStartPoint(int[] location) {
-		if (eventHandler.setStartPoint(location[0] / pixelPerSecond))
+		if (eventHandler.setStartPoint(location[0] / pixelPerSecond)) {
 			timeline.setStartPoint(location[0]);
-		else
+		} else {
 			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	public void setEndPoint(int[] location) {
-		if (eventHandler.setEndPoint(location[0] / pixelPerSecond))
+		if (eventHandler.setEndPoint(location[0] / pixelPerSecond)) {
 			timeline.setEndPoint(location[0]);
-		else
+		} else {
 			Toast.makeText(parentActivity, R.string.warning_invalid_marker_position, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	public void setCallingParameters(int id, SoundTrack track) {
@@ -220,13 +224,15 @@ public class SoundMixer {
 	}
 
 	public void setSoundMixerLength(int length) {
-		if (length > soundMixerLength)
+		if (length > soundMixerLength) {
 			soundMixerLength = length;
+		}
 	}
 
 	public int getPixelPerSecond() {
-		if (pixelPerSecond == 0)
+		if (pixelPerSecond == 0) {
 			pixelPerSecond = DeviceInfo.getScreenWidth(parentActivity) / defaultTrackLength;
+		}
 		return pixelPerSecond;
 	}
 

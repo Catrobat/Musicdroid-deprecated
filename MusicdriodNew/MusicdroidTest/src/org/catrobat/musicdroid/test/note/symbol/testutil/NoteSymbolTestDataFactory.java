@@ -26,7 +26,9 @@ import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.symbol.NoteSymbol;
 
-public class NoteSymbolTestDataFactory {
+public final class NoteSymbolTestDataFactory {
+	private NoteSymbolTestDataFactory() {
+	}
 
 	public static NoteSymbol createNoteSymbol() {
 		return new NoteSymbol();

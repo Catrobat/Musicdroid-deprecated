@@ -32,7 +32,9 @@ import org.catrobat.musicdroid.note.symbol.Symbol;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SymbolListTestDataFactory {
+public final class SymbolListTestDataFactory {
+	private SymbolListTestDataFactory() {
+	}
 
 	public static List<Symbol> createSimpleSymbolList() {
 		List<Symbol> symbols = new LinkedList<Symbol>();

@@ -56,10 +56,11 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 	public void onDestroyActionMode(ActionMode mode) {
 		MenuItem item = mode.getMenu().getItem(1);
 		if (item.getIcon().getConstantState() == parent.getResources().getDrawable(R.drawable.checkbox_unchecked)
-				.getConstantState())
+				.getConstantState()) {
 			PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 0);
-		else
+		} else {
 			PreferenceManager.getInstance().setPreference(PreferenceManager.PLAY_PLAYBACK_KEY, 1);
+		}
 	}
 
 	/**
@@ -72,10 +73,11 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 		mode.setTitle(R.string.recorder_context_title);
 
 		MenuItem item = mode.getMenu().getItem(1);
-		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1)
+		if (PreferenceManager.getInstance().getPreference(PreferenceManager.PLAY_PLAYBACK_KEY) == 1) {
 			item.setIcon(R.drawable.checkbox_checked);
-		else
+		} else {
 			item.setIcon(R.drawable.checkbox_unchecked);
+		}
 
 		return true;
 	}
@@ -88,10 +90,11 @@ public class RecorderMenuCallback implements ActionMode.Callback {
 		switch (item.getItemId()) {
 			case R.id.recorder_context_playback:
 				if (item.getIcon().getConstantState() == parent.getResources()
-						.getDrawable(R.drawable.checkbox_unchecked).getConstantState())
+						.getDrawable(R.drawable.checkbox_unchecked).getConstantState()) {
 					item.setIcon(R.drawable.checkbox_checked);
-				else
+				} else {
 					item.setIcon(R.drawable.checkbox_unchecked);
+				}
 				break;
 			case R.id.recorder_context_bpm:
 				metronomDialog.show(parent.getFragmentManager(), null);

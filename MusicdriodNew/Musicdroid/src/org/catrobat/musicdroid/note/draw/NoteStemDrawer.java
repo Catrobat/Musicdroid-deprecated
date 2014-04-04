@@ -30,8 +30,11 @@ import android.graphics.Point;
 
 import org.catrobat.musicdroid.note.NoteLength;
 
-public class NoteStemDrawer {
+public final class NoteStemDrawer {
 	private static final double LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES = 3.5;
+
+	private NoteStemDrawer() {
+	}
 
 	public static void drawStem(NoteSheetCanvas noteSheetCanvas, NoteLength noteLength, Point startPointOfNoteStem,
 			Point endPointOfNoteStem, boolean isUpdirectedStem) {

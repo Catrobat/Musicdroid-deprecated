@@ -35,11 +35,10 @@ import java.util.List;
 
 public class CheckForAssertionsTest extends TestCase {
 	private static final String[] DIRECTORIES = { "../MusicdroidTest", "../MusicdroidUiTest" };
-	private static final String[] IGNORED_FILES = { "Reflection.java", "Util.java", "UITestHelper.java",
-			"UiTestTasks.java", "InstrumentTestDataFactory.java", "MidiFileTestDataFactory.java",
-			"BreakSymbolTestDataFactory.java", "BoundNoteSymbolTestDataFactory.java", "NoteSymbolTestDataFactory.java",
-			"NoteEventTestDataFactory.java", "ProjectTestDataFactory.java", "SymbolListTestDataFactory.java",
-			"TrackTestDataFactory.java" };
+	private static final String[] IGNORED_FILES = { "Reflection.java", "Util.java", "UiTestHelper.java",
+		"InstrumentTestDataFactory.java", "MidiFileTestDataFactory.java", "BreakSymbolTestDataFactory.java",
+		"BoundNoteSymbolTestDataFactory.java", "TrackTestDataFactory.java",	"NoteSymbolTestDataFactory.java",
+		"NoteEventTestDataFactory.java", "ProjectTestDataFactory.java", "SymbolListTestDataFactory.java" };
 	private String errorMessages;
 	private boolean assertionNotFound;
 
@@ -54,7 +53,7 @@ public class CheckForAssertionsTest extends TestCase {
 				return;
 			}
 		}
-		errorMessages += file.getName() + " does not seem to contain assertions\n";
+		errorMessages += file.getName()	+ " does not seem to contain assertions\n";
 		assertionNotFound = true;
 		reader.close();
 	}
@@ -65,8 +64,8 @@ public class CheckForAssertionsTest extends TestCase {
 
 		for (String directoryName : DIRECTORIES) {
 			File directory = new File(directoryName);
-			assertTrue("Couldn't find directory: " + directoryName, directory.exists() && directory.isDirectory());
-			assertTrue("Couldn't read directory: " + directoryName, directory.canRead());
+			assertTrue("Couldn't find directory: " + directoryName,	directory.exists() && directory.isDirectory());
+			assertTrue("Couldn't read directory: " + directoryName,	directory.canRead());
 
 			List<File> filesToCheck = Utils.getFilesFromDirectoryByExtension(directory, new String[] { ".java", });
 			for (File file : filesToCheck) {
@@ -76,6 +75,6 @@ public class CheckForAssertionsTest extends TestCase {
 			}
 		}
 
-		assertFalse("Files potentially without assertion statements:\n" + errorMessages, assertionNotFound);
+		assertFalse("Files potentially without assertion statements:\n"	+ errorMessages, assertionNotFound);
 	}
 }

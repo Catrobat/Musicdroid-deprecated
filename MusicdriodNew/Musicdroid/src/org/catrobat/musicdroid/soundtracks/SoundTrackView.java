@@ -44,8 +44,8 @@ import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.tools.StringFormatter;
 
 public class SoundTrackView extends RelativeLayout implements OnClickListener, View.OnTouchListener {
-	public final static int MINIMAL_WIDTH = 280;
-	public final static int EXPANDED_WIDTH = 400;
+	public static final int MINIMAL_WIDTH = 280;
+	public static final int EXPANDED_WIDTH = 400;
 	final OnClickListener soundTrackViewOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(final View v) {
@@ -110,8 +110,9 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		setRessources(soundTrack.getType().getImageResource(), soundTrack.getName(), soundTrack.getDuration());
 		setFocusableInTouchMode(true);
 
-		if (collapse)
+		if (collapse) {
 			collapse();
+		}
 	}
 
 	private int computeWidthRelativeToDuration() {
@@ -119,8 +120,9 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		int width = duration * SoundMixer.getInstance().getPixelPerSecond();
 		if (width < 280) {
 			collapse = true;
-			if (width < 100)
+			if (width < 100) {
 				collapseCompletely = true;
+			}
 		}
 		return width;
 	}
@@ -212,33 +214,35 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		final int X = (int) event.getRawX();
+		final int xTouchPosition = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:
 				getParent().requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-				xDelta = X - lParams.leftMargin;
+				xDelta = xTouchPosition - lParams.leftMargin;
 				break;
 			case MotionEvent.ACTION_MOVE:
-				if (moveableLocked)
+				if (moveableLocked) {
 					break;
+				}
 
 				getParent().requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-				int old_margin = layoutParams.leftMargin;
-				int margin = X - xDelta;
+				int oldMargin = layoutParams.leftMargin;
+				int margin = xTouchPosition - xDelta;
 
-				if (margin < 0)
+				if (margin < 0) {
 					margin = 0;
-				// if(margin > helper.getScreenWidth()-layoutParams.width) margin =
-				// helper.getScreenWidth()-layoutParams.width;
+					// if(margin > helper.getScreenWidth()-layoutParams.width) margin =
+					// helper.getScreenWidth()-layoutParams.width;
+				}
 
-				if (margin != old_margin) {
+				if (margin != oldMargin) {
 					layoutParams.leftMargin = margin;
-					int start_point = SoundMixer.getInstance().getStartPointByPixel(margin);
-					soundTrack.setStartPoint(start_point);
-					SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, start_point,
+					int startPoint = SoundMixer.getInstance().getStartPointByPixel(margin);
+					soundTrack.setStartPoint(startPoint);
+					SoundMixer.getInstance().updateTimelineOnMove(getId(), margin, startPoint,
 							soundTrack.getDuration());
 					view.setLayoutParams(layoutParams);
 				}
@@ -252,8 +256,9 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 	public void resizeTrack() {
 		RelativeLayout.LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 		layoutParams.width = computeWidthRelativeToDuration();
-		if (collapse)
+		if (collapse) {
 			collapse();
+		}
 		setLayoutParams(layoutParams);
 	}
 
@@ -305,10 +310,12 @@ public class SoundTrackView extends RelativeLayout implements OnClickListener, V
 		lParams.height = DeviceInfo.getScreenHeight(context) / 6;
 		setLayoutParams(lParams);
 
-		if (lParams.width < MINIMAL_WIDTH)
+		if (lParams.width < MINIMAL_WIDTH) {
 			collapse();
-		if (expandImageButton.getVisibility() == View.VISIBLE && lParams.width >= MINIMAL_WIDTH)
+		}
+		if (expandImageButton.getVisibility() == View.VISIBLE && lParams.width >= MINIMAL_WIDTH) {
 			expandToFullSize();
+		}
 	}
 
 	public void disableView() {

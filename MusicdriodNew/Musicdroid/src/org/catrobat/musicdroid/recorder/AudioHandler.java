@@ -35,7 +35,7 @@ import org.catrobat.musicdroid.tools.FileExtensionMethods;
 
 import java.io.File;
 
-public class AudioHandler {
+public final class AudioHandler {
 	public static AudioHandler instance = null;
 	private RecorderLayout layout = null;
 	private Context context = null;

@@ -29,10 +29,9 @@ import android.media.SoundPool;
 import android.util.Log;
 import android.util.SparseIntArray;
 
-public class SoundManager {
-
+public final class SoundManager {
+	private static final SoundManager INSTANCE = new SoundManager();
 	private static final String TAG = SoundManager.class.getSimpleName();
-	static private SoundManager _instance;
 	private static SoundPool soundPool;
 	private static SparseIntArray soundPoolMap;
 	private static SparseIntArray soundPlayMap;
@@ -42,11 +41,8 @@ public class SoundManager {
 	private SoundManager() {
 	}
 
-	static synchronized public SoundManager getInstance() {
-		if (_instance == null) {
-			_instance = new SoundManager();
-		}
-		return _instance;
+	public static SoundManager getInstance() {
+		return INSTANCE;
 	}
 
 	public static void initSounds(Context theContext) {
@@ -57,8 +53,8 @@ public class SoundManager {
 		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 
-	public static void addSound(int Index, int SoundID) {
-		soundPoolMap.put(Index, soundPool.load(context, SoundID, 1));
+	public static void addSound(int index, int soundId) {
+		soundPoolMap.put(index, soundPool.load(context, soundId, 1));
 	}
 
 	public static int addSoundByPath(String path) {
@@ -68,9 +64,9 @@ public class SoundManager {
 		return position;
 	}
 
-	public static int loadSound(int raw_id) {
+	public static int loadSound(int rawId) {
 		int position = soundPoolMap.size() + 1;
-		soundPoolMap.put(position, soundPool.load(context, raw_id, 1));
+		soundPoolMap.put(position, soundPool.load(context, rawId, 1));
 		return position;
 	}
 
@@ -79,12 +75,12 @@ public class SoundManager {
 		soundPoolMap.put(soundPlayMap.size() + 1, soundPool.load(context, R.raw.test_wav, 1));
 	}
 
-	public static void playSoundByRawId(int raw_id, float speed) {
-		playSound(soundPoolMap.get(raw_id), speed, 1);
+	public static void playSoundByRawId(int rawId, float speed) {
+		playSound(soundPoolMap.get(rawId), speed, 1);
 	}
 
-	public static void stopSoundByRawId(int raw_id) {
-		stopSound(soundPoolMap.get(raw_id));
+	public static void stopSoundByRawId(int rawId) {
+		stopSound(soundPoolMap.get(rawId));
 	}
 
 	public static void playSound(int index, float speed, float volume) {
@@ -93,9 +89,9 @@ public class SoundManager {
 
 		Log.i("SoundManager", "SoundPoolID = " + index);
 		int poolId = soundPoolMap.get(index);
-		Integer stream_id = soundPool.play(poolId, volume, volume, 1, 0, speed);
-		Log.e("PUT: ", "" + index + " " + stream_id);
-		soundPlayMap.put(index, stream_id);
+		Integer streamId = soundPool.play(poolId, volume, volume, 1, 0, speed);
+		Log.d("PUT: ", "" + index + " " + streamId);
+		soundPlayMap.put(index, streamId);
 	}
 
 	public static void stopAllSounds() {
@@ -114,11 +110,10 @@ public class SoundManager {
 		soundPool = null;
 		soundPoolMap.clear();
 		audioManager.unloadSoundEffects();
-		_instance = null;
 	}
 
-	public static int getSoundfileDuration(int soundfile_id) {
-		MediaPlayer player = MediaPlayer.create(context, soundfile_id);
+	public static int getSoundfileDuration(int soundfileId) {
+		MediaPlayer player = MediaPlayer.create(context, soundfileId);
 		int duration = player.getDuration();
 		return duration / 1000;
 	}

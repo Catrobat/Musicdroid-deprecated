@@ -62,10 +62,11 @@ public class RecorderActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (layout.isSoundRecorded())
+		if (layout.isSoundRecorded()) {
 			showSecurityQuestionBeforeExit();
-		else
+		} else {
 			finish();
+		}
 
 	}
 

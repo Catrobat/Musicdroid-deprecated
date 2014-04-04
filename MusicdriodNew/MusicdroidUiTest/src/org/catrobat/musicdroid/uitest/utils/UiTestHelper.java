@@ -20,10 +20,10 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.catrobat.musicdroid.uitest.menutest;
+package org.catrobat.musicdroid.uitest.utils;
 
-import android.app.Activity;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.jayway.android.robotium.solo.Solo;
 
@@ -31,49 +31,66 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
 
-public class UITestHelper {
-	private Solo solo;
-	private Activity activity;
-
-	public UITestHelper(Solo s, Activity a) {
-		solo = s;
-		activity = a;
+public final class UiTestHelper {
+	private UiTestHelper() {
 	}
 
-	public Boolean clickAddSoundButton() {
-		solo.clickOnView(activity.findViewById(R.id.btn_add));
+	public static Boolean clickAddSoundButton(Solo solo) {
+		solo.clickOnView(solo.getView(R.id.btn_add));
 		return solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
 	}
 
-	public void addTrack(SoundType type) {
-		if (clickAddSoundButton()) {
+	public static void addTrack(Solo solo, SoundType type) {
+		if (clickAddSoundButton(solo)) {
 			solo.sleep(100);
 			solo.clickOnText(solo.getString(type.getNameResource()));
 			solo.sleep(1000);
 			return;
 		}
-
 	}
 
-	public boolean scrollToSide(View v) {
+	public static boolean scrollToSide(Solo solo, View v) {
 		int[] location = { 0, 0 };
 		v.getLocationOnScreen(location);
 
-		int start_x = location[0];
-		int start_y = location[1];
+		int startX = location[0];
+		int startY = location[1];
 		solo.sleep(100);
 		int width = DeviceInfo.getScreenWidth(solo.getCurrentActivity());
-		solo.drag(start_x + width / 2, 0, start_y, start_y, 1);
+		solo.drag(startX + width / 2, 0, startY, startY, 1);
 
 		int[] newLocation = { 0, 0 };
 		v.getLocationOnScreen(newLocation);
 		return (location[0] != newLocation[0]);
 	}
 
-	public void addTimelineMarker(int positionX, int positionY, int markerId) {
+	public static void addTimelineMarker(Solo solo, int positionX, int positionY, String markerString) {
 		solo.clickLongOnScreen(positionX, positionY);
-		solo.waitForText(activity.getString(markerId));
-		solo.clickOnText(activity.getString(markerId));
+		solo.waitForText(markerString);
+		solo.clickOnText(markerString);
 		solo.sleep(1000);
+	}
+
+	public static void createMicTrack(Solo solo, int durationSeconds) {
+		solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.btn_add));
+		solo.waitForText(solo.getString(R.string.dialog_add_sound_title), 1, 10000, true);
+		solo.sleep(100);
+		solo.clickOnText(solo.getString(SoundType.MIC.getNameResource()));
+		solo.sleep(2000);
+
+		ImageButton recordButton = (ImageButton) solo.getCurrentActivity().findViewById(R.id.microphone_record_button);
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+
+		if (solo.searchText(solo.getCurrentActivity().getString(R.string.dialog_continue))) {
+			solo.clickOnButton(solo.getCurrentActivity().getString(R.string.dialog_continue));
+		}
+
+		solo.sleep(durationSeconds * 1000);
+
+		solo.clickOnView(recordButton);
+		solo.sleep(1000);
+		solo.clickOnText(solo.getCurrentActivity().getString(R.string.recorder_add_to_sound_mixer_text));
+		solo.sleep(500);
 	}
 }
