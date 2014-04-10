@@ -36,9 +36,9 @@
     <string name="sound_mixer_menu_entry_length">Track Length</string>
     <string name="sound_mixer_menu_entry_bpm">Beats per Minute</string>
     <string name="drum_menu_delete">Delete</string>
-    <string name="drum_menu_18">&&;# 187</string>
-    <string name="drum_menu_14">&&;#188</string>
-    <string name="drum_menu_12">&&;#189</string>
+    <string name="drum_menu_18">1/8</string>
+    <string name="drum_menu_14">1/4</string>
+    <string name="drum_menu_12">1/2</string>
     <string name="drum_menu_1">1</string>
     <string name="drum_menu_p">.</string>
     <string name="drum_menu_additional">+</string>

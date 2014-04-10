@@ -22,41 +22,22 @@
  */
 package org.catrobat.musicdroid.instruments.drums;
 
+import android.widget.LinearLayout;
+
 /**
  * @author AM
  * 
  */
-public class DrumEvent {
+public class DrumTimelineView extends LinearLayout {
 
-	private int eventLength;
-	private String drumPartName;
-	private int imageRessource;
-	private int drumKitBackgroundColor;
-
-	public DrumEvent(DrumKitPart drumKitPart) {
-		this.drumPartName = drumKitPart.getDrumPartName();
-		imageRessource = drumKitPart.getDrawableId();
-		drumKitBackgroundColor = drumKitPart.getBackgroundColor();
+	/**
+	 * @param context
+	 */
+	public DrumTimelineView(DrumActivity drumActivity) {
+		super(drumActivity);
 	}
 
-	public String getDrumPartName() {
-		return drumPartName;
-	}
+	public void initComponents() {
 
-	public int getImageRessource() {
-		return imageRessource;
 	}
-
-	public int getEventLength() {
-		return eventLength;
-	}
-
-	public void setEventLength(int eventLength) {
-		this.eventLength = eventLength;
-	}
-
-	public int getDrumKitBackgroundColor() {
-		return drumKitBackgroundColor;
-	}
-
 }

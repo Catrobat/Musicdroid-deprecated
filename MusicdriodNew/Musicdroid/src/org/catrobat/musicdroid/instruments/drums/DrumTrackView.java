@@ -43,7 +43,6 @@ public class DrumTrackView extends LinearLayout {
 	public DrumTrackView(Activity a) {
 		super(a);
 		this.setOrientation(VERTICAL);
-		this.setLayoutParams(new LayoutParams(900, 100, 1.0f));
 		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
 
@@ -71,7 +70,8 @@ public class DrumTrackView extends LinearLayout {
 
 				ImageView drumEventView = new ImageView(getContext());
 				drumEventView.setImageResource(drumEvent.getImageRessource());
-				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 30);
+				drumEventView.setBackgroundColor(drumEvent.getDrumKitBackgroundColor());
+				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(drumEvent.getEventLength(), 30);
 				drumEventView.setLayoutParams(layoutParams);
 				drumChannels.get(i).drawTrackElement(drumEventView);
 			}

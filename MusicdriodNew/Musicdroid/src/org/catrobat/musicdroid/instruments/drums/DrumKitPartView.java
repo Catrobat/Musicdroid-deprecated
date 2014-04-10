@@ -23,10 +23,11 @@
 package org.catrobat.musicdroid.instruments.drums;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 /**
@@ -34,19 +35,24 @@ import android.widget.LinearLayout;
  * 
  */
 public class DrumKitPartView extends LinearLayout implements OnTouchListener {
+	private static final float MENU_OFFSET = (float) 0.8;
 	private DrumKitPart drumKitPart;
-	DrumActivity drumActivity;
+	private DrumActivity drumActivity;
 
 	public DrumKitPartView(Activity a, DrumKitPart drumKitPart) {
 		super(a);
 		drumActivity = (DrumActivity) a;
 		this.drumKitPart = drumKitPart;
 
-		ImageButton drumPartButton = new ImageButton(a);
+		Point size = new Point();
+		a.getWindowManager().getDefaultDisplay().getSize(size);
+		int buttonSizeWidth = size.x / DrumKitView.getNumColumns();
+		int buttonSizeHeight = (int) ((size.y / DrumKitView.getNumRows()) * MENU_OFFSET);
+
+		Button drumPartButton = new Button(a);
 		drumPartButton.setBackgroundResource(drumKitPart.getDrawableId());
 
-		drumPartButton.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
+		drumPartButton.setLayoutParams(new LayoutParams(buttonSizeWidth, buttonSizeHeight));
 		this.addView(drumPartButton);
 
 	}

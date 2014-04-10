@@ -47,12 +47,9 @@ public class DrumTrackRowView extends LinearLayout {
 
 	private void initComponents(String channelName) {
 		TextView channelTextView = new TextView(getContext());
-
 		channelTextView.setText(channelName);
 		channelTextView.setWidth(200);
-
 		this.addView(channelTextView);
-
 	}
 
 	@Override

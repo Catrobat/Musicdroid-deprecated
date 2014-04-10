@@ -26,10 +26,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ScrollView;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.instruments.Instrument;
@@ -44,9 +42,10 @@ import java.util.ArrayList;
 
 public class DrumActivity extends Instrument {
 
-	private DrumTrackView drumTrackView;
+	//private DrumTrackView drumTrackView;
 	private DrumKitView drumKitView;
 	private ArrayList<DrumEvent> drumEventList;
+	private int drumEventLength = 10;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +54,23 @@ public class DrumActivity extends Instrument {
 
 		drumEventList = new ArrayList<DrumEvent>();
 
-		drumTrackView = new DrumTrackView(this);
+		//drumTrackView = new DrumTrackView(this);
 		drumKitView = new DrumKitView(this);
 
 		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 				1.0f);
 		//drumTrackView.setLayoutParams(layoutParams);
 		drumKitView.setLayoutParams(layoutParams);
-
 		LinearLayout linearLayout = new LinearLayout(this);
 
-		HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
-		horizontalScrollView.addView(drumTrackView);
+		//	HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
+		//	horizontalScrollView.addView(drumTrackView);
 
-		ScrollView horizontalScrollView2 = new ScrollView(this);
-		horizontalScrollView2.addView(drumKitView);
+		//ScrollView horizontalScrollView2 = new ScrollView(this);
+		//horizontalScrollView2.addView(drumKitView);
 
-		linearLayout.addView(horizontalScrollView);
-		linearLayout.addView(horizontalScrollView2);
+		//linearLayout.addView(horizontalScrollView);
+		linearLayout.addView(drumKitView);
 
 		linearLayout.setOrientation(1);
 		setContentView(linearLayout);
@@ -84,8 +82,9 @@ public class DrumActivity extends Instrument {
 	}
 
 	public void addDrumEvent(DrumEvent drumEvent) {
+		drumEvent.setEventLength(drumEventLength);
 		drumEventList.add(drumEvent);
-		drumTrackView.updateView(drumEvent);
+		//	drumTrackView.updateView(drumEvent);
 	}
 
 	@Override
@@ -102,8 +101,30 @@ public class DrumActivity extends Instrument {
 
 		switch (item.getItemId()) {
 			case R.id.drum_menu_item_delete:
-				drumTrackView.resetRowInDrumTrackView();
+				//	drumTrackView.resetRowInDrumTrackView();
 				break;
+			/*
+			 * case R.id.drum_menu_item_18:
+			 * drumEventLength = 10;
+			 * break;
+			 * case R.id.drum_menu_item_14:
+			 * drumEventLength = 20;
+			 * 
+			 * break;
+			 * case R.id.drum_menu_item_12:
+			 * drumEventLength = 40;
+			 * 
+			 * break;
+			 * case R.id.drum_menu_item_1:
+			 * drumEventLength = 80;
+			 * 
+			 * break;
+			 * case R.id.drum_menu_item_p:
+			 * drumEventLength = (int) (drumEventLength * 1.5);
+			 * break;
+			 * case R.id.drum_menu_item_additional:
+			 * break;
+			 */
 			default:
 				return super.onOptionsItemSelected(item);
 		}

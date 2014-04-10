@@ -19,7 +19,7 @@
    GNU Affero General Public License for more details.
   
    You should have received a copy of the GNU Affero General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
@@ -27,23 +27,27 @@
         <item
             android:id="@+id/drum_menu_item_18"
             android:showAsAction="always"
-            android:title="@string/drum_menu_delete"/>
+            android:title="@string/drum_menu_18"/>
         <item
             android:id="@+id/drum_menu_item_14"
             android:showAsAction="always"
-            android:title="@string/drum_menu_delete"/>
+            android:title="@string/drum_menu_14"/>
         <item
             android:id="@+id/drum_menu_item_12"
             android:showAsAction="always"
-            android:title="@string/drum_menu_delete"/>
+            android:title="@string/drum_menu_12"/>
+        <item
+            android:id="@+id/drum_menu_item_1"
+            android:showAsAction="always"
+            android:title="@string/drum_menu_1"/>
         <item
             android:id="@+id/drum_menu_item_p"
             android:showAsAction="always"
-            android:title="@string/drum_menu_delete"/>
+            android:title="@string/drum_menu_p"/>
         <item
             android:id="@+id/drum_menu_item_additional"
             android:showAsAction="always"
-            android:title="@string/drum_menu_delete"/>
+            android:title="@string/drum_menu_additional"/>
     </group>
     <group>
         <item

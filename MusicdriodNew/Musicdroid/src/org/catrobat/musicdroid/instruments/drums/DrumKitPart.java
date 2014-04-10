@@ -29,10 +29,12 @@ package org.catrobat.musicdroid.instruments.drums;
 public class DrumKitPart {
 	private String drumPartName;
 	private int drawableId;
+	private int backgroundColor;
 
-	public DrumKitPart(String drumPartName, int drawableId) {
+	public DrumKitPart(String drumPartName, int drawableId, int backgroundColor) {
 		this.drumPartName = drumPartName;
 		this.drawableId = drawableId;
+		this.backgroundColor = (backgroundColor);
 	}
 
 	public String getDrumPartName() {
@@ -41,6 +43,10 @@ public class DrumKitPart {
 
 	public int getDrawableId() {
 		return drawableId;
+	}
+
+	public int getBackgroundColor() {
+		return backgroundColor;
 	}
 
 }
