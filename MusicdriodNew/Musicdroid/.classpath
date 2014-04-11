@@ -2,8 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="D:/Eclipse_ADt/sdk/extras/android/support/v4/android-support-v4.jar"/>
-	<classpathentry exported="true" kind="lib" path="D:/GIT_repos/musicdroid/MusicdriodNew/Musicdroid/libs/android-midi-libv3-1-42.jar"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="lib" path="/Users/stephan/Documents/UNI/musicdroid/GIT_musicdroid/MusicdriodNew/Musicdroid/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/stephan/Documents/UNI/musicdroid/GIT_musicdroid/MusicdriodNew/Musicdroid/libs/android-midi-libv3-1-42.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

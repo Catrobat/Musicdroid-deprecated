@@ -19,7 +19,7 @@
    GNU Affero General Public License for more details.
   
    You should have received a copy of the GNU Affero General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
 
@@ -36,9 +36,12 @@
     <string name="sound_mixer_menu_entry_length">Track Length</string>
     <string name="sound_mixer_menu_entry_bpm">Beats per Minute</string>
     <string name="drum_menu_delete">Delete</string>
+<<<<<<< HEAD
     <string name="drum_menu_18">1/8</string>
     <string name="drum_menu_14">1/4</string>
     <string name="drum_menu_12">1/2</string>
+=======
+>>>>>>> 8387094aaa82445944903d1bbe0b99c7a1f7fc83
     <string name="drum_menu_1">1</string>
     <string name="drum_menu_p">.</string>
     <string name="drum_menu_additional">+</string>

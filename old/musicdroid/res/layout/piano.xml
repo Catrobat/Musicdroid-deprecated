@@ -53,7 +53,7 @@
             android:padding="0px"
             android:src="@drawable/piano" />
     </HorizontalScrollView>
-
+
     <Button
         android:id="@+id/PlayMidiButton"
         style="?android:attr/buttonStyleSmall"
@@ -62,7 +62,7 @@
         android:layout_above="@+id/scrollView"
         android:layout_alignParentLeft="true"
         android:text="@string/playMid" />
-
+
     <Button
         android:id="@+id/StopMidiButton"
         style="?android:attr/buttonStyleSmall"
