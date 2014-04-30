@@ -35,12 +35,14 @@ import android.widget.LinearLayout;
  * 
  */
 public class DrumKitPartView extends LinearLayout implements OnTouchListener {
+
 	private static final float MENU_OFFSET = (float) 0.8;
 	private DrumKitPart drumKitPart;
 	private DrumActivity drumActivity;
 
 	public DrumKitPartView(Activity a, DrumKitPart drumKitPart) {
 		super(a);
+
 		drumActivity = (DrumActivity) a;
 		this.drumKitPart = drumKitPart;
 
@@ -85,4 +87,5 @@ public class DrumKitPartView extends LinearLayout implements OnTouchListener {
 	public boolean onTouch(View arg0, MotionEvent arg1) {
 		return true;
 	}
+
 }

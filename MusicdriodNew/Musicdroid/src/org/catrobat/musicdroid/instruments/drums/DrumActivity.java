@@ -22,12 +22,14 @@
  */
 package org.catrobat.musicdroid.instruments.drums;
 
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.instruments.Instrument;
@@ -43,37 +45,104 @@ import java.util.ArrayList;
 public class DrumActivity extends Instrument {
 
 	//private DrumTrackView drumTrackView;
-	private DrumKitView drumKitView;
+	//	private DrumKitView drumKitView;
 	private ArrayList<DrumEvent> drumEventList;
 	private int drumEventLength = 10;
+	private static final float MENU_OFFSET = (float) 0.8;
+	private ArrayList<Button> drumPartButtons;
+	private ArrayList<DrumKitPart> drumKitParts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_drum_layout);
+		LinearLayout ll = new LinearLayout(this);
+		setContentView(R.layout.drum_kit_layout);
 
-		drumEventList = new ArrayList<DrumEvent>();
+		Point size = new Point();
+		getWindowManager().getDefaultDisplay().getSize(size);
+		int buttonSizeWidth = size.x / DrumKitView.getNumColumns();
+		int buttonSizeHeight = (int) ((size.y / DrumKitView.getNumRows()) * MENU_OFFSET);
 
-		//drumTrackView = new DrumTrackView(this);
-		drumKitView = new DrumKitView(this);
+		drumPartButtons = new ArrayList<Button>();
+		drumKitParts = new ArrayList<DrumKitPart>();
 
-		LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
-				1.0f);
-		//drumTrackView.setLayoutParams(layoutParams);
-		drumKitView.setLayoutParams(layoutParams);
-		LinearLayout linearLayout = new LinearLayout(this);
+		initDrumPartButtons();
+		initDrumKitParts();
 
-		//	HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
-		//	horizontalScrollView.addView(drumTrackView);
+		setupDrumPartButtons();
 
-		//ScrollView horizontalScrollView2 = new ScrollView(this);
-		//horizontalScrollView2.addView(drumKitView);
+		for (int i = 0; i < drumPartButtons.size(); i++) {
+			//drumPartButtons.get(i).setLayoutParams(new LayoutParams(buttonSizeWidth, buttonSizeHeight));
+		}
 
-		//linearLayout.addView(horizontalScrollView);
-		linearLayout.addView(drumKitView);
+		//drumEventList = new ArrayList<DrumEvent>();
+		/*
+		 * //drumTrackView = new DrumTrackView(this);
+		 * //drumKitView = new DrumKitView(this);
+		 * 
+		 * LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		 * LayoutParams.MATCH_PARENT,
+		 * 1.0f);
+		 * //drumTrackView.setLayoutParams(layoutParams);
+		 * //drumKitView.setLayoutParams(layoutParams);
+		 * LinearLayout linearLayout = new LinearLayout(this);
+		 * 
+		 * // HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
+		 * // horizontalScrollView.addView(drumTrackView);
+		 * 
+		 * //ScrollView horizontalScrollView2 = new ScrollView(this);
+		 * //horizontalScrollView2.addView(drumKitView);
+		 * 
+		 * //linearLayout.addView(horizontalScrollView);
+		 * linearLayout.addView(drumKitView);
+		 * 
+		 * linearLayout.setOrientation(1);
+		 * setContentView(linearLayout);
+		 */
+	}
 
-		linearLayout.setOrientation(1);
-		setContentView(linearLayout);
+	private void setupDrumPartButtons() {
+		for (int i = 0; i < drumPartButtons.size(); i++) {
+			drumPartButtons.get(i).setBackgroundResource(drumKitParts.get(i).getDrawableId());
+		}
+
+	}
+
+	private void initDrumKitParts() {
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+		drumKitParts.add(new DrumKitPart("Crash", R.drawable.crash_1, Color.YELLOW));
+
+	}
+
+	public void initDrumPartButtons() {
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_1_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_2_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_3_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_4_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_5_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_6_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_7_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_8_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_9_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_10_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_11_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_12_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_13_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_14_button));
+		drumPartButtons.add((Button) findViewById(R.id.drum_kit_part_15_button));
 	}
 
 	@Override

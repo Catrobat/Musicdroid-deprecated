@@ -1,95 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drumKitLayoutGrid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="0.5"
-    android:columnCount="4"
-    android:rowCount="3" >
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/drumKitField1"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="0"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="0"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField2"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="1"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="0"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField3"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="2"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="0"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField4"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="3"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="0"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField5"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="0"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="1"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField6"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="1"
-        android:layout_columnSpan="2"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="1"
-        android:layout_rowSpan="2"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField8"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="0"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="2"
-        android:background="@color/holo_blue_bright"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/drumKitField7"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:layout_column="3"
-        android:layout_gravity="fill_horizontal|fill_vertical"
-        android:layout_row="1"
-        android:layout_rowSpan="2"
-        android:background="@color/holo_blue_bright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/drum_kit_part_ph_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hallo"
+                android:visibility="invisible" />
+        </FrameLayout>
     </LinearLayout>
 
-</GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/drum_kit_part_1_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_2_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_3_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_4_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_5_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/drum_kit_part_6_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_7_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_8_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_9_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_10_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/drum_kit_part_11_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_12_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_13_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_14_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+
+        <Button
+            android:id="@+id/drum_kit_part_15_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.20" />
+    </LinearLayout>
+
+</LinearLayout>
