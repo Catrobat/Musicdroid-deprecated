@@ -75,6 +75,7 @@ public class Timeline extends RelativeLayout {
 	}
 
 	private void initTimeline() {
+
 		height = DeviceInfo.getScreenHeight(context) / 18;
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(DeviceInfo.getScreenWidth(context),
 				height * 2);
@@ -187,7 +188,9 @@ public class Timeline extends RelativeLayout {
 	}
 
 	public void startTimelineActionMode() {
-		((MainActivity) context).startTimelineActionMode();
+		if (context.equals(MainActivity.class)) {
+			((MainActivity) context).startTimelineActionMode();
+		}
 	}
 
 	public void setClickLocation(int[] l) {

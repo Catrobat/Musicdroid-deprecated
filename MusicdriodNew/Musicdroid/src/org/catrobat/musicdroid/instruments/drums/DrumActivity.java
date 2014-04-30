@@ -25,15 +25,19 @@ package org.catrobat.musicdroid.instruments.drums;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.instruments.Instrument;
 import org.catrobat.musicdroid.note.NoteEvent;
+import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
+import org.catrobat.musicdroid.soundmixer.timeline.TimelineMenuCallback;
 
 import java.util.ArrayList;
 
@@ -46,6 +50,8 @@ public class DrumActivity extends Instrument {
 
 	//private DrumTrackView drumTrackView;
 	//	private DrumKitView drumKitView;
+	private TimelineMenuCallback callbackTimelineMenu;
+
 	private ArrayList<DrumEvent> drumEventList;
 	private int drumEventLength = 10;
 	private static final float MENU_OFFSET = (float) 0.8;
@@ -55,8 +61,21 @@ public class DrumActivity extends Instrument {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LinearLayout ll = new LinearLayout(this);
-		setContentView(R.layout.drum_kit_layout);
+
+		LinearLayout drumLayout = new LinearLayout(this);
+		drumLayout.setOrientation(LinearLayout.VERTICAL);
+
+		LinearLayout drumKitLayout = new LinearLayout(this);
+		Timeline timeLine = new Timeline(this);
+
+		LayoutInflater inflater = LayoutInflater.from(this);
+		inflater.inflate(R.layout.drum_kit_layout, drumKitLayout);
+		timeLine.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		drumLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		drumLayout.addView(timeLine);
+		drumLayout.addView(drumKitLayout);
+
+		setContentView(drumLayout);
 
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
@@ -106,6 +125,10 @@ public class DrumActivity extends Instrument {
 			drumPartButtons.get(i).setBackgroundResource(drumKitParts.get(i).getDrawableId());
 		}
 
+	}
+
+	public void startTimelineActionMode() {
+		startActionMode(callbackTimelineMenu);
 	}
 
 	private void initDrumKitParts() {

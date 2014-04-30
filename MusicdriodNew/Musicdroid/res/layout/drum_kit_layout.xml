@@ -4,30 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+  
+  
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/drum_kit_part_ph_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hallo"
-                android:visibility="invisible" />
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.30"
+        android:layout_weight="0.33"
         android:orientation="horizontal" >
 
         <Button
@@ -64,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.30"
+        android:layout_weight="0.33"
         android:orientation="horizontal" >
 
         <Button
@@ -101,7 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.30"
+        android:layout_weight="0.33"
         android:orientation="horizontal" >
 
         <Button
