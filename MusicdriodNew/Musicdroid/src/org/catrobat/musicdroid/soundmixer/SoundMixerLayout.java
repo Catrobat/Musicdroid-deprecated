@@ -67,23 +67,25 @@ public class SoundMixerLayout implements HorizontalScrollViewListener {
 	public void disableUnselectedViews(int callingTrackId) {
 		for (int child = 0; child < parentLayout.getChildCount(); child++) {
 			View view = parentLayout.getChildAt(child);
-			if (view.getId() != timeline.getId() && view.getId() != callingTrackId)
+			if (view.getId() != timeline.getId() && view.getId() != callingTrackId) {
 				((SoundTrackView) view).disableView();
+			}
 		}
 	}
 
 	public void enableUnselectedViews(int callingTrackId) {
 		for (int child = 0; child < parentLayout.getChildCount(); child++) {
 			View view = parentLayout.getChildAt(child);
-			if (view.getId() != timeline.getId() && view.getId() != callingTrackId)
+			if (view.getId() != timeline.getId() && view.getId() != callingTrackId) {
 				((SoundTrackView) view).enableView();
+			}
 		}
 	}
 
 	private void positionTrack(SoundTrackView track) {
 		if (soundMixer.getNumberOfTracks() > 0) {
-			SoundTrackView lowermost_track = soundMixer.getTrackAtPosition(soundMixer.getNumberOfTracks() - 1);
-			track.alignTrack(RelativeLayout.BELOW, lowermost_track.getId());
+			SoundTrackView lowermostTrack = soundMixer.getTrackAtPosition(soundMixer.getNumberOfTracks() - 1);
+			track.alignTrack(RelativeLayout.BELOW, lowermostTrack.getId());
 		} else {
 			track.alignTrack(RelativeLayout.BELOW, timeline.getId());
 		}

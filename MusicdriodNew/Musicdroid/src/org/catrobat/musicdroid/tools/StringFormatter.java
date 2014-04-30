@@ -25,8 +25,11 @@ package org.catrobat.musicdroid.tools;
 /**
  * @author matthias schlesinger
  */
-public class StringFormatter {
-	private static String SEPERATOR = ":";
+public final class StringFormatter {
+	private static final String SEPERATOR = ":";
+
+	private StringFormatter() {
+	}
 
 	public static String durationStringFromInt(int duration) {
 		int hours = duration / 3600;
@@ -37,16 +40,19 @@ public class StringFormatter {
 
 		String durationString = "";
 
-		if (hours > 0)
+		if (hours > 0) {
 			durationString = "" + hours + SEPERATOR;
+		}
 
 		String min = "" + minutes;
 		String sec = "" + seconds;
 
-		if (minutes < 10)
+		if (minutes < 10) {
 			min = "0" + min;
-		if (seconds < 10)
+		}
+		if (seconds < 10) {
 			sec = "0" + sec;
+		}
 
 		return durationString + min + SEPERATOR + sec;
 	}

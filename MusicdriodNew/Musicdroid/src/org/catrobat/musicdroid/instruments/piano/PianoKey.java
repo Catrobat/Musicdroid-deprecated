@@ -42,7 +42,7 @@ public class PianoKey extends Button {
 	private SoundPlayer soundPlayer;
 
 	public PianoKey(PianoActivity pianoActivity, NoteName noteName, int width, int height, int xPosition,
-	                boolean isBlackKey) {
+			boolean isBlackKey) {
 		super(pianoActivity);
 		initComponents(noteName, width, height, xPosition, isBlackKey);
 		soundPlayer = pianoActivity.getSoundPlayer();

@@ -40,7 +40,7 @@ public class TimelineOnTouchListener implements OnTouchListener {
 		public void onLongPress(final MotionEvent e) {
 			// Log.i("Location: ", "X = " + e.getX() + " | Y = " +
 			// e.getY());
-			int[] location = {(int) e.getX(), (int) e.getY()};
+			int[] location = { (int) e.getX(), (int) e.getY() };
 			timeline.setClickLocation(location);
 			timeline.startTimelineActionMode();
 		}
@@ -73,23 +73,23 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	}
 
 	private boolean handleStartPointOnTouch(MotionEvent event) {
-		final int X = (int) event.getRawX();
+		final int xTouchPosition = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:
 				timeline.requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
-				xDelta = X - lParams.leftMargin;
+				xDelta = xTouchPosition - lParams.leftMargin;
 				break;
 			case MotionEvent.ACTION_MOVE:
 				timeline.requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) startPoint.getLayoutParams();
-				int old_margin = layoutParams.leftMargin;
-				int margin = X - xDelta;
+				int oldMargin = layoutParams.leftMargin;
+				int margin = xTouchPosition - xDelta;
 
-				if (margin != old_margin) {
+				if (margin != oldMargin) {
 					layoutParams.leftMargin = margin;
-					int[] location = {margin, 0};
+					int[] location = { margin, 0 };
 					SoundMixer.getInstance().setStartPoint(location);
 				}
 				ret = true;
@@ -99,23 +99,23 @@ public class TimelineOnTouchListener implements OnTouchListener {
 	}
 
 	private boolean handleEndPointOnTouch(MotionEvent event) {
-		final int X = (int) event.getRawX();
+		final int xTouchPosition = (int) event.getRawX();
 		boolean ret = true;
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_DOWN:
 				timeline.requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
-				xDelta = X - lParams.leftMargin;
+				xDelta = xTouchPosition - lParams.leftMargin;
 				break;
 			case MotionEvent.ACTION_MOVE:
 				timeline.requestDisallowInterceptTouchEvent(true);
 				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) endPoint.getLayoutParams();
-				int old_margin = layoutParams.leftMargin;
-				int margin = X - xDelta;
+				int oldMargin = layoutParams.leftMargin;
+				int margin = xTouchPosition - xDelta;
 
-				if (margin != old_margin) {
+				if (margin != oldMargin) {
 					layoutParams.leftMargin = margin;
-					int[] location = {margin, 0};
+					int[] location = { margin, 0 };
 					SoundMixer.getInstance().setEndPoint(location);
 				}
 				ret = true;

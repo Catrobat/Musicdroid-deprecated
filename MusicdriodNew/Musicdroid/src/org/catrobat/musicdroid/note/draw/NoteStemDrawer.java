@@ -30,11 +30,14 @@ import android.graphics.Point;
 
 import org.catrobat.musicdroid.note.NoteLength;
 
-public class NoteStemDrawer {
+public final class NoteStemDrawer {
 	private static final double LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES = 3.5;
 
+	private NoteStemDrawer() {
+	}
+
 	public static void drawStem(NoteSheetCanvas noteSheetCanvas, NoteLength noteLength, Point startPointOfNoteStem,
-	                            Point endPointOfNoteStem, boolean isUpdirectedStem) {
+			Point endPointOfNoteStem, boolean isUpdirectedStem) {
 
 		int stemLength = (int) (Math.round(LENGTH_OF_STEM_IN_NOTE_LINE_DISTANCES
 				* noteSheetCanvas.getDistanceBetweenNoteLines()));
@@ -62,7 +65,7 @@ public class NoteStemDrawer {
 	}
 
 	private static void drawCurvyStem(NoteSheetCanvas noteSheetCanvas, boolean isUpDirectedStem,
-	                                  Point endPointOfNoteStem, Paint paint, NoteLength noteLength) {
+			Point endPointOfNoteStem, Paint paint, NoteLength noteLength) {
 		//		Path bezierPath = new Path();
 		paint.setStyle(Style.STROKE);
 		//		int xPosition = endPointOfNoteStem.x;
@@ -86,7 +89,7 @@ public class NoteStemDrawer {
 	}
 
 	private static void drawBezierPathUpDirectedStem(NoteSheetCanvas noteSheetCanvas, Point endPointOfNoteStem,
-	                                                 Paint paint) {
+			Paint paint) {
 		int xPosition = endPointOfNoteStem.x;
 		int yPosition = endPointOfNoteStem.y;
 
@@ -101,7 +104,7 @@ public class NoteStemDrawer {
 	}
 
 	private static void drawBezierPathDownDirectedStem(NoteSheetCanvas noteSheetCanvas, Point endPointOfNoteStem,
-	                                                   Paint paint) {
+			Paint paint) {
 		int xPosition = endPointOfNoteStem.x;
 		int yPosition = endPointOfNoteStem.y;
 

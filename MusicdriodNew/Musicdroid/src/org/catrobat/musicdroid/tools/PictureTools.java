@@ -26,9 +26,12 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-public class PictureTools {
+public final class PictureTools {
+	private PictureTools() {
+	}
+
 	public static Rect calculateProportionalPictureContourRect(Bitmap originalPicture, int height, int startXPosition,
-	                                                           int yCenterPosition) {
+			int yCenterPosition) {
 		int keyPictureWidth = originalPicture.getWidth() * height / originalPicture.getHeight();
 
 		Point leftUpperOfRect = new Point(startXPosition, yCenterPosition - height / 2);

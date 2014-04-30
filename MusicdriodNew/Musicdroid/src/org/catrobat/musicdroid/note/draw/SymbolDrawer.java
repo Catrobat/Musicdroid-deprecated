@@ -48,7 +48,7 @@ public class SymbolDrawer {
 
 	public void drawSymbol(Symbol symbol) {
 		if (symbol instanceof BreakSymbol) {
-			breakDrawer.DrawBreak((BreakSymbol) symbol);
+			breakDrawer.drawBreak((BreakSymbol) symbol);
 		} else if (symbol instanceof NoteSymbol) {
 			noteDrawer.drawNoteSymbol((NoteSymbol) symbol);
 		} else if (symbol instanceof BoundNoteSymbol) {

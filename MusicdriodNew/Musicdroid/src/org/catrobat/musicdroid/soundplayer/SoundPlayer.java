@@ -73,10 +73,10 @@ public class SoundPlayer {
 		float leftVolume = curVolume / maxVolume;
 		float rightVolume = curVolume / maxVolume;
 		int priority = 1;
-		int no_loop = 0;
-		float normal_playback_rate = 1f;
-		soundPool.play(soundPoolMap.get(noteName.getMidi()), leftVolume, rightVolume, priority, no_loop,
-				normal_playback_rate);
+		int noLoop = 0;
+		float normalPlaybackRate = 1f;
+		soundPool.play(soundPoolMap.get(noteName.getMidi()), leftVolume, rightVolume, priority, noLoop,
+				normalPlaybackRate);
 	}
 
 	public void playNote(int midiValue) {
@@ -113,11 +113,11 @@ public class SoundPlayer {
 			float leftVolume = curVolume / maxVolume;
 			float rightVolume = curVolume / maxVolume;
 			int priority = 1;
-			int no_loop = 0;
-			float normal_playback_rate = 1f;
+			int noLoop = 0;
+			float normalPlaybackRate = 1f;
 			int a = soundPoolMap.get(midiValue);
-			streamId = soundPool.play(soundPoolMap.get(midiValue), leftVolume, rightVolume, priority, no_loop,
-					normal_playback_rate);
+			streamId = soundPool.play(soundPoolMap.get(midiValue), leftVolume, rightVolume, priority, noLoop,
+					normalPlaybackRate);
 
 		}
 

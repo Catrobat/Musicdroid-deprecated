@@ -25,7 +25,9 @@ package org.catrobat.musicdroid.test.instruments.testutil;
 import org.catrobat.musicdroid.instruments.Instrument;
 import org.catrobat.musicdroid.instruments.piano.PianoActivity;
 
-public class InstrumentTestDataFactory {
+public final class InstrumentTestDataFactory {
+	private InstrumentTestDataFactory() {
+	}
 
 	public static Instrument createInstrument() {
 		return new PianoActivity();

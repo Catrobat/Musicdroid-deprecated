@@ -47,7 +47,7 @@ public class BreakDrawer {
 		this.context = context;
 	}
 
-	public void DrawBreak(BreakSymbol symbol) {
+	public void drawBreak(BreakSymbol symbol) {
 		if (symbol.getNoteLength() == NoteLength.WHOLE || symbol.getNoteLength() == NoteLength.WHOLE_DOT) {
 			drawWholeBreak(noteSheetCanvas, context, symbol.getNoteLength().hasDot());
 		} else if (symbol.getNoteLength() == NoteLength.HALF || symbol.getNoteLength() == NoteLength.HALF_DOT) {
@@ -92,7 +92,7 @@ public class BreakDrawer {
 		paint.setStyle(Style.STROKE);
 		noteSheetCanvas.getCanvas().drawBitmap(breakPicture, null, rect, null);
 		if (symbol.getNoteLength().hasDot()) {
-			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+			DotDrawer.drawDotOnRightSideOfRect(rect, noteSheetCanvas);
 		}
 		//		noteSheetCanvas.getCanvas().drawRect(rectWohleSpace, paint);
 
@@ -113,7 +113,7 @@ public class BreakDrawer {
 		noteSheetCanvas.getCanvas().drawRect(rect, paint);
 
 		if (hasDot) {
-			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+			DotDrawer.drawDotOnRightSideOfRect(rect, noteSheetCanvas);
 		}
 	}
 
@@ -132,7 +132,7 @@ public class BreakDrawer {
 		noteSheetCanvas.getCanvas().drawRect(rect, paint);
 
 		if (hasDot) {
-			DotDrawer.DrawDotOnRightSideOfRect(rect, noteSheetCanvas);
+			DotDrawer.drawDotOnRightSideOfRect(rect, noteSheetCanvas);
 		}
 	}
 }

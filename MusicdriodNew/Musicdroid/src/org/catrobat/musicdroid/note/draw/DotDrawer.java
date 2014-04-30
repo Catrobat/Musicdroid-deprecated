@@ -28,8 +28,11 @@ import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-public class DotDrawer {
-	public static void DrawDotOnRightSideOfRect(RectF rect, NoteSheetCanvas noteSheetCanvas) {
+public final class DotDrawer {
+	private DotDrawer() {
+	}
+
+	public static void drawDotOnRightSideOfRect(RectF rect, NoteSheetCanvas noteSheetCanvas) {
 
 		int dotRadius = 5;
 		int pixelDistanceBetweenRectAndDot = 10;

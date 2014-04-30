@@ -32,13 +32,13 @@ import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.SoundMixerEventHandler;
 import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
 import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.uitest.utils.UiTestHelper;
 
 import java.util.Observable;
 import java.util.Observer;
 
 public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2<MainActivity> implements Observer {
 	protected SoundMixerEventHandler eventHandler = null;
-	protected UITestHelper uiHelper = null;
 	protected Solo solo = null;
 
 	public SoundMixerEventHandlerTest(Class<MainActivity> activityClass) {
@@ -52,7 +52,6 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 	@Override
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
-		uiHelper = new UITestHelper(solo, getActivity());
 		eventHandler = SoundMixer.getInstance().getEventHandler();
 		eventHandler.addObserver(this);
 	}
@@ -63,7 +62,7 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 	}
 
 	public void testObserver() {
-		uiHelper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		solo.clickOnView(getActivity().findViewById(R.id.btn_play));
 		solo.sleep(25000);
 
@@ -74,7 +73,8 @@ public class SoundMixerEventHandlerTest extends ActivityInstrumentationTestCase2
 		timeline.getLocationOnScreen(timelineLocation);
 
 		int clickXPosition = timelineLocation[0] + 200;
-		uiHelper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_start_point));
 
 		solo.clickOnView(getActivity().findViewById(R.id.btn_play));
 		solo.sleep(10000);

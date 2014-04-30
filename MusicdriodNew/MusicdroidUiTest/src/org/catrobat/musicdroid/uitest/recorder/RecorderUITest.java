@@ -111,10 +111,10 @@ public class RecorderUITest extends ActivityInstrumentationTestCase2<MainActivit
 		playSound();
 
 		ImageView equalizer = (ImageView) solo.getCurrentActivity().findViewById(R.id.microphone_equalizer);
-		int old_height = 0;
+		int oldHeight = 0;
 		for (int i = 0; i < 100; i++) {
-			LayoutParams lp = (LayoutParams) equalizer.getLayoutParams();
-			if (lp.height > old_height) {
+			LayoutParams layoutParameters = (LayoutParams) equalizer.getLayoutParams();
+			if (layoutParameters.height > oldHeight) {
 				assertTrue(true);
 				solo.clickOnView(recordButton);
 				stopSound();

@@ -38,12 +38,13 @@ import org.catrobat.musicdroid.soundmixer.timeline.Timeline;
 import org.catrobat.musicdroid.soundmixer.timeline.TimelineProgressBar;
 import org.catrobat.musicdroid.tools.DeviceInfo;
 import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.uitest.utils.UiTestHelper;
 
 public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected SoundMixer mixer = null;
 	protected Timeline timeline = null;
-	protected UITestHelper helper;
+	protected UiTestHelper helper;
 	protected ImageButton playImageButton = null;
 	protected TimelineProgressBar timelineProgressBar = null;
 
@@ -55,7 +56,6 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 		mixer = SoundMixer.getInstance();
-		helper = new UITestHelper(solo, getActivity());
 		timeline = (Timeline) getActivity().findViewById(R.id.timeline);
 		playImageButton = (ImageButton) getActivity().findViewById(R.id.btn_play);
 		timelineProgressBar = (TimelineProgressBar) timeline.findViewById(R.id.timeline_progressBar);
@@ -80,7 +80,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		solo.sleep(1000);
 		solo.clickOnText(getActivity().getString(R.string.settings_button_apply));
 		solo.sleep(1000);
-		assertTrue("SoundMixer is not scrollable", helper.scrollToSide(timeline));
+		assertTrue("SoundMixer is not scrollable", UiTestHelper.scrollToSide(solo, timeline));
 
 		int numTextViewsTopEnd = ((RelativeLayout) timeline.getChildAt(0)).getChildCount();
 		int numViewsBottomEnd = ((RelativeLayout) timeline.getChildAt(1)).getChildCount();
@@ -101,7 +101,8 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		timeline.getLocationOnScreen(timelineLocation);
 
 		int clickXPosition = timelineLocation[0] + 200;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_start_point));
 		View startMarker = timeline.findViewById(R.id.timeline_start_point);
 		int margin = ((RelativeLayout.LayoutParams) startMarker.getLayoutParams()).leftMargin;
 		int pixelPerSecond = SoundMixer.getInstance().getPixelPerSecond();
@@ -111,7 +112,8 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 
 		//End Marker
 		clickXPosition = timelineLocation[0] + 600;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_end_point));
 		View endMarker = timeline.findViewById(R.id.timeline_end_point);
 		int marginEnd = ((RelativeLayout.LayoutParams) endMarker.getLayoutParams()).leftMargin;
 
@@ -123,24 +125,28 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		int[] timelineLocation = { 0, 0 };
 		timeline.getLocationOnScreen(timelineLocation);
 		int clickXPosition = timelineLocation[0] + 200;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_start_point));
 		View startMarker = timeline.findViewById(R.id.timeline_start_point);
 
 		//place endMarker before startMarker - will fail
 		clickXPosition = timelineLocation[0] + 100;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_end_point));
 
 		View endMarker = timeline.findViewById(R.id.timeline_end_point);
 		assertTrue(endMarker.getVisibility() == View.GONE);
 
 		//place endMarker behind startMarker
 		clickXPosition = timelineLocation[0] + 400;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_end_point));
 
 		//place startMarker behind endMarker - will fail
 		int oldMarginStartMarker = ((RelativeLayout.LayoutParams) startMarker.getLayoutParams()).leftMargin;
 		clickXPosition = timelineLocation[0] + 600;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_start_point));
 		int newMarginStartMarker = ((RelativeLayout.LayoutParams) startMarker.getLayoutParams()).leftMargin;
 		assertTrue(oldMarginStartMarker == newMarginStartMarker);
 
@@ -150,11 +156,13 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 		int[] timelineLocation = { 0, 0 };
 		timeline.getLocationOnScreen(timelineLocation);
 		int clickXPosition = timelineLocation[0] + 200;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_start_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_start_point));
 		View startMarker = timeline.findViewById(R.id.timeline_start_point);
 
 		clickXPosition = timelineLocation[0] + 400;
-		helper.addTimelineMarker(clickXPosition, timelineLocation[1], R.string.timeline_menu_entry_end_point);
+		UiTestHelper.addTimelineMarker(solo, clickXPosition, timelineLocation[1],
+				getActivity().getString(R.string.timeline_menu_entry_end_point));
 		View endMarker = timeline.findViewById(R.id.timeline_end_point);
 
 		int[] startMarkerLocation = { 0, 0 };
@@ -177,7 +185,7 @@ public class TimelineTest extends ActivityInstrumentationTestCase2<MainActivity>
 	public void testTimelineProgressBar() {
 		LayoutParams lp = (LayoutParams) timelineProgressBar.getLayoutParams();
 		assertTrue(lp.width == 0);
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		solo.clickOnView(playImageButton);
 		solo.sleep(5000);
 

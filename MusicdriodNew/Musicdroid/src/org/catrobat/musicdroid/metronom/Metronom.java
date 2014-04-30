@@ -35,6 +35,7 @@ public class Metronom {
 	private static final int METRONOM_OFF = 0;
 	private static final int METRONOM_LIGHT = 1;
 	private static final int METRONOM_LIGHT_AND_SOUND = 2;
+	private static final int SAMPLE_RATE = 8000;
 	private final int tickLengthInSamples = 1000; //
 	private Context context = null;
 	private ImageView metronomView = null;
@@ -46,10 +47,10 @@ public class Metronom {
 	private int metronomState;
 	private double accentSound;
 	private double sound;
-	private AudioGenerator audioGenerator = new AudioGenerator(8000);
+	private AudioGenerator audioGenerator = new AudioGenerator(SAMPLE_RATE);
 
-	public Metronom(Context c) {
-		context = c;
+	public Metronom(Context context) {
+		this.context = context;
 	}
 
 	private void initializeValues() {
@@ -60,7 +61,7 @@ public class Metronom {
 		beat = 4;
 		sound = 261.63;
 		accentSound = 392.00;
-		silenceDuration = (int) (((60 / beatsPerMinute) * 8000) - tickLengthInSamples);
+		silenceDuration = (int) (((60 / beatsPerMinute) * SAMPLE_RATE) - tickLengthInSamples);
 		animation = new MetronomAnimation(context, beatsPerMinute);
 	}
 
@@ -68,12 +69,15 @@ public class Metronom {
 		Log.i("Metronom", "START");
 		initializeValues();
 		play = true;
-		if (metronomState == METRONOM_OFF)
+		if (metronomState == METRONOM_OFF) {
 			return;
-		if (metronomState >= METRONOM_LIGHT)
+		}
+		if (metronomState >= METRONOM_LIGHT) {
 			blink();
-		if (metronomState == METRONOM_LIGHT_AND_SOUND)
+		}
+		if (metronomState == METRONOM_LIGHT_AND_SOUND) {
 			play();
+		}
 	}
 
 	public void stopMetronome() {
@@ -84,36 +88,35 @@ public class Metronom {
 
 	private void play() {
 		new Thread(new Runnable() {
-			double[] tickArray = audioGenerator.getSineWave(tickLengthInSamples, 8000, accentSound);
-			double[] tockArray = audioGenerator.getSineWave(tickLengthInSamples, 8000, sound);
+			double[] tickArray = audioGenerator.getSineWave(tickLengthInSamples, SAMPLE_RATE, accentSound);
+			double[] tockArray = audioGenerator.getSineWave(tickLengthInSamples, SAMPLE_RATE, sound);
 			double silence = 0;
-			double[] soundArray = new double[8000];
-			int t = 0
-					,
-					s = 0
-					,
-					b = 0;
+			double[] soundArray = new double[SAMPLE_RATE];
+			int tickSampleIndex = 0;
+			int silenceSampleIndex = 0;
+			int beatIndex = 0;
 
 			@Override
 			public void run() {
 				while (play) {
 					for (int i = 0; i < soundArray.length && play; i++) {
-						if (t < tickLengthInSamples) {
-							if (b == 0) {
-								soundArray[i] = tockArray[t];
+						if (tickSampleIndex < tickLengthInSamples) {
+							if (beatIndex == 0) {
+								soundArray[i] = tockArray[tickSampleIndex];
 							} else {
-								soundArray[i] = tickArray[t];
+								soundArray[i] = tickArray[tickSampleIndex];
 							}
-							t++;
+							tickSampleIndex++;
 						} else {
 							soundArray[i] = silence;
-							s++;
-							if (s >= silenceDuration) {
-								t = 0;
-								s = 0;
-								b++;
-								if (b > (beat - 1))
-									b = 0;
+							silenceSampleIndex++;
+							if (silenceSampleIndex >= silenceDuration) {
+								tickSampleIndex = 0;
+								silenceSampleIndex = 0;
+								beatIndex++;
+								if (beatIndex > (beat - 1)) {
+									beatIndex = 0;
+								}
 							}
 						}
 					}

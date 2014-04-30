@@ -39,7 +39,7 @@ import org.catrobat.musicdroid.soundtracks.SoundTrackDrums;
 import org.catrobat.musicdroid.soundtracks.SoundTrackView;
 import org.catrobat.musicdroid.types.SoundType;
 
-public class AddSoundDialog extends BaseDialog implements OnItemClickListener, OnItemLongClickListener {
+public final class AddSoundDialog extends BaseDialog implements OnItemClickListener, OnItemLongClickListener {
 
 	private static AddSoundDialog instance;
 	private MainActivity parent;
@@ -58,6 +58,7 @@ public class AddSoundDialog extends BaseDialog implements OnItemClickListener, O
 		return instance;
 	}
 
+	//FIXME bad practice
 	public static void init(MainActivity mainActivity) {
 		instance = new AddSoundDialog(mainActivity);
 	}

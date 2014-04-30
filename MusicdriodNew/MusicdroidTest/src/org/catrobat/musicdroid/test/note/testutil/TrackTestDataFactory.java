@@ -29,7 +29,9 @@ import org.catrobat.musicdroid.note.NoteLength;
 import org.catrobat.musicdroid.note.NoteName;
 import org.catrobat.musicdroid.note.Track;
 
-public class TrackTestDataFactory {
+public final class TrackTestDataFactory {
+	private TrackTestDataFactory() {
+	}
 
 	public static Track createTrack() {
 		return new Track(Key.VIOLIN);

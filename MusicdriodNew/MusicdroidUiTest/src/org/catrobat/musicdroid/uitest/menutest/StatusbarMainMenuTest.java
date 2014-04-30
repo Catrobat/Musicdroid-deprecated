@@ -33,12 +33,12 @@ import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.soundmixer.SoundMixer;
 import org.catrobat.musicdroid.soundmixer.Statusbar;
 import org.catrobat.musicdroid.types.SoundType;
+import org.catrobat.musicdroid.uitest.utils.UiTestHelper;
 
 public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected Solo solo = null;
 	protected ImageButton playImageButton = null;
 	protected ImageButton rewindImageButton = null;
-	protected UITestHelper helper = null;
 
 	public StatusbarMainMenuTest() {
 		super(MainActivity.class);
@@ -47,7 +47,6 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 	@Override
 	protected void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
-		helper = new UITestHelper(solo, getActivity());
 		playImageButton = (ImageButton) getActivity().findViewById(R.id.btn_play);
 		rewindImageButton = (ImageButton) getActivity().findViewById(R.id.btn_rewind);
 	}
@@ -58,7 +57,7 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 	}
 
 	public void testButtonChangesOnClick() {
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		solo.clickOnView(playImageButton);
 		solo.sleep(1000);
 		assertFalse(Statusbar.getInstance().getDisplayPlayButton());
@@ -68,7 +67,7 @@ public class StatusbarMainMenuTest extends ActivityInstrumentationTestCase2<Main
 	}
 
 	public void testRewindButtonAppearsOnPlayButtonClick() {
-		helper.addTrack(SoundType.DRUMS);
+		UiTestHelper.addTrack(solo, SoundType.DRUMS);
 		assertTrue(rewindImageButton.getVisibility() == View.INVISIBLE);
 		solo.clickOnView(playImageButton);
 		solo.sleep(5000);

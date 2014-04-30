@@ -52,7 +52,7 @@ public class Recorder {
 		try {
 			recorder.prepare();
 		} catch (IOException e) {
-			Log.e("LOG", "prepare() failed");
+			Log.e("LOG", "prepare() failed", e);
 		}
 
 		recorder.start();
@@ -77,8 +77,9 @@ public class Recorder {
 					try {
 						Thread.sleep(125);
 
-						if (sleepCounter % 8 == 0)
+						if (sleepCounter % 8 == 0) {
 							sendDurationMessage();
+						}
 
 						sendAmplitudeMessage();
 

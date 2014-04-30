@@ -31,7 +31,9 @@ import android.graphics.Rect;
 import org.catrobat.musicdroid.R;
 import org.catrobat.musicdroid.tools.PictureTools;
 
-public class CrossDrawer {
+public final class CrossDrawer {
+	private CrossDrawer() {
+	}
 
 	public static void drawCross(NoteSheetCanvas noteSheetCanvas, int xPosition, int yPosition, Context context) {
 		int crossHeight = 2 * noteSheetCanvas.getDistanceBetweenNoteLines();
@@ -43,8 +45,7 @@ public class CrossDrawer {
 		Rect rect = PictureTools.calculateProportionalPictureContourRect(crossPicture, crossHeight,
 				xStartPositionForCrosses,
 				noteSheetCanvas.getYPositionOfCenterLine() + yPosition * noteSheetCanvas.getDistanceBetweenNoteLines()
-						/ 2
-		);
+						/ 2);
 
 		noteSheetCanvas.getCanvas().drawBitmap(crossPicture, null, rect, null);
 	}

@@ -55,10 +55,10 @@ public class ChangeFilenameDialog extends DialogFragment {
 						AudioHandler.getInstance().setFilename(editText.getText().toString() + ".mp3");
 					}
 				}).setPositiveButton(R.string.settings_button_discard, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+					}
+				});
 
 		AlertDialog dialog = builder.create();
 

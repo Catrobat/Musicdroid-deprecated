@@ -114,8 +114,9 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		Bundle b = msg.getData();
 		if (b.containsKey("duration")) {
 			int key = b.getInt("duration");
-			if (recordDurationTextView != null)
+			if (recordDurationTextView != null) {
 				recordDurationTextView.setText(StringFormatter.durationStringFromInt(key));
+			}
 		} else if (b.containsKey("trackposition")) {
 			int position = b.getInt("trackposition");
 			LayoutParams params = (LayoutParams) progressBarView.getLayoutParams();
@@ -132,8 +133,9 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 	private void handleOnRecordClick() {
 		if (!isRecording) {
 			isRecording = true;
-			if (playImageButton.getVisibility() == View.VISIBLE)
+			if (playImageButton.getVisibility() == View.VISIBLE) {
 				reorderToRecordLayout();
+			}
 
 			AudioHandler.getInstance().startRecording();
 			recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.pause_button));
@@ -173,13 +175,15 @@ public class RecorderLayout extends Handler implements OnClickListener, OnLongCl
 		isRecording = false;
 		recordImageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.record_button));
 		recordImageButton.setColorFilter(Color.RED);
-		if (!recordDurationTextView.getText().equals("00:00"))
+		if (!recordDurationTextView.getText().equals("00:00")) {
 			reorderToPlayLayout();
+		}
 	}
 
 	public void updateFilename(String filename) {
-		if (filenameTextView == null)
+		if (filenameTextView == null) {
 			return;
+		}
 		filenameTextView.setText(filename);
 	}
 
